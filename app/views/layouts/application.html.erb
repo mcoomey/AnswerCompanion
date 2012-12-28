@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application"%>
+  <%= csrf_meta_tags %>
+  <title>AnswerCompanion <%= @page_title %></title>
+</head>
+<body>
+<div id="wrapper">
+	<div id="content">
+        <header>  
+			<%= link_to image_tag("AnswerCompanionLogo.png", :class => "logo"), screens_index_path + "#tabs-#1" %>
+			<div id="sessioninfo">
+				<% if instructor_signed_in? || student_signed_in? %>
+					<%= link_to image_tag("LogoutLogo.png",  :mouseover => "LogoutLogoHover.png",:class => "button", :alt => "Logout" ), destroy_user_session_path, :method => :delete %> 
+					<%= link_to image_tag("MyAccount.png",  :mouseover => "MyAccountHover.png",:class => "button", :alt => "My Account" ), "#" %> </br>
+					<%=current_user.email%></br>
+					Prior login: <%= current_user.last_sign_in_at.localtime.strftime("%b %d, %Y @ %I:%M:%S%P") %></br>
+					Account Balance: <%= number_to_currency(current_user.accountbalance, :unit => "$") %></br>
+				<% end %>
+			</div>   
+ 		</header>
+	    <div id="messages">
+		  	<span class="notice"><%= notice %></span>
+			<span class="ujs_notice"></span>
+		  	<span class="alert"><%= alert %></span>
+			<span class="ujs_alert"></span>
+	  	</div>
+		<%= yield %>
+      <footer> Version 0.0&nbsp;&nbsp;&nbsp;&nbsp;&copy;2012 Answer Companion Incorporated&nbsp;&nbsp;&nbsp;&nbsp;Paxton, MA 01612 </footer>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,109 @@
+html {
+	background: white;
+}
+
+body {
+	font: 100% Arial, Helvetica, sans-serif;
+	background: $very-light-grey;
+	color: black;
+}
+
+#wrapper {
+	width: 1024px;
+	background: $main-green;
+	margin-top: 0;
+	margin-right: auto;
+	margin-bottom: 0;
+	margin-left: auto;
+}
+
+#content {
+	width: 800px;
+	background-repeat: repeat;
+	background-image: url('BlueLineSlice10x030.jpg');
+	margin: 0 auto;
+	border: 5px solid $dark-grey;
+}
+
+header {
+	height: 115px;
+	width: 800px;
+
+	.logo {
+		height:100px;
+		width:185px;
+		position: relative;
+		top:10px;
+		left:10px;
+	}
+	
+  a:hover {
+		text-decoration:none;
+		border:none;
+		color:inherit;
+		background-color:inherit;
+	}
+
+	p {
+		font-size: 1em;
+		margin-left: 250px;
+	}
+}
+
+#sessioninfo {
+	width: 290px;
+	height: 112px;
+	float: right;
+	font: Arial, Helvetica, sans-serif;
+	font-size: 1em;
+	line-height: 28px;
+	padding-top: 3px;
+
+	a:hover {
+		background-color:white;
+	}
+	
+	img.button {
+		width:80px;
+		height:24px;
+		border:none;
+	}
+}
+
+#messages {
+	font: Arial, Helvetica, sans-serif;
+	width:800px;
+	height:30px;
+	margin-left:5px;
+
+  .notice, .ujs_notice  {
+		font-size: 1em;
+		line-height: 28px;
+		padding-top: 3px;
+		color: $medium-green;
+	}
+	.alert, .ujs_alert {
+		font-size: 1.5em;
+		line-height: 28px;
+		padding-top: 3px;
+		color: red;
+	}
+}
+
+article {
+	min-height:600px;
+	height: auto !important;
+	height:600px;
+	width:800px;
+	overflow:auto;
+}
+
+footer {
+	clear: both;
+	height: 20px;
+	width: 800px;
+	padding-top: 10px;
+	font-size: 10px;
+	background-color: $medium-grey;
+	text-align:center;
+}

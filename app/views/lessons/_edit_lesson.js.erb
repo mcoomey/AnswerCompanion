@@ -1,0 +1,14 @@
+<div id="ujsform">
+<%= form_for @lesson, remote:true do |f| %>
+	<%= f.label :title %>
+	<%= f.text_field :title, :size => "65" %>
+	
+	<%= f.label :page %>
+	<%= f.text_field :page, :size => "10" %>
+	
+	<%= f.hidden_field :subject_id, :value => @subjectId %>
+	
+	<%= f.submit "Update"%>
+	<%= f.submit "Cancel"%>
+<% end %>
+</div>

@@ -1,0 +1,78 @@
+<article>
+<div id="buttonarea">
+	<div id="button01">
+	<%=link_to image_tag("BackToList.png",  :mouseover => "BackToListHover.png",:class => "button", :alt => "Back To List" ), textbooks_path %>
+	</div>
+	<div id="button02">
+	<%=link_to image_tag("Edit.png",  :mouseover => "EditHover.png",:class => "button", :alt => "Edit" ), edit_textbook_path(@textbook) %>
+	</div>
+	<div id="button03">
+	<td><%= link_to image_tag("Delete.png",  :mouseover => "DeleteHover.png",:class => "button", :alt => "Delete" ), @textbook, confirm: 'Delete Textbook. Are you sure?', method: :delete %></td>
+	</div>
+</div>
+
+<div id="showarea">
+<table>	
+<tr><th>Show textbook</th></tr>
+<tr><td>
+	
+<div id = "leftcolumn">
+	<p>
+	  Isbn13:<br />
+	<div class="showvalue">
+	  <%= @textbook.isbn13 %>
+	</div>
+	</p>
+	<p>
+	  Title:<br />
+	<div class="showvalue">
+	  <%= @textbook.title %>
+	</div>
+	</p>
+	<p>
+	  Edition:<br />
+	<div class="showvalue">
+	  <%= @textbook.edition %>
+	</div>
+	</p>
+	<p>
+	  Front Cover:<br /><br />
+	  <%= image_tag(@textbook.frontcover_url(:thumb).to_s) %>
+	</p>
+	<!-- <p>
+	  Filename:<br />
+	<div class="showvalue">
+	  <%= @frontcover %>
+	</div>
+	</p> -->
+</div>
+<div id = "rightcolumn">
+	<p>
+	  Author:<br />
+	<div class="showvalue">
+	  <%= @textbook.author %>
+	</div>
+	</p>
+	<p>
+	  Publisher:<br />
+	<div class="showvalue">
+	  <%= @textbook.publisher %>
+	</div>
+	</p>
+	<p>
+	Category:<br />
+	<div class="showvalue">
+    <%= @category %>
+	</div>
+	</p>
+	<p>
+	SubCategory:<br />
+	<div class="showvalue">
+    <%= @subcategory %>
+	</div>
+	</p>
+</td>
+</tr>
+</table>
+</div>
+</article>

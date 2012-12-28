@@ -1,0 +1,35 @@
+<div id="mainpane">
+	<table>
+	  <tr>
+	    <th>Length</th>
+	    <th>Instructor</th>
+	    <th>Difficulty</th>
+	    <th>Views</th>
+		<th>Play/Purchase</th>
+		<% if current_instructor %>
+			<th class="replace"></th>
+			<th class="destroy"></th>
+		<% end %>
+	  </tr>
+
+	<% videos.each do |video| %>
+	  <tr>
+	    <td><%= video.length %></td>
+	    <td><%= video.instructor.screenname %></td>
+	    <td><%= video.difficulty %></td>
+	    <td><%= video.numpurchases %></td>
+		<td><%= link_to 'Play', lesson_video_path(@lesson, video, :subject_id => subjectId) %></td>
+		<% if current_instructor %>
+			<% if current_instructor.id == video.instructor_id %>
+				<td><%=link_to 'Replace',  "#" %></td>
+			    <td><%= link_to 'Destroy', lesson_video_path(@lesson, video, :subject_id => subjectId), confirm:'Delete Video - Are you sure?', method: :delete %></td>
+			<% else %>
+				<td></td>
+				<td></td>
+			<% end %>	
+		<% end %>
+	  </tr>
+	<% end %>
+	</table>
+	<%= params.inspect %>
+</div>

@@ -1,0 +1,11 @@
+	<ul class="ac-tabs-nav">
+		<% if @subjectcount %>
+			<% num = @subjectcount %>
+			<% (0..num-1).each do |i| %>
+				<li>
+					<%= link_to @subjects[i].name, subject_textbook_delegations_path(@subjects[i])+"#tabs-"+(i+1).to_s, :class => "tab-markers" %>
+					<%= link_to "X", {:controller => 'subjects', :action => 'delete', :id => @subjects[i].id.to_s}, :confirm => 'Remove Subject - Are you sure?', :class => "hidden-delete" %>
+				</li>
+			<% end %>	
+		<% end %>
+	</ul>

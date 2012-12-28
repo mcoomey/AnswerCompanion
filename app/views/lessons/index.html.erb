@@ -1,0 +1,38 @@
+<article>
+	<div id="buttonarea">
+		<span class="title"><%= @subjectname %></span>
+		<%=link_to image_tag("Subjects.png",  :mouseover => "SubjectsHover.png", :class => "button", :alt => "Subjects Page" ),  subject_textbook_delegations_path(@subjectId) + "#tabs-" + session[:selectedTab].to_s %>
+		<%=link_to image_tag("AddLesson.png",  :mouseover => "AddLessonHover.png",:class => "button", :alt => "New lesson"),  new_textbook_lesson_path(params[:textbook_id], :subject_id => @subjectId), id:"add_lesson", remote: true %>
+	</div>
+	<div id="ac-tabs">
+		<ul class="ac-tabs-nav">
+			<li>
+				<%= link_to "Lessons", textbook_lessons_path(@textbook, :subject_id => @subjectId, :page => @lessons.current_page )+"#tabs-1", :class => "tab-markers" %>
+			</li>
+			<li>
+				<%= link_to "Exercises", textbook_exercises_path(@textbook, :subject_id => @subjectId )+"#tabs-2", :class => "tab-markers" %>
+			</li>
+		</ul>
+
+		<div id="filterpane">
+			<%= image_tag(@textbook.frontcover_url(:thumb)) %>
+			<div id="filters">
+				<h1>Filters:</h1>
+				<%= form_for :filters, :url => { :action => 'index' }, :html => { :method => 'get' } do |f| %>
+				<%= f.hidden_field :subject_id, :value => @subjectId %>
+				<%= f.label :page, "Page(s)" %>
+				<%= f.text_field :pagefilter, :size => 10, :value => @filterstring %>
+				<%= f.submit "Apply", :class => "button"%>
+				<%= f.submit "Reset", :commit => "Reset", :class => "button" %>
+				<br class="clearfloat"/>
+			</div>
+			<% end %>
+		</div>
+		<%= render 'lesson_index', :lessons => @lessons, :subjectId => @subjectId %>
+			
+		<br class="clearfloat"/>
+	</div>
+
+	<br class="clearfloat"/>
+
+</article>

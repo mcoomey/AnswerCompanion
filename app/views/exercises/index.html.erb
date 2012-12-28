@@ -1,0 +1,44 @@
+<article>
+	<div id="buttonarea">
+		<%= image_tag(@textbook.frontcover_url(:tab)) %>
+	</div>
+	<div id="ac-tabs">
+		<ul class="ac-tabs-nav">
+			<li>
+				<%= link_to "Lessons", textbook_lessons_path(@textbook, :subject_id => params[:subject_id])+"#tabs-1", :class => "tab-markers" %>
+			</li>
+			<li>
+				<%= link_to "Exercises", textbook_exercises_path(@textbook, :subject_id => params[:subject_id])+"#tabs-2", :class => "tab-markers" %>
+			</li>
+		</ul>
+
+<h1>Listing exercises</h1>
+
+<table>
+  <tr>
+    <th>Number</th>
+    <th>Page</th>
+    <th>Section title</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @exercises.each do |exercise| %>
+  <tr>
+    <td><%= exercise.number %></td>
+    <td><%= exercise.page %></td>
+    <td><%= exercise.section_title_id %></td>
+    <td><%= link_to 'Show', exercise %></td>
+    <td><%= link_to 'Edit', edit_exercise_path(exercise) %></td>
+    <td><%= link_to 'Destroy', exercise, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Exercise', new_exercise_path %>
+	<br class="clearfloat"/>
+</div>
+</article>

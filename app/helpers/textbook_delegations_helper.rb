@@ -1,0 +1,2 @@
+module TextbookDelegationsHelper
+end

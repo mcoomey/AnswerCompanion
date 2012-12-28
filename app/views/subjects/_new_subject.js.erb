@@ -1,0 +1,15 @@
+<div id="ujsform">
+<%= form_for [@subjectable, @subject], remote:true do |f| %>
+	<%= f.label :subject %>
+	<%= f.text_field :name, :size => "15" %>
+	
+	<%= f.label :category %>
+	<%= f.text_field :category_name, :size => "15", data: {autocomplete_source: categories_path } %>
+	    
+	<%= f.label :subcategory %>
+	<%= f.text_field :subcategory_name, :size => "15", data: {autocomplete_source: category_subcategories_path(0)+"?category_name=#{@categoryname}"}  %>
+	
+	<%= f.submit "Create" %>
+	<%= f.submit "Cancel", :onclick => "window.location.reload()" %>
+<% end %>
+</div>

@@ -1,0 +1,58 @@
+.frontcover {
+	position:relative;
+	height:200px;
+	width:155px;
+	float:left;
+}
+
+.frontcover .text {
+	text-align:center;
+	font-size:1.2em;
+	margin-top:10px;
+	color:$main-green;
+	height:40px;
+}
+
+.frontcover img {
+	margin-top:10px;
+	background-color:inherit;
+	border: 2px solid white;
+	z-index:-1;
+}
+
+.frontcover img:hover {
+	background-color:white;
+	border: 2px solid red;
+}
+
+.frontcover a:hover {
+	background-color:inherit;
+}
+
+.frontcoverdelete a, .frontcoverdelete a:visited, .frontcoverdelete a:hover {
+	cursor:pointer;
+	color:red;
+	text-decoration:none;
+	background-color:white;
+	position:absolute;
+	left:120px;
+	top:55px;
+	font-size:2em;
+	font-weight:bold;
+	border:1px solid $main-green;
+}
+.frontcoverdelete .buttonTo {
+	cursor:pointer;
+	position:absolute;
+	left:10px;
+	top:15px;
+	color:$main-green;
+	background-color:white;
+	font-weight:bold;
+	font-size:1.5em;
+	border:1px solid $main-green;
+}
+.frontcoverdelete .buttonTo:hover {
+	color:red;
+	border:1px solid red;
+}

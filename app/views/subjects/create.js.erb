@@ -1,0 +1,14 @@
+<% if @subject.errors.any? %>
+	$("#messages .alert").hide();
+	$("#messages .ujs_alert").html("ERROR! <%= j @subject.errors.full_messages.first %>" ).show();
+<% else %>	
+	$("#messages .ujs_alert").hide();
+	$("#messages .alert").show();
+	$("#messages .notice").show();
+	
+	$("#ujsform").remove();
+	$("#buttonarea").show();
+	$("#ac-tabs .ac-tabs-nav li:last").after('<%= j render(:partial => "subject_list", :locals => {:sbj => @subject, :i => @subjectcount }) %>')
+	$("#ac-tabs .ac-tabs-nav li:last a.tab-markers").trigger('click');
+	window.location = "<%= subject_textbook_delegations_path(@subject)+'#tabs-'+(@subjectcount+1).to_s %>";
+<% end %>

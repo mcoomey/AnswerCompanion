@@ -1,0 +1,21 @@
+<article> 
+	<div id="buttonarea">
+<span class="title"></span>
+		<div id = "button01">
+		<% if instructor_signed_in? %>
+			<%=link_to image_tag("AddSubject.png",  :mouseover => "AddSubjectHover.png",:class => "button", :alt => "Add Subject" ), new_instructor_subject_path(current_instructor, :currentSubject => @subjectId )+"#tabs-#{session[:selectedTab]}", remote: true  %>
+		<% elsif student_signed_in? %>
+			<%=link_to image_tag("AddSubject.png",  :mouseover => "AddSubjectHover.png",:class => "button", :alt => "Add Subject" ),  new_student_subject_path(current_student, :currentSubject => @subjectId )+"#tabs-#{session[:selectedTab]}", remote: true %>
+		<% end %>
+		</div>
+
+		<div id = "button02">
+		<% if @subjectcount > 0 %>
+			<%=link_to image_tag("DeleteSubject.png",  :mouseover => "DeleteSubjectHover.png",:class => "button", :alt => "Delete Subject" ), {:action => 'delete', :id => @subjects[0].id.to_s}, :confirm => 'Delete - Are you sure?'%>
+		<% end %>
+		</div>	
+	</div>
+<div id="ac-tabs">
+<%= render "shared/subjecttabs" %>
+</div>
+</article>

@@ -1,0 +1,34 @@
+<article>
+	<div id="buttonarea">
+		<span class="title"><%= @subjectname %></span>
+		<%=link_to image_tag("BackToLessons.png",  :mouseover => "BackToLessonsHover.png", :class => "button", :alt => "Lessons Page" ),  textbook_lessons_path(@textbook, :subject_id => @subjectId) + "#tabs-" + session[:selectedTab].to_s %>
+		<%=link_to image_tag("AddVideo.png",  :mouseover => "AddVideoHover.png",:class => "button", :alt => "New lesson"),  new_lesson_video_path(params[:lesson_id], :subject_id => @subjectId), id:"add_video", remote: true %>
+	</div>
+	<div id="ac-tabs">
+		<div class="lesson-banner">
+			Lesson: <%= @lesson.title %>
+		</div>
+
+		<div id="filterpane">
+			<%= image_tag(@textbook.frontcover_url(:thumb)) %>
+			<div id="filters">
+				<h1>Filters:</h1>
+				<%= form_for :filters, :url => { :action => 'index' }, :html => { :method => 'get' } do |f| %>
+				<%= f.hidden_field :subject_id, :value => @subjectId %>
+				<%= f.label :instructor, "Instructor" %>
+				<%= f.text_field :instructor, :size => 10, :value => @filterstring %>
+				<%= f.submit "Apply", :class => "button"%>
+				<%= f.submit "Reset", :commit => "Reset", :class => "button" %>
+				<br class="clearfloat"/>
+			</div>
+			<% end %>
+		</div>
+		
+		<%= render 'video_index', :videos => @videos, :subjectId => @subjectId %>
+					
+		<br class="clearfloat"/>
+	</div>
+
+	<br class="clearfloat"/>
+
+</article>

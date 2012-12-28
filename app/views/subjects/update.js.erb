@@ -1,0 +1,29 @@
+<% if @subject.errors.any? %>
+	$("#messages .alert").hide();
+	$("#messages .ujs_alert").html("ERROR! <%= j @subject.errors.full_messages.first %>" ).show();
+<% else %>	
+	$("#messages .ujs_alert").hide();
+	$("#messages .alert").show();
+	$("#messages .notice").show();
+	
+	<% if params[:commit]  != "Cancel" %>
+		$("#messages .notice").html("Subject updated successfully. ").show();
+	<% end %>
+	
+	// remove the edit subject form
+	$("#ujsform").remove();
+
+	// update the subject title with the new name
+	$('#buttonarea span.title').text("<%= @subject.name %>")
+
+	// redisplay the button area
+	$("#buttonarea").show()
+
+	// figure out which tab is selected
+	var hash = window.location.hash;
+
+	// update the href text for that tab with the new name
+	$("#ac-tabs ul.ac-tabs-nav a.tab-markers[href$=" + hash +"]").text("<%= @subject.name %>");
+	$('#rename_subject').show();
+	
+<% end %>

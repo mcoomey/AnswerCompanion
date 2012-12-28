@@ -1,0 +1,12 @@
+<div id="ujsform">
+<%= form_for [@lesson, @video] do |f| %>
+	
+	<%= f.hidden_field :subject_id, :value => @subjectId %>
+	
+	<%= f.label :videofile %>
+	<%= f.file_field :videofile %>
+	
+	<%= f.submit "Create" %>
+	<%= f.submit "Cancel", :onclick => "window.location.reload()" %>
+<% end %>
+</div>

@@ -1,0 +1,11 @@
+The following video has been submitted for conversion.<br />
+You will be informed when it is ready for viewing.
+<p>Text: <%= @video.textbook.title %> <br />
+<% if @video.lesson %>
+Page: <%= @video.lesson.page %> <br />
+Lesson: <%= @video.lesson.title %>
+<% elsif @video.exercise %>
+Page: <%= @video.exercise.page %> <br />
+Exercise: <%= @video.exercise.number %>
+<% end %>
+</p>
