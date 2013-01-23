@@ -53,7 +53,7 @@ class VideosController < ApplicationController
       
     if @video.save
       # UserMailer.conversion_submitted(current_instructor, @video).deliver
-      @video.delay.my_convert_to_html5
+      # @video.delay.my_convert_to_html5
       # UserMailer.conversion_complete(current_instructor, @video).deliver
       redirect_to lesson_videos_path(@lesson, :subject_id => @subjectId)
     else

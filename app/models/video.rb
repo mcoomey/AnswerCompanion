@@ -20,6 +20,15 @@ class Video < ActiveRecord::Base
     end
   end
   
+  def ac_convert_to(fmt)
+    fpath = Rails.root.to_s + "/public" + self.videofile_url
+    f_ext = fpath[/(\.[^.]+$)/][1..-1]
+    if f_ext.casecmp(fmt) != 0
+      videobj = Voyeur::Media.new( filename: "#{fpath}")
+      exitstatus = videobj.convert( to: fmt.to_sym)
+    end
+  end
+  
   def my_convert_to_html5
     formats = ["mp4", "ogv", "webm"]
     fpath = Rails.root.to_s + "/public" + self.videofile_url
@@ -36,7 +45,6 @@ class Video < ActiveRecord::Base
           print "#{'%.2f' % percentage} % complete"
           self.progress = percentage
         end
-        puts "************ Exit Status = #{exitstatus} ****************"
       end
     end
     puts "*************************** done with Voyeur *************************************"

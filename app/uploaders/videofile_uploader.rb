@@ -2,6 +2,8 @@
 
 class VideofileUploader < CarrierWave::Uploader::Base
 
+    include CarrierWave::VideoConverter
+
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
@@ -39,14 +41,29 @@ class VideofileUploader < CarrierWave::Uploader::Base
   # version :thumb do
   #   process :scale => [50, 50]
   # end
-version :mp4 do
-end
 
-version :ogv do
-end
+  # encoding: utf-8
 
-version :webm do
-end
+   version :mp4 do
+      process :encode_video => [:mp4]
+      def full_filename(for_file)
+        "#{File.basename(for_file, File.extname(for_file))}.mp4"
+      end
+    end
+
+    version :webm do
+      process :encode_video => [:webm]
+      def full_filename(for_file)
+        "#{File.basename(for_file, File.extname(for_file))}.webm"
+      end
+    end
+
+    version :ogv do
+      process :encode_video => [:ogv]
+      def full_filename(for_file)
+        "#{File.basename(for_file, File.extname(for_file))}.ogv"
+      end
+    end
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
