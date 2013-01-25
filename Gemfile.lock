@@ -35,6 +35,8 @@ GEM
     carrierwave (0.6.2)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
+    carrierwave_backgrounder (0.1.3)
+      carrierwave (~> 0.5)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -138,6 +140,7 @@ PLATFORMS
 
 DEPENDENCIES
   carrierwave
+  carrierwave_backgrounder
   coffee-rails (~> 3.2.1)
   delayed_job_active_record
   devise

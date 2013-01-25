@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121217134827) do
+ActiveRecord::Schema.define(:version => 20130125131215) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -193,9 +193,9 @@ ActiveRecord::Schema.define(:version => 20121217134827) do
     t.integer  "lesson_id"
     t.integer  "instructor_id"
     t.integer  "textbook_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.float    "progress"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.boolean  "videofile_processing"
   end
 
 end

@@ -1,8 +1,11 @@
 # encoding: utf-8
+# require File.join(Rails.root, "lib", "carrierwave_processing", "delayed_job")
+
 
 class VideofileUploader < CarrierWave::Uploader::Base
 
     include CarrierWave::VideoConverter
+    include ::CarrierWave::Backgrounder::Delay
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick

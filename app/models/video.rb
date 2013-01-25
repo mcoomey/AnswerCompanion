@@ -9,7 +9,7 @@ class Video < ActiveRecord::Base
 	validates_presence_of  :videofile, :message => "-- You must specify a video file."
 	
   mount_uploader :videofile, VideofileUploader
-  
+  process_in_background :videofile
   
   def get_video_duration
     fpath = Rails.root.to_s + "/public" + self.videofile_url
@@ -17,6 +17,8 @@ class Video < ActiveRecord::Base
     r = result.match("Duration: ([0-9]+):([0-9]+):([0-9]+).([0-9]+)")
     if r
       self.length = r[1] + ':' + r[2] + ':' + r[3] + '.' + r[4]
+    else
+      self.length = 'ERROR'
     end
   end
   

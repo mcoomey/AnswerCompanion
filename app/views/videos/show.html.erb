@@ -1,7 +1,7 @@
 <article>
-	<%= video_tag(@video.videofile_url, 
-	  							:size=>'800x480',
-	  							:controls=>true,
-	  							:preload=>"auto"
-	  							)%>
+	<%= video_tag([@video.videofile_url(:mp4), @video.videofile_url(:ogv), @video.videofile_url(:webm)],
+					:size => '800x480', 
+					:controls => true, 
+					:autoplay => true,
+					:autobuffer => true )%>
 </article>

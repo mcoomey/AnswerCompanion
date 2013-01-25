@@ -3,8 +3,6 @@
 	  <tr>
 	    <th>Length</th>
 	    <th>Instructor</th>
-	    <th>Difficulty</th>
-	    <th>Views</th>
 		<th>Play/Purchase</th>
 		<% if current_instructor %>
 			<th class="replace"></th>
@@ -16,9 +14,11 @@
 	  <tr>
 	    <td><%= video.length %></td>
 	    <td><%= video.instructor.screenname %></td>
-	    <td><%= video.difficulty %></td>
-	    <td><%= video.numpurchases %></td>
-		<td><%= link_to 'Play', lesson_video_path(@lesson, video, :subject_id => subjectId) %></td>
+		<% if video.videofile_processing %>
+			<td>Processing</td>
+		<% else %>
+			<td><%= link_to 'Play', lesson_video_path(@lesson, video, :subject_id => subjectId) %></td>
+		<% end %>
 		<% if current_instructor %>
 			<% if current_instructor.id == video.instructor_id %>
 				<td><%=link_to 'Replace',  "#" %></td>
