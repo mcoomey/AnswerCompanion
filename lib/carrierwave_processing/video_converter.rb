@@ -19,8 +19,7 @@ module CarrierWave
       File.rename current_path, tmp_path
 
       # encode
-      system("echo Processing #{current_path} >> logfile.log "
-      Voyeur::Media.new( filename: tmp_path ).convert( to: format.to_sym, output_filename: current_path )
+      exitstatus = Voyeur::Media.new( filename: tmp_path ).convert( to: format.to_sym, output_filename: current_path )
 
       # because encoding video will change file extension, change it 
       # to old one

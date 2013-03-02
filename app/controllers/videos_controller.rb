@@ -23,7 +23,10 @@ class VideosController < ApplicationController
   # GET /videos/1
   # GET /videos/1.json
   def show
+    get_subjectId
+    @subjectname = Subject.find(@subjectId).name
     @video = Video.find(params[:id])
+    @lesson = Lesson.find(params[:lesson_id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -35,7 +38,10 @@ class VideosController < ApplicationController
   # GET /videos/new.json
   def new
     get_subjectId
+    @subjectname = Subject.find(@subjectId).name
     @lesson = Lesson.find(params[:lesson_id])
+    @textbook = @lesson.textbook
+    @videos = @lesson.videos
     @video = Video.new
  end
 
@@ -49,18 +55,8 @@ class VideosController < ApplicationController
     @video = @videos.build(:videofile => params[:video][:videofile])
     @video.instructor_id = current_instructor.id if current_instructor
     @video.textbook_id = @textbook.id
-    @video.get_video_duration()
-      
-    if @video.save
-      # UserMailer.conversion_submitted(current_instructor, @video).deliver
-      # @video.delay.my_convert_to_html5
-      # UserMailer.conversion_complete(current_instructor, @video).deliver
-      redirect_to lesson_videos_path(@lesson, :subject_id => @subjectId)
-    else
-      flash[:alert] = "Error: " + @video.errors.full_messages.first
-      redirect_to lesson_videos_path(@lesson, :subject_id => @subjectId)
-    end
-  end
+    @video.save
+ end
 
   # GET /videos/1/edit
   def edit

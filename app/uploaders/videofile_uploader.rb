@@ -4,9 +4,6 @@
 
 class VideofileUploader < CarrierWave::Uploader::Base
 
-    include CarrierWave::VideoConverter
-    include ::CarrierWave::Backgrounder::Delay
-
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
@@ -47,27 +44,27 @@ class VideofileUploader < CarrierWave::Uploader::Base
 
   # encoding: utf-8
 
-   version :mp4 do
-      process :encode_video => [:mp4]
-      def full_filename(for_file)
-        "#{File.basename(for_file, File.extname(for_file))}.mp4"
-      end
-    end
-
-    version :webm do
-      process :encode_video => [:webm]
-      def full_filename(for_file)
-        "#{File.basename(for_file, File.extname(for_file))}.webm"
-      end
-    end
-
-    version :ogv do
-      process :encode_video => [:ogv]
-      def full_filename(for_file)
-        "#{File.basename(for_file, File.extname(for_file))}.ogv"
-      end
-    end
-
+   # version :mp4 do
+   #     # process :encode_video => [:mp4, "*** passed in to encode_video ***"]
+   #     def full_filename(for_file)
+   #       "#{File.basename(for_file, File.extname(for_file))}.mp4"
+   #     end
+   #   end
+   #  
+   #   version :webm do
+   #     # process :encode_video => [:webm, "*** passed in to encode_video ***"]
+   #     def full_filename(for_file)
+   #       "#{File.basename(for_file, File.extname(for_file))}.webm"
+   #     end
+   #   end
+   #  
+   #   version :ogv do
+   #     # process :encode_video => [:ogv, "*** passed in to encode_video ***"]
+   #     def full_filename(for_file)
+   #       "#{File.basename(for_file, File.extname(for_file))}.ogv"
+   #     end
+   #   end
+ 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   # def extension_white_list

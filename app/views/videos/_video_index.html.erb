@@ -1,5 +1,5 @@
 <div id="mainpane">
-	<table>
+	<table id="videotable">
 	  <tr>
 	    <th>Length</th>
 	    <th>Instructor</th>
@@ -9,27 +9,11 @@
 			<th class="destroy"></th>
 		<% end %>
 	  </tr>
-
+	
 	<% videos.each do |video| %>
-	  <tr>
-	    <td><%= video.length %></td>
-	    <td><%= video.instructor.screenname %></td>
-		<% if video.videofile_processing %>
-			<td>Processing</td>
-		<% else %>
-			<td><%= link_to 'Play', lesson_video_path(@lesson, video, :subject_id => subjectId) %></td>
-		<% end %>
-		<% if current_instructor %>
-			<% if current_instructor.id == video.instructor_id %>
-				<td><%=link_to 'Replace',  "#" %></td>
-			    <td><%= link_to 'Destroy', lesson_video_path(@lesson, video, :subject_id => subjectId), confirm:'Delete Video - Are you sure?', method: :delete %></td>
-			<% else %>
-				<td></td>
-				<td></td>
-			<% end %>	
-		<% end %>
-	  </tr>
+		<%= render 'video', :video => video, :lesson => @lesson, :subjectId => @subjectId %>
 	<% end %>
+	
 	</table>
 	<%= params.inspect %>
 </div>

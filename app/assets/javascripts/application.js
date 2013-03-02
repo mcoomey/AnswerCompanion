@@ -13,8 +13,10 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require jquery-fileupload/basic
+//= require jquery-fileupload/vendor/tmpl
 //= require_tree .
-
+	
 jQuery(function() {
 
 	// check for a hash in the URL to load proper tab on a page reload or redirect
@@ -47,7 +49,7 @@ jQuery(function() {
 		var i = 0;
 		
 		// set up a click function so the current page tab is updated immediately before the new one loads
-		$('#ac-tabs ul.ac-tabs-nav a').live( "click", function () {
+		$('#ac-tabs ul.ac-tabs-nav a').on( "click", function () {
 			// change background color for all tabs and their anchors to grey 
 			var navTabs = $('#ac-tabs ul.ac-tabs-nav a');
 			navTabs.each(function (){
@@ -60,4 +62,5 @@ jQuery(function() {
 			$(this).css('background-color', 'inherit');
 		});
 	}
+	
 });

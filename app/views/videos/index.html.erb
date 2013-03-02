@@ -1,9 +1,10 @@
 <article>
 	<div id="buttonarea">
 		<span class="title"><%= @subjectname %></span>
-		<%=link_to image_tag("BackToLessons.png",  :mouseover => "BackToLessonsHover.png", :class => "button", :alt => "Lessons Page" ),  textbook_lessons_path(@textbook, :subject_id => @subjectId) + "#tabs-" + session[:selectedTab].to_s %>
-		<%=link_to image_tag("AddVideo.png",  :mouseover => "AddVideoHover.png",:class => "button", :alt => "New lesson"),  new_lesson_video_path(params[:lesson_id], :subject_id => @subjectId), id:"add_video", remote: true %>
+		<%=link_to image_tag("BackToLessons.png",  :mouseover => "BackToLessonsHover.png", :class => "button", :alt => "Lessons Page" ),  
+		                      textbook_lessons_path(@textbook, :subject_id => @subjectId) + "#tabs-" + session[:selectedTab].to_s %>
 	</div>
+	
 	<div id="ac-tabs">
 		<div class="lesson-banner">
 			Lesson: <%= @lesson.title %>
@@ -24,11 +25,25 @@
 			<% end %>
 		</div>
 		
-		<%= render 'video_index', :videos => @videos, :subjectId => @subjectId %>
-					
+		<%= render 'video_index', :videos => @videos, :lesson => @lesson, :subjectId => @subjectId %>
+
+
 		<br class="clearfloat"/>
 	</div>
 
 	<br class="clearfloat"/>
+	
+	<%= form_for [@lesson, Video.new] do |f| %>
+		<%= f.label :videofile, "Upload new video:" %>
+		<%= f.file_field :videofile %>
+	<% end %>
+	
+	Progress Bar:
+	<script id="template-upload" type="text/x-tmpl">
+	<div class="upload">
+	  {%=o.name%}
+	  <div class="progress"><div class="bar" style="width: 0%"></div></div>
+	</div>
+	</script>
 
 </article>
