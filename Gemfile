@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.12'
 gem 'mysql2'
-gem 'devise'
+gem 'devise', '2.0.4'
 gem 'isbndb'
 gem 'will_paginate', '> 3.0'
 gem 'voyeur'

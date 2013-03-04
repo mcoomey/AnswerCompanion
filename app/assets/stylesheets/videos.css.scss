@@ -1,16 +1,28 @@
+#new_video {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+#uploadfilename {
+	float:left;
+	height: 30px;
+  margin-top: 6px;
+  margin-left: 10px;
+	font-size:15px;
+}
 .upload {
-  border-top: solid 1px #CCC;
-  width: 400px;
-  padding-top: 10px;
-  margin-top: 10px;
+	float: left;
+  width: 450px;
+  height: 30px;
+  padding-top: 0px;
+  margin-top: 0px;
 
   .progress {
-    margin-top: 8px;
+    margin-top: 4px;
     border: solid 1px #555;
     border-radius: 3px;
     -moz-border-radius: 3px;
     .bar {
-      height: 10px;
+      height: 20px;
       background: #3EC144;
     }
   }

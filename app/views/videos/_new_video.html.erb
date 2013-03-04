@@ -1,12 +1,13 @@
-<div id="ujsform">
-<%= form_for [@lesson, @video], :remote => true do |f| %>
-	
+<%= form_for [@lesson, Video.new] do |f| %>
 	<%= f.hidden_field :subject_id, :value => @subjectId %>
-	
-	<%= f.label "Upload New Video" %>
 	<%= f.file_field :videofile, :id => "video_filename" %>
-	<%= f.submit %>
-	
-	<%= link_to "Cancel", lesson_videos_path(@lesson, :subject_id => @subjectId) %>
 <% end %>
-</div>
+
+<script id="template-upload" type="text/x-tmpl">
+	<div class="upload">
+	  <div id="uploadfilename">
+		{%=o.name%}
+      </div>
+ 	    <div class="progress"><div class="bar" style="width: 0%"></div></div>
+	</div>
+</script>
