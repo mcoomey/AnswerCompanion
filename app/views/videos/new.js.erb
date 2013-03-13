@@ -1,6 +1,9 @@
 $('#add_video').hide();
 $('#buttonarea').append("<%= j render 'new_video' %>");
-$('#messages').empty();
+$('#messages .notice').html("");
+$('#messages .ujs_notice').html("");
+$('#messages .alert').html("");
+$('#messages .ujs_alert').html("");
 
 $('#new_video').fileupload({
     dataType: "script",
@@ -13,8 +16,8 @@ $('#new_video').fileupload({
         $('#new_video').append(data.context);
         return data.submit();
       } else {
-				$('#messages .alert').html("Error: Unrecognized video format.");
-        return alert("" + file.name + " is not a wmv, mp4, webm, ogv, mov or flv file");
+				$('#messages .ujs_alert').html("Error: Unrecognized video format.");
+        return;
       }
     },
     progress: function(e, data) {
@@ -27,11 +30,14 @@ $('#new_video').fileupload({
     start: function(e) {
 	    return $('#buttonarea form input[type=file]').remove();
 		},
+    fail: function(e, data) {
+	    return alert("The upload has failed.  Please check your file and try again.");
+		},
 	  done: function(e, data) {
       $('.upload').hide();
-			$('#messages .notice').html("Video upload has been submitted for processing.");
-			$('#add_video').show();
 			$('#new_video').remove();
+			$('#messages .ujs_notice').html("Video upload has been submitted for processing.");
+			$('#add_video').show();
     }
 
   });

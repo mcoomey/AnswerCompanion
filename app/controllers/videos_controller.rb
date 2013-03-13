@@ -55,7 +55,14 @@ class VideosController < ApplicationController
     @video = @videos.build(:videofile => params[:video][:videofile])
     @video.instructor_id = current_instructor.id if current_instructor
     @video.textbook_id = @textbook.id
-    @video.save
+   	if params[:commit]  != "Cancel"
+      if !@video.save
+        flash[:alert] = "Error: " + @video.errors.full_messages.first
+        redirect_to lesson_videos_path(@lesson, :subject_id => @subjectId)
+      end
+    else  
+      redirect_to lesson_videos_path(@lesson, :subject_id => @subjectId)
+    end
  end
 
   # GET /videos/1/edit
@@ -85,15 +92,8 @@ class VideosController < ApplicationController
     @lesson = Lesson.find(params[:lesson_id])
     @video = Video.find(params[:id])
     @video.destroy
-		flash[:notice] = "Video has been successfully deleted."
+		flash[:notice] = "Video has been deleted."
     redirect_to lesson_videos_path(@lesson, :subject_id => params[:subject_id])
   end
-  
-  def progress
-    params.inspect
-    @video = Video.find(params[:video_id])
-    respond_to do |format|
-      format.json { render json:@video.progress}
-    end
-  end
+ 
 end

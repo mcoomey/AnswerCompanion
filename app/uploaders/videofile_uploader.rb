@@ -1,6 +1,4 @@
 # encoding: utf-8
-# require File.join(Rails.root, "lib", "carrierwave_processing", "delayed_job")
-
 
 class VideofileUploader < CarrierWave::Uploader::Base
 
@@ -37,6 +35,30 @@ class VideofileUploader < CarrierWave::Uploader::Base
   #   # do something
   # end
 
+  def encode_video (format='mp4', *args)
+    # move upload to local cache
+    cache_stored_file! if !cached?
+
+    directory = File.dirname( current_path )
+
+    # move upload to tmp file - encoding result will be saved to
+    # original file name
+    tmp_path   = File.join( directory, "tmpfile" )
+    File.rename current_path, tmp_path
+
+    # encode
+    exitstatus = Voyeur::Media.new( filename: tmp_path ).convert( to: format.to_sym, output_filename: current_path )
+
+    # because encoding video will change file extension, change it 
+    # to old one
+    fixed_name = File.basename(current_path, '.*') + "." + format.to_s
+    File.rename File.join( directory, fixed_name ), current_path
+
+    # delete tmp file
+    File.delete tmp_path
+  end
+  
+  
   # Create different versions of your uploaded files:
   # version :thumb do
   #   process :scale => [50, 50]
@@ -45,26 +67,26 @@ class VideofileUploader < CarrierWave::Uploader::Base
   # encoding: utf-8
 
    # version :mp4 do
-   #     # process :encode_video => [:mp4, "*** passed in to encode_video ***"]
+   #     process :encode_video => [:mp4, "*** passed in to encode_video ***"]
    #     def full_filename(for_file)
    #       "#{File.basename(for_file, File.extname(for_file))}.mp4"
    #     end
    #   end
    #  
    #   version :webm do
-   #     # process :encode_video => [:webm, "*** passed in to encode_video ***"]
+   #     process :encode_video => [:webm, "*** passed in to encode_video ***"]
    #     def full_filename(for_file)
    #       "#{File.basename(for_file, File.extname(for_file))}.webm"
    #     end
    #   end
    #  
    #   version :ogv do
-   #     # process :encode_video => [:ogv, "*** passed in to encode_video ***"]
+   #     process :encode_video => [:ogv, "*** passed in to encode_video ***"]
    #     def full_filename(for_file)
    #       "#{File.basename(for_file, File.extname(for_file))}.ogv"
    #     end
    #   end
- 
+    
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   # def extension_white_list

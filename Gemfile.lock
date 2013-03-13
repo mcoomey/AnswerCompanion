@@ -30,6 +30,7 @@ GEM
       multi_json (~> 1.0)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
+    bcrypt-ruby (3.0.1-x86-mingw32)
     builder (3.0.4)
     carrierwave (0.8.0)
       activemodel (>= 3.2.0)
@@ -41,6 +42,12 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.5.0)
+    daemons (1.1.9)
+    delayed_job (3.0.5)
+      activesupport (~> 3.0)
+    delayed_job_active_record (0.4.3)
+      activerecord (>= 2.1.0, < 4)
+      delayed_job (~> 3.0)
     devise (2.0.4)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
@@ -135,6 +142,8 @@ PLATFORMS
 DEPENDENCIES
   carrierwave
   coffee-rails (~> 3.2.1)
+  daemons
+  delayed_job_active_record
   devise (= 2.0.4)
   isbndb
   jquery-fileupload-rails

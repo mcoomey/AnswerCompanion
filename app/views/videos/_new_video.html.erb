@@ -1,6 +1,7 @@
 <%= form_for [@lesson, Video.new] do |f| %>
 	<%= f.hidden_field :subject_id, :value => @subjectId %>
 	<%= f.file_field :videofile, :id => "video_filename" %>
+	<%= f.submit "Cancel" %>
 <% end %>
 
 <script id="template-upload" type="text/x-tmpl">

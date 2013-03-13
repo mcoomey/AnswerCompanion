@@ -7,7 +7,7 @@
 		<div class="lesson-banner">
 			Lesson: <%= @lesson.title %>
 		</div>
-		<%= video_tag([@video.videofile_url(:mp4), @video.videofile_url(:ogv), @video.videofile_url(:webm)],
+		<%= video_tag([@video.processed_video_url(:mp4), @video.processed_video_url(:ogv), @video.processed_video_url(:webm)],
 						:size => '800x480', 
 						:controls => true, 
 						:autoplay => true,
