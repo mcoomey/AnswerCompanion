@@ -32,26 +32,21 @@ class Video < ActiveRecord::Base
 
   def do_video_conversion
     @this_video = Video.find(id)
-    @this_video.delay.my_convert_to_html5(id, videofile_url)
+    @this_video.delay.my_convert_to_html5(id, videofile_url) if !video_processed?
   end
   
   def my_convert_to_html5(video_id, original_video)
     formats = ["mp4", "ogv", "webm"]
     fpath = Rails.root.to_s + "/public" + original_video
-    f_ext = fpath[/(\.[^.]+$)/][1..-1]
+    f_ext = File.extname(fpath) # fpath[/(\.[^.]+$)/][1..-1]
     videobj = Voyeur::Media.new( filename: "#{fpath}")
     formats.each do |fmt|
       if f_ext.casecmp(fmt) != 0 
-        exitstatus = videobj.convert( to: fmt.to_sym) do |time|
-          media_time = Voyeur::MediaTime.new(time).to_seconds
-          duration = Voyeur::MediaTime.new(videobj.raw_duration).to_seconds
-          percentage = (media_time.to_f/duration.to_f) * 100
-          puts "#{'%.2f' % percentage} % complete"
-          print "#{'%.2f' % percentage} % complete"
-        end # convert
+        exitstatus = videobj.convert( to: fmt.to_sym)[:status]
+        puts "****ffmpeg exitstatus = #{exitstatus}"
       end  # if f_ext
     end  # formats
-    update_attribute :videofile_processing, 1
+    update_attribute :videofile_processed, 1
     puts "*************************** done with Voyeur *************************************"
    end
    
@@ -59,7 +54,7 @@ class Video < ActiveRecord::Base
      videofile_url.chomp(File.extname(videofile_url)) + "." + format.to_s
    end
    
-   def video_not_processed?
-     videofile_processing != 1
+   def video_processed?
+     videofile_processed && videofile_processed > 0
    end
  end

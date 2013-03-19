@@ -3,8 +3,10 @@
 		<span class="title"><%= @subjectname %></span>
 		<%=link_to image_tag("BackToLessons.png",  :mouseover => "BackToLessonsHover.png", :class => "button", :alt => "Lessons Page" ),  
 		                      textbook_lessons_path(@textbook, :subject_id => @subjectId) + "#tabs-" + session[:selectedTab].to_s %>
-							<%=link_to image_tag("AddVideo.png",  :mouseover => "AddVideoHover.png",:class => "button", :alt => "New lesson"),  
-							  new_lesson_video_path(params[:lesson_id], :subject_id => @subjectId), id:"add_video", remote: true %>
+		<% if current_instructor %>
+			<%=link_to image_tag("AddVideo.png",  :mouseover => "AddVideoHover.png",:class => "button", :alt => "New lesson"),  
+								  new_lesson_video_path(params[:lesson_id], :subject_id => @subjectId), id:"add_video", remote: true %>
+		<% end %>
 	</div>
 	
 	<div id="ac-tabs">

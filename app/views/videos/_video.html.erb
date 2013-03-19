@@ -1,8 +1,10 @@
 <tr>
     <td><%= video.length %></td>
     <td><%= video.instructor.screenname %></td>
-	<% if video.videofile_processing %>
+	<% if !video.videofile_processed || video.videofile_processed == 0 %>
 		<td>Processing</td>
+	<% elsif video.videofile_processed < 0 %>
+		<td>Error</td>
 	<% else %>
 		<td><%= link_to 'Play', lesson_video_path(lesson, video, :subject_id => subjectId) %></td>
 	<% end %>

@@ -193,9 +193,9 @@ ActiveRecord::Schema.define(:version => 20130125131215) do
     t.integer  "lesson_id"
     t.integer  "instructor_id"
     t.integer  "textbook_id"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
-    t.boolean  "videofile_processing"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.integer  "videofile_processed"
   end
 
 end

@@ -7,12 +7,14 @@ jQuery ->
 	$("#textbook_subcategory_name").autocomplete
 	  minLength: 0
 	  delay: 0
-	  source: $("#textbook_subcategory_name").data("autocomplete-source")
+	  source: $("#textbook_subcategory_name").data("autocomplete-source"),
+    messages: {noResults: '', results: ''}
 
 	$("#textbook_category_name").autocomplete
 	  minLength: 0
 	  delay: 0
-	  source: $("#textbook_category_name").data("autocomplete-source")
+	  source: $("#textbook_category_name").data("autocomplete-source"),
+    messages: {noResults: '', results: ''}
 	  select: (event, ui) ->
 	    subcatSub = $("#textbook_subcategory_name").data("autocomplete-source").replace(/\=.*/, "=" + ui.item.value)
 	    $("#textbook_subcategory_name").autocomplete "option", "source", subcatSub
