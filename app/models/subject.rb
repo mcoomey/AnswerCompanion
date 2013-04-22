@@ -2,7 +2,7 @@ class Subject < ActiveRecord::Base
 	
 	belongs_to :category
 	belongs_to :subcategory
-	belongs_to :subjectable, :polymorphic => true
+	belongs_to :student
 	has_many :textbook_delegations, :dependent => :destroy
 	has_many :textbooks, :through => :textbook_delegations
 	validates :name, :uniqueness => { :scope => [:subjectable_id, :subjectable_type], :message => " already exists."}

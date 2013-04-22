@@ -1,6 +1,7 @@
 class Instructor < ActiveRecord::Base
 	
-	has_many :subjects, :as => :subjectable
+	belongs_to :school
+	has_many :courses
 	has_many :videos
 	has_many :lessons
 	has_many :exercises
@@ -13,7 +14,7 @@ class Instructor < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me,
-  								:firstname, :lastname, :screenname, :emailpref, :paypalaccount,
-  								:role, :privilege, :grade, :school, :accountbalance, :violationcount
- 
+                  :firstname, :lastname, :screenname, :emailpref, :paypalaccount,
+                  :role, :privilege, :grade, :school, :accountbalance, :violationcount
+   
 end

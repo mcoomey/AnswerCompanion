@@ -1,6 +1,6 @@
 class Student < ActiveRecord::Base
 	
-	has_many :subjects, :as => :subjectable
+	has_many :subjects
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :timeoutable and :omniauthable

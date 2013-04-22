@@ -1,0 +1,16 @@
+<tr>
+  <td><%= link_to local_course.name, instructor_course_path(local_course.instructor.id, local_course.id) %></td>
+  <td><%= local_course.section %></td>
+	<td><%= local_course.term %> </td>
+	<td>
+		<%= form_for local_course do |f| %>
+			<%= f.check_box :archived %>
+			<%= f.submit :update %>
+		<% end %>
+	</td>
+	<td>
+		<%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png",:class => "button", :alt => "Delete Course"),  
+			        instructor_course_path(current_instructor.id, local_course.id), :confirm => "Delete [#{local_course.name} - Section #{local_course.section}] - Are you sure?", 
+			        :method => :delete, :remote => true %>
+	</td>
+</tr>

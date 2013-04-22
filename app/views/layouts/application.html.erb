@@ -14,7 +14,7 @@
 			<div id="sessioninfo">
 				<% if instructor_signed_in? || student_signed_in? %>
 					<%= link_to image_tag("LogoutLogo.png",  :mouseover => "LogoutLogoHover.png",:class => "button", :alt => "Logout" ), destroy_user_session_path, :method => :delete %> 
-					<%= link_to image_tag("MyAccount.png",  :mouseover => "MyAccountHover.png",:class => "button", :alt => "My Account" ), "#" %> </br>
+					<%= link_to image_tag("Account.png",  :mouseover => "AccountHover.png",:class => "button", :alt => "Account" ), "#" %> </br>
 					<%=current_user.email%></br>
 					Prior login: <%= current_user.last_sign_in_at.localtime.strftime("%b %d, %Y @ %I:%M:%S%P") %></br>
 					Account Balance: <%= number_to_currency(current_user.accountbalance, :unit => "$") %></br>

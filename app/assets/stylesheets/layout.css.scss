@@ -107,3 +107,7 @@ footer {
 	background-color: $medium-grey;
 	text-align:center;
 }
+.clearfloat {
+	clear:both;
+	line-height:0;
+}

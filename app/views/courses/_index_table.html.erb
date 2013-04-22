@@ -1,0 +1,13 @@
+<table class="index">
+  <tr>
+    <th>Name</th>
+    <th>Section</th>
+    <th>Term</th>
+    <th>Archived</th>
+	<th></th>
+  </tr>
+
+<% local_courses.each do |course| %>
+  <%= render 'course_table_row', :local_course => course %>
+<% end %>
+</table>

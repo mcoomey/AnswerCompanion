@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130125131215) do
+ActiveRecord::Schema.define(:version => 20130421160850) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -19,6 +19,18 @@ ActiveRecord::Schema.define(:version => 20130125131215) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  create_table "courses", :force => true do |t|
+    t.string   "name"
+    t.string   "section"
+    t.integer  "instructor_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.string   "term"
+    t.boolean  "archived"
+  end
+
+  add_index "courses", ["instructor_id"], :name => "index_courses_on_instructor_id"
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -94,6 +106,14 @@ ActiveRecord::Schema.define(:version => 20130125131215) do
     t.datetime "updated_at",    :null => false
   end
 
+  create_table "schools", :force => true do |t|
+    t.string   "name"
+    t.string   "town"
+    t.string   "state"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "section_titles", :force => true do |t|
     t.string   "name"
     t.integer  "textbook_id"
@@ -149,12 +169,11 @@ ActiveRecord::Schema.define(:version => 20130125131215) do
 
   create_table "subjects", :force => true do |t|
     t.string   "name"
-    t.integer  "subjectable_id"
-    t.string   "subjectable_type"
+    t.integer  "student_id"
     t.integer  "category_id"
     t.integer  "subcategory_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "textbook_delegations", :force => true do |t|

@@ -8,11 +8,11 @@ class ScreensController < ApplicationController
 			  redirect_to(student_subjects_path(current_student))
 			end
   	elsif current_instructor
-  	  if current_instructor.subjects.count > 0
-			  redirect_to(subject_textbook_delegations_path(current_instructor.subjects.first.id))
-			else
-			  redirect_to(instructor_subjects_path(current_instructor))
-			end
+      if current_instructor.courses.count > 0
+        redirect_to(instructor_course_path(current_instructor.id, current_instructor.courses.first.id))
+      else
+        redirect_to(instructor_courses_path(current_instructor))
+      end
 		end  		
   end
 

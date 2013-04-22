@@ -1,0 +1,21 @@
+<article>
+	<div id="buttonarea">
+		<span class="title">Course Index</span>
+		
+			<%=link_to image_tag("AddCourse.png",  :mouseover => "AddCourseHover.png",:class => "button", :alt => "Add Course"),  
+			                      new_instructor_course_path(current_instructor.id), id: "new_course", remote:true %>
+	</div>
+	<div id="static-tabs">
+		<ul class="static-tabs-nav">
+			<li><a href="#current-courses">Current Courses</a></li>
+			<li><a href="#archived-courses">Archived Courses</a></li>
+		</ul>
+		<div id="current-courses">
+			<%= render 'index_table', :local_courses => @current_courses %>
+		</div>
+		<div id="archived-courses">
+			<%= render 'index_table', :local_courses => @archived_courses %>
+		</div>
+	</div>	
+</article>
+

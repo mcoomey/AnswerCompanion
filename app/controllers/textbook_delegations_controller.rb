@@ -9,9 +9,8 @@ class TextbookDelegationsController < ApplicationController
 	  else
 	    @subjectname = ""
     end
-		subjectableid = @subject.subjectable_id
-		subjectabletype = @subject.subjectable_type
-		@subjects = Subject.where("subjectable_id = ? AND subjectable_type = ?", subjectableid, subjectabletype)
+		@student = Student.find(@subject.student_id)
+		@subjects = @student.subjects
 		@subjectcount = @subjects.count
 		# use the subject IDs to determine the tab# currently selected so any redirect can select the proper tab
 		@subids = @subjects.map{|c| c.id }

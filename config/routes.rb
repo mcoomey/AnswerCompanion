@@ -34,7 +34,7 @@ AnswerCompanion::Application.routes.draw do
   devise_for :students
 
 	resources :instructors do
-		resources :subjects
+		resources :courses
 	end
 	
 	resources :students do
@@ -46,13 +46,12 @@ AnswerCompanion::Application.routes.draw do
 	end
 	
 	resources :videos
-
   resources :section_titles
-
   resources :lessons
-
   resources :exercises
- 
+  resources :schools
+  resources :courses
+  
 	root :to => "screens#index"
 
    # The priority is based upon order of creation:

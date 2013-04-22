@@ -15,10 +15,14 @@
 //= require jquery_ujs
 //= require jquery-fileupload/basic
 //= require jquery-fileupload/vendor/tmpl
+//= require jquery.cookie
 //= require_tree .
 	
 jQuery(function() {
 
+	// set up jquery-ui tabs function on the static-tabs div
+	// $("#static-tabs").tabs();
+	
 	// check for a hash in the URL to load proper tab on a page reload or redirect
 	var hash = window.location.hash;
 	var navTabs = $('#ac-tabs ul.ac-tabs-nav a.tab-markers');
@@ -62,5 +66,8 @@ jQuery(function() {
 			$(this).css('background-color', 'inherit');
 		});
 	}
+
+	// force first tab to be clicked on load
+		// $('#ac-tabs .ac-tabs-nav a:first').trigger('click');
 	
 });
