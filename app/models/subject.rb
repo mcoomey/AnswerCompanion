@@ -3,9 +3,11 @@ class Subject < ActiveRecord::Base
 	belongs_to :category
 	belongs_to :subcategory
 	belongs_to :student
-	has_many :textbook_delegations, :dependent => :destroy
-	has_many :textbooks, :through => :textbook_delegations
-	validates :name, :uniqueness => { :scope => [:subjectable_id, :subjectable_type], :message => " already exists."}
+  has_many :textbook_delegations, :as => :textable
+  has_many :textbooks, :through => :textbook_delegations
+  has_many :enrollments
+  
+	validates :name, :uniqueness => { :scope => :student_id, :message => " already exists."}
 	validates :name, :presence => true
 	
 	accepts_nested_attributes_for :category

@@ -2,7 +2,7 @@ class CoursesController < ApplicationController
   # GET /courses
   # GET /courses.json
   def index
-    @instructor = current_instructor or Instructor.find(params[:instructor_id])
+    @instructor = Instructor.find(params[:instructor_id]) or current_instructor
     @courses = @instructor.courses
     @current_courses = @instructor.courses.where(:archived => false)
     @archived_courses = @instructor.courses.where(:archived => true)
@@ -35,11 +35,6 @@ class CoursesController < ApplicationController
   # GET /courses/new.json
   def new
     @course = Course.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.js # new.js.erb
-    end
   end
 
   # GET /courses/1/edit
@@ -53,21 +48,10 @@ class CoursesController < ApplicationController
     @instructor = current_instructor or Instructor.find(params[:instructor_id])
     @course = @instructor.courses.build(params[:course])
    	if params[:commit]  != "Cancel"
-    	if @course.save
-    		flash[:notice] = "Successfully created course."
-        respond_to do |format|
-          format.html { redirect_to instructor_courses_path(:instructor_id => @course.instructor_id), notice: 'Course was successfully created.' }
-          format.js
-        end
-      else
-        respond_to do |format|
-          format.html { 
-            flash[:alert] = "Error! " + @course.errors.full_messages.first
-            render action: "new"
-          }
-          format.js
-        end
-      end
+    	@course.save
+      render "create"
+    else
+      render "cancel"
     end
   end
 
@@ -75,16 +59,7 @@ class CoursesController < ApplicationController
   # PUT /courses/1.json
   def update
     @course = Course.find(params[:id])
-
-    respond_to do |format|
-      if @course.update_attributes(params[:course])
-        format.html { redirect_to instructor_courses_path(:instructor_id => @course.instructor_id), notice: 'Course was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @course.errors, status: :unprocessable_entity }
-      end
-    end
+    @course.update_attributes!(params[:course])
   end
 
   # DELETE /courses/1
@@ -92,10 +67,5 @@ class CoursesController < ApplicationController
   def destroy
     @course = Course.find(params[:id])
     @course.destroy
-
-    respond_to do |format|
-      format.html { redirect_to instructor_courses_path(:instructor_id => @course.instructor_id) + cookies[:course_index_tab] }
-      format.js
-    end
   end
 end

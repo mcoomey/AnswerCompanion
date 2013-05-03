@@ -16,7 +16,7 @@ jQuery ->
 
 	  # store the hash of the addressed tab in the "course_index_tab" cookie
 	  $hash = $active.attr("href")
-	  $.cookie('course_index_tab', $hash)
+	  $.cookie('index_tab', $hash)
   
 	  # Hide the remaining content
 	  $links.not($active).each ->
@@ -35,9 +35,9 @@ jQuery ->
 	    $active = $(this)
 	    $content = $($(this).attr("href"))
 
-	    # store the hash of the clicked tab in the "course_index_tab" cookie
+	    # store the hash of the clicked tab in the "index_tab" cookie
 	    $hash = $(this).attr("href")
-	    $.cookie('course_index_tab', $hash)
+	    $.cookie('index_tab', $hash)
     
 	    # Make the tab active.
 	    $active.addClass "activeTab"

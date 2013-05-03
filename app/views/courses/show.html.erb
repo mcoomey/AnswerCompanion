@@ -4,28 +4,19 @@
 			<%= f.select(:id, @courses.collect{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
 		<% end %>
 		
-			<%=link_to image_tag("Edit.png",  :mouseover => "EditHover.png",:class => "button", :alt => "Edit Subject"), edit_course_path(@course) %>
+		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
+		           instructor_courses_path(@instructor) %>
+		<%=link_to image_tag("Edit.png",  :mouseover => "EditHover.png",:class => "button", :alt => "Edit Subject"), 
+		           edit_course_path(@course) %>
 	</div>
 	<div id="ac-tabs">
 		<ul class="ac-tabs-nav">
+			<li><%= link_to "Textbooks", "#", :class => "tab-markers" %></li>
+			<li><%= link_to "Handouts", "#", :class => "tab-markers" %></li>
+			<li><%= link_to "Lectures", "#", :class => "tab-markers" %></li>
+			<li><%= link_to "Assignments", "#", :class => "tab-markers" %></li>
+			<li><%= link_to "Assessments", "#", :class => "tab-markers" %></li>
 		</ul>
 		<br class="clearfloat"/>
-		<p>
-		  <b>Name:</b>
-		  <%= @course.name %>
-		</p>
-
-		<p>
-		  <b>Section:</b>
-		  <%= @course.section %>
-		</p>
-
-		<p>
-		  <b>Term:</b>
-		  <%= @course.term %>
-		</p>
-
-		<%= link_to 'Edit', edit_instructor_course_path(current_instructor, @course) %> |
-		<%= link_to 'Back', instructor_courses_path(current_instructor) %>
 	</div>	
 </article>

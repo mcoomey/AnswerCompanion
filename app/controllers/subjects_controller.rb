@@ -1,35 +1,15 @@
 class SubjectsController < ApplicationController
 
-before_filter :findsubjects
-
-  def findsubjects
-  	@subjectable = find_subjectable
-   	if (@subjectable)
-  		@subjects = @subjectable.subjects
-  		@subjectcount = @subjects.count
-  	else 
-  		@subjects = nil
-  		@subjectcount = 0
-  	end
-  end
-  
-  def find_subjectable
-  	params.each do |name, value|
-  		if name =~ /(.+)_id$/
-  			if $1.classify.constantize.exists?(value)
-  				return $1.classify.constantize.find(value)
-  			else
-  				return nil
-  			end
-  		end
-  	end
-  	nil
-  end
-
   def index
-  	if (@subjectcount == 0)
-  		flash[:alert] = "You need to add at least one subject."
-  	end
+    @student = Student.find(params[:student_id]) or current_student
+    @subjects = @student.subjects
+    @current_subjects = @student.subjects.where(:archived => false)
+    @archived_subjects = @student.subjects.where(:archived => true)
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @courses }
+    end
   		
   end
 
@@ -41,26 +21,14 @@ before_filter :findsubjects
   end
 
   def create
-  	@subject = @subjectable.subjects.build(params[:subject])
+    @student = current_student or Student.find(params[:instructor_id])
+    @subject = @student.subjects.build(params[:subject])
    	if params[:commit]  != "Cancel"
-    	if @subject.save
-    		flash[:notice] = "Successfully created subject."
-    		session[:selectedTab] = @subjectable.subjects.count
-    		respond_to do |format|
-    		  format.html { 
-    		    redirect_to(:controller => 'textbook_delegations', :action => 'index', :subject_id => @subject.id.to_s, :anchor => "tabs-#{session[:selectedTab]}")
-  		    }
-  		    format.js
-  	    end
-    	else
-    		respond_to do |format|
-    		  format.html { 
-        	  flash[:alert] = "Error! " + @subject.errors.full_messages.first
-      		}
-      		format.js
-    		end
-  		end
-  	end
+    	@subject.save
+      render "create"
+    else
+      render "cancel"
+    end
   end
 
   def edit
@@ -68,35 +36,14 @@ before_filter :findsubjects
   end
 
   def update
-   	@subject = Subject.find(params[:id])
-   	if params[:commit]  != "Cancel"
-    	if @subject.update_attributes(params[:subject])
-    		flash[notice] = "Successfully updated subject."
-    		respond_to do |format|
-    		  format.html { redirect_to(:controller => 'textbook_delegations', :action => 'index', 
-    		                :subject_id => @subject.id.to_s, :anchor => "tabs-#{session[:selectedTab]}")}
-    		  format.js
-  		  end
-    	else
-    		respond_to do |format|
-    		  format.html {render :action => 'edit'}
-    		  format.js 
-  		  end
-    	end
-  	end
+    @subject = Subject.find(params[:id])
+    @subject.update_attributes!(params[:subject])
   end
 
+  # DELETE /courses/1
+  # DELETE /courses/1.json
   def destroy
-    subject = Subject.find(params[:id])
-    subject.destroy
-    flash[:notice] = "Subject deleted."
-    
-		@subjects = @subjectable.subjects
-		if @subjects.count == 0
-		  redirect_to(:action => 'index')
-		else
-		  redirect_to(:controller => 'textbook_delegations', :action => 'index', :subject_id => @subjects.first.id.to_s)
-		end	
+    @subject = Subject.find(params[:id])
+    @subject.destroy
   end
 end
-

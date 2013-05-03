@@ -1,0 +1,14 @@
+<tr>
+	<td><%= link_to local_subject.name, student_subject_path(local_subject.student.id, local_subject.id) %></td>
+	<td><%= local_subject.term %></td>
+	<td><%= form_for local_subject, remote: true do |f| %>
+				<%= f.check_box :archived %>
+				<%= f.submit :update %>
+			<% end %>
+	</td>
+	<td>
+		<%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png",:class => "button", :alt => "Delete Course"),  
+			        student_subject_path(current_student.id, local_subject.id), :confirm => "Delete #{local_subject.name} - Are you sure?", 
+			        :method => :delete, :remote => true %>
+	</td>
+</tr>

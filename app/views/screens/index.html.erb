@@ -33,16 +33,22 @@
     </div>
 
     <div id="menu">
-        <div id="instructor">
+        <div class="instructor">
             <ul>
 				<li><%=link_to image_tag("Login.png",  :mouseover => "LoginHover.png",:alt => "Login" ), new_instructor_session_path %></li>
 				<li><%=link_to image_tag("Register.png",  :mouseover => "RegisterHover.png",:alt => "Register" ), new_instructor_registration_path %></li>
             </ul>
         </div>
-        <div id="student">
+        <div class="student">
             <ul>
 				<li><%=link_to image_tag("Login.png",  :mouseover => "LoginHover.png",:alt => "Login" ), new_student_session_path %></li>
 				<li><%=link_to image_tag("Register.png",  :mouseover => "RegisterHover.png",:alt => "Register" ), new_student_registration_path %></li>
+             </ul>
+        </div>
+        <div class="parent">
+            <ul>
+				<li><%=link_to image_tag("Login.png",  :mouseover => "LoginHover.png",:alt => "Login" ), new_parent_session_path %></li>
+				<li><%=link_to image_tag("Register.png",  :mouseover => "RegisterHover.png",:alt => "Register" ), new_parent_registration_path %></li>
              </ul>
         </div>
     </div>        

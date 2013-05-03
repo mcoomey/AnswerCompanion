@@ -7,50 +7,13 @@
 	margin-bottom: 8px;
 	margin-left: 8px;
 	background:white;
-	border: solid 2px red;
+	border: solid 2px $main-green;
 	cursor:pointer;
 }
 #menu {
 	clear:both;
 	height: 150px;
 	width: 800px;
-	margin: auto;
-}
-
-#instructor {
-	float:left;
-	background-image: url('InstructorLogo.png');
-	background-size: 130px 30px;
-	background-position: 40px 30px;
-	background-repeat: no-repeat;
-	height: 100px;
-	width: 400px;
-	margin-top: 0px;
-	margin-right: 0;
-	margin-bottom: 0;
-	margin-left: 0;
-	border:none;
-	ul li {
-		float: left;
-		padding-top: 60px;
-		padding-left: 10px;
-		list-style-type: none;
-		text-decoration: none;
-		a:hover {
-			background-color:white;
-			color:black;
-		}
-	}
-}
-
-#student {
-	float:right;
-	height: 100px;
-	width: 400px;
-	background-image: url('StudentLogo.png');
-	background-size: 100px 30px;
-	background-position: 55px 30px;
-	background-repeat: no-repeat;
 	margin-top: 0px;
 	margin-right: 0px;
 	margin-bottom: 0;
@@ -62,9 +25,37 @@
 		padding-left: 10px;
 		list-style-type: none;
 		text-decoration: none;
- 		a:hover {
-			background-color:white;
-			color:black;
-		}
 	}
+}
+
+.instructor {
+	height: 100px;
+	width: 250px;
+	float:left;
+	background-image: url('InstructorLogo.png');
+	background-size: 130px 30px;
+	background-position: 60px 30px;
+	background-repeat: no-repeat;
+
+}
+
+.student {
+	float:left;
+	height: 100px;
+	width: 250px;
+	background-image: url('StudentLogo.png');
+	background-size: 100px 30px;
+	background-position: 70px 30px;
+	background-repeat: no-repeat;
+
+}
+
+.parent {
+	float:left;
+	height: 100px;
+	width: 250px;
+	background-image: url('ParentLogo.png');
+	background-size: 90px 30px;
+	background-position: 75px 30px;
+	background-repeat: no-repeat;
 }

@@ -9,11 +9,11 @@
 	$("#ujsform").remove();
 	$("#buttonarea").show();
 	
-	if ($.cookie('course_index_tab') == "#current-courses") {
+	if ($.cookie('index_tab') == "#current-courses") {
 		$("#current-courses table tr:last").after("<%= j render 'course_table_row', :local_course => @course %>");
 		}
 	else {
 		$("#archived-courses table tr:last").after("<%= j render 'course_table_row', :local_course => @course %>");
 		}
-
+	$("#edit_course_<%= @course.id %>").submitOnCheck();
 <% end %>

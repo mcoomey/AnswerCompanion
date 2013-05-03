@@ -8,7 +8,12 @@
 	
 	$("#ujsform").remove();
 	$("#buttonarea").show();
-	$("#ac-tabs .ac-tabs-nav li:last").after('<%= j render(:partial => "subject_list", :locals => {:sbj => @subject, :i => @subjectcount }) %>')
-	$("#ac-tabs .ac-tabs-nav li:last a.tab-markers").trigger('click');
-	window.location = "<%= subject_textbook_delegations_path(@subject)+'#tabs-'+(@subjectcount+1).to_s %>";
+	
+	if ($.cookie('index_tab') == "#current-subjects") {
+		$("#current-subjects table tr:last").after("<%= j render 'subject_table_row', :local_subject => @subject %>");
+		}
+	else {
+		$("#archived-subjects table tr:last").after("<%= j render 'subject_table_row', :local_subject => @subject %>");
+		}
+	$("#edit_subject_<%= @subject.id %>").submitOnCheck();	
 <% end %>

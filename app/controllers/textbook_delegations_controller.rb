@@ -1,25 +1,8 @@
 class TextbookDelegationsController < ApplicationController
-  before_filter :findSubjects
-
-# Find subjects for this user
-	def findSubjects
-		@subject = Subject.find(params[:subject_id])
-		if @subject
-		  @subjectname = @subject.name
-	  else
-	    @subjectname = ""
-    end
-		@student = Student.find(@subject.student_id)
-		@subjects = @student.subjects
-		@subjectcount = @subjects.count
-		# use the subject IDs to determine the tab# currently selected so any redirect can select the proper tab
-		@subids = @subjects.map{|c| c.id }
-		@subjectId = params[:subject_id].to_i
-		session[:selectedTab] = (@subids.index @subjectId) + 1
-	end
+  before_filter :load_textable
 
   def index
-		@textbookDels = @subject.textbook_delegations
+		@textbookDels = @textable.textbook_delegations
 		if (@textbookDels.count == 0)
 			flash[:alert] = "You must add at least 1 textbook."
 		else
@@ -93,6 +76,11 @@ class TextbookDelegationsController < ApplicationController
 		flash[:notice] = title + " was successfully removed."
 		tbdel.destroy
 		redirect_to(:action => 'index', :anchor => "tabs-#{session[:selectedTab]}")
+  end
+
+  def load_textable
+    resource, id = request.path.split('/')[1, 2]
+    @textable = resource.singularize.classify.constantize.find(id)
   end
 
 end

@@ -3,7 +3,7 @@
   <td><%= local_course.section %></td>
 	<td><%= local_course.term %> </td>
 	<td>
-		<%= form_for local_course do |f| %>
+		<%= form_for local_course, remote: true do |f| %>
 			<%= f.check_box :archived %>
 			<%= f.submit :update %>
 		<% end %>

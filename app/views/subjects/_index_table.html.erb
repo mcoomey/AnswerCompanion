@@ -1,0 +1,12 @@
+<table class="index">
+  <tr>
+    <th>Name</th>
+	<th>Term</th>
+    <th>Archived</th>
+	<th>Delete</th>
+  </tr>
+
+<% local_subjects.each do |subject| %>
+  <%= render 'subject_table_row', :local_subject => subject %>
+<% end %>
+</table>

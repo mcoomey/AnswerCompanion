@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130421160850) do
+ActiveRecord::Schema.define(:version => 20130502174403) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -47,6 +47,15 @@ ActiveRecord::Schema.define(:version => 20130421160850) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "enrollments", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "subject_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "enrollments", ["course_id", "subject_id"], :name => "index_enrollments_on_course_id_and_subject_id"
 
   create_table "exercises", :force => true do |t|
     t.string   "number"
@@ -105,6 +114,41 @@ ActiveRecord::Schema.define(:version => 20130421160850) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
+
+  create_table "parents", :force => true do |t|
+    t.string   "email",                  :default => "",    :null => false
+    t.string   "encrypted_password",     :default => "",    :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
+    t.integer  "failed_attempts",        :default => 0
+    t.string   "unlock_token"
+    t.datetime "locked_at"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.string   "firstname"
+    t.string   "lastname"
+    t.boolean  "deactivated",            :default => false
+  end
+
+  add_index "parents", ["email"], :name => "index_parents_on_email", :unique => true
+  add_index "parents", ["reset_password_token"], :name => "index_parents_on_reset_password_token", :unique => true
+
+  create_table "parents_students", :id => false, :force => true do |t|
+    t.integer "parent_id"
+    t.integer "student_id"
+  end
+
+  add_index "parents_students", ["parent_id", "student_id"], :name => "index_parents_students_on_parent_id_and_student_id"
 
   create_table "schools", :force => true do |t|
     t.string   "name"
@@ -174,16 +218,20 @@ ActiveRecord::Schema.define(:version => 20130421160850) do
     t.integer  "subcategory_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.boolean  "archived"
+    t.string   "term"
   end
 
   create_table "textbook_delegations", :force => true do |t|
     t.integer  "textbook_id"
-    t.integer  "subject_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "textable_id"
+    t.string   "textable_type"
   end
 
-  add_index "textbook_delegations", ["textbook_id", "subject_id"], :name => "index_textbook_delegations_on_textbook_id_and_subject_id"
+  add_index "textbook_delegations", ["textable_id", "textable_type"], :name => "index_textbook_delegations_on_textable_id_and_textable_type"
+  add_index "textbook_delegations", ["textbook_id"], :name => "index_textbook_delegations_on_textbook_id_and_subject_id"
 
   create_table "textbooks", :force => true do |t|
     t.string   "isbn13"

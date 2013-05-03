@@ -4,6 +4,8 @@
 
 # set up autocomplete options for subject category and subcategory text_fields
 jQuery ->
+	$('.edit_subject').submitOnCheck()
+
 	$("#subject_subcategory_name").autocomplete
 	  minLength: 0
 	  delay: 0
@@ -20,3 +22,4 @@ jQuery ->
 	    $("#subject_subcategory_name").autocomplete "option", "source", subcatSub
 	  change: (event, ui) ->
 		  $("#subject_subcategory_name").val("")
+

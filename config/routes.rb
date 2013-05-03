@@ -33,6 +33,8 @@ AnswerCompanion::Application.routes.draw do
   
   devise_for :students
 
+  devise_for :parents
+
 	resources :instructors do
 		resources :courses
 	end

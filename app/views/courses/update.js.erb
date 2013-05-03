@@ -1,0 +1,5 @@
+<% if @course.archived? %>
+	$('#edit_course_<%= @course.id %>').parent().parent().appendTo("#archived-courses table");
+<% else %>
+	$('#edit_course_<%= @course.id %>').parent().parent().appendTo("#current-courses table");
+<% end %>
