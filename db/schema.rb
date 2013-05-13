@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130502174403) do
+ActiveRecord::Schema.define(:version => 20130504003631) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -95,7 +95,6 @@ ActiveRecord::Schema.define(:version => 20130502174403) do
     t.integer  "role",                   :default => 0
     t.integer  "privilege",              :default => 0
     t.string   "grade"
-    t.string   "school"
     t.float    "accountbalance",         :default => 0.0
     t.integer  "violationcount",         :default => 0
     t.boolean  "deactivated",            :default => false

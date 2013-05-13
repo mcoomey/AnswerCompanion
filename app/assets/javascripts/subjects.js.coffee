@@ -6,20 +6,8 @@
 jQuery ->
 	$('.edit_subject').submitOnCheck()
 
-	$("#subject_subcategory_name").autocomplete
-	  minLength: 0
-	  delay: 0
-	  source: $("#subject_subcategory_name").data("autocomplete-source"),
-    messages: {noResults: '', results: ''}
-
 	$("#subject_category_name").autocomplete
 	  minLength: 0
 	  delay: 0
 	  source: $("#subject_category_name").data("autocomplete-source"),
     messages: {noResults: '', results: ''}
-	  select: (event, ui) ->
-	    subcatSub = $("#subject_subcategory_name").data("autocomplete-source").replace(/\=.*/, "=" + ui.item.value)
-	    $("#subject_subcategory_name").autocomplete "option", "source", subcatSub
-	  change: (event, ui) ->
-		  $("#subject_subcategory_name").val("")
-

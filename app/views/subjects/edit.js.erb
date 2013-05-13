@@ -2,27 +2,21 @@ $("#messages .alert").hide();
 $("#messages .ujs_alert").hide();
 $("#messages .notice").hide();
 $("#messages .ujs_notice").hide();
-$("#buttonarea").hide().after('<%= j render("edit_subject") %>');
 
-$("#subject_subcategory_name").autocomplete({
-  minLength: 0,
-  delay: 0,
-  source: $("#subject_subcategory_name").data("autocomplete-source"),
-  messages: {noResults: '', results: ''}
-  });
+$("#confirm_yes").click(function(){
+	$("#create_new_category_dialog").dialog("close");
+});
 
-$("#subject_category_name").autocomplete({
-  minLength: 0,
-  delay: 0,
-  source: $("#subject_category_name").data("autocomplete-source"),
-  messages: {noResults: '', results: ''},
-  select: function(event, ui) {
-    var subcatSub;
-    subcatSub = $("#subject_subcategory_name").data("autocomplete-source").replace(/\=.*/, "=" + ui.item.value);
-    return $("#subject_subcategory_name").autocomplete("option", "source", subcatSub);
-	  },
-  change: function(event, ui) {
-    return $("#subject_subcategory_name").val("");
-	  }
-	});
+$("#confirm_no").click(function(){
+	$("#subject_category_name").val("");
+	$("#create_new_category_dialog").dialog("close");
+});
+
+
+if ($.cookie('index_tab') == "#current-subjects") {
+	$("#ujsform").replace("<%= j render 'new_subject', :archived_val => false %>");
+	}
+else {
+	$("#ujsform").replace("<%= j render 'new_subject', :archived_val => true %>");
+	}
 

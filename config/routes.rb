@@ -55,6 +55,8 @@ AnswerCompanion::Application.routes.draw do
   resources :courses
   
 	root :to => "screens#index"
+	
+	match "subjects/confirm", :to => "subjects#confirm"
 
    # The priority is based upon order of creation:
   # first created -> highest priority.

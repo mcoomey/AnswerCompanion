@@ -5,6 +5,8 @@
 			<%=link_to image_tag("AddSubject.png",  :mouseover => "AddSubjectHover.png",:class => "button", :alt => "Add Subject"),  
 			                      new_student_subject_path(current_student.id), id: "new_subject", remote:true %>
 	</div>
+	<div id="create_new_category_dialog">
+	</div>
 	<div id="static-tabs">
 		<ul class="static-tabs-nav">
 			<li><a href="#current-subjects">Current Subjects</a></li>

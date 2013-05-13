@@ -1,0 +1,18 @@
+#create_new_category_dialog {
+	display:none;
+	text-align:center;
+	.title {
+		color:$main-green;
+		font-size:2em;
+	}
+	input[type="submit"] {
+		color:black;
+		font-size:1.5em;
+		margin-top:20px;
+		&:hover{
+		  color:blue;	
+		  cursor:pointer;
+		}
+	}
+	
+}
