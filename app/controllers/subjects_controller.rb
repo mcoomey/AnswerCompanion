@@ -14,19 +14,31 @@ class SubjectsController < ApplicationController
   end
 
   def show
+    @student = Student.find(params[:student_id]) or current_student
+    @subjects = @student.subjects.where(:archived => false)
+    if params[:subject]
+      @subject = Subject.where(:student_id => @student).find(params[:subject][:id])
+    else
+      @subject = Subject.where(:student_id => @student).find(params[:id])
+    end
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @subject }
+    end
+
   end
 
   def new
   	@subject = Subject.new
   	@new_category = false
-  	@confirmed_new_category = false
   end
 
   def create
-
     @student = current_student or Student.find(params[:student_id])
-    
+
     if params[:commit] == "Cancel"
+      @action = "Create"
       render "cancel"
       
     elsif params[:commit] == "Create"
@@ -40,7 +52,6 @@ class SubjectsController < ApplicationController
       end
       
     elsif params[:commit] == "Yes"
-      @confirmed_new_category = true
       @subject = @student.subjects.build(params[:subject])
       @subject.save
       
@@ -48,15 +59,42 @@ class SubjectsController < ApplicationController
       render('edit')
     end
      
-  end
- 
+  end 
+  
   def edit
   	@subject = Subject.find(params[:id])
+  	@new_category = false
   end
 
   def update
+    @student = current_student or Student.find(params[:student_id])
     @subject = Subject.find(params[:id])
-    @subject.update_attributes!(params[:subject])
+    
+    if params[:commit] == "Cancel"       # form submitted to cancel the edit
+      @action = "Edit"
+      render('cancel')
+      
+    elsif params[:commit] == "Update"          # form submitted for traditional update
+      @subject.assign_attributes(params[:subject])
+      @category = @subject.category
+      if @category && @category.new_record?
+        @new_category = true;
+        render('edit')
+      else
+        @subject.save
+      end
+
+    elsif params[:commit] == "Yes"
+      @subject.update_attributes(params[:subject])
+      
+    elsif params[:commit] == "No"
+      render('edit')
+ 
+    else                                    # form was submitted via jquery to toggle archive
+      @subject.update_attributes!(params[:subject])
+      render('toggle_archive')
+    end
+    
   end
 
   # DELETE /courses/1

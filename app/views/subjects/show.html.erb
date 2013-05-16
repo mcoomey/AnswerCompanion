@@ -1,0 +1,24 @@
+<article>
+	<div id="buttonarea">
+		<%= form_for :subject, :url => { :action => 'show' }, :html => { :method => 'get' } do |f| %>
+			<%= f.select(:id, @subjects.collect{|x| [x.name, x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
+		<% end %>
+		
+		<%=link_to image_tag("BackToSubjects.png",  :mouseover => "BackToSubjectsHover.png",:class => "button", :alt => "Back to Subjects"), 
+		           student_subjects_path(@student) %>
+		<%=link_to image_tag("Edit.png",  :mouseover => "EditHover.png",:class => "button", :alt => "Edit Subject"), 
+		           edit_subject_path(@subject), remote: true %>
+	</div>
+	<div id="create_new_category_dialog">
+	</div>	
+	<div id="ac-tabs">
+		<ul class="ac-tabs-nav">
+			<li><%= link_to "Textbooks", "#", :class => "tab-markers" %></li>
+			<li><%= link_to "Handouts", "#", :class => "tab-markers" %></li>
+			<li><%= link_to "Lectures", "#", :class => "tab-markers" %></li>
+			<li><%= link_to "Assignments", "#", :class => "tab-markers" %></li>
+			<li><%= link_to "Assessments", "#", :class => "tab-markers" %></li>
+		</ul>
+		<br class="clearfloat"/>
+	</div>	
+</article>

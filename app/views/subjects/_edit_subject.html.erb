@@ -1,3 +1,4 @@
+
 <div id="ujsform">
 <%= form_for @subject, remote:true do |f| %>
 
@@ -12,7 +13,7 @@
 
 	<%= f.hidden_field :archived, :value => archived_val %>
 
-	<%= f.submit "Create", :name => "commit" %>
+	<%= f.submit "Update", :name => "commit" %>
 	<%= f.submit "Cancel", :name => "commit" %>
 <% end %>
 </div>

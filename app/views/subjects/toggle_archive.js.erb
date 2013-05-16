@@ -1,0 +1,7 @@
+$('#edit_subject_<%= @subject.id %>').parent().parent().remove();
+<% if @subject.archived? %>
+	$("#archived-subjects table tr:last").after("<%= j render 'subject_table_row', :local_subject => @subject %>");
+<% else %>
+	$("#current-subjects table tr:last").after("<%= j render 'subject_table_row', :local_subject => @subject %>");
+<% end %>
+$("#edit_subject_<%= @subject.id %>").submitOnCheck();

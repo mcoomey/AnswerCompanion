@@ -1,5 +1,6 @@
-<% if @subject.archived? %>
-	$('#edit_subject_<%= @subject.id %>').parent().parent().appendTo("#archived-subjects table");
-<% else %>
-	$('#edit_subject_<%= @subject.id %>').parent().parent().appendTo("#current-subjects table");
-<% end %>
+	$("#ujsform").hide();
+	$("#messages .alert").show();
+	$("#messages .ujs_alert").hide();
+	$("#messages .notice").show().html("Subject has been updated.");
+	$("#messages .ujs_notice").hide();
+	$("#buttonarea").show();
