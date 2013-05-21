@@ -5,6 +5,7 @@
 		<td><%= link_to local_subject.name, student_subject_path(local_subject.student.id, local_subject.id) %></td>
 	<% end %>
 	<td><%= local_subject.term %></td>
+	<td><%= local_subject.category_name %></td>
 	<td><%= form_for local_subject, remote: true do |f| %>
 			<%= f.check_box :archived %>
 			<%= f.submit :toggle_archive %>

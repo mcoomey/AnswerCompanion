@@ -11,14 +11,77 @@
 	</div>
 	<div id="create_new_category_dialog">
 	</div>	
-	<div id="ac-tabs">
-		<ul class="ac-tabs-nav">
-			<li><%= link_to "Textbooks", "#", :class => "tab-markers" %></li>
-			<li><%= link_to "Handouts", "#", :class => "tab-markers" %></li>
-			<li><%= link_to "Lectures", "#", :class => "tab-markers" %></li>
-			<li><%= link_to "Assignments", "#", :class => "tab-markers" %></li>
-			<li><%= link_to "Assessments", "#", :class => "tab-markers" %></li>
+	<div id="horizontal-tabs">
+		<ul class="static-tabs-nav">
+			<li><a href=".current-asset">Current</a></li>
+			<li><a href=".archived-asset">Archived </a></li>
+			<li><a href=".future-asset">Future </a></li>
 		</ul>
+	</div>
+	<div id="vertical-tabs">
+		<ul class="static-tabs-nav">
+			<li><%= link_to "Textbooks", "#asset-1", :class => "tab-markers" %></li>
+			<li><%= link_to "Handouts", "#asset-2", :class => "tab-markers" %></li>
+			<li><%= link_to "Lectures", "#asset-3", :class => "tab-markers" %></li>
+			<li><%= link_to "Assignments", "#asset-4", :class => "tab-markers" %></li>
+			<li><%= link_to "Assessments", "#asset-5", :class => "tab-markers" %></li>
+		</ul>
+		</br>
+		<div id="asset-1">
+			<div class="archived-asset">
+				<h2>Archived Textbooks</h2>
+			</div>
+			<div class="current-asset">
+				<h2>Current Textbooks</h2>
+			</div>
+			<div class="future-asset">
+				<h2>Future Textbooks</h2>
+			</div>			
+		</div>
+		<div id="asset-2">
+			<div class="archived-asset">
+				<h2>Archived Handouts</h2>
+			</div>
+			<div class="current-asset">
+				<h2>Current Handouts</h2>
+			</div>
+			<div class="future-asset">
+				<h2>Future Handouts</h2>
+			</div>			
+		</div>
+		<div id="asset-3">
+			<div class="archived-asset">
+				<h2>Archived Lectures</h2>
+			</div>
+			<div class="current-asset">
+				<h2>Current Lectures</h2>
+			</div>
+			<div class="future-asset">
+				<h2>Future Lectures</h2>
+			</div>			
+		</div>
+		<div id="asset-4">
+			<div class="archived-asset">
+				<h2>Archived Assignments</h2>
+			</div>
+			<div class="current-asset">
+				<h2>Current Assignments</h2>
+			</div>
+			<div class="future-asset">
+				<h2>Future Assignments</h2>
+			</div>			
+		</div>
+		<div id="asset-5">
+			<div class="archived-asset">
+				<h2>Archived Assessments</h2>
+			</div>
+			<div class="current-asset">
+				<h2>Current Assessments</h2>
+			</div>
+			<div class="future-asset">
+				<h2>Future Assessments</h2>
+			</div>			
+		</div>
 		<br class="clearfloat"/>
 	</div>	
 </article>

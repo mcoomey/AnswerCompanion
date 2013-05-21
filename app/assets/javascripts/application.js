@@ -21,14 +21,23 @@
 jQuery(function() {
 
 	// set up jquery-ui tabs function on the static-tabs div
-	// $("#static-tabs").tabs();
+  // $("#static-tabs").tabs();
+	// $("#static-tabs a").on("click", function (e) { e.preventDefault();});
+	
+  // $( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
+  //   $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+	
 	
 	// check for a hash in the URL to load proper tab on a page reload or redirect
 	var hash = window.location.hash;
-	var navTabs = $('#ac-tabs ul.ac-tabs-nav a.tab-markers');
+	
+  var navTabs = $('#ac-tabs ul.ac-tabs-nav a.tab-markers');
+  // var navTabs = $("#vertical-tabs ul.static-tabs-nav a.tab-markers");
 	var selectedTab = 0;	// selectedTab contains the tab# to select - default to the first one (#0)
 	
-	if (navTabs){	// if the page has navigation tabs
+	if (navTabs.size() > 0){	// if the page has navigation tabs
+	  
+	  alert("navTabs have been detected.")
 		
 		// if URL contains a hash then match it to one of the tabs
 		if (hash) {
@@ -69,5 +78,5 @@ jQuery(function() {
 
 	// force first tab to be clicked on load
 		// $('#ac-tabs .ac-tabs-nav a:first').trigger('click');
-	
+
 });
