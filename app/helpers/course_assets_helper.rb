@@ -1,0 +1,2 @@
+module CourseAssetsHelper
+end

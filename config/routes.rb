@@ -1,5 +1,23 @@
 AnswerCompanion::Application.routes.draw do
 
+  get "instructors/index"
+
+  get "instructor/index"
+
+  get "course_assets/new"
+
+  get "course_assets/create"
+
+  get "course_assets/index"
+
+  get "course_assets/show"
+
+  get "course_assets/edit"
+
+  get "course_assets/update"
+
+  get "course_assets/destroy"
+
   get "screens/index"
   get "screens/welcome"
   
@@ -29,7 +47,10 @@ AnswerCompanion::Application.routes.draw do
     end
   end
   
-  devise_for :instructors
+  devise_for :instructors, :controllers => {:registrations => "instructors/registrations"} do
+    get '/instructor/signup', :to => 'instructors/registration#new'
+    post '/resource', :to => 'instructors/registration#create'
+  end
   
   devise_for :students
 

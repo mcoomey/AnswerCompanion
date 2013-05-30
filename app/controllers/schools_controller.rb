@@ -6,7 +6,10 @@ class SchoolsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @schools }
+      format.json { 
+        @filtered_schools = School.order(:name).where("lower(name) like ?", "#{params[:term.downcase]}%")
+        render json: @filtered_schools.map{|s| s.name + "||" + s.town +  "||" + s.state}
+      }
     end
   end
 

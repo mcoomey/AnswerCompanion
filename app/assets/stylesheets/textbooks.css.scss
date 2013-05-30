@@ -87,26 +87,3 @@
 	background-color: white;
 	color:$main-green;
 }
-
-ul.ui-autocomplete {
-  position: absolute;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border: solid 1px $medium-grey;
-  cursor: default;
-  li {
-    background-color: white;
-    border-top: solid 1px $very-light-grey;
-    margin: 0;
-    padding: 0;
-    a {
-      color: black;
-      display: block;
-      padding: 3px;
-    }
-    a.ui-state-hover, a.ui-state-active {
-      background-color: $very-light-green;
-    }
-  }
-}

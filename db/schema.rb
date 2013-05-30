@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130504003631) do
+ActiveRecord::Schema.define(:version => 20130527174405) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -19,6 +19,16 @@ ActiveRecord::Schema.define(:version => 20130504003631) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  create_table "course_assets", :force => true do |t|
+    t.string   "name"
+    t.integer  "type"
+    t.integer  "course_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "course_assets", ["course_id"], :name => "index_course_assets_on_course_id"
 
   create_table "courses", :force => true do |t|
     t.string   "name"
@@ -98,12 +108,20 @@ ActiveRecord::Schema.define(:version => 20130504003631) do
     t.float    "accountbalance",         :default => 0.0
     t.integer  "violationcount",         :default => 0
     t.boolean  "deactivated",            :default => false
+    t.integer  "school_id"
   end
 
   add_index "instructors", ["confirmation_token"], :name => "index_instructors_on_confirmation_token", :unique => true
   add_index "instructors", ["email"], :name => "index_instructors_on_email", :unique => true
   add_index "instructors", ["reset_password_token"], :name => "index_instructors_on_reset_password_token", :unique => true
   add_index "instructors", ["unlock_token"], :name => "index_instructors_on_unlock_token", :unique => true
+
+  create_table "instructors_schools", :id => false, :force => true do |t|
+    t.integer "instructor_id"
+    t.integer "school_id"
+  end
+
+  add_index "instructors_schools", ["instructor_id", "school_id"], :name => "index_instructors_schools_on_instructor_id_and_school_id"
 
   create_table "lessons", :force => true do |t|
     t.string   "title"

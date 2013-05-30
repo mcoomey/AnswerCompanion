@@ -1,5 +1,5 @@
 #buttonarea {
-	width:800px;
+	width:$screen-width - 24px;
 	height:30px;
 	.title {
 		font-size:24px;
@@ -32,7 +32,7 @@
 }
 
 #ujsform {
-	width:800px;
+	width:$screen-width - 24px;
 	height:30px;
 	label {
 		font-size:1em;
@@ -54,4 +54,34 @@
 				  cursor:pointer;
 				}
 			}
+}
+
+ul.ui-autocomplete {
+  position: absolute;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: solid 1px $medium-grey;
+  cursor: default;
+  li {
+    background-color: white;
+    border-top: solid 1px $very-light-grey;
+    margin: 0;
+    padding: 0;
+    a {
+      color: black;
+      display: block;
+      padding: 3px;
+    }
+    a.ui-state-hover, a.ui-state-active {
+      background-color: $very-light-green;
+    }
+  }
+}
+
+.ui-widget-content .ui-state-focus {
+	border: 1px solid $medium-grey;
+	background: $very-light-green;
+	font-weight: normal;
+	color: #212121;
 }

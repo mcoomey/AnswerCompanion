@@ -11,6 +11,7 @@
  *= require_self
 */
 @charset "utf-8";
+@import "jquery-ui-1.10.3.custom.css";
 @import "constants.css.scss";
 @import "layout.css.scss";
 @import "common.css.scss";
@@ -23,4 +24,3 @@
 @import "lessons.css.scss";
 @import "videos.css.scss";
 @import "courses.css.scss";
-@import "jquery-ui-1.10.3.custom.css";

@@ -8,7 +8,12 @@ class CoursesController < ApplicationController
     @archived_courses = @instructor.courses.where(:archived => true)
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { # index.html.erb
+        if @courses.count == 0
+          flash[:notice] = "You don't have any courses defined.  "
+          flash[:alert] = "Please add a course."
+        end
+        }
       format.json { render json: @courses }
     end
   end
