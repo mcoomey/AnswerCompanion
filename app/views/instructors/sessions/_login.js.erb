@@ -1,0 +1,30 @@
+<div id="data-entry">
+    <%= image_tag("I.png", class: "login_img") %>
+    <span class="login">nstructor login</span>
+    <div id="login-form">
+      <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+      
+        <label class="input">
+        	<span>Email address</span>
+          <%= f.email_field :email, size: 25 %>
+        </label>
+        
+        <label class="input">
+        	<span>Password</span>  
+        	<%= f.password_field :password, size: 20 %>
+        </label>   
+      
+        <% if devise_mapping.rememberable? %>
+          <%= f.check_box :remember_me, class: "remember-me" %> <%= f.label :remember_me, class: "remember-me"  %>
+        <% end %>
+
+        <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
+          <%= link_to "Forgot password?", new_password_path(resource_name), class: "forgot-password" %>
+        <% end -%>
+        
+        <%= f.submit "Sign in" %>
+        </br>
+
+   <% end %>
+  </div>
+</div>

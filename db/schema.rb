@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130527174405) do
+ActiveRecord::Schema.define(:version => 20130530173549) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -108,20 +108,12 @@ ActiveRecord::Schema.define(:version => 20130527174405) do
     t.float    "accountbalance",         :default => 0.0
     t.integer  "violationcount",         :default => 0
     t.boolean  "deactivated",            :default => false
-    t.integer  "school_id"
   end
 
   add_index "instructors", ["confirmation_token"], :name => "index_instructors_on_confirmation_token", :unique => true
   add_index "instructors", ["email"], :name => "index_instructors_on_email", :unique => true
   add_index "instructors", ["reset_password_token"], :name => "index_instructors_on_reset_password_token", :unique => true
   add_index "instructors", ["unlock_token"], :name => "index_instructors_on_unlock_token", :unique => true
-
-  create_table "instructors_schools", :id => false, :force => true do |t|
-    t.integer "instructor_id"
-    t.integer "school_id"
-  end
-
-  add_index "instructors_schools", ["instructor_id", "school_id"], :name => "index_instructors_schools_on_instructor_id_and_school_id"
 
   create_table "lessons", :force => true do |t|
     t.string   "title"
@@ -166,6 +158,16 @@ ActiveRecord::Schema.define(:version => 20130527174405) do
   end
 
   add_index "parents_students", ["parent_id", "student_id"], :name => "index_parents_students_on_parent_id_and_student_id"
+
+  create_table "school_memberships", :force => true do |t|
+    t.integer  "school_id"
+    t.integer  "schoolmember_id"
+    t.string   "schoolmember_type"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "school_memberships", ["schoolmember_id", "schoolmember_type"], :name => "index_school_memberships_on_id_and_type"
 
   create_table "schools", :force => true do |t|
     t.string   "name"

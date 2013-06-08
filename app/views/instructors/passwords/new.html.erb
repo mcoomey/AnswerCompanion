@@ -1,12 +1,35 @@
-<h2>Forgot your password?</h2>
+<article>
+	<div id="buttonarea">
+		<span class="title">Forgot your password?</span>
+		<%=link_to image_tag("BackToWelcome.png",  :mouseover => "BackToWelcomeHover.png",:class => "button", :alt => "Welcome Page"), root_path() %>
+		<%=link_to image_tag("Login.png",  :mouseover => "LoginHover.png",:class => "button", :alt => "Login"), new_session_path(resource_name) %>
+	</div>
 
+<div id="data-entry">
+	
 <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
   <%= devise_error_messages! %>
-
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
-
-  <div><%= f.submit "Send me reset password instructions" %></div>
+  <div id="left-entry-panel">
+	<label class="input">
+		<span>Email address</span>
+	 	<%= f.email_field :email, :class => "wide" %>
+	</label></br>
+	<%= f.submit "Send me reset password instructions", :class => "button, input" %>
+  </div>
 <% end %>
+</div>
 
-<%= render "links" %>
+<div id="signup-links">	
+	<%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
+	  <%= button_to "Forgot password", new_password_path(resource_name), :method => :get %>
+	<% end -%>
+
+	<%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+	  <%= button_to "Re-send confirmation instructions", new_confirmation_path(resource_name), :method => :get %>
+	<% end -%>
+
+	<%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+	  <%= button_to "Re-send unlock instructions", new_unlock_path(resource_name), :method => :get %>
+	<% end -%>
+</div>
+</article>

@@ -12,5 +12,7 @@ jQuery ->
       ui.item.value = info[0]
       $("#instructor_school_name").val info[0]
       $("#instructor_school_town").val info[1]
+      $("#instructor_school_town").toggleLabel()
       $("#instructor_school_state").val info[2]
+      $("#instructor_school_state").toggleLabel()
     

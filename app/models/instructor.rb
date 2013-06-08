@@ -1,12 +1,12 @@
 class Instructor < ActiveRecord::Base
 	
-	has_many :schools
+	has_many :school_memberships, :as => :schoolmember
+	has_many :schools, :through => :school_memberships
 	has_many :courses
 	has_many :videos
 	has_many :lessons
 	has_many :exercises
 	has_many :textbooks
-	has_and_belongs_to_many :schools
 	
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :timeoutable and :omniauthable

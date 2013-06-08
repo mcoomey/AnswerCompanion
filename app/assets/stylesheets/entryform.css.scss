@@ -1,0 +1,95 @@
+#data-entry {
+  position:relative;
+  width: 720px;
+  height: 370px;
+  background-color:$very-light-green;
+  border: solid 5px $dark-grey;
+  border-bottom-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+	border-top-right-radius: 20px;
+	border-top-left-radius: 20px;
+  padding: 15px;
+  margin: 20px;
+  font-size: 1.2em;
+    
+  .login_img{
+    position:absolute;
+    top:15px;
+    left:15px;
+    width:20px;
+    height:30px;
+  }
+
+  span.login {
+    position:absolute;
+    top:25px;
+    left:32px;
+    font-family: "Copperplate", sans-serif;
+    font-size: 24px;
+    }
+
+  #login-form {
+    position:absolute;
+    width:750px;
+    height:340px;
+    top:60px;
+    left:0px;
+    margin:0;
+    input {
+      border: solid 1px $medium-grey;
+      border-radius:15px;
+      font-size: 1em;
+      &:hover{
+    	  cursor:pointer;
+    	}
+    }
+  	.input {
+      border-radius:15px;
+      margin: 10px 5px 5px 5px;
+      float: left;
+    }
+    .input span {
+      position: absolute;
+      padding: 7px;
+      margin-left: 10px;
+      color: $medium-grey;
+      z-index:1;
+      cursor:text;
+    }
+    .input input, .input textarea, .input select {
+      z-index:0;
+      padding: 6px;
+      font: inherit;
+    }
+    input[type=submit] {
+      position:absolute;
+      bottom:20px;
+      right:120px;
+    }
+    input[type=checkbox].remember-me  {
+      position:absolute;
+      top:50px;
+      left:20px;
+    }
+    label.remember-me {
+      position:absolute;
+      top:52px;
+      left:40px;
+      font-family: "Copperplate", sans-serif;
+      font-size: 16px;
+    }
+    a.forgot-password {
+      position:absolute;
+      top:52px;
+      left:300px;
+      font-family: "Copperplate", sans-serif;
+      font-size: 16px;
+      color:black;
+      &:hover{
+        cursor:pointer;
+        color:blue;
+      }
+    }
+  }
+}
+

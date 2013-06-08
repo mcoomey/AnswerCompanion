@@ -58,5 +58,11 @@ module AnswerCompanion
     
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+    
+    # Enable devise to respond to JSON
+    config.to_prepare do
+      DeviseController.respond_to :html, :json
+    end
+    
   end
 end

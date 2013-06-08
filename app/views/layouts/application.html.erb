@@ -10,9 +10,9 @@
 <div id="wrapper">
 	<div id="content">
         <header>  
-			<%= link_to image_tag("AnswerCompanionLogo.png", :class => "logo"), screens_index_path + "#tabs-#1" %>
+			<%= link_to image_tag("AnswerCompanionLogo.png", :class => "logo"), root_path %>
 			<div id="sessioninfo">
-				<% if instructor_signed_in? || student_signed_in? %>
+				<% if instructor_signed_in? || student_signed_in? || parent_signed_in? %>
 					<%= link_to image_tag("LogoutLogo.png",  :mouseover => "LogoutLogoHover.png",:class => "button", :alt => "Logout" ), destroy_user_session_path, :method => :delete %> 
 					<%= link_to image_tag("Account.png",  :mouseover => "AccountHover.png",:class => "button", :alt => "Account" ), "#" %> </br>
 					<%=current_user.email%></br>

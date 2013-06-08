@@ -1,5 +1,7 @@
 class Student < ActiveRecord::Base
 	
+	has_many :school_memberships, :as => :schoolmember
+	has_many :schools, :through => :school_memberships
 	has_many :subjects
 	has_and_belongs_to_many :parents
 

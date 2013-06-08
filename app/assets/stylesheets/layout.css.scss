@@ -18,7 +18,7 @@ body {
 }
 
 #content {
-	width: $screen-width - 24px;
+	width: $screen-width - 10px;
 	background-repeat: repeat;
 	background-image: url('BlueLineSlice10x030.jpg');
 	margin: 0 auto;
@@ -27,7 +27,7 @@ body {
 
 header {
 	height: 115px;
-	width: $screen-width - 24px;
+	width: $screen-width - 10px;
 
 	.logo {
 		height:100px;
@@ -51,7 +51,7 @@ header {
 }
 
 #sessioninfo {
-	width: 290px;
+	width: 350px;
 	height: 112px;
 	margin-right:10px;
 	float: right;
@@ -59,7 +59,7 @@ header {
 	font-size: 1em;
 	line-height: 28px;
 	padding-top: 3px;
-
+	
 	a:hover {
 		background-color:white;
 	}
@@ -73,7 +73,7 @@ header {
 
 #messages {
 	font: Arial, Helvetica, sans-serif;
-	width:$screen-width - 24px;
+	width:$screen-width - 10px;
 	height:30px;
 	margin-left:5px;
 
@@ -92,17 +92,17 @@ header {
 }
 
 article {
-	min-height:600px;
+	min-height:640px;
 	height: auto !important;
 	height:600px;
-	width:$screen-width - 24px;
+	width:$screen-width - 10px;
 	overflow:auto;
 }
 
 footer {
 	clear: both;
 	height: 20px;
-	width: $screen-width - 24px;
+	width: $screen-width - 10px;
 	padding-top: 10px;
 	font-size: 10px;
 	background-color: $medium-grey;

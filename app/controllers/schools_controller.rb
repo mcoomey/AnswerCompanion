@@ -1,8 +1,14 @@
 class SchoolsController < ApplicationController
+  before_filter :load_schoolmember
+  
   # GET /schools
   # GET /schools.json
   def index
-    @schools = School.all
+    if !@schoolmember
+      @schools = School.all
+    else
+      @schools = @schoolmember.schools
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -83,4 +89,14 @@ class SchoolsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def load_schoolmember
+    resource,id = request.path.split('/')[1,2]
+    if ((resource == "instructors")||(resource == 'students'))
+      @schoolmember = resource.singularize.classify.constantize.find(id)
+    else
+      @schoolmember = nil
+    end
+  end
+  
 end

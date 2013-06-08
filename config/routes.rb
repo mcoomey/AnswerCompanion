@@ -57,10 +57,12 @@ AnswerCompanion::Application.routes.draw do
   devise_for :parents
 
 	resources :instructors do
+	  resources :schools
 		resources :courses
 	end
 	
 	resources :students do
+	  resources :schools
 		resources :subjects
 	end
 	

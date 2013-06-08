@@ -1,61 +1,79 @@
 <article>
 	<div id="buttonarea">
 		<span class="title">Instructor Sign up</span>
-		<%= link_to "Sign in", new_session_path(resource_name) %>
-		<%= link_to "Forgot password", new_password_path(resource_name) %>
-		<%= link_to "Re-send confirmation instructions?", new_confirmation_path(resource_name) %>
-		<%= link_to "Re-send unlock instructions?", new_unlock_path(resource_name) %>
-	</div>
-	<div id="horizontal-tabs">
-		<ul class="static-tabs-nav">
-		</ul>
+		<%=link_to image_tag("BackToWelcome.png",  :mouseover => "BackToWelcomeHover.png",:class => "button", :alt => "Welcome Page"), root_path() %>
+		<%=link_to image_tag("Login.png",  :mouseover => "LoginHover.png",:class => "button", :alt => "Login"), new_session_path(resource_name) %>
 	</div>
 
+<div id="data-entry">
+	
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
+  <div id="left-entry-panel">
+	<label class="input">
+		<span>Email address</span>
+	 	<%= f.email_field :email, :class => "wide" %>
+	</label></br>
 
-  <div>
-	<%= f.label :your_email %>
- 	<%= f.email_field :email %></br>
+	<label class="input">
+		<span>Screen nickname</span>
+	 	<%= f.text_field :screenname, class: "medium-width" %>
+	</label></br>
 
-    <%= f.label :new_password %>
-    <%= f.password_field :password %>
+		<label class="input">
+		<span>Password</span>
+	    <%= f.password_field :password, class: "medium-width" %>
+	</label></br>
  
-    <%= f.label :"re-enter_password" %>
-    <%= f.password_field :password_confirmation %>
+		<label class="input">
+		<span>Re-enter Password</span>
+	    <%= f.password_field :password_confirmation, class: "medium-width" %>
+	</label></br>
   </div>
-  <div>
-	<%= f.label :first_name %>
- 	<%= f.text_field :firstname %>
+  <div id="right-entry-panel">
+		<label class="input">
+		<span>First name</span>
+	 	<%= f.text_field :firstname, class: "medium-width" %>
+	</label>
 
-	<%= f.label :last_name %>
- 	<%= f.text_field :lastname %>
+		<label class="input">
+		<span>Last name</span>
+	 	<%= f.text_field :lastname, class: "medium-width" %>
+	</label></br>
 
-	<%= f.label :screen_name %>
- 	<%= f.text_field :screenname %>
-  </div>
+		<%= f.fields_for :school do |s| %>
+		<label class="input">
+		  <span>School name</span>
+	      <%= s.text_field :name, data: {autocomplete_source: schools_path}, :class => "wide" %>
+	</label></br>
 
-  <div>
-	<fieldset>
-		<legend>School</legend>
-	<%= f.fields_for :school do |s| %>
-	  <%= s.label :name %>
-      <%= s.text_field :name, data: {autocomplete_source: schools_path} %>
+		<label class="input">
+	      <span>Town or City</span>
+	      <%= s.text_field :town, :class => "narrow"  %>
+	</label></br>
 
-      <%= s.label :town %>
-      <%= s.text_field :town  %>
-
-      <%= s.label :state %>
-      <%= s.text_field :state  %>
-	<% end %>
-	</fieldset>
-  </div>
-
-
+		<label class="input">
+	      <span>State</span>
+	      <%= s.text_field :state, :class => "very-narrow"  %>
+	</label></br>
+		<% end %>
   <%= f.hidden_field :role, :value => "1" %>
-
-  <div><%= f.submit "Sign up" %></div>
+  </div>
+  <%= f.submit "Sign up", :class => "button, input" %>
+</div>
 <% end %>
 
-<%= render "links" %>
+<div id="signup-links">	
+	<%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
+	  <%= button_to "Forgot password", new_password_path(resource_name), :method => :get %>
+	<% end -%>
+
+	<%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+	  <%= button_to "Re-send confirmation instructions", new_confirmation_path(resource_name), :method => :get %>
+	<% end -%>
+
+	<%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+	  <%= button_to "Re-send unlock instructions", new_unlock_path(resource_name), :method => :get %>
+	<% end -%>
+</div>
 </article>
