@@ -23,7 +23,7 @@
   span.login {
     position:absolute;
     top:25px;
-    left:32px;
+    left:35px;
     font-family: "Copperplate", sans-serif;
     font-size: 24px;
     }
@@ -61,10 +61,15 @@
       padding: 6px;
       font: inherit;
     }
-    input[type=submit] {
+    input.signin {
       position:absolute;
       bottom:20px;
-      right:120px;
+      right:160px;
+    }
+    img.cancel-login {
+      position:absolute;
+      bottom:20px;
+      right:60px;
     }
     input[type=checkbox].remember-me  {
       position:absolute;

@@ -1,9 +1,12 @@
-#videoblock {
+#videoblock, #login-register {
   height:450px;
   width:800px;
   border: solid 20px $main-green;
   margin:auto;
-}
+}  
+#login-register {
+    display:none;
+  }
 .videoarea {
 	float: left;
 	height:205px;

@@ -1,7 +1,17 @@
-<ul>
-	<li><%= link_to "Textbooks", textbooks_path %></li>
-	<li>Videos</li>
-	<li>Feedback</li>
-	<li>Homework</li>
-	<li>Classes</li>
-</ul>
+This is the welcome screen! </br>
+<%= form_for :student, :url => { :action => 'welcome' }, :html => { :method => 'get' } do |f| %>
+
+	<%= f.label :email %></br>
+	<%= f.email_field :email %> </br>
+	
+	<%= f.label :passwd %></br>
+	<%= f.text_field :passwd %> </br>
+	
+	<%= f.submit 'submit' %>
+<% end %>
+
+<% if @valid %>
+	Password is correct!
+<% else %>
+	Password is NOT correct!
+<% end %>
