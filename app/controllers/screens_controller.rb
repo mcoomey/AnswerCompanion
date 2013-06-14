@@ -19,5 +19,5 @@ class ScreensController < ApplicationController
       end
     end
   end  
-    
+
 end

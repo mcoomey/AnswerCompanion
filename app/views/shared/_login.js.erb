@@ -29,8 +29,8 @@
     		<%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
     			<%= link_to "Forgot password?", new_password_path(resource_name), class: "forgot-password" %>
     		<% end -%>
-    		<%= image_submit_tag "Login.png", :onmouseover => "this.src='assets/LoginHover.png'",
-    		                                  :onmouseout => "this.src='assets/Login.png'", class: "signin" %>
+    		<%= image_submit_tag "Login.png", :onmouseover => "this.src='/assets/LoginHover.png'",
+    		                                  :onmouseout => "this.src='/assets/Login.png'", class: "signin" %>
     	<% end %>
     	<%= image_tag "Cancel.png",  :mouseover => "CancelHover.png", :alt => "Cancel" , class: "cancel-login"  %>
     </div>

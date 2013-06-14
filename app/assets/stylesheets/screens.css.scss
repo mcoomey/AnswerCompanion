@@ -4,9 +4,18 @@
   border: solid 20px $main-green;
   margin:auto;
 }  
-#login-register {
+#login-register.invisible {
     display:none;
   }
+#login-register.visible {
+  display:block;
+}
+#videoblock.invisible {
+    display:none;
+  }
+#videoblock.visible {
+  display:block;
+}
 .videoarea {
 	float: left;
 	height:205px;
@@ -19,6 +28,7 @@
 	border: solid 2px $main-green;
 	cursor:pointer;
 }
+
 #menu {
 	clear:both;
 	height: 150px;
@@ -36,7 +46,12 @@
 		text-decoration: none;
 	}
 }
-
+#menu.invisible {
+    display:none;
+  }
+#menu.visible {
+  display:block;
+}
 .instructor {
   margin-left: ($screen-width - 774px) / 2;
 	height: 100px;

@@ -1,13 +1,15 @@
 module ApplicationHelper
 	
 	def current_user
-		(current_student || current_instructor)
+		(current_student || current_instructor || current_parent)
 	end
 	
 	def current_user_email
 		if instructor_signed_in?
 			current_instructor.email
 		elsif student_signed_in?
+			current_student.email
+		elsif parent_signed_in?
 			current_student.email
 		else
 			"Not signed in"
@@ -18,7 +20,9 @@ module ApplicationHelper
 		if instructor_signed_in? 
 			return destroy_instructor_session_path
 		elsif student_signed_in? 
-			return destroy_student_session_path 
+			return destroy_student_session_path
+		elsif parent_signed_in? 
+			return destroy_parent_session_path
 		end		
 	end
 	
