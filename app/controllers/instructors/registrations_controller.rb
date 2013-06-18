@@ -23,6 +23,7 @@ class Instructors::RegistrationsController < Devise::RegistrationsController
         respond_with resource, :location => after_inactive_sign_up_path_for(resource)
       end
     else
+      flash[:alert] = "Error: " + resource.errors.full_messages.join(", ")
       clean_up_passwords resource
       respond_with resource
     end

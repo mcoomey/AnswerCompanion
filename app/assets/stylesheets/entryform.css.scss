@@ -28,38 +28,35 @@
     font-size: 24px;
     }
 
-  #login-form {
+  #data-entry-form {
     position:absolute;
     width:750px;
     height:340px;
     top:60px;
     left:0px;
     margin:0;
-    input {
+    ::-moz-placeholder {
+      color:$dark-grey;
+    }
+    input[type=text], input[type=email], input[type=password] {
       border: solid 1px $medium-grey;
       border-radius:15px;
       font-size: 1em;
+      height:35px;
+      margin-bottom:10px;
+      padding-left:10px;
+      &.wide {
+        width:320px;
+      }
+      &.medium {
+        width:215px;
+      }
+      &.narrow {
+        width:90px;
+      }
       &:hover{
     	  cursor:pointer;
     	}
-    }
-  	.input {
-      border-radius:15px;
-      margin: 10px 5px 5px 5px;
-      float: left;
-    }
-    .input span {
-      position: absolute;
-      padding: 7px;
-      margin-left: 10px;
-      color: $medium-grey;
-      z-index:1;
-      cursor:text;
-    }
-    .input input, .input textarea, .input select {
-      z-index:0;
-      padding: 6px;
-      font: inherit;
     }
     input.signin {
       position:absolute;
@@ -86,7 +83,7 @@
     a.forgot-password {
       position:absolute;
       top:52px;
-      left:300px;
+      left:40px;
       font-family: "Copperplate", sans-serif;
       font-size: 16px;
       color:black;
@@ -95,6 +92,36 @@
         color:blue;
       }
     }
+    a.forgot-password-big {
+      position:absolute;
+      top:62px;
+      left:30px;
+      font-family: "Copperplate", sans-serif;
+      font-size: 26px;
+      color:red;
+      &:hover{
+        cursor:pointer;
+        color:blue;
+      }
+    }
+  	.field_with_errors input{
+  	  border: solid 3px red;
+  	}
   }
+  #left-entry-panel{
+    position: relative;
+    width:355px;
+    height:240px;
+    margin-left:20px;
+    float: left;
+  }
+  #right-entry-panel{
+    position: relative;
+    width:355px;
+    height:240px;
+    float:left;
+   
+  }
+
 }
 

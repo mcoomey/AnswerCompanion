@@ -7,4 +7,6 @@ jQuery ->
     $("#login-register").hide()
     $("#videoblock").show()
     $("#menu").show()
+    $(".alert").empty()
+    $(".notice").empty()
   

@@ -14,7 +14,6 @@ class CustomFailure < Devise::FailureApp
     if http_auth?
       http_auth
     else
-puts "warden message = #{warden_message}"
       store_location!
       flash[:alert] = i18n_message unless flash[:notice]  
       redirect_to redirect_url

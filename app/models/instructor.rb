@@ -20,6 +20,8 @@ class Instructor < ActiveRecord::Base
                   :deactivated, :school, :schools_attributes
   accepts_nested_attributes_for :schools
    
+	validates :screenname, :uniqueness => { :message => " already exists."}
+	
 #    def school_name
 #      if school.try(:name).to_s.length() > 0
 #        school.try(:name).to_s + "||" + school.try(:town).to_s + "||" + school.try(:state).to_s
