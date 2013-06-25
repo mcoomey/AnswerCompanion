@@ -23,10 +23,46 @@ class Instructors::RegistrationsController < Devise::RegistrationsController
         respond_with resource, :location => after_inactive_sign_up_path_for(resource)
       end
     else
-      flash[:alert] = "Error: " + resource.errors.full_messages.join(", ")
+      if resource.errors.count > 1
+        flash[:alert] = "Errors: " + resource.errors.full_messages.join(", ")
+      else
+        flash[:alert] = "Error: " + resource.errors.full_messages.join(", ")
+      end
       clean_up_passwords resource
       respond_with resource
     end
   end
+  
+  # GET /resource/edit
+  def edit
+    render :edit
+  end
+
+  # PUT /resource
+  # We need to use a copy of the resource because we don't want to change
+  # the current user in place.
+  def update
+    self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
+
+    if resource.update_with_password(params[resource_name])
+      if is_navigational_format?
+        if resource.respond_to?(:pending_reconfirmation?) && resource.pending_reconfirmation?
+          flash_key = :update_needs_confirmation
+        end
+        set_flash_message :notice, flash_key || :updated
+      end
+      sign_in resource_name, resource, :bypass => true
+      respond_with resource, :location => after_update_path_for(resource)
+    else
+        if resource.errors.count > 1
+          flash[:alert] = "Errors: " + resource.errors.full_messages.join(", ")
+        else
+          flash[:alert] = "Error: " + resource.errors.full_messages.join(", ")
+        end
+      clean_up_passwords resource
+      respond_with resource
+    end
+  end
+
  
 end

@@ -1,7 +1,8 @@
 #data-entry {
   position:relative;
   width: 720px;
-  height: 370px;
+  height:auto !important;
+  min-height: 370px;
   background-color:$very-light-green;
   border: solid 5px $dark-grey;
   border-bottom-right-radius: 20px;
@@ -29,12 +30,13 @@
     }
 
   #data-entry-form {
-    position:absolute;
+    position:relative;
     width:750px;
-    height:340px;
-    top:60px;
-    left:0px;
-    margin:0;
+    height:auto !important;
+    min-height:340px;
+    margin-top:60px;
+    margin-left:0px;
+    margin-left:20px;
     ::-moz-placeholder {
       color:$dark-grey;
     }
@@ -58,32 +60,45 @@
     	  cursor:pointer;
     	}
     }
+    input[type=submit]{
+      font-size: 1em;
+    }
     input.signin {
       position:absolute;
-      bottom:20px;
+      bottom:0;
       right:160px;
     }
     img.cancel-login {
       position:absolute;
-      bottom:20px;
+      bottom:0;
       right:60px;
+    }
+    img.cancel-link {
+      position:absolute;
+      bottom:0;
+      right:60px;
+    }
+    a.delete-link {
+      position:absolute;
+      bottom:0;
+      left:40px;
     }
     input[type=checkbox].remember-me  {
       position:absolute;
       top:50px;
-      left:20px;
+      left:0px;
     }
     label.remember-me {
       position:absolute;
       top:52px;
-      left:40px;
+      left:20px;
       font-family: "Copperplate", sans-serif;
       font-size: 16px;
     }
     a.forgot-password {
       position:absolute;
       top:52px;
-      left:40px;
+      left:10px;
       font-family: "Copperplate", sans-serif;
       font-size: 16px;
       color:black;
@@ -95,7 +110,7 @@
     a.forgot-password-big {
       position:absolute;
       top:62px;
-      left:30px;
+      left:10px;
       font-family: "Copperplate", sans-serif;
       font-size: 26px;
       color:red;
@@ -108,19 +123,18 @@
   	  border: solid 3px red;
   	}
   }
-  #left-entry-panel{
+  .left-entry-panel{
     position: relative;
     width:355px;
-    height:240px;
+//    min-height:240px;
     margin-left:20px;
     float: left;
   }
-  #right-entry-panel{
+  .right-entry-panel{
     position: relative;
     width:355px;
-    height:240px;
+//    min-height:240px;
     float:left;
-   
   }
 
 }

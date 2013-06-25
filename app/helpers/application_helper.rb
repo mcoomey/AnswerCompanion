@@ -16,6 +16,16 @@ module ApplicationHelper
 		end
 	end  	
 	
+	def edit_user_registration_path
+	 	if instructor_signed_in? 
+			return edit_instructor_registration_path
+		elsif student_signed_in? 
+			return edit_student_registration_path
+		elsif parent_signed_in? 
+			return edit_parent_registration_path
+		end		
+	end
+	
 	def destroy_user_session_path
 		if instructor_signed_in? 
 			return destroy_instructor_session_path
@@ -25,5 +35,4 @@ module ApplicationHelper
 			return destroy_parent_session_path
 		end		
 	end
-	
 end

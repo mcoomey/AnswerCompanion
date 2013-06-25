@@ -2,27 +2,37 @@
   <%= render 'shared/resource_heading', :formtype => "login" %>
   <div id="data-entry-form">
    	<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-		  <div id="left-entry-panel">
-			<%= f.email_field :email, class: "wide", placeholder: "Email address" %>
-			<% if devise_mapping.rememberable? %>
-				<%= f.check_box :remember_me, class: "remember-me" %> <%= f.label :remember_me, class: "remember-me"  %>
-			<% end %>
-			
+
+		  <div class="left-entry-panel">
+				<%= f.email_field :email, class: "wide", placeholder: "Email address", tabindex: 1 %>
+				<%= f.check_box :remember_me, class: "remember-me" %> <%= f.label :remember_me, class: "remember-me", tabindex: 3  %>
 			</div>
-		  <div id="right-entry-panel">
-			<%= f.password_field :password, class: "wide", placeholder: "Password" %>
-			<% if devise_mapping.recoverable? && controller_name != 'passwords' %>
-				<% if flash[:alert] == I18n.t("devise.failure.invalid") %>
+
+		  <div class="right-entry-panel">
+				<%= f.password_field :password, class: "wide", placeholder: "Password", tabindex: 2 %>
+				<% msg = I18n.t("devise.failure.invalid") %>
+				<% if flash[:alert] && (flash[:alert].include? msg) %>
 					<%= link_to "Forgot password?", new_password_path(resource_name), class: "forgot-password-big" %>
 				<% else %>
 					<%= link_to "Forgot password?", new_password_path(resource_name), class: "forgot-password" %>
 				<% end %>
-			<% end %>
 			</div>
 			
 			<%= image_submit_tag "Login.png", :onmouseover => "this.src='/assets/LoginHover.png'",
-			                                  :onmouseout => "this.src='/assets/Login.png'", class: "signin" %>
+				                                :onmouseout => "this.src='/assets/Login.png'", class: "signin", tabindex: 4 %>
 		<% end %>
-		<%= image_tag "Cancel.png",  :mouseover => "CancelHover.png", :alt => "Cancel" , class: "cancel-login"  %>
+		
+		<%= image_tag "Cancel.png",  :mouseover => "CancelHover.png", :alt => "Cancel" , class: "cancel-login" %>
+
+		<% msg = I18n.t("devise.failure.unconfirmed") %>
+		<% if flash[:alert] && (flash[:alert].include? msg) %>
+		  <%= link_to "Re-send confirmation instructions?", new_confirmation_path(resource_name) %>
+		<% end %>
+			
+		<% msg = I18n.t("devise.failure.locked") %>
+		<% if flash[:alert] && (flash[:alert].include? msg) %>
+		  <%= link_to "Request unlock instructions?", new_unlock_path(resource_name) %>
+		<% end %>
+			
   </div>
 </div>
