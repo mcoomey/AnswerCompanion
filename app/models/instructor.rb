@@ -18,7 +18,7 @@ class Instructor < ActiveRecord::Base
                   :firstname, :lastname, :screenname, :emailpref, :paypalaccount,
                   :role, :privilege, :grade, :accountbalance, :violationcount,
                   :deactivated, :school, :schools_attributes
-  accepts_nested_attributes_for :schools
+  accepts_nested_attributes_for :schools, allow_destroy: true
    
 	validates :screenname, :uniqueness => { :message => " already exists."}, :allow_blank => true
 	

@@ -1,4 +1,6 @@
 class Instructors::RegistrationsController < Devise::RegistrationsController
+
+  before_filter :authenticate_user!
   
   def new
     @school = School.new

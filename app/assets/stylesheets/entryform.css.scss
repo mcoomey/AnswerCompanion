@@ -51,10 +51,10 @@
         width:320px;
       }
       &.medium {
-        width:215px;
+        width:200px;
       }
       &.narrow {
-        width:90px;
+        width:60px;
       }
       &:hover{
     	  cursor:pointer;
@@ -64,23 +64,24 @@
       font-size: 1em;
     }
     input.signin {
+      padding-top:40px;
       position:absolute;
-      bottom:0;
+      bottom:10px;
       right:160px;
     }
     img.cancel-login {
       position:absolute;
-      bottom:0;
+      bottom:10px;
       right:60px;
     }
     img.cancel-link {
       position:absolute;
-      bottom:0;
+      bottom:10px;
       right:60px;
     }
     a.delete-link {
       position:absolute;
-      bottom:0;
+      bottom:10px;
       left:40px;
     }
     input[type=checkbox].remember-me  {
@@ -126,16 +127,18 @@
   .left-entry-panel{
     position: relative;
     width:355px;
-//    min-height:240px;
     margin-left:20px;
     float: left;
   }
   .right-entry-panel{
     position: relative;
     width:355px;
-//    min-height:240px;
     float:left;
   }
-
+  .full-width-panel{
+    clear:both;
+    margin-left:20px;
+    width:100%;
+  }
 }
 
