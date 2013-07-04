@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130530173549) do
+ActiveRecord::Schema.define(:version => 20130628181628) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -102,7 +102,6 @@ ActiveRecord::Schema.define(:version => 20130530173549) do
     t.string   "screenname"
     t.integer  "emailpref",              :default => 0
     t.string   "paypalaccount"
-    t.integer  "role",                   :default => 0
     t.integer  "privilege",              :default => 0
     t.string   "grade"
     t.float    "accountbalance",         :default => 0.0
@@ -159,6 +158,20 @@ ActiveRecord::Schema.define(:version => 20130530173549) do
 
   add_index "parents_students", ["parent_id", "student_id"], :name => "index_parents_students_on_parent_id_and_student_id"
 
+  create_table "role_assignments", :force => true do |t|
+    t.integer  "role_id"
+    t.string   "roleable_type"
+    t.integer  "roleable_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "roles", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "school_memberships", :force => true do |t|
     t.integer  "school_id"
     t.integer  "schoolmember_id"
@@ -209,7 +222,6 @@ ActiveRecord::Schema.define(:version => 20130530173549) do
     t.string   "screenname"
     t.integer  "emailpref",              :default => 0
     t.string   "paypalaccount"
-    t.integer  "role",                   :default => 0
     t.integer  "privilege",              :default => 0
     t.string   "grade"
     t.string   "school"

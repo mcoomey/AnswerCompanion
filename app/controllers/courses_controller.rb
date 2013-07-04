@@ -1,7 +1,8 @@
 class CoursesController < ApplicationController
   
-
-  before_filter :authenticate_instructor!  
+  # before_filter :authenticate_instructor!  
+  load_and_authorize_resource :instructor
+  load_and_authorize_resource :course, :through => :instructor
 
   # GET /courses
   # GET /courses.json
@@ -77,4 +78,5 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
     @course.destroy
   end
+
 end

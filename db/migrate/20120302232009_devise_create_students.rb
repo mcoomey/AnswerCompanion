@@ -43,7 +43,6 @@ class DeviseCreateStudents < ActiveRecord::Migration
       t.string   "screenname"
       t.integer  "emailpref",              :default => 0
       t.string   "paypalaccount"
-      t.integer  "role",                   :default => 0
       t.integer  "privilege",              :default => 0
       t.string   "grade"
       t.string   "school"

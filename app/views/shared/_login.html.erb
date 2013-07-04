@@ -26,12 +26,18 @@
 
 		<% msg = I18n.t("devise.failure.unconfirmed") %>
 		<% if flash[:alert] && (flash[:alert].include? msg) %>
-		  <%= link_to "Re-send confirmation instructions?", new_confirmation_path(resource_name) %>
+			<div class="full-width-panel">
+				</br>
+			  <%= link_to "Re-send confirmation instructions?", new_confirmation_path(resource_name) %>
+			</div>
 		<% end %>
 			
 		<% msg = I18n.t("devise.failure.locked") %>
 		<% if flash[:alert] && (flash[:alert].include? msg) %>
-		  <%= link_to "Request unlock instructions?", new_unlock_path(resource_name) %>
+			<div class="full-width-panel">
+				</br>
+			  <%= link_to "Request unlock instructions?", new_unlock_path(resource_name) %>
+			</div>
 		<% end %>
 			
   </div>

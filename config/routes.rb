@@ -1,5 +1,8 @@
 AnswerCompanion::Application.routes.draw do
 
+  resources :roles
+
+
   get "instructors/index"
 
   get "instructor/index"

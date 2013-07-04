@@ -1,4 +1,5 @@
 class InstructorsController < ApplicationController
+  
   def index
   	@instructors = Instructor.find(:all)
   end

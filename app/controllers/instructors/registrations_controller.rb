@@ -1,6 +1,6 @@
 class Instructors::RegistrationsController < Devise::RegistrationsController
 
-  before_filter :authenticate_user!
+  before_filter :authenticate_instructor!
   
   def new
     @school = School.new
@@ -12,9 +12,11 @@ class Instructors::RegistrationsController < Devise::RegistrationsController
     @school = School.where(name: params[:instructor][:school][:name], 
                            town: params[:instructor][:school][:town], 
                            state: params[:instructor][:school][:state]).first_or_create
+    @role = Role.find_by_name("Instructor")
     
     if resource.save
       resource.schools << @school
+      resource.roles << @role
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_navigational_format?
         sign_in(resource_name, resource)
@@ -45,8 +47,21 @@ class Instructors::RegistrationsController < Devise::RegistrationsController
   # the current user in place.
   def update
     self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
-
-    if resource.update_with_password(params[resource_name])
+  
+    schools_attributes = params[resource_name].delete(:schools_attributes)
+  
+    schools_attributes.each do | (key, val) |
+      skool = School.where(name: val[:name], town: val[:town], state: val[:state]).first_or_create
+      membership = SchoolMembership.where("school_id = ? and schoolmember_type = ? and schoolmember_id = ?", 
+                                    skool.id, current_user.class.name, current_user.id).first
+      if (val[:_destroy]=='1')
+        membership.destroy
+      elsif !membership
+        resource.schools << skool
+      end
+    end
+    
+   if resource.update_with_password(params[resource_name])
       if is_navigational_format?
         if resource.respond_to?(:pending_reconfirmation?) && resource.pending_reconfirmation?
           flash_key = :update_needs_confirmation

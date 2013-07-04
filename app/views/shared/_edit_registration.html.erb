@@ -27,7 +27,8 @@
 					</div>
 					<%= f.fields_for :schools do |sch| %>
 					  <%= render 'shared/school_fields', f: sch %>
-				  <% end %>		
+				  <% end %>
+				  <%= link_to_add_fields "Add School", f, :schools %>
 					<div class="clear-float-space"></br></div>
 					<%= image_submit_tag "Submit.png", :onmouseover => "this.src='/assets/SubmitHover.png'",
 				                                     :onmouseout => "this.src='/assets/Submit.png'", class: "signin" %>	

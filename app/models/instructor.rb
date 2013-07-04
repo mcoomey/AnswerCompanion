@@ -1,5 +1,7 @@
 class Instructor < ActiveRecord::Base
 	
+	has_many :role_assignments, :as => :roleable
+	has_many :roles, :through => :role_assignments
 	has_many :school_memberships, :as => :schoolmember
 	has_many :schools, :through => :school_memberships
 	has_many :courses
@@ -16,22 +18,10 @@ class Instructor < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me,
                   :firstname, :lastname, :screenname, :emailpref, :paypalaccount,
-                  :role, :privilege, :grade, :accountbalance, :violationcount,
+                  :privilege, :grade, :accountbalance, :violationcount,
                   :deactivated, :school, :schools_attributes
   accepts_nested_attributes_for :schools, allow_destroy: true
    
 	validates :screenname, :uniqueness => { :message => " already exists."}, :allow_blank => true
 	
-#    def school_name
-#      if school.try(:name).to_s.length() > 0
-#        school.try(:name).to_s + "||" + school.try(:town).to_s + "||" + school.try(:state).to_s
-#      else
-#        nil
-#      end
-#    end
-#    
-#    def school_name=(name_town_state)
-#      name, town, state = name_town_state.split("||")
-#      self.school = School.where(name: name, town: town, state: state).first_or_initialize if name.present?
-#    end
 end
