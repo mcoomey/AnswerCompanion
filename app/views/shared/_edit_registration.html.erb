@@ -8,7 +8,7 @@
 						<%= f.label "Email:" %>
 					 	<%= f.email_field :email, class: "wide", tabindex: 1 %>
 					  <%= f.label "New Password (if desired):"%>
-					  <%= f.password_field :password, class: "wide", tabindex: 3 %>
+					  <%= f.password_field :password, :autocomplete => "off", class: "wide", tabindex: 3 %>
 					  <%= f.label "First name:"%>
 					 	<%= f.text_field :firstname, class: "wide", tabindex: 5 %>
 					  <%= f.label "Screen nickname:"%>

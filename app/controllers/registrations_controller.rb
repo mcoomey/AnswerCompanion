@@ -1,9 +1,9 @@
-class Instructors::RegistrationsController < Devise::RegistrationsController
+class RegistrationsController < Devise::RegistrationsController
 
   before_filter :authenticate_instructor!
   
   def new
-    # @school = School.new
+    @school = School.new
     super    
   end
 

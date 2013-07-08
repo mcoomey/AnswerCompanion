@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130628181628) do
+ActiveRecord::Schema.define(:version => 20130708180654) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -75,6 +75,14 @@ ActiveRecord::Schema.define(:version => 20130628181628) do
     t.integer  "instructor_id"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+  end
+
+  create_table "family_memberships", :force => true do |t|
+    t.integer  "student_id"
+    t.integer  "familymember_id"
+    t.string   "familymember_type"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
 
   create_table "instructors", :force => true do |t|
@@ -224,7 +232,6 @@ ActiveRecord::Schema.define(:version => 20130628181628) do
     t.string   "paypalaccount"
     t.integer  "privilege",              :default => 0
     t.string   "grade"
-    t.string   "school"
     t.float    "accountbalance",         :default => 0.0
     t.integer  "violationcount",         :default => 0
     t.boolean  "deactivated",            :default => false

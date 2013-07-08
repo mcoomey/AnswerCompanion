@@ -5,7 +5,9 @@ class Student < ActiveRecord::Base
 	has_many :school_memberships, :as => :schoolmember
 	has_many :schools, :through => :school_memberships
 	has_many :subjects
-	has_and_belongs_to_many :parents
+	has_many :family_memberships
+  has_many :instructors, :through => :family_memberships, :source => :familymember, :source_type => 'Instructor'
+  has_many :parents, :through => :family_memberships, :source => :familymember, :source_type => 'Parent'
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :timeoutable and :omniauthable

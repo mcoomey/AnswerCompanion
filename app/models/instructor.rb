@@ -9,6 +9,8 @@ class Instructor < ActiveRecord::Base
 	has_many :lessons
 	has_many :exercises
 	has_many :textbooks
+	has_many :family_memberships, :as => :familymember
+	has_many :children, :through => :family_memberships, :source => :student
 	
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :timeoutable and :omniauthable

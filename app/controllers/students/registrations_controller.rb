@@ -1,6 +1,6 @@
-class Instructors::RegistrationsController < Devise::RegistrationsController
+class Students::RegistrationsController < Devise::RegistrationsController
 
-  before_filter :authenticate_instructor!
+  before_filter :authenticate_student!
   
   def new
     # @school = School.new
@@ -8,11 +8,11 @@ class Instructors::RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    build_resource(params[:instructor].except(:school))
-    @school = School.where(name: params[:instructor][:school][:name], 
-                           town: params[:instructor][:school][:town], 
-                           state: params[:instructor][:school][:state]).first_or_create
-    @role = Role.find_by_name("Instructor")
+    build_resource(params[:student].except(:school))
+    @school = School.where(name: params[:student][:school][:name], 
+                           town: params[:student][:school][:town], 
+                           state: params[:student][:school][:state]).first_or_create
+    @role = Role.find_by_name("Student")
     
     if resource.save
       resource.schools << @school

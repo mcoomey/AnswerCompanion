@@ -36,15 +36,11 @@ AnswerCompanion::Application.routes.draw do
     end
   end
   
-  devise_for :instructors, :controllers => {:registrations => "instructors/registrations", :passwords => "instructors/passwords"} 
-  # do
-  #   get '/instructor/signup', :to => 'instructors/registration#new'
-  #   post '/resource', :to => 'instructors/registration#create'
-  # end
-  # 
-  devise_for :students
+  devise_for :instructors, :controllers => {:registrations => "instructors/registrations"} 
 
-  devise_for :parents
+  devise_for :students, :controllers => {:registrations => "students/registrations"} 
+
+  devise_for :parents, :controllers => {:registrations => "parents/registrations"} 
 
 	resources :instructors do
 	  resources :schools

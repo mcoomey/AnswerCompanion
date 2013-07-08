@@ -1,8 +1,9 @@
 class Parent < ActiveRecord::Base
   
-  has_and_belongs_to_many :children, :class_name => "Student"
 	has_many :role_assignments, :as => :roleable
 	has_many :roles, :through => :role_assignments
+	has_many :family_memberships, :as => :familymember
+	has_many :children, :through => :family_memberships, :source => :student
   
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :timeoutable and :omniauthable
