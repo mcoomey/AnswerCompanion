@@ -7,14 +7,18 @@
 					 	<%= f.email_field :email, class: "wide", placeholder: "Email address", tabindex: 1 %>
 					  <%= f.password_field :password, class: "wide", placeholder: "Password", tabindex: 3 %>
 					 	<%= f.text_field :firstname, class: "wide", placeholder: "First name", tabindex: 5 %>
-				    <%= s.text_field :name, data: {autocomplete_source: schools_path}, class: "wide", placeholder: "School name", tabindex: 7 %>
+						<% if resource_name != :parent %>
+					    <%= s.text_field :name, data: {autocomplete_source: schools_path}, class: "wide", placeholder: "School name", tabindex: 7 %>
+						<% end %>
 				  </div>
 				  <div class="right-entry-panel">
-					 	<%= f.text_field :screenname, class: "wide", placeholder: "Screen nickname", tabindex: 2 %>
+					 	<%= f.text_field :username, class: "wide", placeholder: "Username", tabindex: 2 %>
 					  <%= f.password_field :password_confirmation, class: "wide", placeholder: "Re-enter Password", tabindex: 4 %>
 					 	<%= f.text_field :lastname, class: "wide", placeholder: "Last name", tabindex: 6 %>
-						<%= s.text_field :town, class: "medium", placeholder: "Town or City", tabindex: 8 %>
-						<%= s.text_field :state, class: "narrow", placeholder: "State", tabindex: 9 %>
+						<% if resource_name != :parent %>
+							<%= s.text_field :town, class: "medium", placeholder: "Town or City", tabindex: 8 %>
+							<%= s.text_field :state, class: "narrow", placeholder: "State", tabindex: 9 %>
+						<% end %>
 					</div>
 			  <% end %>
 				<%= image_submit_tag "Register.png", :onmouseover => "this.src='/assets/RegisterHover.png'",

@@ -50,15 +50,20 @@ class Instructors::RegistrationsController < Devise::RegistrationsController
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
   
     schools_attributes = params[resource_name].delete(:schools_attributes)
-  
+    skool_error = false  
     schools_attributes.each do | (key, val) |
       skool = School.where(name: val[:name], town: val[:town], state: val[:state]).first_or_create
-      membership = SchoolMembership.where("school_id = ? and schoolmember_type = ? and schoolmember_id = ?", 
-                                    skool.id, current_user.class.name, current_user.id).first
-      if (val[:_destroy]=='1')
-        membership.destroy
-      elsif !membership
-        resource.schools << skool
+      if skool.errors.count == 0
+        membership = SchoolMembership.where("school_id = ? and schoolmember_type = ? and schoolmember_id = ?", 
+                                      skool.id, current_user.class.name, current_user.id).first
+        if (val[:_destroy]=='1')
+          membership.destroy
+        elsif !membership
+          resource.schools << skool
+        end  
+      else
+        skool_error = true
+        flash[:alert] = "School " + skool.errors.full_messages.first
       end
     end
     
@@ -66,7 +71,7 @@ class Instructors::RegistrationsController < Devise::RegistrationsController
       if is_navigational_format?
         flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?
           :update_needs_confirmation : :updated
-        set_flash_message :notice, flash_key
+        set_flash_message :notice, flash_key unless skool_error
       end
       sign_in resource_name, resource, :bypass => true
       respond_with resource, :location => after_update_path_for(resource)

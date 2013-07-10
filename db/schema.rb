@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130708180654) do
+ActiveRecord::Schema.define(:version => 20130709174138) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -77,14 +77,6 @@ ActiveRecord::Schema.define(:version => 20130708180654) do
     t.datetime "updated_at",       :null => false
   end
 
-  create_table "family_memberships", :force => true do |t|
-    t.integer  "student_id"
-    t.integer  "familymember_id"
-    t.string   "familymember_type"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
-  end
-
   create_table "instructors", :force => true do |t|
     t.string   "email",                  :default => "",    :null => false
     t.string   "encrypted_password",     :default => "",    :null => false
@@ -107,7 +99,7 @@ ActiveRecord::Schema.define(:version => 20130708180654) do
     t.datetime "updated_at",                                :null => false
     t.string   "firstname"
     t.string   "lastname"
-    t.string   "screenname"
+    t.string   "username"
     t.integer  "emailpref",              :default => 0
     t.string   "paypalaccount"
     t.integer  "privilege",              :default => 0
@@ -154,6 +146,7 @@ ActiveRecord::Schema.define(:version => 20130708180654) do
     t.string   "firstname"
     t.string   "lastname"
     t.boolean  "deactivated",            :default => false
+    t.string   "username"
   end
 
   add_index "parents", ["email"], :name => "index_parents_on_email", :unique => true
@@ -227,7 +220,7 @@ ActiveRecord::Schema.define(:version => 20130708180654) do
     t.datetime "updated_at",                                :null => false
     t.string   "firstname"
     t.string   "lastname"
-    t.string   "screenname"
+    t.string   "username"
     t.integer  "emailpref",              :default => 0
     t.string   "paypalaccount"
     t.integer  "privilege",              :default => 0

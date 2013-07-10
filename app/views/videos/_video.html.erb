@@ -1,6 +1,6 @@
 <tr>
     <td><%= video.length %></td>
-    <td><%= video.instructor.screenname %></td>
+    <td><%= video.instructor.username %></td>
 	<% if !video.videofile_processed || video.videofile_processed == 0 %>
 		<td>Processing</td>
 	<% elsif video.videofile_processed < 0 %>

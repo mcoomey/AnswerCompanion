@@ -11,8 +11,8 @@
 					  <%= f.password_field :password, :autocomplete => "off", class: "wide", tabindex: 3 %>
 					  <%= f.label "First name:"%>
 					 	<%= f.text_field :firstname, class: "wide", tabindex: 5 %>
-					  <%= f.label "Screen nickname:"%>
-					 	<%= f.text_field :screenname, class: "wide", tabindex: 7 %>
+					  <%= f.label "Username:"%>
+					 	<%= f.text_field :username, class: "wide", tabindex: 7 %>
 				  </div>
 				  <div class="right-entry-panel">
 					  <%= f.label "Current password:" %>
@@ -22,13 +22,27 @@
 					  <%= f.label "Last name:"%>
 					 	<%= f.text_field :lastname, class: "wide", tabindex: 6 %>
 					</div>
-					<div class="full-width-panel">
-						School Membership:
-					</div>
-					<%= f.fields_for :schools do |sch| %>
-					  <%= render 'shared/school_fields', f: sch %>
-				  <% end %>
-				  <%= link_to_add_fields "Add School", f, :schools %>
+					<div class="clear-float-space"></br></div>
+					<% if resource_name != :parent %>
+						<div class="full-width-panel">
+							School Membership:
+						</div>
+						<%= f.fields_for :schools do |sch| %>
+						  <%= render 'shared/school_fields', f: sch %>
+					  <% end %>
+					  <%= link_to_add_fields "Add School", f, :schools %>
+					<% else %>
+						<% if @children.count > 0 %>
+							Children:
+							<ul>
+							<% @children.each do |child| %>
+								<li><%= child.email %></li>
+							<% end %>
+							</ul>
+						<% else %>
+						  Children must add your email to their profile to allow you access to their account.
+						<% end %>
+					<% end %>
 					<div class="clear-float-space"></br></div>
 					<%= image_submit_tag "Submit.png", :onmouseover => "this.src='/assets/SubmitHover.png'",
 				                                     :onmouseout => "this.src='/assets/Submit.png'", class: "signin" %>	

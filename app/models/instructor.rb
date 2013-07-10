@@ -9,8 +9,6 @@ class Instructor < ActiveRecord::Base
 	has_many :lessons
 	has_many :exercises
 	has_many :textbooks
-	has_many :family_memberships, :as => :familymember
-	has_many :children, :through => :family_memberships, :source => :student
 	
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :timeoutable and :omniauthable
@@ -19,11 +17,11 @@ class Instructor < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me,
-                  :firstname, :lastname, :screenname, :emailpref, :paypalaccount,
+                  :firstname, :lastname, :username, :emailpref, :paypalaccount,
                   :privilege, :grade, :accountbalance, :violationcount,
                   :deactivated, :school, :schools_attributes
   accepts_nested_attributes_for :schools, allow_destroy: true
    
-	validates :screenname, :uniqueness => { :message => " already exists."}, :allow_blank => true
+	validates :username, :uniqueness => { :message => " already exists."}, :allow_blank => true
 	
 end

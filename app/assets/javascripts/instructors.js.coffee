@@ -13,4 +13,3 @@ jQuery ->
       $("#instructor_school_name").val info[0]
       $("#instructor_school_town").val info[1]
       $("#instructor_school_state").val info[2]
-    
