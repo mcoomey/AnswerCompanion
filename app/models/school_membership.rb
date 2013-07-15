@@ -3,5 +3,4 @@ class SchoolMembership < ActiveRecord::Base
   belongs_to :school
   belongs_to :schoolmember, :polymorphic => true
   
-  validates :school_id, :uniqueness => { :scope => [:schoolmember_id, :schoolmember_type], :message => " already belongs."}
 end

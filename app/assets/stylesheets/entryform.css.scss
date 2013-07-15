@@ -1,6 +1,5 @@
 #data-entry {
   position:relative;
-  width: 720px;
   height:auto !important;
   min-height: 370px;
   background-color:$very-light-green;
@@ -127,22 +126,31 @@
   	.field_with_errors input{
   	  border: solid 3px red;
   	}
-  }
-  .left-entry-panel{
-    position: relative;
-    width:355px;
-    margin-left:20px;
-    float: left;
-  }
-  .right-entry-panel{
-    position: relative;
-    width:355px;
-    float:left;
-  }
-  .full-width-panel{
-    clear:both;
-    margin-left:20px;
-    width:100%;
+    .left-entry-panel{
+      position: relative;
+      width:350px;
+      margin-left:20px;
+      float: left;
+    }
+    .right-entry-panel{
+      position: relative;
+      width:350px;
+      float:left;
+    }
+    .full-width-panel{
+      clear:both;
+      margin-top:20px;
+      margin-left:20px;
+      width:700px;
+    }
+    .wide-panel{
+      margin-left:20px;
+      width:660px;
+      height:50px;
+    }
+    a.add_fields{
+      margin-left:20px;
+    }
   }
 }
 

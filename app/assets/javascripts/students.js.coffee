@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 jQuery ->
-  $('#xstudent_school_name').autocomplete
+  $('#student_school_name').autocomplete
     minLength: 0
     delay: 0
     source: $("#student_school_name").data("autocomplete-source"),

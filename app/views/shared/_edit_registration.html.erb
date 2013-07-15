@@ -22,15 +22,27 @@
 					  <%= f.label "Last name:"%>
 					 	<%= f.text_field :lastname, class: "wide", tabindex: 6 %>
 					</div>
-					<div class="clear-float-space"></br></div>
+					<div class="clear-float-space"></div>
 					<% if resource_name != :parent %>
 						<div class="full-width-panel">
 							School Membership:
 						</div>
 						<%= f.fields_for :schools do |sch| %>
 						  <%= render 'shared/school_fields', f: sch %>
-					  <% end %>
-					  <%= link_to_add_fields "Add School", f, :schools %>
+					  <% end %>	
+					  <%= link_to_image_add_fields f, :schools, "AddSchool.png", "AddSchoolHover.png" %>
+					
+						<% if resource_name == :student%>
+							<div class="full-width-panel">
+								Grant Parent Access to:
+							</div>
+							<%= f.fields_for :schools do |sch| %>
+							  <%= render 'shared/school_fields', f: sch %>
+					  <% end %>	
+					  <%= link_to_image_add_fields f, :schools, "AddSchool.png", "AddSchoolHover.png" %>
+						
+						<% end %>
+						
 					<% else %>
 						<% if @children.count > 0 %>
 							Children:

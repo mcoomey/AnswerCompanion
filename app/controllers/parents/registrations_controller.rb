@@ -35,7 +35,11 @@ class Parents::RegistrationsController < Devise::RegistrationsController
   
   # GET /resource/edit
   def edit
-    @children = current_user.children
+    @parentemail = ParentEmail.where(email: current_user.email)
+    @children = []
+    @parentemail.each do |pe|
+      @children<< pe.student
+    end
     render :edit
   end
   

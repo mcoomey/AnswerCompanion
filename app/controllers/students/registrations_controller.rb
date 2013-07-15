@@ -8,15 +8,32 @@ class Students::RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    build_resource(params[:student].except(:school))
-    @school = School.where(name: params[:student][:school][:name], 
-                           town: params[:student][:school][:town], 
-                           state: params[:student][:school][:state]).first_or_create
+    build_resource(params[:student].except(:school).except(:parent_email))
+    if params[:student][:school][:name].length > 0
+      @school = School.where(name: params[:student][:school][:name], 
+                             town: params[:student][:school][:town], 
+                             state: params[:student][:school][:state]).first_or_create
+    else
+      @school = nil
+    end
+                           
+    if params[:student][:parent_email][:email].length > 0
+      @parent_email = ParentEmail.where(email: params[:student][:parent_email][:email]).first_or_create
+    else
+      @parent_email = nil
+    end
+  
     @role = Role.find_by_name("Student")
-    
+   
     if resource.save
-      resource.schools << @school
+      if @school
+        resource.schools << @school
+      end
       resource.roles << @role
+      if @parent_email
+        @parent_email.student_id = resource.id
+        @parent_email.save
+      end
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_navigational_format?
         sign_in(resource_name, resource)

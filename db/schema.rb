@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130709174138) do
+ActiveRecord::Schema.define(:version => 20130710183238) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -122,6 +122,15 @@ ActiveRecord::Schema.define(:version => 20130709174138) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
+
+  create_table "parent_emails", :force => true do |t|
+    t.integer  "student_id"
+    t.string   "email"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "parent_emails", ["student_id", "email"], :name => "index_parent_emails_on_student_id_and_email"
 
   create_table "parents", :force => true do |t|
     t.string   "email",                  :default => "",    :null => false

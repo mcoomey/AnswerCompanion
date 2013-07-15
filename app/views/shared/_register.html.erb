@@ -20,6 +20,13 @@
 							<%= s.text_field :state, class: "narrow", placeholder: "State", tabindex: 9 %>
 						<% end %>
 					</div>
+					
+					<% if resource_name == :student %>
+						<%= f.fields_for :parent_email do |p| %>
+					    <%= p.email_field :email, class: "wide", placeholder: "Parent email", tabindex: 10 %>
+						<% end %>
+					<% end %>
+					
 			  <% end %>
 				<%= image_submit_tag "Register.png", :onmouseover => "this.src='/assets/RegisterHover.png'",
 				                                     :onmouseout => "this.src='/assets/Register.png'", class: "signin" %>
