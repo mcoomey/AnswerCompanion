@@ -36,15 +36,16 @@
 							<div class="full-width-panel">
 								Grant Parent Access to:
 							</div>
-							<%= f.fields_for :schools do |sch| %>
-							  <%= render 'shared/school_fields', f: sch %>
+							<%= f.fields_for :parent_emails do |em| %>
+							  <%= render 'shared/parent_email_fields', f: em %>
 					  <% end %>	
-					  <%= link_to_image_add_fields f, :schools, "AddSchool.png", "AddSchoolHover.png" %>
+					  <%= link_to_image_add_fields f, :parent_emails, "AddParent.png", "AddParentHover.png" %>
 						
 						<% end %>
 						
 					<% else %>
 						<% if @children.count > 0 %>
+							<div class="full-width-panel">
 							Children:
 							<ul>
 							<% @children.each do |child| %>
@@ -53,6 +54,7 @@
 							</ul>
 						<% else %>
 						  Children must add your email to their profile to allow you access to their account.
+							</div>
 						<% end %>
 					<% end %>
 					<div class="clear-float-space"></br></div>

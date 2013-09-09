@@ -106,6 +106,10 @@
   		border-top-left-radius: 4px;  
   		border-bottom-right-radius: 0;
   		border-bottom-left-radius: 4px;  
+  		
+  		&:first-child {
+  		  margin-top:40px;
+  		}
 
   		&:hover {
   			border-color:blue;

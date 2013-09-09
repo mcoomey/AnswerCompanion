@@ -84,6 +84,20 @@ class Students::RegistrationsController < Devise::RegistrationsController
       end
     end
     
+    parent_emails_attributes = params[resource_name].delete(:parent_emails_attributes)
+    pem_error = false
+    parent_emails_attributes.each do | (key, val) |
+      pem = ParentEmail.where(email: val[:email], student_id: current_user.id).first_or_create
+      if pem.errors.count == 0
+        if (val[:_destroy]=='1')
+          pem.destroy
+        end
+      else
+        pem_error = true
+        flash[:alert] = "School " + pem.errors.full_messages.first
+      end
+    end
+    
    if resource.update_with_password(params[resource_name])
       if is_navigational_format?
         flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?

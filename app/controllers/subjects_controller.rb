@@ -1,7 +1,7 @@
 class SubjectsController < ApplicationController
 
   def index
-    @student = Student.find(params[:student_id]) or current_student
+    @student = Student.find_by_id(params[:student_id]) || current_student
     @subjects = @student.subjects
     @current_subjects = @student.subjects.where(:archived => false)
     @archived_subjects = @student.subjects.where(:archived => true)
@@ -14,7 +14,7 @@ class SubjectsController < ApplicationController
   end
 
   def show
-    @student = Student.find(params[:student_id]) or current_student
+    @student = Student.find_by_id(params[:student_id]) || current_student
     @subjects = @student.subjects.where(:archived => false)
     if params[:subject]
       @subject = Subject.where(:student_id => @student).find(params[:subject][:id])

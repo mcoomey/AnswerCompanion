@@ -2,7 +2,7 @@ $("#messages .alert").hide();
 $("#messages .ujs_alert").hide();
 $("#messages .notice").hide();
 $("#messages .ujs_notice").hide();
-if ($.cookie('index_tab') == "#current-courses") {
+if ($.cookie('horizontal-tabs-index') == "#current-courses") {
 	$("#buttonarea").hide().after("<%= j render 'new_course', :archived_val => false %>");
 	}
 else {

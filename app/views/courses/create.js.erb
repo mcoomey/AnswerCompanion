@@ -9,7 +9,7 @@
 	$("#ujsform").remove();
 	$("#buttonarea").show();
 	
-	if ($.cookie('index_tab') == "#current-courses") {
+	if ($.cookie('horizontal-tabs-index') == "#current-courses") {
 		$("#current-courses table tr:last").after("<%= j render 'course_table_row', :local_course => @course %>");
 		}
 	else {

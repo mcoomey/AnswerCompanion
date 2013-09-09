@@ -47,6 +47,11 @@ class Parents::RegistrationsController < Devise::RegistrationsController
   # We need to use a copy of the resource because we don't want to change
   # the current user in place.
   def update
+    @parentemail = ParentEmail.where(email: current_user.email)
+    @children = []
+    @parentemail.each do |pe|
+      @children<< pe.student
+    end
     self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
   

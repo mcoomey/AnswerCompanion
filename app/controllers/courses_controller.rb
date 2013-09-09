@@ -1,16 +1,22 @@
 class CoursesController < ApplicationController
   
   # before_filter :authenticate_instructor!  
-  load_and_authorize_resource :instructor
-  load_and_authorize_resource :course, :through => :instructor
+  # load_and_authorize_resource :instructor
+  # load_and_authorize_resource :course, :through => :instructor
 
   # GET /courses
   # GET /courses.json
   def index
-    @instructor = Instructor.find(params[:instructor_id]) or current_instructor
-    @courses = @instructor.courses
-    @current_courses = @instructor.courses.where(:archived => false)
-    @archived_courses = @instructor.courses.where(:archived => true)
+    if params[:instructor_id]
+      @instructor = Instructor.find_by_id(params[:instructor_id])
+      @courses = @instructor.courses
+      @current_courses = @instructor.courses.where(:archived => false)
+      @archived_courses = @instructor.courses.where(:archived => true)
+    else
+      @courses = Course.all
+      @current_courses = Course.where(:archived => false)
+      @archived_courses = Course.where(:archived => true)
+    end
 
     respond_to do |format|
       format.html { # index.html.erb
@@ -26,14 +32,14 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
-    @instructor = Instructor.find(params[:instructor_id])
+    if params[:course]
+      @course = Course.find_by_id(params[:course][:id])
+    else
+      @course = Course.find_by_id(params[:id])
+    end
+    @instructor = @course.instructor
     @courses = @instructor.courses.where(:archived => false)
     @selections = @courses.map{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}
-    if params[:course]
-      @course = Course.where(:instructor_id => @instructor).find(params[:course][:id])
-    else
-      @course = Course.where(:instructor_id => @instructor).find(params[:id])
-    end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -49,13 +55,14 @@ class CoursesController < ApplicationController
 
   # GET /courses/1/edit
   def edit
-    @course = Course.find(params[:id])
+    @course = Course.find_by_id(params[:id])
+    @instructor = @course.try(:instructor) || current_instructor
   end
 
   # POST /courses
   # POST /courses.json
   def create
-    @instructor = current_instructor or Instructor.find(params[:instructor_id])
+    @instructor = Instructor.find_by_id(params[:instructor_id]) || current_instructor
     @course = @instructor.courses.build(params[:course])
    	if params[:commit]  != "Cancel"
     	@course.save
@@ -69,6 +76,7 @@ class CoursesController < ApplicationController
   # PUT /courses/1.json
   def update
     @course = Course.find(params[:id])
+    @instructor = @course.instructor
     @course.update_attributes!(params[:course])
   end
 

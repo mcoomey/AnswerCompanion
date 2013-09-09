@@ -8,7 +8,7 @@ jQuery.fn.loadSessionTabs = ->
     $("#horizontal-tabs a").first().trigger('click')
   else
     # find which tab was previously selected
-    for htab in [0..($("#horizontal-tabs a").size()-1)]
+    for htab in [0..($("#horizontal-tabs a").size()-1)] by 1
       if $("#horizontal-tabs a")[htab].attributes[0].value == tab
         $("#horizontal-tabs a").eq(htab).trigger('click')
   
@@ -19,8 +19,8 @@ jQuery.fn.loadSessionTabs = ->
     $("#vertical-tabs a").first().trigger('click')
   else
     # find which tab was previously selected
-    for vtab in [0..($("#vertical-tabs a").size()-1)]
-      if $("#vertical-tabs a")[vtab].attributes[1].value == tab
+    for vtab in [0..($("#vertical-tabs a").size()-1)] by 1
+      if $("#vertical-tabs a")[vtab].attributes[0].value == tab
         $("#vertical-tabs a").eq(vtab).trigger('click')
 
 
@@ -33,14 +33,15 @@ jQuery.fn.setStaticTabs = ->
 
   # If the location.hash matches one of the links, use that as the active tab.
   # If no match is found, use the first link as the initial active tab.
-  $active = $($links.filter("[href=\"" + location.hash + "\"]")[0] or $links[0])
+  $active = $($links.filter("[href=\"" + location.hash + "\"]")[0] || $links[0])
   $active.addClass "activeTab"
   $active.parent().addClass "activeTab"
   $content = $($active.attr("href"))
 
-  # store the hash of the addressed tab in the "course_index_tab" cookie
+  # store the hash of the addressed tab in the appropriate cookie (horizontal-tabs-index or vertical-tabs-index)
+  cookie_name = $(this).closest('div').attr('id') + "-index"
   $hash = $active.attr("href")
-  $.cookie('index_tab', $hash)
+  $.cookie(cookie_name, $hash, path: '/')
 
   # Hide the remaining content
   $links.not($active).each ->
@@ -59,11 +60,11 @@ jQuery.fn.setStaticTabs = ->
     $active = $(this)
     $content = $($(this).attr("href"))
 
-    # store the hash of the clicked tab and its div in the "index_tab" cookie
+    # store the hash of the clicked tab and its div in the "xxxx-tabs-index" cookie
     $hash = $(this).attr("href")
-    $theDiv = $(this).closest('div').attr('id');
+    cookie_name = $(this).closest('div').attr('id') + "-index"
     
-    $.cookie($theDiv + "-index", $hash)
+    $.cookie(cookie_name, $hash, path: '/')
   
     # Make the tab active.
     $active.addClass "activeTab"

@@ -13,11 +13,3 @@ jQuery ->
 	  delay: 0
 	  source: $("#subject_category_name").data("autocomplete-source"),
     messages: {noResults: '', results: ''}
-
-  # set up the horizontal (current - archived - future) tabs
-  $("#horizontal-tabs ul.static-tabs-nav").setStaticTabs()
-
-  # set up the vertical (subject assets) tabs
-  $("#vertical-tabs ul.static-tabs-nav").setStaticTabs()
-  
-  $(this).loadSessionTabs()

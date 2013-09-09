@@ -2,6 +2,7 @@
   <td><%= link_to local_course.name, instructor_course_path(local_course.instructor.id, local_course.id) %></td>
   <td><%= local_course.section %></td>
 	<td><%= local_course.term %> </td>
+  <td><%= local_course.instructor.username %></td>
 	<td>
 		<%= form_for local_course, remote: true do |f| %>
 			<%= f.check_box :archived %>
