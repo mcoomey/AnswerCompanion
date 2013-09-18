@@ -10,34 +10,15 @@
 			<%=link_to image_tag("AddTextbook.png",  :mouseover => "AddTextbookHover.png",:class => "button", :alt => "Add Textbook" ), new_subject_textbook_delegation_path(params[:subject_id]) %>
 		<% end %>
 
-		<% if instructor_signed_in? %>
-			<%=link_to image_tag("AddSubject.png",  :mouseover => "AddSubjectHover.png",:class => "button", :alt => "Add Subject" ), new_instructor_subject_path(current_instructor, :currentSubject => @subjectId )+"#tabs-#{session[:selectedTab]}", remote: true  %>
-		<% elsif student_signed_in? %>
-			<%=link_to image_tag("AddSubject.png",  :mouseover => "AddSubjectHover.png",:class => "button", :alt => "Add Subject" ),  new_student_subject_path(current_student, :currentSubject => @subjectId )+"#tabs-#{session[:selectedTab]}", remote: true %>
-		<% end %>
-
-
 	</div>
-	<div id="ac-tabs">
-		<ul class="ac-tabs-nav">
-			<% if @subjectcount %>
-				<% num = @subjectcount %>
-				<% (0..num-1).each do |i| %>
-					<%= render :partial => "/subjects/subject_list", :locals => {:sbj => @subjects[i], :i => i } %>
-				<% end %>	
-			<% end %>
-		</ul>
 
 	<% @textbookDels.each do |tb_del| %>
 		<div class="frontcover">
-			<div class="frontcoverdelete">
-				<%= button_to 'X', subject_textbook_delegation_path(params[:subject_id], tb_del), :confirm => 'Remove Textbook. Are you sure?', :method => :delete, :class => "buttonTo" %>
-			</div>
 			<%= link_to image_tag(tb_del.textbook.frontcover_url(:thumb).to_s, :alt => "Show Textbook" ), textbook_lessons_path(tb_del.textbook_id, :subject_id => params[:subject_id]) %>
 			<%= link_to "Edit", edit_textbook_path(tb_del.textbook_id) %>
 		</div>
 	<% end %>
 	<br class="clearfloat"/>
-</div>	
+
 	(Choose a textbook to open.)
 </article>

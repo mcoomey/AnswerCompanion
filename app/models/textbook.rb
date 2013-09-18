@@ -5,7 +5,7 @@ class Textbook < ActiveRecord::Base
   belongs_to :category
 	belongs_to :subcategory
   belongs_to :instructor
-	has_many :textbook_delegations
+  has_many :textbook_delegations
 	has_many :section_titles
 	has_many :lessons
 	has_many :exercises

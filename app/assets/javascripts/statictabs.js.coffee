@@ -73,3 +73,14 @@ jQuery.fn.setStaticTabs = ->
   
     # Prevent the anchor's default click action
     e.preventDefault()
+
+
+jQuery ->
+
+  # set up the horizontal (current - archived - future) tabs
+  $("#horizontal-tabs ul.static-tabs-nav").setStaticTabs()
+
+  # set up the vertical (subject|course assets) tabs
+  $("#vertical-tabs ul.static-tabs-nav").setStaticTabs()
+
+  $(this).loadSessionTabs()

@@ -56,13 +56,16 @@ AnswerCompanion::Application.routes.draw do
 		resources :textbook_delegations
 	end
 	
+	resources :courses do
+		resources :textbook_delegations
+	end
+	
 	resources :videos
   resources :section_titles
   resources :lessons
   resources :exercises
   resources :schools
   resources :courses
-  resources :course_assets
 	root :to => "screens#index"
 	
 	match "subjects/toggle_archive", :to => "subjects#toggle_archive"

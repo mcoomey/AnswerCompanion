@@ -40,6 +40,7 @@ class CoursesController < ApplicationController
     @instructor = @course.instructor
     @courses = @instructor.courses.where(:archived => false)
     @selections = @courses.map{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}
+    @assets = ["A", "B", "C", "D"]
 
     respond_to do |format|
       format.html # show.html.erb

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130904200701) do
+ActiveRecord::Schema.define(:version => 20130916175154) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -22,14 +22,17 @@ ActiveRecord::Schema.define(:version => 20130904200701) do
 
   create_table "course_assets", :force => true do |t|
     t.string   "name"
-    t.integer  "type"
+    t.integer  "asset_type"
     t.integer  "course_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.string   "ancestry"
+    t.integer  "assetable_id"
+    t.string   "assetable_type"
   end
 
   add_index "course_assets", ["ancestry"], :name => "index_course_assets_on_ancestry"
+  add_index "course_assets", ["assetable_id", "assetable_type"], :name => "index_course_assets_on_assetable_id_and_assetable_type"
   add_index "course_assets", ["course_id"], :name => "index_course_assets_on_course_id"
 
   create_table "courses", :force => true do |t|

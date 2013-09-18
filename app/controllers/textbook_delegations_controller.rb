@@ -8,6 +8,7 @@ class TextbookDelegationsController < ApplicationController
 		else
 			flash[:alert] = nil
 		end
+    @subjectcount = 0  # DEBUG
 	end
 	
 	def show
@@ -80,6 +81,7 @@ class TextbookDelegationsController < ApplicationController
 
   def load_textable
     resource, id = request.path.split('/')[1, 2]
+    puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>resource = #{resource}   id = #{id}"
     @textable = resource.singularize.classify.constantize.find(id)
   end
 
