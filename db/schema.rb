@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130916175154) do
+ActiveRecord::Schema.define(:version => 20130924153543) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -22,18 +22,14 @@ ActiveRecord::Schema.define(:version => 20130916175154) do
 
   create_table "course_assets", :force => true do |t|
     t.string   "name"
-    t.integer  "asset_type"
+    t.string   "model"
     t.integer  "course_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
     t.string   "ancestry"
-    t.integer  "assetable_id"
-    t.string   "assetable_type"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "course_assets", ["ancestry"], :name => "index_course_assets_on_ancestry"
-  add_index "course_assets", ["assetable_id", "assetable_type"], :name => "index_course_assets_on_assetable_id_and_assetable_type"
-  add_index "course_assets", ["course_id"], :name => "index_course_assets_on_course_id"
 
   create_table "courses", :force => true do |t|
     t.string   "name"
@@ -261,15 +257,13 @@ ActiveRecord::Schema.define(:version => 20130916175154) do
   end
 
   create_table "textbook_delegations", :force => true do |t|
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "course_asset_id"
     t.integer  "textbook_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-    t.integer  "textable_id"
-    t.string   "textable_type"
   end
 
-  add_index "textbook_delegations", ["textable_id", "textable_type"], :name => "index_textbook_delegations_on_textable_id_and_textable_type"
-  add_index "textbook_delegations", ["textbook_id"], :name => "index_textbook_delegations_on_textbook_id_and_subject_id"
+  add_index "textbook_delegations", ["course_asset_id"], :name => "index_textbook_delegations_on_textable_id_and_textable_type"
 
   create_table "textbooks", :force => true do |t|
     t.string   "isbn13"

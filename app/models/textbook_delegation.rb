@@ -1,5 +1,5 @@
 class TextbookDelegation < ActiveRecord::Base
-  belongs_to :textable, :polymorphic => true
+  attr_accessible :textbook_attributes
+  belongs_to :course_asset
 	belongs_to :textbook
-	
 end

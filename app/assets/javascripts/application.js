@@ -37,7 +37,7 @@ jQuery(function() {
 	
 	if (navTabs.size() > 0){	// if the page has navigation tabs
 	  
-    alert("navTabs have been detected.")
+    // alert("navTabs have been detected.")
 		
 		// if URL contains a hash then match it to one of the tabs
 		if (hash) {

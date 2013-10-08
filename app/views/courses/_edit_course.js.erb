@@ -1,0 +1,15 @@
+<div id="ujsform">
+  <%= form_for @course, remote: true do |f| %>
+    <%= f.label :course_name, "Course Name" %>
+    <%= f.text_field :name, :size => "15" %>
+
+    <%= f.label :section %>
+    <%= f.text_field :section, :size => "15" %>
+
+    <%= f.label :term %>
+    <%= f.text_field :term, :size => "15" %>
+
+    <%= f.submit "Update", :name => "commit" %>
+    <%= f.submit "Cancel", :name => "commit" %>
+  <% end %>
+</div>

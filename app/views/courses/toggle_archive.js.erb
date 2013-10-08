@@ -1,0 +1,7 @@
+$('#edit_course_<%= @course.id %>').parent().parent().remove();
+<% if @course.archived? %>
+  $("#archived-courses table").append("<%= j render 'course_table_row', :local_course => @course %>");
+<% else %>
+  $("#current-courses table").append("<%= j render 'course_table_row', :local_course => @course %>");
+<% end %>
+$('.edit_course').submitOnCheck();

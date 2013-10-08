@@ -4,7 +4,7 @@ class Instructor < ActiveRecord::Base
 	has_many :roles, :through => :role_assignments
 	has_many :school_memberships, :as => :schoolmember
 	has_many :schools, :through => :school_memberships
-	has_many :courses
+	has_many :courses, dependent: :destroy
 	has_many :videos
 	has_many :lessons
 	has_many :exercises

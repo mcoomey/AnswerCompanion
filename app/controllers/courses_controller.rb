@@ -32,19 +32,27 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
+    puts ">>>>>>>>>>>>>>>>>>>>>>>>>params = " + params.inspect
     if params[:course]
       @course = Course.find_by_id(params[:course][:id])
+      @course_asset = @course.course_assets.try(:first)
+      if @course_asset
+        redirect_to course_asset_textbook_delegations_path(@course_asset)
+      else
+        redirect_to course_path(@course)
+      end
     else
       @course = Course.find_by_id(params[:id])
-    end
-    @instructor = @course.instructor
-    @courses = @instructor.courses.where(:archived => false)
-    @selections = @courses.map{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}
-    @assets = ["A", "B", "C", "D"]
+      @course_assets = @course.course_assets.roots
+      @instructor = @course.instructor
+      @courses = @instructor.courses.where(:archived => false)
+      
+      @selections = @courses.map{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @course }
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @course }
+      end
     end
   end
 
@@ -69,6 +77,7 @@ class CoursesController < ApplicationController
     	@course.save
       render "create"
     else
+      @action = "Create"
       render "cancel"
     end
   end
@@ -76,16 +85,26 @@ class CoursesController < ApplicationController
   # PUT /courses/1
   # PUT /courses/1.json
   def update
-    @course = Course.find(params[:id])
+    @course = Course.find_by_id(params[:id])
     @instructor = @course.instructor
-    @course.update_attributes!(params[:course])
+    if params[:commit] != "Cancel"
+      @course.update_attributes(params[:course])
+      render "update"
+    else
+      @action = "Edit"
+      render "cancel"
+    end
   end
 
   # DELETE /courses/1
   # DELETE /courses/1.json
   def destroy
-    @course = Course.find(params[:id])
+    @course = Course.find_by_id(params[:id])
     @course.destroy
   end
 
+  def toggle_archive
+    @course = Course.find_by_id(params[:course_id])
+    @course.update_attributes!(params[:course])
+  end
 end

@@ -56,15 +56,16 @@ class TextbooksController < ApplicationController
   end
 
   def create
-    @textbook = Textbook.new(params[:textbook])    
-    @query = ISBNdb::Query.new('DGZ3WU39')
-    result = @query.find_book_by_isbn(@textbook.userisbn)
+    @textbook = Textbook.new(params[:textbook])   
+    result = GoogleBooks.search(:isbn => @textbook.userisbn)
     
     if result.first
-      @textbook.isbn13 = result.first.isbn13
+      @textbook.isbn13 = result.first.isbn_13
       @textbook.title = result.first.title
-      @textbook.author = result.first.authors_text
-      @textbook.publisher = result.first.publisher_text
+      @textbook.author = result.first.authors
+      @textbook.publisher = result.first.publisher
+      @textbook.remote_frontcover_url = result.first.image_link
+      puts ">>>>>>>>>>>>>>>>>>>>>>>>@textbook.remote_frontcover_url = #{@textbook.remote_frontcover_url} <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
       
       if @textbook.save
         if (@textbook.userisbn != @textbook.isbn13)
@@ -86,8 +87,11 @@ class TextbooksController < ApplicationController
 
   def edit
     @textbook = Textbook.find(params[:id])
+    puts ">>>>>>>>>>>>>>>>>>>> Textbook.title = #{@textbook.title}"
     @categoryid = @textbook.category ? @textbook.category.id : "1"
-    @categoryname = @textbook.category.name
+    puts ">>>>>>>>>>>>>>>>>>>> @categoryid = #{@categoryid}"
+    @categoryname = Category.find_by_id(@categoryid).name
+    puts ">>>>>>>>>>>>>>>>>>>> @categoryname = #{@categoryname}"
   end
 
   def update

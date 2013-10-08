@@ -18,83 +18,21 @@
 	</div>
 	<div id="vertical-tabs">
 		<ul class="static-tabs-nav">
-			<li><%= link_to "Textbooks", "#asset-1" %></li>
-			<li><%= link_to "Lessons", "#asset-2" %></li>
-			<li><%= link_to "Handouts", "#asset-3" %></li>
-			<li><%= link_to "Assignments", "#asset-4" %></li>
-			<li><%= link_to "Assessments", "#asset-5" %></li>
-			<li><%= link_to "Announcements", "#asset-6" %></li>
+			<% @course_assets.each do |asset| %>
+				<li><%= link_to asset.name, send("course_asset_#{asset.model}_path", asset) %></li>
+			<% end %>
 		</ul>
-			
-			
-			<div id="panel">
-				<div id="asset-1">
-					<div class="archived-asset">
-						Archived Textbooks
-					</div>
-					<div class="current-asset">
-						Current Textbooks
-					</div>
-					<div class="future-asset">
-						Future Textbooks
-					</div>			
-				</div>
-				<div id="asset-2">
-					<div class="archived-asset">
-						Archived Lessons
-					</div>
-					<div class="current-asset">
-						Current Lessons
-					</div>
-					<div class="future-asset">
-						Future Lessons
-					</div>			
-				</div>
-				<div id="asset-3">
-					<div class="archived-asset">
-						Archived Handouts
-					</div>
-					<div class="current-asset">
-						Current Handouts
-					</div>
-					<div class="future-asset">
-						Future Handouts
-					</div>			
-				</div>
-				<div id="asset-4">
-					<div class="archived-asset">
-						Archived Assignments
-					</div>
-					<div class="current-asset">
-						Current Assignments
-					</div>
-					<div class="future-asset">
-						Future Assignments
-					</div>			
-				</div>
-				<div id="asset-5">
-					<div class="archived-asset">
-						Archived Assessments
-					</div>
-					<div class="current-asset">
-						Current Assessments
-					</div>
-					<div class="future-asset">
-						Future Assessments
-					</div>			
-				</div>
-				<div id="asset-6">
-					<div class="archived-asset">
-						Archived Announcements
-					</div>
-					<div class="current-asset">
-						Current Announcements
-					</div>
-					<div class="future-asset">
-						Future Announcements
-					</div>			
-				</div>
+		<div id="panel">
+			<div class="archived-asset">
+				Archived Textbooks
 			</div>
+			<div class="current-asset">
+				Current Textbooks
+			</div>
+			<div class="future-asset">
+				Future Textbooks
+			</div>			
+		</div>
 		<br class="clearfloat"/>
 	</div>	
 </article>

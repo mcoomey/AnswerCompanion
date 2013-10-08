@@ -32,7 +32,7 @@ AnswerCompanion::Application.routes.draw do
   
   resources :lessons do
     resources :videos do
-      get 'progress'
+      post 'progress'
     end
   end
   
@@ -44,7 +44,7 @@ AnswerCompanion::Application.routes.draw do
 
 	resources :instructors do
 	  resources :schools
-		resources :courses
+		resources :courses 
 	end
 	
 	resources :students do
@@ -52,12 +52,8 @@ AnswerCompanion::Application.routes.draw do
 		resources :subjects
 	end
 	
-	resources :subjects do
-		resources :textbook_delegations
-	end
-	
-	resources :courses do
-		resources :textbook_delegations
+	resources :course_assets do
+    resources :textbook_delegations
 	end
 	
 	resources :videos
@@ -65,10 +61,16 @@ AnswerCompanion::Application.routes.draw do
   resources :lessons
   resources :exercises
   resources :schools
-  resources :courses
+  
+  resources :courses do
+    put 'toggle_archive'
+    resources :course_assets
+  end
+  
 	root :to => "screens#index"
 	
 	match "subjects/toggle_archive", :to => "subjects#toggle_archive"
+  # match "courses/toggle_archive", :to => "courses#toggle_archive"
 	match "screens/welcome", :to => "screens#welcome"
 
    # The priority is based upon order of creation:

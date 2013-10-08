@@ -1,9 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.12'
-gem 'mysql2'
+gem 'mysql2', '0.3.11'
 gem 'devise', '2.2.4'
-gem 'isbndb'
 gem 'will_paginate', '> 3.0'
 gem 'voyeur'
 
@@ -24,3 +23,4 @@ gem 'delayed_job_active_record'
 gem 'jquery-cookie-rails'
 gem 'cancan'
 gem 'ancestry'
+gem 'googlebooks'

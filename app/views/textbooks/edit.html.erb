@@ -39,10 +39,6 @@
 		<%= tb.text_field :title %>
 	</div>
 	<div class="field">
-		<%= tb.label :edition %><br />
-		<%= tb.text_field :edition %>
-	</div>
-	<div class="field">
 		<%= tb.label :frontcover %><br />
 		<%= image_tag(@textbook.frontcover_url(:thumb).to_s) %>
 	</div>

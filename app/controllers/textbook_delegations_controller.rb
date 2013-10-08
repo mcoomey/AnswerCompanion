@@ -1,14 +1,29 @@
 class TextbookDelegationsController < ApplicationController
-  before_filter :load_textable
 
   def index
-		@textbookDels = @textable.textbook_delegations
-		if (@textbookDels.count == 0)
+    puts ">>>>>>>>>>>>>>>>>>>>>>>>>params = " + params.inspect
+    
+    @instructor = current_instructor
+    @courses = @instructor.courses.where(:archived => false)
+    if params[:course]
+      @course = Course.find_by_id(params[:course][:id])
+      @course_asset = @course.course_assets.try(:first)
+      if @course_asset
+        redirect_to course_asset_textbook_delegations_path(@course_asset)
+      else
+        redirect_to course_path(@course)
+      end
+    else
+      @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
+      @course = @course_asset.course
+    end
+    @course_assets = @course.course_assets
+		@textbookDels = @course_asset.try(:textbook_delegations)
+		if (@textbookDels && @textbookDels.count == 0)
 			flash[:alert] = "You must add at least 1 textbook."
 		else
 			flash[:alert] = nil
 		end
-    @subjectcount = 0  # DEBUG
 	end
 	
 	def show
@@ -77,12 +92,6 @@ class TextbookDelegationsController < ApplicationController
 		flash[:notice] = title + " was successfully removed."
 		tbdel.destroy
 		redirect_to(:action => 'index', :anchor => "tabs-#{session[:selectedTab]}")
-  end
-
-  def load_textable
-    resource, id = request.path.split('/')[1, 2]
-    puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>resource = #{resource}   id = #{id}"
-    @textable = resource.singularize.classify.constantize.find(id)
   end
 
 end

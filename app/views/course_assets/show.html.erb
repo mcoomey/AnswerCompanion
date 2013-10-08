@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @course_asset.name %>
+</p>
+
+<p>
+  <b>Model:</b>
+  <%= @course_asset.model %>
+</p>
+
+<p>
+  <b>Course:</b>
+  <%= @course_asset.course_id %>
+</p>
+
+<p>
+  <b>Ancestry:</b>
+  <%= @course_asset.ancestry %>
+</p>
+
+
+<%= link_to 'Edit', edit_course_asset_path(@course_asset) %> |
+<%= link_to 'Back', course_assets_path %>

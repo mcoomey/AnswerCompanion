@@ -1,13 +1,24 @@
 <tr>
-  <td><%= link_to local_course.name, course_path(local_course.id) %></td>
+  <td>
+  <% if local_course.archived %>
+		<%= local_course.name %>
+	<% elsif local_course.course_assets.count > 0 %>
+		<%= link_to local_course.name, send("course_asset_#{local_course.course_assets.first.model}_path", (local_course.course_assets.first)) %>
+	<% else %>
+		<%= link_to local_course.name, course_path(local_course.id) %>
+	<% end %>
+  </td>
   <td><%= local_course.section %></td>
 	<td><%= local_course.term %> </td>
   <td><%= local_course.instructor.username %></td>
 	<td>
-		<%= form_for local_course, remote: true do |f| %>
+		<%= form_for local_course, :url => course_toggle_archive_path(local_course), remote: true do |f| %>
 			<%= f.check_box :archived %>
 			<%= f.submit :update %>
 		<% end %>
+	</td>
+	<td>
+		<%= link_to "Edit", edit_course_path(local_course), id: "edit_link_#{local_course.id}" , remote: true %>
 	</td>
 	<td>
 		<%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png",:class => "button", :alt => "Delete Course"),  
