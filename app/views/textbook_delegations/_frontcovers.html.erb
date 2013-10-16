@@ -1,0 +1,6 @@
+<div class="frontcover">
+	<%= link_to image_tag(local_tb_del.textbook.frontcover_url(:thumb).to_s, :alt => "Show Textbook" ), textbook_lessons_path(local_tb_del.textbook) %>
+	<div class="frontcoverdelete">
+		<%= button_to 'X', course_asset_textbook_delegation_path(@course_asset, local_tb_del), :confirm => 'Remove Textbook. Are you sure?', :method => :delete, :class => "buttonTo" %>
+	</div>
+</div>

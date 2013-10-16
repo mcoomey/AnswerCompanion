@@ -6,8 +6,6 @@
 		
 		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
 		           instructor_courses_path(@instructor) %>
-		<%=link_to image_tag("Edit.png",  :mouseover => "EditHover.png",:class => "button", :alt => "Edit Subject"), 
-		           edit_course_path(@course) %>
 	</div>
 	<div id="horizontal-tabs">
 		<ul class="static-tabs-nav">
@@ -24,13 +22,10 @@
 		</ul>
 		<div id="panel">
 			<div class="archived-asset">
-				Archived Textbooks
 			</div>
 			<div class="current-asset">
-				Current Textbooks
 			</div>
 			<div class="future-asset">
-				Future Textbooks
 			</div>			
 		</div>
 		<br class="clearfloat"/>

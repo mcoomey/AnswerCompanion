@@ -2,7 +2,7 @@
 	<div id="buttonarea">
 		<span class="title">Choose Textbook</span>
 		<div id = "button01">
-			<%=link_to image_tag("Cancel.png",  :mouseover => "CancelHover.png",:class => "button", :alt => "Cancel" ), subject_textbook_delegations_path(params[:subject_id])+"#tabs-#{session[:selectedTab]}" %>
+			<%=link_to image_tag("Cancel.png",  :mouseover => "CancelHover.png",:class => "button", :alt => "Cancel" ), "#"%>
 		</div>
 		<div id = "button02">
 			<% if current_instructor %>

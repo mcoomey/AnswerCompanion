@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130924153543) do
+ActiveRecord::Schema.define(:version => 20131014124455) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -261,6 +261,7 @@ ActiveRecord::Schema.define(:version => 20130924153543) do
     t.datetime "updated_at",      :null => false
     t.integer  "course_asset_id"
     t.integer  "textbook_id"
+    t.integer  "archived"
   end
 
   add_index "textbook_delegations", ["course_asset_id"], :name => "index_textbook_delegations_on_textable_id_and_textable_type"

@@ -1,0 +1,8 @@
+<div id="ujsform">
+  <%= form_for @textbook, :url => { :controller => 'textbook_delegations', :action => 'create' }, :html => { :method => 'post' }, remote: true do |f| %>
+    <%= f.label :isbn13, "Textbook ISBN13: " %>
+    <%= f.text_field :isbn13, :size => "20" %>
+    <%= f.submit "Submit", :name => "commit" %>
+    <%= f.submit "Cancel", :name => "commit" %>
+  <% end %>
+</div>

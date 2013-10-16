@@ -20,63 +20,7 @@
 	
 jQuery(function() {
 
-	// set up jquery-ui tabs function on the static-tabs div
-  // $("#static-tabs").tabs();
-	// $("#static-tabs a").on("click", function (e) { e.preventDefault();});
-	
-  // $( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
-  //   $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
-	
-	
-	// check for a hash in the URL to load proper tab on a page reload or redirect
-	var hash = window.location.hash;
-	
-  var navTabs = $('#ac-tabs ul.ac-tabs-nav a.tab-markers');
-  // var navTabs = $("#vertical-tabs ul.static-tabs-nav a.tab-markers");
-	var selectedTab = 0;	// selectedTab contains the tab# to select - default to the first one (#0)
-	
-	if (navTabs.size() > 0){	// if the page has navigation tabs
-	  
-    // alert("navTabs have been detected.")
-		
-		// if URL contains a hash then match it to one of the tabs
-		if (hash) {
-			for (var idx=0; idx <navTabs.length; idx++) {
-				if (navTabs[idx].hash == hash){
-					selectedTab = idx;		// select this tab
-					break;
-				}
-			}
-		}
-	
-		// change background color for all tabs and their anchors to grey and enable the pointer cursor
-		navTabs.each(function (){
-			$(this).parent().css('background-color', '#999999');
-			$(this).css('background-color', '#999999');
-			$(this).css('cursor', 'pointer');
-		});
-		// then change the selected tab and anchor background to white and enable the text cursor
-		$(navTabs[selectedTab]).parent().css('background-color', '#FFFFFF');
-		$(navTabs[selectedTab]).css('background-color', '#FFFFFF');
-		// $(navTabs[selectedTab]).css('cursor', 'text');
-		var i = 0;
-		
-		// set up a click function so the current page tab is updated immediately before the new one loads
-		$('#ac-tabs ul.ac-tabs-nav a').on( "click", function () {
-			// change background color for all tabs and their anchors to grey 
-			var navTabs = $('#ac-tabs ul.ac-tabs-nav a');
-			navTabs.each(function (){
-				$(this).parent().css('background-color', '#999999');
-				$(this).css('background-color', 'inherit');
-			});
-			
-			// then change the selected tab and anchor background to white
-			$(this).parent().css('background-color', '#FFFFFF');
-			$(this).css('background-color', 'inherit');
-		});
-	}
-
-	// force first tab to be clicked on load
-		// $('#ac-tabs .ac-tabs-nav a:first').trigger('click');
-
+  $("#horizontal-tabs ul.static-tabs-nav").setStaticTabs();
+  $("#vertical-tabs ul.dynamic-tabs-nav").setDynamicTabs();
+  $(this).loadSessionTabs();
 });
