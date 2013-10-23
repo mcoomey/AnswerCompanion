@@ -30,20 +30,32 @@
 		</ul>
 		<div id="panel">
 			<div class="archived-asset">
+			<% if @textbookDels_archived %>
+				<% @textbookDels_archived.each do |tb_del| %>
+					<%= render 'frontcovers', :local_tb_del => tb_del %>
+				<% end %>
+			<% end %>
   			<br class="clearfloat"/>
 			</div>
 			<div class="current-asset">
-				<% if @textbookDels %>
-					<% @textbookDels.each do |tb_del| %>
+				<% if @textbookDels_current %>
+					<% @textbookDels_current.each do |tb_del| %>
 						<%= render 'frontcovers', :local_tb_del => tb_del %>
 					<% end %>
 				<% end %>
 				<br class="clearfloat"/>				
 			</div>
 			<div class="future-asset">
+			<% if @textbookDels_future %>
+				<% @textbookDels_future.each do |tb_del| %>
+					<%= render 'frontcovers', :local_tb_del => tb_del %>
+				<% end %>
+			<% end %>
   			<br class="clearfloat"/>
 			</div>			
 		</div>
 		<br class="clearfloat"/>
-	</div>	
+	</div>
+	<div id="textbook_choices_dialog"
+	</div>
 </article>

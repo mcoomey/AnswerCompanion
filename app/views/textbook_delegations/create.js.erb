@@ -1,7 +1,9 @@
-$("#messages .alert").show();
-$("#messages .ujs_alert").show();
-$("#messages .notice").show();
+$("#messages .alert").hide();
+$("#messages .ujs_alert").html("<%= @tbdelError %>").show();
+$("#messages .notice").hide();
 $("#messages .ujs_notice").html("<%= @tbdelNotice %>").show();
 $("#ujsform").remove();
 $("#buttonarea").show();
-$("#panel").find($.cookie("horizontal_tabs_index")).find(".clearfloat").before("<%= j render 'frontcovers', :local_tb_del => @tbdel %>");
+<% if !@tbdelError %>
+  $("#panel").find($.cookie("horizontal_tabs_index")).find(".clearfloat").before("<%= j render 'frontcovers', :local_tb_del => @tbdel %>");
+<% end %>

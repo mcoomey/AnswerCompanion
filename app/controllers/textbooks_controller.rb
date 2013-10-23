@@ -64,7 +64,8 @@ class TextbooksController < ApplicationController
       @textbook.title = result.first.title
       @textbook.author = result.first.authors
       @textbook.publisher = result.first.publisher
-      @textbook.remote_frontcover_url = result.first.image_link
+      # @textbook.remote_frontcover_url = result.first.image_link
+      @textbook.image_link = result.first.image_link
       puts ">>>>>>>>>>>>>>>>>>>>>>>>@textbook.remote_frontcover_url = #{@textbook.remote_frontcover_url} <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
       
       if @textbook.save

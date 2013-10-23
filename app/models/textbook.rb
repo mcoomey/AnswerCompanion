@@ -1,6 +1,6 @@
 class Textbook < ActiveRecord::Base
   attr_accessible :userisbn, :isbn13, :title, :author, :publisher, :edition, :frontcover, :category_id, :subcategory_id, :div, 
-                   :subdiv1, :subdiv2, :subdiv3, :frontcover_cache, :remote_frontcover_url, :category_name,
+                   :subdiv1, :subdiv2, :subdiv3, :frontcover_cache, :remote_frontcover_url, :image_link, :category_name,
                    :subcategory_name
   belongs_to :category
 	belongs_to :subcategory

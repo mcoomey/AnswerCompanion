@@ -7,10 +7,15 @@ jQuery.fn.loadSessionTabs = ->
     $("#horizontal-tabs a").first().trigger('click')
   else
     # find which tab was previously selected
-    for htab in [0..($("#horizontal-tabs a").size()-1)] by 1
+    numtabs = $("#horizontal-tabs a").size()
+    for htab in [0..(numtabs-1)] by 1
       if $("#horizontal-tabs a")[htab].attributes[0].value == tab
         $("#horizontal-tabs a").eq(htab).trigger('click')
-  
+        break
+    # if no matching tab was found default to the first one
+    if htab >= numtabs
+      $("#horizontal-tabs a").first().trigger('click')
+      
 jQuery.fn.setStaticTabs = ->
 	# For each set of tabs, we want to keep track of
   # which tab is active and it's associated content
