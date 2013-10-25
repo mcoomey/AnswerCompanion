@@ -35,6 +35,14 @@
   		border-top-left-radius: 4px;  
   		border-bottom-right-radius: 0px;
   		border-bottom-left-radius: 0px;  
+  		z-index: 10;
+  		
+      &.ui-droppable {
+        &.hover {
+      	border-color:yellow;
+      	background-color:$very-light-green;
+      	}
+      };
 
   		&:first-child {
   		  margin-left: 180px;
@@ -43,7 +51,7 @@
   		&:hover {
   			border-color:blue;
   		}
-
+  		
   		a {
   			cursor:pointer;
   			color: black;
@@ -55,7 +63,7 @@
   				background-color:inherit;
   			}
         &.activeTab {
-    	    background-color: white;
+    	    background-color: inherit;
         }
       }
   	  &.activeTab {

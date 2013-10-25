@@ -1,6 +1,6 @@
 class Textbook < ActiveRecord::Base
   attr_accessible :userisbn, :isbn13, :title, :author, :publisher, :edition, :frontcover, :category_id, :subcategory_id, :div, 
-                   :subdiv1, :subdiv2, :subdiv3, :frontcover_cache, :remote_frontcover_url, :image_link, :category_name,
+                   :subdiv1, :subdiv2, :subdiv3, :frontcover_cache, :image_link, :category_name,
                    :subcategory_name
   belongs_to :category
 	belongs_to :subcategory
@@ -15,7 +15,6 @@ class Textbook < ActiveRecord::Base
 	accepts_nested_attributes_for :category
 	accepts_nested_attributes_for :subcategory
 	
-	mount_uploader :frontcover, FrontcoverUploader
 	validates_presence_of  :isbn13, :message => "-- You must specify the ISBN."
 	validates_uniqueness_of :isbn13, :message => "-- That ISBN already exists."
 	

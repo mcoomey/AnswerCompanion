@@ -23,4 +23,23 @@ jQuery(function() {
   $("#horizontal-tabs ul.static-tabs-nav").setStaticTabs();
   $("#vertical-tabs ul.dynamic-tabs-nav").setDynamicTabs();
   $(this).loadSessionTabs();
+  $(".frontcover").draggable({containment: 'document', revert: true, revertDuration: 100});
+  $("#horizontal-tabs ul.static-tabs-nav li").droppable({hoverClass: "hover", tolerance: "pointer", drop:handleDropEvent });
+  $("#textbook_drop_id_1").click(function(){
+    var secure_token = $('meta[name="csrf-token"]').attr("content");
+    var dataString = 'authenticity_token=' + secure_token + '&tbdel[archive]=9';
+    $.ajax({
+      type: "PUT",
+      url: "/course_assets/1/textbook_delegations/1",
+      data: dataString,
+      success: function() {
+        alert('success');
+      },
+      error: function(){
+        alert('error');
+        return false;
+      }
+    })
+    return false;
+  })
 });

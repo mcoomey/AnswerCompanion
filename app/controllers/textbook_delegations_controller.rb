@@ -57,13 +57,7 @@ class TextbookDelegationsController < ApplicationController
           @tbdelError = "Error, textbook already added to #{tabs[@tbdel.archived].to_s} tab."
         else  
           # otherwise, add it to the currently selected tab
-          @course_asset.textbooks << existingbook
-          @tbdel = @course_asset.textbook_delegations.where(:textbook_id => existingbook.id).first
-          @tbdel.archived = tabs.index(current_horizontal_tab())
-          @tbdel.save
-          @tbdelError = nil
-          @tbdelNotice = "Successfully added new textbook."
-          flash[:alert] = nil
+          add_to_current_tab(tabs, existingbook)
         end
         
       # otherwise, if textbook is not already in the database... 
@@ -99,14 +93,7 @@ class TextbookDelegationsController < ApplicationController
                 else  
                     puts ">>>>>>>>>>exact match getting added to selected tab<<<<<<<<<<<<<<<<<<<"
                   # otherwise, add it to the currently selected tab
-                  @course_asset.textbooks << existingbook
-                  @tbdel = @course_asset.textbook_delegations.where(:textbook_id => existingbook.id).first
-                  puts ">>>>>>>>>>>>>tabs.index(current_horizontal_tab()) = #{tabs.index(current_horizontal_tab())}<<<<<<<<<<<<<<<<<<<"
-                  @tbdel.archived = tabs.index(current_horizontal_tab())
-                  @tbdel.save
-                  @tbdelError = nil
-                  @tbdelNotice = "Successfully added new textbook."
-                  flash[:alert] = nil
+                  add_to_current_tab(tabs, existingbook)
                   break
                 end
 
@@ -116,19 +103,11 @@ class TextbookDelegationsController < ApplicationController
                 @textbook.title = candidate.title
                 @textbook.author = candidate.authors
                 @textbook.publisher = candidate.publisher
-                @textbook.remote_frontcover_url = candidate.image_link
                 @textbook.image_link = candidate.image_link
                 @textbook.save
             
                 # and then add it to the current asset
-                @course_asset.textbooks << @textbook
-                @tbdel = @course_asset.textbook_delegations.where(:textbook_id => @textbook.id).first
-                puts ">>>>>>>>>>>>>tabs.index(current_horizontal_tab()) = #{tabs.index(current_horizontal_tab())}<<<<<<<<<<<<<<<<<<<"
-                @tbdel.archived = tabs.index(current_horizontal_tab())
-                @tbdel.save
-                @tbdelError = nil
-                @tbdelNotice = "Successfully added new textbook."
-                flash[:alert] = nil
+                add_to_current_tab(tabs, @textbook)
                 break
               end
                             
@@ -149,7 +128,19 @@ class TextbookDelegationsController < ApplicationController
       render "cancel"
     end
   end
+  
+	def edit
+	 
+	end
 	
+	def update
+    tbdel = TextbookDelegation.find(params[:id])
+    newval = params[:tbdel][:archive]
+    puts ">>>>>>>>>>newval=#{newval}<<<<<<<<<<<<<<<"
+    tbdel.archived = newval
+    tbdel.save
+	end
+  
   def destroy
 		tbdel = TextbookDelegation.find(params[:id])
 		tbdel.destroy
@@ -171,5 +162,14 @@ private
     end
   end
 
+  def add_to_current_tab(tabs, textbook)
+    @course_asset.textbooks << textbook
+    @tbdel = @course_asset.textbook_delegations.where(:textbook_id => textbook.id).first
+    @tbdel.archived = tabs.index(current_horizontal_tab())
+    @tbdel.save
+    @tbdelError = nil
+    @tbdelNotice = "Successfully added new textbook."
+    flash[:alert] = nil
+  end
 
 end
