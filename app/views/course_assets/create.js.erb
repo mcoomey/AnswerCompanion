@@ -1,0 +1,7 @@
+$("#messages .alert").hide();
+$("#messages .ujs_alert").html("<%= @course_assetError %>").show();
+$("#messages .notice").hide();
+$("#messages .ujs_notice").html("<%= @course_assetNotice %>").show();
+$("#ujsform").remove();
+$("#buttonarea").show();
+$("ul.dynamic-tabs-nav").append("<%= j render 'shared/course_asset_tag', :local_asset => @course_asset %>")

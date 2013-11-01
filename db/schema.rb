@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131020144511) do
+ActiveRecord::Schema.define(:version => 20131030223137) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -20,9 +20,16 @@ ActiveRecord::Schema.define(:version => 20131020144511) do
     t.datetime "updated_at",  :null => false
   end
 
+  create_table "course_asset_model_types", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "model_name"
+  end
+
   create_table "course_assets", :force => true do |t|
     t.string   "name"
-    t.string   "model"
+    t.integer  "model_type"
     t.integer  "course_id"
     t.string   "ancestry"
     t.datetime "created_at", :null => false
@@ -39,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20131020144511) do
     t.datetime "updated_at",    :null => false
     t.string   "term"
     t.boolean  "archived"
+    t.string   "passphrase"
   end
 
   add_index "courses", ["instructor_id"], :name => "index_courses_on_instructor_id"
@@ -58,6 +66,16 @@ ActiveRecord::Schema.define(:version => 20131020144511) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "documents", :force => true do |t|
+    t.string   "description"
+    t.string   "filename"
+    t.string   "type"
+    t.integer  "course_asset_id"
+    t.integer  "archived"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
   create_table "enrollments", :force => true do |t|
     t.integer  "course_id"
@@ -122,6 +140,15 @@ ActiveRecord::Schema.define(:version => 20131020144511) do
     t.integer  "instructor_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+  end
+
+  create_table "links", :force => true do |t|
+    t.string   "description"
+    t.string   "url"
+    t.integer  "course_asset_id"
+    t.integer  "archived"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "parent_emails", :force => true do |t|
@@ -282,12 +309,17 @@ ActiveRecord::Schema.define(:version => 20131020144511) do
     t.string   "image_link"
   end
 
+  create_table "textboxes", :force => true do |t|
+    t.text     "content"
+    t.integer  "course_asset_id"
+    t.integer  "archived"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
   create_table "videos", :force => true do |t|
     t.string   "videofile"
     t.string   "length"
-    t.integer  "feedback_score"
-    t.integer  "difficulty"
-    t.integer  "numpurchases"
     t.boolean  "archived"
     t.integer  "newversion_id"
     t.integer  "exercise_id"
@@ -297,6 +329,7 @@ ActiveRecord::Schema.define(:version => 20131020144511) do
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
     t.integer  "videofile_processed"
+    t.integer  "course_asset_id"
   end
 
 end

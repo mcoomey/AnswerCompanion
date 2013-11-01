@@ -144,7 +144,7 @@ class TextbookDelegationsController < ApplicationController
   def destroy
 		tbdel = TextbookDelegation.find(params[:id])
 		tbdel.destroy
-		redirect_to(:action => 'index', :anchor => "tabs-#{session[:selectedTab]}")
+		redirect_to(:action => 'index')
   end
 
 private 

@@ -39,11 +39,15 @@ class CoursesController < ApplicationController
       if @course_asset
         redirect_to course_asset_textbook_delegations_path(@course_asset)
       else
+  			flash[:alert] = "You must add a Course Asset."
         redirect_to course_path(@course)
       end
     else
       @course = Course.find_by_id(params[:id])
       @course_assets = @course.course_assets.roots
+      if @course_assets.count == 0
+  			flash[:alert] = "You must add a Course Asset."
+      end
       @instructor = @course.instructor
       @courses = @instructor.courses.where(:archived => false)
       

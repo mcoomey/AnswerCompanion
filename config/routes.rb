@@ -1,5 +1,22 @@
 AnswerCompanion::Application.routes.draw do
 
+  resources :course_asset_model_types
+
+
+  get "document/index"
+
+  get "document/show"
+
+  get "document/new"
+
+  get "document/create"
+
+  get "document/edit"
+
+  get "document/update"
+
+  get "document/destroy"
+
   resources :roles
 
 
@@ -54,6 +71,10 @@ AnswerCompanion::Application.routes.draw do
 	
 	resources :course_assets do
     resources :textbook_delegations
+    resources :documents
+    resources :videos
+    resources :links
+    resources :textboxes
 	end
 	
 	resources :videos

@@ -1,6 +1,6 @@
 class Course < ActiveRecord::Base
   
-  attr_accessible :name, :section, :instructor, :term, :archived
+  attr_accessible :name, :section, :instructor, :term, :archived, :passphrase
   
   belongs_to :instructor
   has_many :enrollments, dependent: :destroy

@@ -5,6 +5,7 @@ class Video < ActiveRecord::Base
   belongs_to :lesson
   belongs_to :instructor
   belongs_to :textbook
+  belongs_to :course_asset
   has_one :newversion, :class_name => "Video", :foreign_key => "newversion_id"
 	
   mount_uploader :videofile, VideofileUploader

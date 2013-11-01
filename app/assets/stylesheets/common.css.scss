@@ -38,22 +38,26 @@
 		font-size:1em;
 		color:$main-green;
 	}
-		input[type="submit"] {
-			color:black;
-			font-size:1em;
-			&:hover{
-			  color:blue;	
-			  cursor:pointer;
-			}
+	input[type="submit"] {
+		color:black;
+		font-size:1em;
+		&:hover{
+		  color:blue;	
+		  cursor:pointer;
 		}
-			input[value="Cancel"] {
-				color:black;
-				font-size:1em;
-				&:hover{
-				  color:red;	
-				  cursor:pointer;
-				}
-			}
+	}
+	input[value="Cancel"] {
+		color:black;
+		font-size:1em;
+		&:hover{
+		  color:red;	
+		  cursor:pointer;
+		}
+	}
+	select {
+		color:$main-green;
+		font-size:1em;
+	}
 }
 
 ul.ui-autocomplete {

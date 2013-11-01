@@ -3,14 +3,14 @@
   <% if local_course.archived %>
 		<%= local_course.name %>
 	<% elsif local_course.course_assets.count > 0 %>
-		<%= link_to local_course.name, send("course_asset_#{local_course.course_assets.first.model}_path", (local_course.course_assets.first)) %>
+		<%= link_to local_course.name, send("course_asset_#{CourseAssetModelType.find_by_id(local_course.course_assets.first.model_type).model_name}_path", (local_course.course_assets.first)) %>
 	<% else %>
 		<%= link_to local_course.name, course_path(local_course.id) %>
 	<% end %>
   </td>
   <td><%= local_course.section %></td>
 	<td><%= local_course.term %> </td>
-  <td><%= local_course.instructor.username %></td>
+  <td><%= local_course.passphrase %></td>
 	<td>
 		<%= form_for local_course, :url => course_toggle_archive_path(local_course), remote: true do |f| %>
 			<%= f.check_box :archived %>

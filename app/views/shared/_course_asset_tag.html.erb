@@ -1,0 +1,6 @@
+<div class="asset-tag" id="asset-tag<%= local_asset.id %>">
+	<div class="asset-tag-delete">
+		<%= button_to 'X', course_asset_path(local_asset), :confirm => "Delete Asset Tag - #{local_asset.name}.\nAll content will be lost!\n\nAre you sure?", :method => :delete, :remote => true, :class => "buttonTo" %>
+	</div>
+	<li><%= link_to local_asset.name, url_for([local_asset, CourseAssetModelType.find_by_id(local_asset.model_type).model_name]), id: "link_to_asset_#{local_asset.id}" %></li>
+</div>

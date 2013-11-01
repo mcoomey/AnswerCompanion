@@ -1,0 +1,23 @@
+<h1>Listing course_asset_model_types</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @course_asset_model_types.each do |course_asset_model_type| %>
+  <tr>
+    <td><%= course_asset_model_type.name %></td>
+    <td><%= link_to 'Show', course_asset_model_type %></td>
+    <td><%= link_to 'Edit', edit_course_asset_model_type_path(course_asset_model_type) %></td>
+    <td><%= link_to 'Destroy', course_asset_model_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Course asset model type', new_course_asset_model_type_path %>

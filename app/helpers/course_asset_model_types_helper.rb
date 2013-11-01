@@ -1,0 +1,2 @@
+module CourseAssetModelTypesHelper
+end

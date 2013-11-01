@@ -11,4 +11,4 @@ window.handleDropEvent = (event, ui) ->
     type: "PUT"
     url: urlString
     data: dataString
-  false
+  dragitem.insertBefore($("div"+tabs[archived]).find(".clearfloat"))

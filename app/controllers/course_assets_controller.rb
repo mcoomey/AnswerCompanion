@@ -22,35 +22,29 @@ class CourseAssetsController < ApplicationController
   end
 
   # GET /course_assets/new
-  # GET /course_assets/new.json
   def new
     @course_asset = CourseAsset.new
+    @course = Course.find_by_id(params[:course_id])
+  end
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @course_asset }
+   # POST /course_assets
+  def create
+   	if params[:commit]  != "Cancel"
+      @course_asset = CourseAsset.new(params[:course_asset])
+      if @course_asset.save
+        @course_asset_error = nil
+      else
+        @course_assetError = @course_asset.errors.full_messages.first
+      end
+    else
+      @course_assetNotice = "Add new asset action canceled."
+      render "cancel"
     end
   end
 
-  # GET /course_assets/1/edit
+ # GET /course_assets/1/edit
   def edit
     @course_asset = CourseAsset.find(params[:id])
-  end
-
-  # POST /course_assets
-  # POST /course_assets.json
-  def create
-    @course_asset = CourseAsset.new(params[:course_asset])
-
-    respond_to do |format|
-      if @course_asset.save
-        format.html { redirect_to @course_asset, notice: 'Course asset was successfully created.' }
-        format.json { render json: @course_asset, status: :created, location: @course_asset }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @course_asset.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # PUT /course_assets/1
@@ -70,14 +64,25 @@ class CourseAssetsController < ApplicationController
   end
 
   # DELETE /course_assets/1
-  # DELETE /course_assets/1.json
   def destroy
     @course_asset = CourseAsset.find(params[:id])
+    @course = @course_asset.course
     @course_asset.destroy
 
-    respond_to do |format|
-      format.html { redirect_to course_assets_url }
-      format.json { head :no_content }
-    end
+    ref_url = request.referrer.to_s
+    orig_url = request.original_url.to_s
+    
+    # if user is deleting the currently selected asset
+    if (ref_url.index orig_url) == 0
+      # if there are any other assets associated with the course then render the first one
+      @course_asset = @course.course_assets.try(:first)
+      if @course_asset
+        render :js => "window.location.href = '#{course_asset_textbook_delegations_path(@course_asset)}'"
+        # otherwise just render the course
+      else
+        render :js => "window.location.href = '#{course_path(@course)}'"
+      end
+    end 
   end
+  
 end
