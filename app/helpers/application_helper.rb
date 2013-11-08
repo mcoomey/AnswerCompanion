@@ -1,5 +1,10 @@
 module ApplicationHelper
 	
+  def this_page(path)
+    
+  end
+  
+  
 	def current_user
 		(current_student || current_instructor || current_parent)
 	end

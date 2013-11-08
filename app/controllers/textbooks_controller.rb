@@ -45,10 +45,15 @@ class TextbooksController < ApplicationController
   end
 
   def show
-    @textbook = Textbook.find(params[:id])
-    @frontcover = File.basename(@textbook.frontcover_url(:thumb).to_s)
-    @category = @textbook.category ? @textbook.category.name : nil
-    @subcategory = @textbook.subcategory ? @textbook.subcategory.name : nil
+    @instructor = current_instructor
+    @courses = @instructor.courses.where(:archived => false)
+    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
+    @course = @course_asset.course
+    @course_assets = @course.course_assets
+    @textbook = Textbook.find_by_id(params[:id])
+    @lessons = @textbook.lessons.sort{|a,b| a.page.to_i <=> b.page.to_i}
+    @exercises = @textbook.exercises
+		
   end
 
   def new
@@ -86,11 +91,8 @@ class TextbooksController < ApplicationController
 
   def edit
     @textbook = Textbook.find(params[:id])
-    puts ">>>>>>>>>>>>>>>>>>>> Textbook.title = #{@textbook.title}"
     @categoryid = @textbook.category ? @textbook.category.id : "1"
-    puts ">>>>>>>>>>>>>>>>>>>> @categoryid = #{@categoryid}"
     @categoryname = Category.find_by_id(@categoryid).name
-    puts ">>>>>>>>>>>>>>>>>>>> @categoryname = #{@categoryname}"
   end
 
   def update

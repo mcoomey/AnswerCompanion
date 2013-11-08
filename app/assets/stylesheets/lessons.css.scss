@@ -1,19 +1,20 @@
 
 #filterpane {
-	padding-top: 5px;
-	width: 150px;
-	min-height: 250px;
-	float: left;
+	height:26px;
+	margin-left:10px;
+	float: right;
 	background: white;
 	.button {
-		float:right;
-		margin-right:5px;
-		margin-top:15px;
-		background:$light-green;
+		padding:0px;
+		margin-top:0px;
+		margin-right:0px;
+		background:$very-light-green;
 		cursor:pointer;
+		float:right;
+		font-size:.8em;
 	}
 	#filters {
-		padding:5px;
+		padding:2px;
 		margin-right: 5px;
 		position: relative;
 		border-bottom-right-radius: 4px;
@@ -24,13 +25,8 @@
 		border: 2px solid $medium-green;
 		color: black;  
 		font-family: Verdana,Arial,sans-serif;
-		font-size: 0.75em;
-		H1 {
-			color:$main-green;
-			font-size: 1.5em;
-			font-weight: bold;
-			margin:0px 0px 10px 0px;
-		}
+		color:$main-green;
+		font-size: 1em;
 	}
 }	
 
@@ -49,13 +45,14 @@
 }
 
 #mainpane {
+	width:835px;
 	padding: 0;
 	margin: 0;
-	width: 645px;
 	min-height: 250px;
 	float: left;
 	background: white;
 	table {
+		margin:20px;
 		width:100%;
 		border-spacing: 0;
 		border-collapse: collapse;

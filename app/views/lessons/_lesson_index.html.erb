@@ -1,23 +1,20 @@
 <div id="mainpane">
-	<%= will_paginate lessons, :params => {:controller => "lessons", :action => "index", :textbook_id => @textbook, :subject_id => subjectId } %>
 	<table>
 	  <tr>
 	    <th class="title">Title</th>
 	    <th class="page">Page</th>
-		<% if current_instructor %>
-			<th class="edit"></th>
-			<th class="destroy"></th>
-		<% end %>
+			<th class="edit">Edit</th>
+			<th class="destroy">Delete</th>
 	  </tr>
 
 	<% lessons.each do |lesson| %>
 	  <tr>
-	    <td><%= link_to lesson.title, lesson_videos_path(lesson, :subject_id => @subjectId) %></td>
+	    <td><%= link_to lesson.title, lesson_videos_path(lesson) %></td>
 	    <td><%= lesson.page %></td>
 		<% if current_instructor %>
 			<% if current_instructor.id == lesson.instructor_id %>
-				<td><%=link_to 'Edit',  edit_textbook_lesson_path(lesson.textbook, lesson, :subject_id => subjectId), remote: true %></td>
-			    <td><%= link_to 'Destroy', lesson_path(lesson, :subject_id => subjectId), confirm: 'Delete Lesson - Are you sure?', method: :delete %></td>
+				<td><%=link_to 'Edit',  edit_textbook_lesson_path(lesson.textbook, lesson), remote: true %></td>
+			    <td><%= link_to 'Destroy', lesson_path(lesson), confirm: 'Delete Lesson - Are you sure?', method: :delete %></td>
 			<% else %>
 				<td></td>
 				<td></td>

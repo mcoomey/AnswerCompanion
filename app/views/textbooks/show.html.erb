@@ -1,78 +1,60 @@
 <article>
-<div id="buttonarea">
-	<div id="button01">
-	<%=link_to image_tag("BackToList.png",  :mouseover => "BackToListHover.png",:class => "button", :alt => "Back To List" ), textbooks_path %>
-	</div>
-	<div id="button02">
-	<%=link_to image_tag("Edit.png",  :mouseover => "EditHover.png",:class => "button", :alt => "Edit" ), edit_textbook_path(@textbook) %>
-	</div>
-	<div id="button03">
-	<td><%= link_to image_tag("Delete.png",  :mouseover => "DeleteHover.png",:class => "button", :alt => "Delete" ), @textbook, confirm: 'Delete Textbook. Are you sure?', method: :delete %></td>
-	</div>
-</div>
+	<div id="buttonarea">
+		<%= form_for :course, :url => course_asset_textbook_delegations_path(@course_asset), :html => { :method => 'get' } do |f| %>
+			<%= f.select(:id, @courses.collect{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
+		<% end %>
+		
+		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
+		           instructor_courses_path(@instructor) %>
+							 
+		<%=link_to image_tag("AddLesson.png",  :mouseover => "AddLessonHover.png",:class => "button", :alt => "Add a Lesson"), 
+		           new_textbook_lesson_path(@textbook), :remote => true %>
+							 
+		<%=link_to image_tag("AddExercise.png",  :mouseover => "AddExerciseHover.png",:class => "button", :alt => "Add an Exercise"), 
+		           new_textbook_exercise_path(@textbook), :remote => true %>
 
-<div id="showarea">
-<table>	
-<tr><th>Show textbook</th></tr>
-<tr><td>
-	
-<div id = "leftcolumn">
-	<p>
-	  Isbn13:<br />
-	<div class="showvalue">
-	  <%= @textbook.isbn13 %>
+
+ 		<div id="filterpane">
+ 			<div id="filters">
+ 				<%= form_for :filters, :url => { :action => 'index' }, :html => { :method => 'get' } do |f| %>
+	 				<%= f.label :page, "Page Filter:" %>
+	 				<%= f.text_field :pagefilter, :size => 10, :value => @filterstring %>
+	 				<%= f.submit "Apply", :class => "button"%>
+	 				<%= f.submit "Reset", :commit => "Reset", :class => "button" %>
+	 			<% end %>
+ 			</div>
+ 		</div>
+
+
 	</div>
-	</p>
-	<p>
-	  Title:<br />
-	<div class="showvalue">
-	  <%= @textbook.title %>
+	<div id="horizontal-tabs">
+		<ul class="static-tabs-nav">
+			<li><a href=".lesson-asset">Lessons</a></li>
+			<li><a href=".exercise-asset">Exercises</a></li>
+		</ul>
 	</div>
-	</p>
-	<p>
-	  Edition:<br />
-	<div class="showvalue">
-	  <%= @textbook.edition %>
+	<div id="vertical-tabs">
+		<ul class="dynamic-tabs-nav">
+  		<span class="title">Course Assets</span>
+			<% @course_assets.each do |asset| %>
+				<%= render "shared/course_asset_tag", :local_asset => asset %>
+				<% if @course_asset == asset %>
+					<%= image_tag(@textbook.thumbnail, class: "thumbnail") %>
+				<% end %>
+  		<% end %>
+		</ul>
+		<div id="panel">
+			<div class="lesson-asset">
+				<%= render 'lessons/lesson_index', :lessons => @lessons %>
+  			<br class="clearfloat"/>
+			</div>
+			<div class="exercise-asset">
+				textbooks/show.exercise-asset
+				<br class="clearfloat"/>				
+			</div>
+		</div>
+		<br class="clearfloat"/>
 	</div>
-	</p>
-	<p>
-	  Front Cover:<br /><br />
-	  <%= image_tag(@textbook.frontcover_url(:thumb).to_s) %>
-	</p>
-	<!-- <p>
-	  Filename:<br />
-	<div class="showvalue">
-	  <%= @frontcover %>
+	<div id="textbook_choices_dialog"
 	</div>
-	</p> -->
-</div>
-<div id = "rightcolumn">
-	<p>
-	  Author:<br />
-	<div class="showvalue">
-	  <%= @textbook.author %>
-	</div>
-	</p>
-	<p>
-	  Publisher:<br />
-	<div class="showvalue">
-	  <%= @textbook.publisher %>
-	</div>
-	</p>
-	<p>
-	Category:<br />
-	<div class="showvalue">
-    <%= @category %>
-	</div>
-	</p>
-	<p>
-	SubCategory:<br />
-	<div class="showvalue">
-    <%= @subcategory %>
-	</div>
-	</p>
-</td>
-</tr>
-</table>
-</div>
 </article>

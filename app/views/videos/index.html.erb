@@ -15,7 +15,7 @@
 		</div>
 
 		<div id="filterpane">
-			<%= image_tag(@textbook.frontcover_url(:thumb)) %>
+			<%= image_tag(@textbook.image_link) %>
 			<div id="filters">
 				<h1>Filters:</h1>
 				<%= form_for :filters, :url => { :action => 'index' }, :html => { :method => 'get' } do |f| %>

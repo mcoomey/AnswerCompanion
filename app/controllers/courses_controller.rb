@@ -32,7 +32,6 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
-    puts ">>>>>>>>>>>>>>>>>>>>>>>>>params = " + params.inspect
     if params[:course]
       @course = Course.find_by_id(params[:course][:id])
       @course_asset = @course.course_assets.try(:first)

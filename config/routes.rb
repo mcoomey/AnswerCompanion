@@ -71,6 +71,7 @@ AnswerCompanion::Application.routes.draw do
 	
 	resources :course_assets do
     resources :textbook_delegations
+    resources :textbooks
     resources :documents
     resources :videos
     resources :links

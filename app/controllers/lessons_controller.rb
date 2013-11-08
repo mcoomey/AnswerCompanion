@@ -9,7 +9,7 @@ class LessonsController < ApplicationController
   # GET /lessons.json
   def index
     get_subjectId
-    @subjectname = Subject.find(@subjectId).name
+    @subjectname = Subject.find(@subjectId).name if @subjectId
     @textbook = Textbook.find(params[:textbook_id])
     if params[:filters] && (params[:commit] != "Reset")
       @filterstring = params[:filters][:pagefilter]

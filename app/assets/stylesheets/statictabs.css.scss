@@ -88,7 +88,7 @@
 	font-size: 0.75em;
   ul.dynamic-tabs-nav {
     width: 120px;
-    height: 534px;
+    height: 514px;
     float: left;
   	background: $main-green;
   	list-style:none outside none;
@@ -150,8 +150,10 @@
   }
 }
 #panel{
-  width:796px;
-  height:500px;
+  width:$screen-width - 14px - 120px;
+  height:514px;
+	float:left;
+	overflow:auto;
 }
 .archived-asset {
 	display:none;

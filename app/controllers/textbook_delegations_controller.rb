@@ -30,6 +30,22 @@ class TextbookDelegationsController < ApplicationController
 	end
 	
 	def show
+    @instructor = current_instructor
+    @courses = @instructor.courses.where(:archived => false)
+    if params[:course]
+      @course = Course.find_by_id(params[:course][:id])
+      @course_asset = @course.course_assets.try(:first)
+      if @course_asset
+        redirect_to course_asset_textbook_delegations_path(@course_asset)
+      else
+        redirect_to course_path(@course)
+      end
+    else
+      @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
+      @course = @course_asset.course
+    end
+    @course_assets = @course.course_assets
+    @textbook = TextbookDelegation.find_by_id(params[:id]).textbook
 		
 	end
 	
@@ -64,34 +80,27 @@ class TextbookDelegationsController < ApplicationController
       else
         # check for a match in Google books
         result = GoogleBooks.search('isbn:' + isbn13, {count: 4}) # return up to 4 results
-        puts ">>>>>>>>>>>>>>result.count = #{result.count}<<<<<<<<<<<<<<<<<"
         # if something close is found...
         if (result && result.count > 0)
           
           #check each result
           result.each do |candidate|
             
-            puts ">>>>>>>>>>>>trying ISBN #{candidate.isbn_13}<<<<<<<<<<<<<<<<<<<<"
-            
             # if it's an exact match 
             if isbn13 == candidate.isbn_13
-              puts ">>>>>>>>>>exact match found in Googlebooks<<<<<<<<<<<<<<<<<<<"
               @textbook.isbn13 = candidate.isbn_13
               
               # check to see if the matching result is already in the database
               existingbook = Textbook.find_by_isbn13(@textbook.isbn13)
               
               if existingbook
-                puts ">>>>>>>>>>exact match found in the database<<<<<<<<<<<<<<<<<<<"
                 # if so, check to see if it's already in the asset
                 @tbdel = @course_asset.textbook_delegations.where(:textbook_id => existingbook.id).first
                 if @tbdel
-                  puts ">>>>>>>>>>exact match already in the asset<<<<<<<<<<<<<<<<<<<"
                   #if so, report error and inform which tab
                   @tbdelError = "Error, textbook already added to #{tabs[@tbdel.archived].to_s} tab."
                   break
                 else  
-                    puts ">>>>>>>>>>exact match getting added to selected tab<<<<<<<<<<<<<<<<<<<"
                   # otherwise, add it to the currently selected tab
                   add_to_current_tab(tabs, existingbook)
                   break
@@ -99,7 +108,6 @@ class TextbookDelegationsController < ApplicationController
 
               # otherwise, if textbook is not already in the database add the new book to the database
               else
-                puts ">>>>>>>>>>exact match not found in database<<<<<<<<<<<<<<<<<<<"
                 @textbook.title = candidate.title
                 @textbook.author = candidate.authors
                 @textbook.publisher = candidate.publisher
@@ -135,16 +143,13 @@ class TextbookDelegationsController < ApplicationController
 	
 	def update
     tbdel = TextbookDelegation.find(params[:id])
-    newval = params[:tbdel][:archive]
-    puts ">>>>>>>>>>newval=#{newval}<<<<<<<<<<<<<<<"
-    tbdel.archived = newval
+    tbdel.archived = params[:tbdel][:archive]
     tbdel.save
 	end
   
   def destroy
 		tbdel = TextbookDelegation.find(params[:id])
 		tbdel.destroy
-		redirect_to(:action => 'index')
   end
 
 private 

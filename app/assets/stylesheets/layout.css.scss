@@ -36,18 +36,6 @@ header {
 		top:10px;
 		left:10px;
 	}
-	
-  a:hover {
-		text-decoration:none;
-		border:none;
-		color:inherit;
-		background-color:inherit;
-	}
-
-	p {
-		font-size: 1em;
-		margin-left: 250px;
-	}
 }
 
 #sessioninfo {
@@ -59,10 +47,6 @@ header {
 	font-size: 1em;
 	line-height: 28px;
 	padding-top: 3px;
-	
-	a:hover {
-		background-color:white;
-	}
 	
 	img.button {
 		width:80px;
@@ -80,23 +64,21 @@ header {
   .notice, .ujs_notice  {
 		font-size: 1em;
 		line-height: 28px;
-		padding-top: 3px;
+		padding-top: 2px;
 		color: $medium-green;
 	}
 	.alert, .ujs_alert {
 		font-size: 1.5em;
 		line-height: 28px;
-		padding-top: 3px;
+		padding-top: 2px;
 		color: red;
 	}
 }
 
 article {
-	min-height:640px;
-	height: auto !important;
-//  height:600px;
+  height:583px;
 	width:$screen-width - 10px;
-	overflow:auto;
+	overflow:hidden;
 }
 
 footer {

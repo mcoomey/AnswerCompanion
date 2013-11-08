@@ -33,6 +33,7 @@ class CourseAssetsController < ApplicationController
       @course_asset = CourseAsset.new(params[:course_asset])
       if @course_asset.save
         @course_asset_error = nil
+        @course_assets = @course_asset.course.course_assets
       else
         @course_assetError = @course_asset.errors.full_messages.first
       end
@@ -77,7 +78,9 @@ class CourseAssetsController < ApplicationController
       # if there are any other assets associated with the course then render the first one
       @course_asset = @course.course_assets.try(:first)
       if @course_asset
-        render :js => "window.location.href = '#{course_asset_textbook_delegations_path(@course_asset)}'"
+        new_path = send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).model_name}_path", @course_asset)
+        render :js => "window.location.href = '#{new_path}'"
+        
         # otherwise just render the course
       else
         render :js => "window.location.href = '#{course_path(@course)}'"

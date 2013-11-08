@@ -9,7 +9,7 @@
 <body>
 <div id="wrapper">
 	<div id="content">
-        <header>  
+    <header>  
 			<%= link_to image_tag("AnswerCompanionLogo.png", :class => "logo"), root_path %>
 			<div id="sessioninfo">
 				<% if instructor_signed_in? || student_signed_in? || parent_signed_in? %>
@@ -23,16 +23,16 @@
 				<% end %>
 			</div>   
  		</header>
-	    <div id="messages">
-		  	<span class="notice"><%= notice %></span>
+    <div id="messages">
+	  	<span class="notice"><%= notice %></span>
 			<span class="ujs_notice"></span>
-		  	<span class="alert"><%= alert %></span>
+	  	<span class="alert"><%= alert %></span>
 			<span class="ujs_alert"></span>
-	  	</div>
-			<%= yield :asset_table %>
-			<%= yield %>
-      <footer> Version 0.0&nbsp;&nbsp;&nbsp;&nbsp;&copy;2012 Answer Companion Incorporated&nbsp;&nbsp;&nbsp;&nbsp;Paxton, MA 01612 </footer>
-    </div>
+  	</div>
+		<%= yield :asset_table %>
+		<%= yield %>
+    <footer> Version 0.0&nbsp;&nbsp;&nbsp;&nbsp;&copy;2012 Answer Companion Incorporated&nbsp;&nbsp;&nbsp;&nbsp;Paxton, MA 01612 </footer>
+  </div>
 </div>
 </body>
 </html>

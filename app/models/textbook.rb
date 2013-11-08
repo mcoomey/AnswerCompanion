@@ -18,6 +18,10 @@ class Textbook < ActiveRecord::Base
 	validates_presence_of  :isbn13, :message => "-- You must specify the ISBN."
 	validates_uniqueness_of :isbn13, :message => "-- That ISBN already exists."
 	
+  def thumbnail
+    image_link.gsub("zoom=1", "zoom=5")
+  end
+  
 	def category_name
 	  category.try(:name)
 	end

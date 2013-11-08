@@ -1,2 +1,38 @@
-<h1>TextbookDelegations#show</h1>
-<p>Find me in app/views/textbook_delegations/show.html.erb</p>
+<article>
+	<div id="buttonarea">
+		<%= form_for :course, :url => {:action => 'index' }, :html => { :method => 'get' } do |f| %>
+			<%= f.select(:id, @courses.collect{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
+		<% end %>
+		
+		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
+		           instructor_courses_path(@instructor) %>
+	</div>
+	<div id="horizontal-tabs">
+		<ul class="static-tabs-nav">
+			<li><a href=".lesson-asset">Lessons</a></li>
+			<li><a href=".exercise-asset">Exercises</a></li>
+		</ul>
+	</div>
+	<div id="vertical-tabs">
+		<ul class="dynamic-tabs-nav">
+  		<span class="title">Course Assets</span>
+			<% @course_assets.each do |asset| %>
+				<%= render "shared/course_asset_tag", :local_asset => asset %>
+				<% if @course_asset == asset %>
+					<%= image_tag(@textbook.thumbnail, class: "thumbnail") %>
+				<% end %>
+  		<% end %>
+		</ul>
+		<div id="panel">
+			<div class="lesson-asset">
+  			<br class="clearfloat"/>
+			</div>
+			<div class="exercise-asset">
+				<br class="clearfloat"/>				
+			</div>
+		</div>
+		<br class="clearfloat"/>
+	</div>
+	<div id="textbook_choices_dialog"
+	</div>
+</article>
