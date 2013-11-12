@@ -1,26 +1,29 @@
-<div id="mainpane">
+<div id="mainpane" class="tableContainer">
 	<table>
-	  <tr>
-	    <th class="title">Title</th>
-	    <th class="page">Page</th>
-			<th class="edit">Edit</th>
-			<th class="destroy">Delete</th>
-	  </tr>
-
-	<% lessons.each do |lesson| %>
-	  <tr>
-	    <td><%= link_to lesson.title, lesson_videos_path(lesson) %></td>
-	    <td><%= lesson.page %></td>
-		<% if current_instructor %>
-			<% if current_instructor.id == lesson.instructor_id %>
-				<td><%=link_to 'Edit',  edit_textbook_lesson_path(lesson.textbook, lesson), remote: true %></td>
-			    <td><%= link_to 'Destroy', lesson_path(lesson), confirm: 'Delete Lesson - Are you sure?', method: :delete %></td>
-			<% else %>
-				<td></td>
-				<td></td>
-			<% end %>	
-		<% end %>
-	  </tr>
-	<% end %>
+		<thead class="fixedHeader">
+		  <tr>
+		    <th class="title">Title</th>
+		    <th class="page">Page</th>
+				<th class="edit">Edit</th>
+				<th class="destroy">Delete</th>
+		  </tr>
+		</thead>
+		<tbody class="scrollContent">
+			<% lessons.each do |lesson| %>
+			  <tr>
+			    <td><%= link_to lesson.title, lesson_videos_path(lesson) %></td>
+			    <td><%= lesson.page %></td>
+				<% if current_instructor %>
+					<% if current_instructor.id == lesson.instructor_id %>
+						<td><%=link_to 'Edit',  edit_textbook_lesson_path(lesson.textbook, lesson), remote: true %></td>
+					    <td><%= link_to 'Destroy', lesson_path(lesson), confirm: 'Delete Lesson - Are you sure?', method: :delete %></td>
+					<% else %>
+						<td></td>
+						<td></td>
+					<% end %>	
+				<% end %>
+			  </tr>
+			<% end %>
+		</tbody>
 	</table>
 </div>

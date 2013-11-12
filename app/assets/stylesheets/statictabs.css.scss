@@ -153,22 +153,21 @@
   width:$screen-width - 14px - 120px;
   height:514px;
 	float:left;
-	overflow:auto;
 }
 .archived-asset {
 	display:none;
 	margin-top: 0;
-	padding-left: 140px;
+	padding-left: 20px;
 }
 .current-asset {
 	display:block;
 	margin-top: 0;
-	padding-left: 140px;
+	padding-left: 20px;
 }
 .future-asset {
 	display:none;
 	margin-top: 0;
-	padding-left: 140px;
+	padding-left: 20px;
 }
 .asset-tag {
 	position:relative;

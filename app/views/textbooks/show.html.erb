@@ -16,9 +16,10 @@
 
  		<div id="filterpane">
  			<div id="filters">
- 				<%= form_for :filters, :url => { :action => 'index' }, :html => { :method => 'get' } do |f| %>
+ 				<%= form_for :filters, :url => textbook_path(@textbook), :html => { :method => 'get'} do |f| %>
 	 				<%= f.label :page, "Page Filter:" %>
 	 				<%= f.text_field :pagefilter, :size => 10, :value => @filterstring %>
+					<%= f.hidden_field :course_asset_id, :value => @course_asset.id %>
 	 				<%= f.submit "Apply", :class => "button"%>
 	 				<%= f.submit "Reset", :commit => "Reset", :class => "button" %>
 	 			<% end %>
