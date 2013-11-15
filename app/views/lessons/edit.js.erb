@@ -1,5 +1,6 @@
 $("#messages .alert").hide();
-$("#messages .ujs_alert").hide();
+$("#messages .ujs_alert").html("<%= @lessonError %>").show();
 $("#messages .notice").hide();
-$("#messages .ujs_notice").hide();
+$("#messages .ujs_notice").html("<%= @lessonNotice %>").show();
+$("#ujsform").remove();
 $("#buttonarea").hide().after('<%= j render("edit_lesson") %>');

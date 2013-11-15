@@ -1,0 +1,2 @@
+$("#messages .ujs_notice").html("<%= @lessonNotice %>").show();
+$("#lessonpane").replaceWith("<%= j render 'lesson_index', :lessons => @lessons %>");

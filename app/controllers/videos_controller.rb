@@ -8,8 +8,8 @@ class VideosController < ApplicationController
   # GET /videos
   # GET /videos.json
   def index
-    get_subjectId
-    @subjectname = Subject.find(@subjectId).name
+    # get_subjectId
+    # @subjectname = Subject.find(@subjectId).name
     @lesson = Lesson.find(params[:lesson_id])
     @textbook = @lesson.textbook
     @videos = @lesson.videos

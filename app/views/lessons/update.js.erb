@@ -1,22 +1,8 @@
-<% if @lesson.errors.any? %>
-	$("#messages .alert").hide();
-	$("#messages .ujs_alert").html("ERROR! <%= j @lesson.errors.full_messages.first %>" ).show();
-<% else %>	
-	$("#messages .ujs_alert").hide();
-	$("#messages .alert").show();
-	$("#messages .notice").show();
-	
-	<% if params[:commit]  != "Cancel" %>
-		$("#messages .notice").html("Lesson updated successfully. ").show();
-	<% end %>
-	
-	// remove the edit lesson form
-	$("#ujsform").remove();
-
-
-	$("#mainpane").replaceWith("<%= j render 'lesson_index', :lessons => @lessons, :subjectId => @subjectId %>");
-	
-	// redisplay the button area
-	$("#buttonarea").show()
-
-<% end %>
+$("#messages .alert").hide();
+$("#messages .ujs_alert").html("<%= @lessonError %>").show();
+$("#messages .notice").hide();
+$("#messages .ujs_notice").html("<%= @lessonNotice %>").show();
+$("#ujsform").remove();
+$("#buttonarea").show();
+$("#filters_pagefilter").val("");
+$("#lessonpane").replaceWith("<%= j render 'lesson_index', :lessons => @lessons %>");

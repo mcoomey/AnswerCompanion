@@ -1,14 +1,14 @@
 <div id="ujsform">
-<%= form_for [@textbook, @lesson], remote:true do |f| %>
+<%= form_for @lesson, remote:true do |f| %>
 	<%= f.label :title %>
 	<%= f.text_field :title, :id => "lesson_title", :size => "65" %>
 	
 	<%= f.label :page %>
 	<%= f.text_field :page, :size => "13" %>
 	
-	<%= f.hidden_field :subject_id, :value => @subjectId %>
+	<%= f.hidden_field :textbook_id, :value => @textbook.id %>
 	
 	<%= f.submit "Create" %>
-	<%= f.submit "Cancel", :onclick => "window.location.reload()" %>
+	<%= f.submit "Cancel" %>
 <% end %>
 </div>

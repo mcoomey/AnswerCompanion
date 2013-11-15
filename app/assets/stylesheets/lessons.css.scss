@@ -34,14 +34,8 @@
 		}
 	}
 }
-
-
-
-
-
-
 /* define height and width of scrollable area. Add 16px to width for scrollbar          */
-#mainpane.tableContainer {
+#lessonpane.tableContainer {
 	clear: both;
 	width: 874px;
 	height: 504px;
@@ -60,10 +54,11 @@
 		vertical-align:center;
 		border-spacing: 0;
 		border-collapse: collapse;
+		padding:0;
 		th {
 			border: 1px solid $main-green;
 		  width: 619px;
-			height:35px;
+			height:34px;
 		}
 		th + th {
 			width:69px;
@@ -81,6 +76,7 @@
 		width: 854px;
 		height: 460px;
 		padding-top:0;
+		margin:0;
 		border-spacing: 0;
 		border-collapse: collapse;
 		border-bottom: 1px solid $main-green;
@@ -112,4 +108,8 @@
 			width:65px;
 		}
 	}
+}
+
+.field_with_errors {
+	display: inline;
 }

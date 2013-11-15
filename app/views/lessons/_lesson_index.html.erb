@@ -1,4 +1,4 @@
-<div id="mainpane" class="tableContainer">
+<div id="lessonpane" class="tableContainer">
 	<table>
 		<thead class="fixedHeader">
 		  <tr>
@@ -16,7 +16,7 @@
 				<% if current_instructor %>
 					<% if current_instructor.id == lesson.instructor_id %>
 						<td><%=link_to 'Edit',  edit_textbook_lesson_path(lesson.textbook, lesson), remote: true %></td>
-					    <td><%= link_to 'Destroy', lesson_path(lesson), confirm: 'Delete Lesson - Are you sure?', method: :delete %></td>
+					    <td><%= link_to 'Delete', lesson_path(lesson), confirm: 'Delete Lesson - Are you sure?', method: :delete, :remote => true %></td>
 					<% else %>
 						<td></td>
 						<td></td>
