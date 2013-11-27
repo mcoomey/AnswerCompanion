@@ -10,14 +10,22 @@
 		<%=link_to image_tag("AddLesson.png",  :mouseover => "AddLessonHover.png",:class => "button", :alt => "Add a Lesson"), 
 		           new_textbook_lesson_path(@textbook), :remote => true %>
 							 
-		<%=link_to image_tag("AddExercise.png",  :mouseover => "AddExerciseHover.png",:class => "button", :alt => "Add an Exercise"), 
-		           new_textbook_exercise_path(@textbook), :remote => true %>
-
+ 		<div id="filterpane">
+ 			<div id="filters">
+ 				<%= form_for :filters, :url => textbook_lessons_path(@textbook), :html => { :method => 'get'} do |f| %>
+	 				<%= f.label :page, "Page Filter:" %>
+	 				<%= f.text_field :pagefilter, :size => 10, :value => @filterstring %>
+					<%= f.hidden_field :course_asset_id, :value => @course_asset.id %>
+	 				<%= f.submit "Apply", :class => "button"%>
+	 				<%= f.submit "Reset", :commit => "Reset", :class => "button" %>
+	 			<% end %>
+ 			</div>
+ 		</div>
 	</div>
 	<div id="horizontal-tabs">
-		<ul class="static-tabs-nav">
-			<li><a href=".lesson-asset">Lessons</a></li>
-			<li><a href=".exercise-asset">Exercises</a></li>
+		<ul class="dynamic-tabs-nav">
+			<li class="activeTab"><%= link_to "Lessons", textbook_lessons_path(@textbook, :course_asset_id => @course_asset.id ) %></li>
+			<li><%= link_to "Exercises", textbook_exercises_path(@textbook, :course_asset_id => @course_asset.id ) %></li>
 		</ul>
 	</div>
 	<div id="vertical-tabs">
@@ -32,12 +40,8 @@
 		</ul>
 		<div id="panel">
 			<div class="lesson-asset">
-				LESSONS
+				<%= render 'lessons/lesson_index', :lessons => @lessons %>
   			<br class="clearfloat"/>
-			</div>
-			<div class="exercise-asset">
-				EXERCISES
-				<br class="clearfloat"/>				
 			</div>
 		</div>
 		<br class="clearfloat"/>

@@ -45,43 +45,7 @@ class TextbooksController < ApplicationController
   end
 
   def show
-    if params[:filters]
-      @course_asset = CourseAsset.find_by_id(params[:filters][:course_asset_id])
-    else
-      @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
-    end
-    @instructor = current_instructor
-    @courses = @instructor.courses.where(:archived => false)
-    @course = @course_asset.course
-    @course_assets = @course.course_assets
-    @textbook = Textbook.find_by_id(params[:id])
-    
-    if params[:filters] && (params[:commit] != "Reset")
-      @filterstring = params[:filters][:pagefilter]
-      if @filterstring.include?('-')
-        range = @filterstring.split('-')
-        @lessons = @textbook.lessons.where("page between ? and ?", range[0].to_i, range[1].to_i).sort{|a,b| a.page.to_i <=> b.page.to_i}
-        @exercises = @textbook.exercises.where("page between ? and ?", range[0].to_i, range[1].to_i).sort{|a,b| a.page.to_i <=> b.page.to_i}
-      else
-        @lessons = @textbook.lessons.where("page = ?", @filterstring)
-        @exercises = @textbook.exercises.where("page = ?", @filterstring)
-      end
-        
-    else
-      @filterstring = nil
-      @lessons = @textbook.lessons.sort{|a,b| a.page.to_i <=> b.page.to_i}
-      @exercises = @textbook.exercises.sort{|a,b| a.page.to_i <=> b.page.to_i}
-    end
-    
-    flash[:alert] = nil
-    
-    if (@lessons.count == 0)&&(cookies[:horizontal_tabs_index] == '.lesson-asset')
-      flash[:alert] = "No lessons found."
-    end
-    
-    if (@exercises.count == 0)&&(cookies[:horizontal_tabs_index] == '.exercise-asset')
-      flash[:alert] = "No exercises found."
-    end
+
   end
 
   def new

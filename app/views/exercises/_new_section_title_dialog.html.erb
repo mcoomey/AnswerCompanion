@@ -1,0 +1,9 @@
+<%= form_for @exercise, remote:true do |f| %>
+	<%= f.hidden_field :number %>
+	<%= f.hidden_field :page %>
+	<%= f.hidden_field :section_title_name %>
+	<%= f.hidden_field :textbook_id %>
+	</br>
+	<%= f.submit "Yes", :name => "commit", :id => "confirm_yes" %>
+	<%= f.submit "No", :name => "commit",  :id => "confirm_no"  %>
+<% end %>

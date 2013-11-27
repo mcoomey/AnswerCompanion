@@ -2,11 +2,17 @@ class SectionTitlesController < ApplicationController
   # GET /section_titles
   # GET /section_titles.json
   def index
-    @section_titles = SectionTitle.all
+    
+    if params[:textbook_id]
+      textbook = Textbook.find_by_id(params[:textbook_id])
+      @section_titles = textbook.section_titles.order(:name).where("name like ?", "%#{params[:term]}%")
+    else
+      @section_titles = SectionTitle.order(:name)
+    end
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @section_titles }
+      format.json { render json: @section_titles.map(&:name) }
     end
   end
 

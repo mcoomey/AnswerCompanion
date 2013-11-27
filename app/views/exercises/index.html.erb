@@ -1,44 +1,51 @@
 <article>
 	<div id="buttonarea">
-		<%= image_tag(@textbook.thumbnail) %>
+		<%= form_for :course, :url => course_asset_textbook_delegations_path(@course_asset), :html => { :method => 'get' } do |f| %>
+			<%= f.select(:id, @courses.collect{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
+		<% end %>
+		
+		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
+		           instructor_courses_path(@instructor) %>
+							 
+		<%=link_to image_tag("AddExercise.png",  :mouseover => "AddExerciseHover.png",:class => "button", :alt => "Add an Exercise"), 
+		           new_textbook_exercise_path(@textbook), :remote => true %>
+
+ 		<div id="filterpane">
+ 			<div id="filters">
+ 				<%= form_for :filters, :url => textbook_exercises_path(@textbook), :html => { :method => 'get'} do |f| %>
+	 				<%= f.label :page, "Page Filter:" %>
+	 				<%= f.text_field :pagefilter, :size => 10, :value => @filterstring %>
+					<%= f.hidden_field :course_asset_id, :value => @course_asset.id %>
+	 				<%= f.submit "Apply", :class => "button"%>
+	 				<%= f.submit "Reset", :commit => "Reset", :class => "button" %>
+	 			<% end %>
+ 			</div>
+ 		</div>
 	</div>
-	<div id="ac-tabs">
-		<ul class="ac-tabs-nav">
-			<li>
-				<%= link_to "Lessons", textbook_lessons_path(@textbook, :subject_id => params[:subject_id])+"#tabs-1", :class => "tab-markers" %>
-			</li>
-			<li>
-				<%= link_to "Exercises", textbook_exercises_path(@textbook, :subject_id => params[:subject_id])+"#tabs-2", :class => "tab-markers" %>
-			</li>
+	<div id="horizontal-tabs">
+		<ul class="dynamic-tabs-nav">
+			<li><%= link_to "Lessons", textbook_lessons_path(@textbook, :course_asset_id => @course_asset.id ) %></li>
+			<li class="activeTab"><%= link_to "Exercises", textbook_exercises_path(@textbook, :course_asset_id => @course_asset.id ) %></li>
 		</ul>
-
-<h1>Listing exercises</h1>
-
-<table>
-  <tr>
-    <th>Number</th>
-    <th>Page</th>
-    <th>Section title</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @exercises.each do |exercise| %>
-  <tr>
-    <td><%= exercise.number %></td>
-    <td><%= exercise.page %></td>
-    <td><%= exercise.section_title_id %></td>
-    <td><%= link_to 'Show', exercise %></td>
-    <td><%= link_to 'Edit', edit_exercise_path(exercise) %></td>
-    <td><%= link_to 'Destroy', exercise, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Exercise', new_exercise_path %>
-	<br class="clearfloat"/>
-</div>
+	</div>
+	<div id="vertical-tabs">
+		<ul class="dynamic-tabs-nav">
+  		<span class="title">Course Assets</span>
+			<% @course_assets.each do |asset| %>
+				<%= render "shared/course_asset_tag", :local_asset => asset %>
+				<% if @course_asset == asset %>
+					<%= image_tag(@textbook.thumbnail, class: "thumbnail") %>
+				<% end %>
+  		<% end %>
+		</ul>
+		<div id="panel">
+			<div class="exercise-asset">
+				<%= render 'exercise_index', :exercises => @exercises %>
+				<br class="clearfloat"/>				
+			</div>
+		</div>
+		<br class="clearfloat"/>
+	</div>
+	<div id="create_new_section_title_dialog"
+	</div>
 </article>

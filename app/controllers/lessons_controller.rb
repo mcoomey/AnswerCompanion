@@ -3,14 +3,48 @@ class LessonsController < ApplicationController
   # GET /lessons
   # GET /lessons.json
   def index
-    @lessons = Lesson.all
-    render json: @lessons
+    
+    if params[:filters]
+      @course_asset = CourseAsset.find_by_id(params[:filters][:course_asset_id])
+    else
+      @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
+    end
+    @instructor = current_instructor
+    @courses = @instructor.courses.where(:archived => false)
+    @course = @course_asset.course
+    @course_assets = @course.course_assets
+    @textbook = Textbook.find_by_id(params[:textbook_id])
+    
+    if params[:filters] && (params[:commit] != "Reset")
+      @filterstring = params[:filters][:pagefilter]
+      if @filterstring.include?('-')
+        range = @filterstring.split('-')
+        @lessons = @textbook.lessons.where("page between ? and ?", range[0].to_i, range[1].to_i).sort{|a,b| a.page.to_i <=> b.page.to_i}
+      else
+        @lessons = @textbook.lessons.where("page = ?", @filterstring)
+      end
+        
+    else
+      @filterstring = nil
+      @lessons = @textbook.lessons.sort{|a,b| a.page.to_i <=> b.page.to_i}
+    end
+    
+    flash[:alert] = nil
+    
+    if (@lessons.count == 0)
+      flash[:alert] = "No lessons found."
+    end
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @lessons }
+    end    
   end
 
   # GET /lessons/1
   # GET /lessons/1.json
   def show
-    @lesson = Lesson.find(params[:id])
+    @lesson = Lesson.find_by_id(params[:id])
     
     respond_to do |format|
       format.html # show.html.erb

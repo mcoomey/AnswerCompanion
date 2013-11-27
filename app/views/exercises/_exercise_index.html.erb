@@ -1,0 +1,31 @@
+<div id="exercisepane" class="tableContainer">
+	<table>
+		<thead class="fixedHeader">
+		  <tr>
+		    <th>Number</th>
+		    <th>Page</th>
+		    <th>Section</th>
+				<th>Edit</th>
+				<th>Delete</th>
+		  </tr>
+		</thead>
+		<tbody class="scrollContent">
+			<% exercises.each do |exercise| %>
+			  <tr>
+			    <td><%= link_to exercise.number, exercise_videos_path(exercise) %></td>
+			    <td><%= exercise.page %></td>
+			    <td><%= exercise.section_title.name %></td>
+				<% if current_instructor %>
+					<% if current_instructor.id == exercise.instructor_id %>
+						<td><%=link_to 'Edit',  edit_textbook_exercise_path(exercise.textbook, exercise), remote: true %></td>
+					    <td><%= link_to 'Delete', exercise_path(exercise), confirm: 'Delete Exercise - Are you sure?', method: :delete, :remote => true %></td>
+					<% else %>
+						<td></td>
+						<td></td>
+					<% end %>	
+				<% end %>
+			  </tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

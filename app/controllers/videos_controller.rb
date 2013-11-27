@@ -10,7 +10,12 @@ class VideosController < ApplicationController
   def index
     # get_subjectId
     # @subjectname = Subject.find(@subjectId).name
-    @lesson = Lesson.find(params[:lesson_id])
+    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
+    @course = @course_asset.course
+    @course_assets = @course.course_assets
+    @instructor = @course.instructor
+    @courses = @instructor.courses
+    @lesson = Lesson.find_by_id(params[:lesson_id])
     @textbook = @lesson.textbook
     @videos = @lesson.videos
 
