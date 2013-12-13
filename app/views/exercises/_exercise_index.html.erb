@@ -12,7 +12,7 @@
 		<tbody class="scrollContent">
 			<% exercises.each do |exercise| %>
 			  <tr>
-			    <td><%= link_to exercise.number, exercise_videos_path(exercise) %></td>
+			    <td><%= link_to exercise.number, exercise_videos_path(exercise, course_asset_id: @course_asset.id) %></td>
 			    <td><%= exercise.page %></td>
 			    <td><%= exercise.section_title.name %></td>
 				<% if current_instructor %>

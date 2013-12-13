@@ -1,4 +1,4 @@
-<tr>
+<tr id="video_<%= video.id %>">
     <td><%= video.length %></td>
     <td><%= video.instructor.username %></td>
 	<% if !video.videofile_processed || video.videofile_processed == 0 %>
@@ -6,12 +6,18 @@
 	<% elsif video.videofile_processed < 0 %>
 		<td>Error</td>
 	<% else %>
-		<td><%= link_to 'Play', lesson_video_path(lesson, video, :subject_id => subjectId) %></td>
+		<td>
+			<% if @resource == "exercises" %>
+				<%= link_to 'Play', exercise_video_path(params[:exercise_id], video, :course_asset_id => @course_asset.id) %>
+			<% else %>
+				<%= link_to 'Play', lesson_video_path(params[:lesson_id], video, :course_asset_id => @course_asset.id) %>
+			<% end %>
+		</td>
 	<% end %>
 	<% if current_instructor %>
 		<% if current_instructor.id == video.instructor_id %>
 			<td><%=link_to 'Replace',  "#" %></td>
-		    <td><%= link_to 'Destroy', lesson_video_path(lesson, video, :subject_id => subjectId), confirm:'Delete Video - Are you sure?', method: :delete %></td>
+		    <td><%= link_to 'Destroy', video_path(video), confirm:'Delete Video - Are you sure?', method: :delete, remote: true %></td>
 		<% else %>
 			<td></td>
 			<td></td>

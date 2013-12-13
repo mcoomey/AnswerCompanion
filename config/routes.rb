@@ -44,7 +44,9 @@ AnswerCompanion::Application.routes.draw do
   end
  
   resources :exercises do
-    resources :videos
+    resources :videos do
+      post 'progress'
+    end
   end
   
   resources :lessons do

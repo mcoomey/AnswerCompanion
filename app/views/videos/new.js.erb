@@ -1,10 +1,8 @@
-$('#add_video').hide();
-$('#buttonarea').append("<%= j render 'new_video' %>");
-$('#messages .notice').html("");
-$('#messages .ujs_notice').html("");
-$('#messages .alert').html("");
-$('#messages .ujs_alert').html("");
-
+$("#messages .alert").hide();
+$("#messages .ujs_alert").hide();
+$("#messages .notice").hide();
+$("#messages .ujs_notice").hide();
+$("#buttonarea").hide().after("<%= j render 'new_video' %>");
 $('#new_video').fileupload({
     dataType: "script",
     add: function(e, data) {

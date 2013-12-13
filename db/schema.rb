@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131030223137) do
+ActiveRecord::Schema.define(:version => 20131201155517) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -322,14 +322,15 @@ ActiveRecord::Schema.define(:version => 20131030223137) do
     t.string   "length"
     t.boolean  "archived"
     t.integer  "newversion_id"
-    t.integer  "exercise_id"
-    t.integer  "lesson_id"
     t.integer  "instructor_id"
     t.integer  "textbook_id"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
     t.integer  "videofile_processed"
-    t.integer  "course_asset_id"
+    t.integer  "videoable_id"
+    t.string   "videoable_type"
   end
+
+  add_index "videos", ["videoable_id", "videoable_type"], :name => "index_videos_on_videoable_id_and_videoable_type"
 
 end

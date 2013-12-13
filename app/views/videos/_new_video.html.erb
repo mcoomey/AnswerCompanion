@@ -1,14 +1,19 @@
-<%= form_for [@lesson, Video.new] do |f| %>
-	<%= f.hidden_field :subject_id, :value => @subjectId %>
-	<%= f.file_field :videofile, :id => "video_filename" %>
-	<%= f.submit "Cancel" %>
-<% end %>
+<div id="ujsform">
+	<%= form_for [@videoable, @video], remote: true do |f| %>
+		<%= f.label :video_filename %>
+		<%= f.file_field :videofile, :id => "video_filename" %>
+		<%= f.hidden_field :course_asset_id, :value => @course_asset.id %>
+		<%= f.hidden_field :instructor_id, :value => @instructor.id %>
+		<%= f.hidden_field :textbook_id, :value => @textbook.id %>
+		<%= f.submit "Cancel" %>
+	<% end %>
+</div>
 
 <script id="template-upload" type="text/x-tmpl">
 	<div class="upload">
 	  <div id="uploadfilename">
-		{%=o.name%}
-      </div>
- 	    <div class="progress"><div class="bar" style="width: 0%"></div></div>
+			{%=o.name%}
+    </div>
+    <div class="progress"><div class="bar" style="width: 0%"></div></div>
 	</div>
 </script>

@@ -7,17 +7,14 @@
 		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
 		           instructor_courses_path(@instructor) %>
 							 
-		<%=link_to image_tag("AddLesson.png",  :mouseover => "AddLessonHover.png",:class => "button", :alt => "Add a Lesson"), 
-		           new_textbook_lesson_path(@textbook), :remote => true %>
+		<%=link_to image_tag("AddVideo.png",  :mouseover => "AddVideoHover.png",:class => "button", :alt => "Add a Video"), 
+		           new_exercise_video_path(@videoable, :course_asset_id => @course_asset.id), :id => "add_video", :remote => true %>
 							 
-		<%=link_to image_tag("AddExercise.png",  :mouseover => "AddExerciseHover.png",:class => "button", :alt => "Add an Exercise"), 
-		           new_textbook_exercise_path(@textbook), :remote => true %>
-
 	</div>
 	<div id="horizontal-tabs">
-		<ul class="static-tabs-nav">
-			<li><a href=".lesson-asset">Lessons</a></li>
-			<li><a href=".exercise-asset">Exercises</a></li>
+		<ul class="dynamic-tabs-nav">
+			<%= content_tag(:li, (link_to "Lessons", textbook_lessons_path(@textbook, :course_asset_id => @course_asset.id )), class: ("activeTab" if @resource == "lessons")) %>
+			<%= content_tag(:li, (link_to "Exercises", textbook_exercises_path(@textbook, :course_asset_id => @course_asset.id )), class: ("activeTab" if @resource == "exercises")) %>
 		</ul>
 	</div>
 	<div id="vertical-tabs">
@@ -30,18 +27,22 @@
 				<% end %>
   		<% end %>
 		</ul>
-		<div id="panel">
-			<div class="lesson-asset">
-				LESSONS
-  			<br class="clearfloat"/>
+		<div id="panel">			
+			<div id="breadcrumbs">
+				<% if @resource == "exercises" %>
+					<%= @videoable.section_title.name + " Exercise: " + @videoable.number %>
+				<% else%>
+					<%= @videoable.title + " Page: " + @videoable.page %>
+				<% end %>
 			</div>
+
 			<div class="exercise-asset">
-				EXERCISES
+				<%= render "video_index", :videos => @videos %>
 				<br class="clearfloat"/>				
 			</div>
 		</div>
 		<br class="clearfloat"/>
 	</div>
-	<div id="textbook_choices_dialog"
+	<div id="create_new_section_title_dialog"
 	</div>
 </article>

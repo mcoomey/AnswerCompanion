@@ -1,0 +1,8 @@
+$("#messages .alert").hide();
+$("#messages .ujs_alert").html("<%= @exerciseError %>").show();
+$("#messages .notice").hide();
+$("#messages .ujs_notice").html("<%= @exerciseNotice %>").show();
+$("#ujsform").remove();
+$("#buttonarea").show();
+$("#filters_pagefilter").val("");
+$("#exercisepane").replaceWith("<%= j render 'exercise_index', :exercises => @exercises %>");

@@ -2,6 +2,4 @@ $("#messages .alert").hide();
 $("#messages .ujs_alert").html("<%= @videoError %>").show();
 $("#messages .notice").hide();
 $("#messages .ujs_notice").html("<%= @videoNotice %>").show();
-$("#ujsform").remove();
-$("#buttonarea").show();
-$("#videopane table tr:last").after('<%= j render 'video', :video => @video  %>');
+$("tr#video_<%= @video.id %>").remove();

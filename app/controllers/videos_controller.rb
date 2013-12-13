@@ -1,24 +1,10 @@
 class VideosController < ApplicationController
   
-  def get_subjectId
-    @subjectId = params[:subject_id] if params[:subject_id]
-    @subjectId = params[:filters][:subject_id] if params[:filters]
-  end
-
+  before_filter :load_videoable, :except => [:destroy]
+  
   # GET /videos
   # GET /videos.json
   def index
-    # get_subjectId
-    # @subjectname = Subject.find(@subjectId).name
-    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
-    @course = @course_asset.course
-    @course_assets = @course.course_assets
-    @instructor = @course.instructor
-    @courses = @instructor.courses
-    @lesson = Lesson.find_by_id(params[:lesson_id])
-    @textbook = @lesson.textbook
-    @videos = @lesson.videos
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { }
@@ -28,10 +14,7 @@ class VideosController < ApplicationController
   # GET /videos/1
   # GET /videos/1.json
   def show
-    get_subjectId
-    @subjectname = Subject.find(@subjectId).name
     @video = Video.find(params[:id])
-    @lesson = Lesson.find(params[:lesson_id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -42,33 +25,27 @@ class VideosController < ApplicationController
   # GET /videos/new
   # GET /videos/new.json
   def new
-    get_subjectId
-    @subjectname = Subject.find(@subjectId).name
-    @lesson = Lesson.find(params[:lesson_id])
-    @textbook = @lesson.textbook
-    @videos = @lesson.videos
-    @video = Video.new
- end
+    @video = @videoable.videos.new
+  end
 
   # POST /videos
   # POST /videos.json
   def create
-    @subjectId = params[:video][:subject_id]
-    @lesson = Lesson.find(params[:lesson_id])
-    @textbook = @lesson.textbook
-    @videos = @lesson.videos
-    @video = @videos.build(:videofile => params[:video][:videofile])
-    @video.instructor_id = current_instructor.id if current_instructor
-    @video.textbook_id = @textbook.id
-   	if params[:commit]  != "Cancel"
-      if !@video.save
-        flash[:alert] = "Error: " + @video.errors.full_messages.first
-        redirect_to lesson_videos_path(@lesson, :subject_id => @subjectId)
+   	if params[:commit]  == "Cancel"
+      @videoNotice = "Add new video action canceled."
+      render "cancel"
+    else
+      @video = @videoable.videos.new(params[:video].except(:course_asset_id))
+      if @video.save
+        @videoError = nil
+        @videoNotice = "Successfully added new video."
+      else
+        @videoNotice = nil
+        @videoError = "Error! " + @video.errors.full_messages.first
+        render "new"
       end
-    else  
-      redirect_to lesson_videos_path(@lesson, :subject_id => @subjectId)
     end
- end
+  end
 
   # GET /videos/1/edit
   def edit
@@ -94,11 +71,24 @@ class VideosController < ApplicationController
   # DELETE /videos/1
   # DELETE /videos/1.json
   def destroy
-    @lesson = Lesson.find(params[:lesson_id])
     @video = Video.find(params[:id])
     @video.destroy
-		flash[:notice] = "Video has been deleted."
-    redirect_to lesson_videos_path(@lesson, :subject_id => params[:subject_id])
+    @videoError = nil
+    @videoNotice = "Video has been successfully deleted."
   end
  
+  private
+  
+  def load_videoable
+    @resource, id = request.path.split('/')[1,2]
+    @videoable = @resource.singularize.classify.constantize.find_by_id(id)
+    @textbook = @videoable.textbook
+    @course_asset = CourseAsset.find_by_id(params[:course_asset_id]) || CourseAsset.find_by_id(params[:video][:course_asset_id])
+    @course = @course_asset.course
+    @course_assets = @course.course_assets
+    @instructor = @course.instructor
+    @courses = @instructor.courses
+    @videos = @videoable.videos
+  end
+  
 end

@@ -1,3 +1,23 @@
+#panel {
+	#breadcrumbs {
+	  width:$screen-width - 14px - 120px;
+	  height:24px;
+		float:left;
+		text-align:center;
+		padding-top:5px;
+		font-size:1.2em;
+		color:$main-green;
+		a {
+			&:hover{
+				text-decoration:underline;
+				color:blue;
+			}
+		}
+	}
+	video {
+		padding-left:45px;
+	}
+}
 #new_video {
 	margin-top: 0px;
 	margin-bottom: 0px;

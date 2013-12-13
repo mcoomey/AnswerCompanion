@@ -1,11 +1,12 @@
 The following video has been submitted for conversion.<br />
 You will be informed when it is ready for viewing.
-<p>Text: <%= @video.textbook.title %> <br />
-<% if @video.lesson %>
-Page: <%= @video.lesson.page %> <br />
-Lesson: <%= @video.lesson.title %>
-<% elsif @video.exercise %>
-Page: <%= @video.exercise.page %> <br />
-Exercise: <%= @video.exercise.number %>
+<p>Text: <%= @video.textbook.title %><br />
+<% if @video.videoable.class.to_s == "Lesson" %>
+Lesson: <%= @video.videoable.title %><br />
+Page: <%= @video.videoable.page %> <br />
+<% elsif @video.videoable.class.to_s == "Exercise" %>
+Section: <%= @video.videoable.section_title.name %> <br />
+Page: <%= @video.videoable.page %> <br />
+Exercise: <%= @video.videoable.number %>
 <% end %>
 </p>

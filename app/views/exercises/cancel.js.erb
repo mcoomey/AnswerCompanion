@@ -1,5 +1,5 @@
 $("#messages .alert").show();
-$("#messages .ujs_alert").show();
+$("#messages .ujs_alert").html("<%= @exerciseError %>").show();
 $("#messages .notice").show();
 $("#messages .ujs_notice").html("<%= @exerciseNotice %>").show();
 $("#ujsform").remove();

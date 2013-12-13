@@ -118,8 +118,24 @@ class ExercisesController < ApplicationController
   # PUT /exercises/1.json
   def update
     @exercise = Exercise.find(params[:id])
-    if params[:commit]  != "Cancel"
-      if @exercise.update_attributes(:title => params[:exercise][:title], :page => params[:exercise][:page])
+    @textbook = @exercise.textbook
+    
+    if params[:commit]  == "Cancel"
+      @exerciseNotice = "Update exercise action canceled."
+      @exerciseAlert = nil
+      render "cancel"
+      
+    elsif params[:commit] == "Update"
+      old_section_title = @exercise.section_title
+      @exercise.assign_attributes(params[:exercise])
+      @section_title = @exercise.section_title
+      if @section_title && @section_title.new_record?
+        @new_section_title = true;
+        render "new"
+      elsif @exercise.save
+        if old_section_title.exercises.count == 0
+          old_section_title.delete
+        end
         @exerciseError = nil
         @exerciseNotice = "Successfully updated exercise."
       else  
@@ -127,11 +143,24 @@ class ExercisesController < ApplicationController
         @exerciseError = "Error! " + @exercise.errors.full_messages.first
         render "edit"
       end
-    else
-      @exerciseNotice = "Update exercise action canceled."
+      
+    elsif params[:commit] == "Yes"
+      @filterstring = nil
+      @exercise.assign_attributes(params[:exercise])
+      if @exercise.save
+        @exerciseError = nil
+        @exerciseNotice = "Successfully updated exercise."
+      else  
+        @exerciseNotice = nil
+        @exerciseError = "Error! " + @exercise.errors.full_messages.first
+      end
+    
+    else  # params[:commit] == "No"
+      render('edit')
     end
-    @textbook = @exercise.textbook
+
     @exercises = @textbook.exercises.sort{|a,b| a.page.to_i <=> b.page.to_i}
+    
   end
 
   # DELETE /exercises/1

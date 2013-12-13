@@ -1,0 +1,18 @@
+<div id="ujsform">
+<%= form_for @exercise, remote:true do |f| %>
+	
+	<%= f.label :number %>
+	<%= f.text_field :number, :id => "exercise_number", :size => "10" %>
+	
+	<%= f.label :page %>
+	<%= f.text_field :page, :size => "13" %>
+	
+	<%= f.label :section_title_name, "Section Title" %>
+	<%= f.text_field :section_title_name, data: {autocomplete_source: textbook_section_titles_path(@textbook) } %>
+	
+	<%= f.hidden_field :textbook_id, :value => @textbook.id %>
+	
+	<%= f.submit "Update"%>
+	<%= f.submit "Cancel"%>
+<% end %>
+</div>

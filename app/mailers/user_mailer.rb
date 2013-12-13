@@ -1,15 +1,13 @@
 class UserMailer < ActionMailer::Base
   default from: "registrar@answercompanion.com"
   
-  def conversion_submitted(user, video)
-    @user = user
+  def conversion_submitted(email, video)
     @video = video
-    mail(:to => user.email, :from => "Do_Not_Reply@answercompanion.com", :subject => "Video conversion submitted")
+    mail(:to => email, :from => "Do_Not_Reply@answercompanion.com", :subject => "Video conversion submitted")
   end
 
-  def conversion_complete(user, video)
-    @user = user
+  def conversion_complete(email, video)
     @video = video
-    mail(:to => user.email, :from => "Do_Not_Reply@answercompanion.com", :subject => "Video conversion completed")
+    mail(:to => email, :from => "Do_Not_Reply@answercompanion.com", :subject => "Video conversion completed")
   end
 end

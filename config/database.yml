@@ -12,18 +12,18 @@ test:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: AnswerCompanion_test
+  database: AnswerCompanion_development
   pool: 5
-  username: mcoomey
-  password: dynamic
+  username: root
+  password: excel407
   host: localhost
 
 production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: AnswerCompanion_production
+  database: AnswerCompanion_development
   pool: 5
-  username: mcoomey
-  password: dynamic
+  username: root
+  password: excel407
   host: localhost

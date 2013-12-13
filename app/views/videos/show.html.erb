@@ -1,16 +1,45 @@
 <article>
 	<div id="buttonarea">
-		<span class="title"><%= @subjectname %></span>
-		<%=link_to image_tag("BackToVideos.png",  :mouseover => "BackToVideosHover.png", :class => "button", :alt => "Videos Page" ),  lesson_videos_path(@lesson, :subject_id => @subjectId) %>
-	</div>	
-	<div id="ac-tabs">
-		<div class="lesson-banner">
-			Lesson: <%= @lesson.title %>
+		<%= form_for :course, :url => course_asset_textbook_delegations_path(@course_asset), :html => { :method => 'get' } do |f| %>
+			<%= f.select(:id, @courses.collect{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
+		<% end %>
+		
+		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
+		           instructor_courses_path(@instructor) %>
+							 
+	</div>
+	<div id="horizontal-tabs">
+		<ul class="dynamic-tabs-nav">
+			<%= content_tag(:li, (link_to "Lessons", textbook_lessons_path(@textbook, :course_asset_id => @course_asset.id )), class: ("activeTab" if @resource == "lessons")) %>
+			<%= content_tag(:li, (link_to "Exercises", textbook_exercises_path(@textbook, :course_asset_id => @course_asset.id )), class: ("activeTab" if @resource == "exercises")) %>
+		</ul>
+	</div>
+	<div id="vertical-tabs">
+		<ul class="dynamic-tabs-nav">
+  		<span class="title">Course Assets</span>
+			<% @course_assets.each do |asset| %>
+				<%= render "shared/course_asset_tag", :local_asset => asset %>
+				<% if @course_asset == asset %>
+					<%= image_tag(@textbook.thumbnail, class: "thumbnail") %>
+				<% end %>
+  		<% end %>
+		</ul>
+		<div id="panel">
+			<div id="breadcrumbs">
+				<% if @resource == "exercises" %>
+					<%= link_to @videoable.section_title.name + " Exercise: " + @videoable.number, exercise_videos_path(@videoable, course_asset_id: @course_asset.id) %>
+				<% else%>
+					<%= link_to @videoable.title + " Page: " + @videoable.page, lesson_videos_path(@videoable, course_asset_id: @course_asset.id) %>
+				<% end %>
+			</div>
+			<%= video_tag([@video.processed_video_url(:mp4), @video.processed_video_url(:ogv), @video.processed_video_url(:webm)],
+							:size => '800x480', 
+							:controls => true, 
+							:autoplay => true,
+							:autobuffer => true )%>
 		</div>
-		<%= video_tag([@video.processed_video_url(:mp4), @video.processed_video_url(:ogv), @video.processed_video_url(:webm)],
-						:size => '800x480', 
-						:controls => true, 
-						:autoplay => true,
-						:autobuffer => true )%>
+		<br class="clearfloat"/>
+	</div>
+	<div id="create_new_section_title_dialog"
 	</div>
 </article>
