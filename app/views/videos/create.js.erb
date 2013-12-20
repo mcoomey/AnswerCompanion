@@ -5,3 +5,4 @@ $("#messages .ujs_notice").html("<%= @videoNotice %>").show();
 $("#ujsform").remove();
 $("#buttonarea").show();
 $("#videopane table tr:last").after('<%= j render 'video', :video => @video  %>');
+setTimeout(alert("Polling has begun."), 3000);

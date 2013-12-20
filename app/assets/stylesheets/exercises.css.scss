@@ -60,10 +60,13 @@
 			border-bottom: none;
 			border-left: 1px solid $main-green;
 			vertical-align:center;
-			font-size:14px;
 			padding:0 0 0 5px;
 			height:35px;
 		  width: 95px;
+      font-size:14px;
+      .video_processed{
+        display:none;
+      }
 		}
 		td + td {
 			width:95px;

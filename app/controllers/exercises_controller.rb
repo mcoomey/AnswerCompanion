@@ -109,6 +109,7 @@ class ExercisesController < ApplicationController
 
   # GET /exercises/1/edit
   def edit
+    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
     @textbook = Textbook.find(params[:textbook_id])
     @exercise = Exercise.find(params[:id])
     @exercises = @textbook.exercises
@@ -117,8 +118,9 @@ class ExercisesController < ApplicationController
   # PUT /exercises/1
   # PUT /exercises/1.json
   def update
-    @exercise = Exercise.find(params[:id])
+    @exercise = Exercise.find_by_id(params[:id])
     @textbook = @exercise.textbook
+    @course_asset = CourseAsset.find_by_id(params[:exercise][:course_asset_id])
     
     if params[:commit]  == "Cancel"
       @exerciseNotice = "Update exercise action canceled."
@@ -127,7 +129,7 @@ class ExercisesController < ApplicationController
       
     elsif params[:commit] == "Update"
       old_section_title = @exercise.section_title
-      @exercise.assign_attributes(params[:exercise])
+      @exercise.assign_attributes(params[:exercise].except(:course_asset_id))
       @section_title = @exercise.section_title
       if @section_title && @section_title.new_record?
         @new_section_title = true;

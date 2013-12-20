@@ -1,8 +1,11 @@
 <tr id="video_<%= video.id %>">
     <td><%= video.length %></td>
     <td><%= video.instructor.username %></td>
+		
+		
 	<% if !video.videofile_processed || video.videofile_processed == 0 %>
-		<td>Processing</td>
+		<td> <%= link_to 'Processing', '#',  id:'video_processing_'+video.id.to_s, class: 'video_processing', data: {url: video_path(video)} %>
+		     <%= link_to 'Play', '#',  id:'video_processed_'+video.id.to_s, class: 'video_processed', data: {url: video_path(video)} %></td>
 	<% elsif video.videofile_processed < 0 %>
 		<td>Error</td>
 	<% else %>
@@ -14,6 +17,9 @@
 			<% end %>
 		</td>
 	<% end %>
+	
+	
+	<!-- only the video owner can replace or destroy it -->
 	<% if current_instructor %>
 		<% if current_instructor.id == video.instructor_id %>
 			<td><%=link_to 'Replace',  "#" %></td>

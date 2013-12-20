@@ -17,7 +17,7 @@
 			    <td><%= exercise.section_title.name %></td>
 				<% if current_instructor %>
 					<% if current_instructor.id == exercise.instructor_id %>
-						<td><%=link_to 'Edit',  edit_textbook_exercise_path(exercise.textbook, exercise), remote: true %></td>
+						<td><%=link_to 'Edit',  edit_textbook_exercise_path(exercise.textbook, exercise, course_asset_id: @course_asset.id), remote: true %></td>
 					    <td><%= link_to 'Delete', exercise_path(exercise), confirm: 'Delete Exercise - Are you sure?', method: :delete, :remote => true %></td>
 					<% else %>
 						<td></td>

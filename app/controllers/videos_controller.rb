@@ -15,7 +15,6 @@ class VideosController < ApplicationController
   # GET /videos/1.json
   def show
     @video = Video.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @video }
@@ -81,14 +80,20 @@ class VideosController < ApplicationController
   
   def load_videoable
     @resource, id = request.path.split('/')[1,2]
-    @videoable = @resource.singularize.classify.constantize.find_by_id(id)
-    @textbook = @videoable.textbook
-    @course_asset = CourseAsset.find_by_id(params[:course_asset_id]) || CourseAsset.find_by_id(params[:video][:course_asset_id])
-    @course = @course_asset.course
-    @course_assets = @course.course_assets
-    @instructor = @course.instructor
-    @courses = @instructor.courses
-    @videos = @videoable.videos
+    puts ">>>>>@resource = #{@resource}<<<<<<"
+    if @resource == "videos"
+      @videos = Video.all
+      @video = Video.find_by_id(params[:id])
+    else
+      @videoable = @resource.singularize.classify.constantize.find_by_id(id)
+      @textbook = @videoable.textbook
+      @videos = @videoable.videos
+      @course_asset = CourseAsset.find_by_id(params[:course_asset_id]) || CourseAsset.find_by_id(params[:video][:course_asset_id])
+      @course = @course_asset.course
+      @course_assets = @course.course_assets
+      @instructor = @course.instructor
+      @courses = @instructor.courses
+    end
   end
   
 end
