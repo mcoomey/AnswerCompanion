@@ -29,6 +29,8 @@ $('#new_video').fileupload({
 	    return $('#buttonarea form input[type=file]').remove();
 		},
     fail: function(e, data) {
+      console.log(">>>>>>>>>>>>>>>>>>>>>>>FAIL<<<<<<<<<<<<<<<<<<<<<<<<<<")
+      console.log(data.jqXHR.responseText);
 	    return alert("The upload has failed.  Please check your file and try again.");
 		},
 	  done: function(e, data) {
