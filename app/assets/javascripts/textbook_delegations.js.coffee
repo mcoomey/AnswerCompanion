@@ -7,6 +7,11 @@ window.handleDropEvent = (event, ui) ->
   archived = tabs.indexOf(dropitem)
   dataString = "authenticity_token=" + secure_token + "&tbdel[archive]=" + archived
   urlString = window.location.pathname + "/" + tbdel_id
+  # console.log "dragitem    = " + dragitem   
+  # console.log "dropitem   = " + dropitem  
+  # console.log "tbdel_id  = " + tbdel_id 
+  # console.log "dataString = " + dataString
+  # console.log "urlString = " + urlString
   $.ajax
     type: "PUT"
     url: urlString

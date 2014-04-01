@@ -9,15 +9,23 @@
 		<ul class="static-tabs-nav">
 			<li><a href="#current-courses">Current Courses</a></li>
 			<li><a href="#archived-courses">Archived Courses</a></li>
+			<li><a href="#future-courses">Future Courses</a></li>
 		</ul>
 	</div>
 	<div id="static-tabs">
+    
 		<div id="current-courses">
 			<%= render 'index_table', :local_courses => @current_courses %>
 		</div>
+    
 		<div id="archived-courses">
 			<%= render 'index_table', :local_courses => @archived_courses %>
 		</div>
+    
+    <div id="future-courses">
+      <%= render 'index_table', :local_courses => @future_courses %>
+    </div>
+    
 	</div>	
 </article>
 

@@ -10,12 +10,14 @@ class CoursesController < ApplicationController
     if params[:instructor_id]
       @instructor = Instructor.find_by_id(params[:instructor_id])
       @courses = @instructor.courses
-      @current_courses = @instructor.courses.where(:archived => false)
-      @archived_courses = @instructor.courses.where(:archived => true)
+      @current_courses = @instructor.courses.where(:archived => 0)
+      @archived_courses = @instructor.courses.where(:archived => 1)
+      @future_courses = @instructor.courses.where(:archived => 2)
     else
       @courses = Course.all
-      @current_courses = Course.where(:archived => false)
-      @archived_courses = Course.where(:archived => true)
+      @current_courses = Course.where(:archived => 0)
+      @archived_courses = Course.where(:archived => 1)
+      @future_courses = @instructor.courses.where(:archived => 2)
     end
 
     respond_to do |format|

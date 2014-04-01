@@ -23,6 +23,6 @@ jQuery(function() {
   $("#horizontal-tabs ul.static-tabs-nav").setStaticTabs();
   $("#vertical-tabs ul.dynamic-tabs-nav").setDynamicTabs();
   $(this).loadSessionTabs();
-  $(".frontcover").draggable({containment: 'document', revert: true, revertDuration: 100});
+  $(".frontcover").draggable({containment: 'document', revert: true, revertDuration: 100 });
   $("#horizontal-tabs ul.static-tabs-nav li").droppable({hoverClass: "hover", tolerance: "pointer", drop:handleDropEvent });
 });

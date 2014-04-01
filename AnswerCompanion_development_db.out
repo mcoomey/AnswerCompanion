@@ -1,0 +1,854 @@
+-- MySQL dump 10.13  Distrib 5.5.22, for osx10.6 (i386)
+--
+-- Host: localhost    Database: AnswerCompanion_development
+-- ------------------------------------------------------
+-- Server version	5.5.22
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `categories`
+--
+
+DROP TABLE IF EXISTS `categories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `categories`
+--
+
+LOCK TABLES `categories` WRITE;
+/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` VALUES (1,'All',NULL,'2012-03-29 17:33:27','2012-03-31 13:16:27'),(2,'Math',NULL,'2012-03-29 17:34:39','2012-03-31 13:16:27'),(3,'Science',NULL,'2012-03-29 17:35:35','2012-03-29 17:35:35'),(4,'Computer Science',NULL,'2012-04-30 14:52:20','2012-04-30 14:52:20'),(5,'French',NULL,'2012-07-20 01:09:12','2012-07-20 01:09:12'),(6,'History',NULL,'2012-07-24 20:18:10','2012-07-24 20:18:10'),(7,'comxx',NULL,'2013-09-26 16:59:29','2013-09-26 16:59:29');
+/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `course_asset_model_types`
+--
+
+DROP TABLE IF EXISTS `course_asset_model_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `course_asset_model_types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `model_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `course_asset_model_types`
+--
+
+LOCK TABLES `course_asset_model_types` WRITE;
+/*!40000 ALTER TABLE `course_asset_model_types` DISABLE KEYS */;
+INSERT INTO `course_asset_model_types` VALUES (1,'Textbooks','2013-10-30 18:44:52','2013-10-30 18:44:52','textbook_delegations'),(2,'Videos','2013-10-30 18:45:26','2013-10-30 18:45:26','videos'),(3,'Documents','2013-10-30 18:45:41','2013-10-30 18:45:41','documents'),(4,'Links','2013-10-30 18:45:52','2013-10-30 18:45:52','links'),(5,'Plain Text','2013-10-30 18:46:07','2013-10-30 18:46:07','textboxes');
+/*!40000 ALTER TABLE `course_asset_model_types` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `course_assets`
+--
+
+DROP TABLE IF EXISTS `course_assets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `course_assets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `model_type` int(11) DEFAULT NULL,
+  `course_id` int(11) DEFAULT NULL,
+  `ancestry` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_course_assets_on_ancestry` (`ancestry`)
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `course_assets`
+--
+
+LOCK TABLES `course_assets` WRITE;
+/*!40000 ALTER TABLE `course_assets` DISABLE KEYS */;
+INSERT INTO `course_assets` VALUES (19,'Textbooks',1,1,NULL,'2013-11-02 11:17:04','2013-11-02 11:17:04'),(20,'Asset2',1,1,NULL,'2013-11-02 14:36:27','2013-11-02 14:36:27'),(21,'Asset3',1,1,NULL,'2013-11-04 00:12:07','2013-11-04 00:12:07'),(22,'Asset4',1,1,NULL,'2013-11-04 00:12:18','2013-11-04 00:12:18'),(24,'Textbooks',1,2,NULL,'2013-11-06 16:24:55','2013-11-06 16:24:55'),(37,'Textbooks',1,6,NULL,'2013-11-06 18:32:14','2013-11-06 18:32:14'),(38,'Junk',3,2,NULL,'2013-12-03 23:32:42','2013-12-03 23:32:42'),(40,'Asset5',2,1,NULL,'2013-12-29 17:58:30','2013-12-29 17:58:30');
+/*!40000 ALTER TABLE `course_assets` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `courses`
+--
+
+DROP TABLE IF EXISTS `courses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `courses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `section` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `instructor_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `term` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `archived` tinyint(1) DEFAULT NULL,
+  `passphrase` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_courses_on_instructor_id` (`instructor_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `courses`
+--
+
+LOCK TABLES `courses` WRITE;
+/*!40000 ALTER TABLE `courses` DISABLE KEYS */;
+INSERT INTO `courses` VALUES (1,'Algebra 1','1',1,'2013-06-28 23:24:55','2013-11-19 15:26:33','A',0,'Wachusett rocks!'),(2,'Math5','5',1,'2013-06-28 23:24:55','2013-10-06 18:10:51','5',0,NULL),(3,'French5','5',2,'2013-06-28 23:25:05','2013-08-28 19:56:12','5',0,NULL),(4,'Math2','2',2,'2013-06-28 23:26:48','2013-09-06 17:20:40','2',1,NULL),(6,'French2','2',1,'2013-06-29 18:00:13','2013-10-29 18:49:07','2',0,NULL);
+/*!40000 ALTER TABLE `courses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `delayed_jobs`
+--
+
+DROP TABLE IF EXISTS `delayed_jobs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `delayed_jobs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `priority` int(11) DEFAULT '0',
+  `attempts` int(11) DEFAULT '0',
+  `handler` text COLLATE utf8_unicode_ci,
+  `last_error` text COLLATE utf8_unicode_ci,
+  `run_at` datetime DEFAULT NULL,
+  `locked_at` datetime DEFAULT NULL,
+  `failed_at` datetime DEFAULT NULL,
+  `locked_by` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `queue` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `delayed_jobs_priority` (`priority`,`run_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `delayed_jobs`
+--
+
+LOCK TABLES `delayed_jobs` WRITE;
+/*!40000 ALTER TABLE `delayed_jobs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `delayed_jobs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `documents`
+--
+
+DROP TABLE IF EXISTS `documents`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `documents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `filename` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `course_asset_id` int(11) DEFAULT NULL,
+  `archived` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `documents`
+--
+
+LOCK TABLES `documents` WRITE;
+/*!40000 ALTER TABLE `documents` DISABLE KEYS */;
+/*!40000 ALTER TABLE `documents` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `enrollments`
+--
+
+DROP TABLE IF EXISTS `enrollments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `enrollments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `course_id` int(11) DEFAULT NULL,
+  `subject_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_enrollments_on_course_id_and_subject_id` (`course_id`,`subject_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `enrollments`
+--
+
+LOCK TABLES `enrollments` WRITE;
+/*!40000 ALTER TABLE `enrollments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `enrollments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `exercises`
+--
+
+DROP TABLE IF EXISTS `exercises`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `exercises` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `page` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `section_title_id` int(11) DEFAULT NULL,
+  `textbook_id` int(11) DEFAULT NULL,
+  `instructor_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `exercises`
+--
+
+LOCK TABLES `exercises` WRITE;
+/*!40000 ALTER TABLE `exercises` DISABLE KEYS */;
+INSERT INTO `exercises` VALUES (1,'1','11',1,2,1,'2013-11-25 20:49:29','2013-12-17 18:09:46'),(2,'2','22',2,2,1,'2013-11-26 01:15:13','2013-11-26 01:15:13'),(3,'3','33',3,2,1,'2013-11-28 14:20:37','2013-11-28 14:20:37'),(4,'4','44',4,2,1,'2013-11-30 04:05:01','2013-11-30 04:05:01');
+/*!40000 ALTER TABLE `exercises` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `instructors`
+--
+
+DROP TABLE IF EXISTS `instructors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `instructors` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `encrypted_password` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `reset_password_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `reset_password_sent_at` datetime DEFAULT NULL,
+  `remember_created_at` datetime DEFAULT NULL,
+  `sign_in_count` int(11) DEFAULT '0',
+  `current_sign_in_at` datetime DEFAULT NULL,
+  `last_sign_in_at` datetime DEFAULT NULL,
+  `current_sign_in_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_sign_in_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `confirmation_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `confirmed_at` datetime DEFAULT NULL,
+  `confirmation_sent_at` datetime DEFAULT NULL,
+  `unconfirmed_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `failed_attempts` int(11) DEFAULT '0',
+  `unlock_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `locked_at` datetime DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `firstname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `lastname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `username` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `emailpref` int(11) DEFAULT '0',
+  `paypalaccount` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `privilege` int(11) DEFAULT '0',
+  `grade` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `accountbalance` float DEFAULT '0',
+  `violationcount` int(11) DEFAULT '0',
+  `deactivated` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_instructors_on_email` (`email`),
+  UNIQUE KEY `index_instructors_on_reset_password_token` (`reset_password_token`),
+  UNIQUE KEY `index_instructors_on_confirmation_token` (`confirmation_token`),
+  UNIQUE KEY `index_instructors_on_unlock_token` (`unlock_token`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `instructors`
+--
+
+LOCK TABLES `instructors` WRITE;
+/*!40000 ALTER TABLE `instructors` DISABLE KEYS */;
+INSERT INTO `instructors` VALUES (1,'mcoomey@charter.net','$2a$10$EWbOoGfv4rw40f6IgRn9u.tlCix94DTJlJODfb1w3Pnakb3ddDF2u','GbKgz7XBwg4gFoT7cgVH','2013-06-25 11:21:55',NULL,108,'2014-01-16 16:14:04','2013-12-30 15:54:20','127.0.0.1','127.0.0.1',NULL,'2013-07-05 12:42:36','2013-07-05 12:42:04',NULL,0,NULL,NULL,'2013-05-30 17:46:40','2014-01-16 16:14:04','Michael','Coomey','Mr. Coomey',0,NULL,0,NULL,0,0,0);
+/*!40000 ALTER TABLE `instructors` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `lessons`
+--
+
+DROP TABLE IF EXISTS `lessons`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `lessons` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `page` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `textbook_id` int(11) DEFAULT NULL,
+  `instructor_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `lessons`
+--
+
+LOCK TABLES `lessons` WRITE;
+/*!40000 ALTER TABLE `lessons` DISABLE KEYS */;
+INSERT INTO `lessons` VALUES (1,'1-1 Using Variables','4',2,2,'2012-11-09 16:41:38','2012-11-09 16:41:38'),(2,'1-2 Exponents and Order of Operations','9',2,2,'2012-11-09 16:41:38','2012-11-09 16:41:38'),(3,'1-3 Exploring Real Numbers','17',2,2,'2012-11-09 16:42:14','2012-11-09 16:42:14'),(4,'1-4 Adding Real Numbers','24',2,2,'2012-11-09 16:42:40','2012-11-09 16:42:40'),(5,'1-5 Subtracting Real Numbers','32',2,2,'2012-11-09 16:43:06','2012-11-09 16:43:06'),(6,'1-6 Multipying and Dividing real Numbers','37',2,2,'2012-11-09 16:50:51','2012-11-09 16:50:51'),(7,'1-7 The Distributive Property','47',2,2,'2012-11-11 13:15:45','2012-11-11 13:15:45'),(8,'1-8 Properties of Real Numbers','54',2,2,'2012-11-11 13:16:32','2012-11-11 13:16:32'),(9,'1-9 Graphing Data on the Coordinate Plane','59',2,2,'2012-11-11 13:17:07','2012-11-11 13:17:07'),(10,'2-1 Solving One-Step Equations','74',2,2,'2012-11-16 17:23:49','2012-11-16 17:23:49'),(11,'2-2 Solving Two-Step Equations','81',2,2,'2012-11-16 17:24:19','2012-11-16 17:24:19'),(12,'2-3 Solving Multi-Step Equations','88',2,2,'2012-11-16 17:24:58','2012-11-16 17:24:58'),(13,'2-4 Equations With Variables on Both Sides','96',2,2,'2012-11-16 17:25:37','2012-11-16 17:25:37'),(14,'2-5 Equations and Problem Solving','103',2,2,'2012-11-16 17:26:04','2012-11-16 17:26:04'),(15,'2-6 Formulas','111',2,2,'2012-11-16 17:26:29','2012-11-16 17:26:29'),(16,'2-7 Using Measures of Central Tendency','118',2,2,'2012-11-16 17:27:01','2012-11-16 17:27:01'),(17,'3-1 Inequalities and Their Graphs','134',2,2,'2012-11-16 17:27:38','2012-11-16 17:27:38'),(18,'3-2 Solving Inequalities using Addition and Subtraction','140',2,2,'2012-11-16 17:28:24','2012-11-16 17:28:24'),(19,'3-3 Solving Inequalities Using Multiplication and Division','146',2,2,'2012-11-16 17:29:01','2012-11-16 17:29:01'),(20,'3-4 Solving Multi-Step Inequalities','153',2,2,'2012-11-16 17:29:32','2012-11-16 17:29:32'),(21,'3-5 Compound Inequalities','161',2,2,'2012-11-16 17:30:06','2012-11-16 17:30:06'),(22,'3-6 Absolute Value Equations and Inequalities','167',2,2,'2012-11-16 17:30:39','2012-11-16 17:30:39'),(23,'4-1 Ratio and Proportion','182',2,2,'2012-11-16 17:31:13','2012-11-16 17:31:13'),(24,'4-2 Proportions and Similar Figures','189',2,2,'2012-11-16 17:31:43','2012-11-16 17:31:43'),(45,'test','1',20,2,'2012-11-20 18:31:03','2012-11-20 18:31:03'),(46,'testing','1',1,1,'2013-11-05 16:04:28','2013-11-05 16:04:28'),(66,'Java Intro','1',3,1,'2013-11-15 02:02:53','2013-11-15 02:02:53');
+/*!40000 ALTER TABLE `lessons` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `links`
+--
+
+DROP TABLE IF EXISTS `links`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `links` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `course_asset_id` int(11) DEFAULT NULL,
+  `archived` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `links`
+--
+
+LOCK TABLES `links` WRITE;
+/*!40000 ALTER TABLE `links` DISABLE KEYS */;
+/*!40000 ALTER TABLE `links` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `parent_emails`
+--
+
+DROP TABLE IF EXISTS `parent_emails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `parent_emails` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_parent_emails_on_student_id_and_email` (`student_id`,`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `parent_emails`
+--
+
+LOCK TABLES `parent_emails` WRITE;
+/*!40000 ALTER TABLE `parent_emails` DISABLE KEYS */;
+INSERT INTO `parent_emails` VALUES (1,11,'spamfreemwc@gmail.com','2013-07-11 12:44:06','2013-07-11 12:44:07'),(2,1,'spamfreemwc@gmail.com','2013-07-11 12:44:06','2013-07-11 12:44:07'),(3,9,'spamfreemwc@gmail.com','2013-07-11 12:44:06','2013-07-11 12:44:07');
+/*!40000 ALTER TABLE `parent_emails` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `parents`
+--
+
+DROP TABLE IF EXISTS `parents`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `parents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `encrypted_password` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `reset_password_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `reset_password_sent_at` datetime DEFAULT NULL,
+  `remember_created_at` datetime DEFAULT NULL,
+  `sign_in_count` int(11) DEFAULT '0',
+  `current_sign_in_at` datetime DEFAULT NULL,
+  `last_sign_in_at` datetime DEFAULT NULL,
+  `current_sign_in_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_sign_in_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `confirmation_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `confirmed_at` datetime DEFAULT NULL,
+  `confirmation_sent_at` datetime DEFAULT NULL,
+  `unconfirmed_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `failed_attempts` int(11) DEFAULT '0',
+  `unlock_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `locked_at` datetime DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `firstname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `lastname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `deactivated` tinyint(1) DEFAULT '0',
+  `username` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_parents_on_email` (`email`),
+  UNIQUE KEY `index_parents_on_reset_password_token` (`reset_password_token`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `parents`
+--
+
+LOCK TABLES `parents` WRITE;
+/*!40000 ALTER TABLE `parents` DISABLE KEYS */;
+INSERT INTO `parents` VALUES (1,'spamfreemwc@gmail.com','$2a$10$55CyKHJajckGQNp51ONCj.ZtEEuWjRgMd9OJ3ncxoLljI5x3TtGti',NULL,NULL,NULL,12,'2013-07-15 21:16:04','2013-07-09 18:18:29','127.0.0.1','127.0.0.1',NULL,'2013-04-24 12:45:44','2013-04-24 12:44:30',NULL,0,NULL,NULL,'2013-04-24 12:44:30','2013-07-15 21:34:41','Michael','',0,'Parent Coomey'),(2,'newparent@x.x','$2a$10$p3RN059baABw4kdG1HrVQOCgwT3vIJpXqQQa5fjXj.WgdnG0lctWS',NULL,NULL,NULL,1,'2013-07-07 13:55:34','2013-07-07 13:55:34','127.0.0.1','127.0.0.1',NULL,'2013-07-07 13:55:34','2013-07-07 13:55:10',NULL,0,NULL,NULL,'2013-07-07 13:55:10','2013-07-07 13:55:34','New','Parent',0,NULL),(3,'parent1@x.x','$2a$10$nWY3fLOMdguclJJGJRnrdOuA6KgTRKfQo.iCmg57w4IK7XwBZu1U.',NULL,NULL,NULL,2,'2013-07-09 18:38:38','2013-07-09 17:59:41','127.0.0.1','127.0.0.1',NULL,'2013-07-09 17:59:41','2013-07-09 17:59:11',NULL,0,NULL,NULL,'2013-07-09 17:59:11','2013-07-09 18:38:38','Parent','One',0,NULL),(4,'stud3parent@x.x','$2a$10$zfU59F32cJotEB1F8/NoDO4lutI.RE.K5.uFr0DuK.WXdHFA2XbIG',NULL,NULL,NULL,1,'2013-07-12 23:00:46','2013-07-12 23:00:46','127.0.0.1','127.0.0.1',NULL,'2013-07-12 23:00:46','2013-07-12 23:00:22',NULL,0,NULL,NULL,'2013-07-12 23:00:22','2013-07-12 23:00:46','','',0,'');
+/*!40000 ALTER TABLE `parents` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `role_assignments`
+--
+
+DROP TABLE IF EXISTS `role_assignments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `role_assignments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) DEFAULT NULL,
+  `roleable_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `roleable_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `role_assignments`
+--
+
+LOCK TABLES `role_assignments` WRITE;
+/*!40000 ALTER TABLE `role_assignments` DISABLE KEYS */;
+INSERT INTO `role_assignments` VALUES (1,5,'Instructor',1,'2013-06-28 19:46:39','2013-06-28 19:46:39'),(2,3,'Instructor',2,'2013-06-28 20:07:44','2013-06-28 20:07:44'),(3,3,'Instructor',3,'2013-06-28 20:07:44','2013-06-28 20:07:44'),(4,3,'Instructor',4,'2013-06-28 20:07:44','2013-06-28 20:07:44'),(5,3,'Instructor',5,'2013-06-28 20:07:44','2013-06-28 20:07:44'),(6,2,'Student',1,'2013-06-28 20:50:01','2013-06-28 20:50:01'),(7,1,'Parent',1,'2013-06-28 20:52:53','2013-06-28 20:52:53'),(8,3,'Instructor',6,'2013-07-01 13:26:28','2013-07-01 13:26:28'),(9,3,'Instructor',7,'2013-07-05 13:33:35','2013-07-05 13:33:35'),(10,1,'Parent',2,'2013-07-07 13:55:12','2013-07-07 13:55:12'),(11,1,'Parent',3,'2013-07-09 17:59:16','2013-07-09 17:59:16'),(12,3,'Instructor',2,'2013-07-10 15:52:51','2013-07-10 15:52:51'),(13,2,'Student',3,'2013-07-10 19:22:31','2013-07-10 19:22:31'),(14,2,'Student',2,'2013-07-10 19:47:32','2013-07-10 19:47:32'),(15,2,'Student',3,'2013-07-10 20:34:29','2013-07-10 20:34:29'),(16,2,'Student',4,'2013-07-10 20:40:59','2013-07-10 20:40:59'),(17,2,'Student',5,'2013-07-10 20:48:02','2013-07-10 20:48:02'),(18,2,'Student',6,'2013-07-10 22:54:30','2013-07-10 22:54:30'),(19,2,'Student',7,'2013-07-10 23:00:12','2013-07-10 23:00:12'),(20,2,'Student',8,'2013-07-10 23:01:14','2013-07-10 23:01:14'),(21,2,'Student',9,'2013-07-11 01:04:56','2013-07-11 01:04:56'),(22,2,'Student',10,'2013-07-11 12:42:27','2013-07-11 12:42:27'),(23,2,'Student',11,'2013-07-11 12:44:07','2013-07-11 12:44:07'),(24,1,'Parent',4,'2013-07-12 23:00:24','2013-07-12 23:00:24'),(25,3,'Instructor',3,'2013-12-13 12:28:20','2013-12-13 12:28:20');
+/*!40000 ALTER TABLE `role_assignments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `roles`
+--
+
+DROP TABLE IF EXISTS `roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `roles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `roles`
+--
+
+LOCK TABLES `roles` WRITE;
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (1,'Parent','2013-06-28 17:38:23','2013-06-28 17:38:23'),(2,'Student','2013-06-28 17:38:51','2013-06-28 17:38:51'),(3,'Instructor','2013-06-28 17:38:51','2013-06-28 17:38:51'),(4,'Administrator','2013-06-28 17:38:51','2013-06-28 17:38:51'),(5,'Superuser','2013-06-28 17:38:51','2013-06-28 17:38:51');
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `schema_migrations`
+--
+
+DROP TABLE IF EXISTS `schema_migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `schema_migrations` (
+  `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  UNIQUE KEY `unique_schema_migrations` (`version`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `schema_migrations`
+--
+
+LOCK TABLES `schema_migrations` WRITE;
+/*!40000 ALTER TABLE `schema_migrations` DISABLE KEYS */;
+INSERT INTO `schema_migrations` VALUES ('20120302232009'),('20120302232059'),('20120307181217'),('20120315183633'),('20120328200141'),('20120417204301'),('20120418160732'),('20121023121828'),('20121023121928'),('20121023122013'),('20121023122415'),('20121030180850'),('20121129191919'),('20121217134827'),('20130125131215'),('20130325203703'),('20130327182400'),('20130328004848'),('20130330202715'),('20130405003210'),('20130421160850'),('20130423155439'),('20130423165903'),('20130429154556'),('20130501203113'),('20130502171113'),('20130502174403'),('20130504003631'),('20130523145815'),('20130524200750'),('20130530173549'),('20130628172824'),('20130628181628'),('20130706120825'),('20130709174138'),('20130710183238'),('20130904200701'),('20130916175154'),('20130919200639'),('20130924153543'),('20131014124455'),('20131020144511'),('20131028225546'),('20131029113702'),('20131029113738'),('20131029121544'),('20131029122617'),('20131029180702'),('20131030184318'),('20131030223137'),('20131201155517');
+/*!40000 ALTER TABLE `schema_migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `school_memberships`
+--
+
+DROP TABLE IF EXISTS `school_memberships`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `school_memberships` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `school_id` int(11) DEFAULT NULL,
+  `schoolmember_id` int(11) DEFAULT NULL,
+  `schoolmember_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_school_memberships_on_id_and_type` (`schoolmember_id`,`schoolmember_type`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `school_memberships`
+--
+
+LOCK TABLES `school_memberships` WRITE;
+/*!40000 ALTER TABLE `school_memberships` DISABLE KEYS */;
+INSERT INTO `school_memberships` VALUES (7,1,1,'Instructor','2013-07-04 04:05:16','2013-07-04 04:05:16'),(13,1,1,'Student','2013-07-09 13:17:12','2013-07-09 13:17:12'),(19,2,2,'Instructor','2013-07-10 15:55:52','2013-07-10 15:55:52'),(29,1,11,'Student','2013-07-11 12:44:07','2013-07-11 12:44:07'),(30,1,3,'Instructor','2013-12-13 12:28:20','2013-12-13 12:28:20');
+/*!40000 ALTER TABLE `school_memberships` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `schools`
+--
+
+DROP TABLE IF EXISTS `schools`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `schools` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `town` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `schools`
+--
+
+LOCK TABLES `schools` WRITE;
+/*!40000 ALTER TABLE `schools` DISABLE KEYS */;
+INSERT INTO `schools` VALUES (1,'Oxford High School','Oxford','MA','2013-05-30 17:46:40','2013-06-26 19:13:54'),(2,'Wachusett Regional High School','Holden','MA','2013-05-30 19:45:27','2013-05-30 19:45:27'),(3,'Burncoat High School','Worcester','MA','2013-05-30 17:46:40','2013-06-27 11:47:59'),(4,'Worcester Polytechnic Institute','Worcester','MA','2013-06-28 20:07:42','2013-06-28 20:07:42');
+/*!40000 ALTER TABLE `schools` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `section_titles`
+--
+
+DROP TABLE IF EXISTS `section_titles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `section_titles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `textbook_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `section_titles`
+--
+
+LOCK TABLES `section_titles` WRITE;
+/*!40000 ALTER TABLE `section_titles` DISABLE KEYS */;
+INSERT INTO `section_titles` VALUES (1,'Section 1',2,'2013-11-25 20:49:29','2013-11-25 20:49:29'),(2,'Section 2',2,'2013-11-26 01:15:13','2013-11-26 01:15:13'),(3,'Section 3',2,'2013-11-26 15:17:35','2013-11-26 15:17:35'),(4,'Section 4',2,'2013-11-30 04:05:01','2013-11-30 04:05:01');
+/*!40000 ALTER TABLE `section_titles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `students`
+--
+
+DROP TABLE IF EXISTS `students`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `students` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `encrypted_password` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `reset_password_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `reset_password_sent_at` datetime DEFAULT NULL,
+  `remember_created_at` datetime DEFAULT NULL,
+  `sign_in_count` int(11) DEFAULT '0',
+  `current_sign_in_at` datetime DEFAULT NULL,
+  `last_sign_in_at` datetime DEFAULT NULL,
+  `current_sign_in_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_sign_in_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `confirmation_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `confirmed_at` datetime DEFAULT NULL,
+  `confirmation_sent_at` datetime DEFAULT NULL,
+  `unconfirmed_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `failed_attempts` int(11) DEFAULT '0',
+  `unlock_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `locked_at` datetime DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `firstname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `lastname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `username` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `emailpref` int(11) DEFAULT '0',
+  `paypalaccount` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `privilege` int(11) DEFAULT '0',
+  `grade` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `accountbalance` float DEFAULT '0',
+  `violationcount` int(11) DEFAULT '0',
+  `deactivated` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_students_on_email` (`email`),
+  UNIQUE KEY `index_students_on_reset_password_token` (`reset_password_token`),
+  UNIQUE KEY `index_students_on_confirmation_token` (`confirmation_token`),
+  UNIQUE KEY `index_students_on_unlock_token` (`unlock_token`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `students`
+--
+
+LOCK TABLES `students` WRITE;
+/*!40000 ALTER TABLE `students` DISABLE KEYS */;
+INSERT INTO `students` VALUES (1,'mcoomey@gmail.com','$2a$10$5fmFdKEEPL4p8syDBe0IkOyNfyS8g69QRWeJ.7nEgePGI.2KfAROK',NULL,NULL,NULL,145,'2013-07-15 22:32:57','2013-07-14 18:35:05','127.0.0.1','127.0.0.1',NULL,'2012-03-19 14:13:40','2012-03-19 14:13:00',NULL,0,NULL,NULL,'2012-03-19 14:13:00','2013-07-15 22:32:57','','','',0,NULL,0,NULL,0,0,0),(9,'stud2@x.x','$2a$10$oGaPoK8UbOumH9NZGebfAuxzKPxT4srxrixEImdEisfciKuAY2c/y',NULL,NULL,NULL,1,'2013-07-12 21:49:04','2013-07-12 21:49:04','127.0.0.1','127.0.0.1',NULL,'2013-07-12 21:49:04','2013-07-11 01:04:55',NULL,0,NULL,NULL,'2013-07-11 01:04:55','2013-07-12 21:49:04','','','',0,NULL,0,NULL,0,0,0),(11,'stud3@x.x','$2a$10$MbCO1TdaJIHyflA4xBBNcutFEQODkc1VRWWEOwMXniAgUXUxMLA.m',NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,'aACoWMbZFLKDkFxHD9AG',NULL,'2013-07-11 12:44:06',NULL,0,NULL,NULL,'2013-07-11 12:44:06','2013-07-11 12:44:06','Studdly','Three','Studdly3',0,NULL,0,NULL,0,0,0);
+/*!40000 ALTER TABLE `students` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `subcategories`
+--
+
+DROP TABLE IF EXISTS `subcategories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `subcategories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `subcategories`
+--
+
+LOCK TABLES `subcategories` WRITE;
+/*!40000 ALTER TABLE `subcategories` DISABLE KEYS */;
+INSERT INTO `subcategories` VALUES (1,'All',1,'2012-04-26 13:06:58','2012-04-26 13:06:58'),(2,'Algebra 1',2,'2012-04-19 12:27:52','2012-04-26 13:09:23'),(3,'Geometry',2,'2012-04-26 13:01:05','2012-04-26 13:09:39'),(4,'Algebra 2',2,'2012-04-26 13:10:58','2012-04-26 13:10:58'),(5,'c programming',4,'2012-04-30 14:56:24','2012-04-30 14:56:24'),(6,'Trigonometry',2,'2012-04-30 17:48:36','2012-04-30 17:48:36'),(7,'Pre Calculus',2,'2012-05-14 20:27:05','2012-05-14 20:27:05'),(8,'Probability & Statistics',2,'2012-05-14 20:28:11','2012-05-14 20:28:11'),(9,'Basic Programming',4,'2012-05-14 20:29:03','2012-05-14 20:29:03'),(10,'Web Programming',4,'2012-05-25 17:17:13','2012-05-25 17:18:32'),(11,'c++ programming',4,'2012-09-27 17:58:09','2012-09-27 17:58:09'),(13,'xxx',8,'2012-10-15 20:30:42','2012-10-15 20:30:42'),(14,'French',9,'2012-10-15 21:29:11','2012-10-15 21:29:11'),(15,'Algebra',NULL,'2013-05-11 15:21:28','2013-05-11 15:21:28'),(16,'xxxx',NULL,'2013-05-11 17:08:21','2013-05-11 17:08:21');
+/*!40000 ALTER TABLE `subcategories` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `subjects`
+--
+
+DROP TABLE IF EXISTS `subjects`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `subjects` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `student_id` int(11) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `subcategory_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `archived` tinyint(1) DEFAULT NULL,
+  `term` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `subjects`
+--
+
+LOCK TABLES `subjects` WRITE;
+/*!40000 ALTER TABLE `subjects` DISABLE KEYS */;
+INSERT INTO `subjects` VALUES (6,'Algebra 1',1,2,NULL,'2012-05-09 23:20:32','2013-05-17 01:17:40',0,'Fall-2012'),(7,'Computer Science',1,4,NULL,'2012-05-14 20:36:04','2013-05-15 18:56:33',0,'Fall-2012'),(10,'Basic',1,4,14,'2012-05-23 13:15:41','2013-05-17 01:17:26',0,'Spring-2013'),(13,'Math',1,2,NULL,'2013-05-17 01:16:10','2013-05-17 19:25:47',0,'AB-2013');
+/*!40000 ALTER TABLE `subjects` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `textbook_delegations`
+--
+
+DROP TABLE IF EXISTS `textbook_delegations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `textbook_delegations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `course_asset_id` int(11) DEFAULT NULL,
+  `textbook_id` int(11) DEFAULT NULL,
+  `archived` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_textbook_delegations_on_textable_id_and_textable_type` (`course_asset_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `textbook_delegations`
+--
+
+LOCK TABLES `textbook_delegations` WRITE;
+/*!40000 ALTER TABLE `textbook_delegations` DISABLE KEYS */;
+INSERT INTO `textbook_delegations` VALUES (30,'2013-11-02 11:17:23','2013-11-05 20:53:00',19,1,1),(36,'2013-11-03 03:23:33','2014-01-16 18:58:08',19,3,0),(41,'2013-11-04 01:34:20','2013-11-04 01:34:20',20,5,0),(42,'2013-11-05 20:53:38','2013-11-05 20:53:38',19,2,0),(44,'2013-11-06 16:25:30','2013-11-06 16:25:30',24,6,0),(45,'2013-11-06 18:32:30','2013-11-06 18:32:30',37,5,0),(46,'2013-11-06 19:05:57','2013-11-06 19:05:57',21,1,0);
+/*!40000 ALTER TABLE `textbook_delegations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `textbooks`
+--
+
+DROP TABLE IF EXISTS `textbooks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `textbooks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `isbn13` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `author` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `publisher` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `edition` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `frontcover` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `subcategory_id` int(11) DEFAULT NULL,
+  `userisbn` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `instructor_id` int(11) DEFAULT NULL,
+  `image_link` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `textbooks`
+--
+
+LOCK TABLES `textbooks` WRITE;
+/*!40000 ALTER TABLE `textbooks` DISABLE KEYS */;
+INSERT INTO `textbooks` VALUES (1,'9780131101630','The C programming language','Brian W. Kernighan, Dennis M. Ritchie','Prentice Hall PTR',NULL,'books',NULL,NULL,NULL,'2013-10-20 15:00:56','2013-10-20 15:00:56',NULL,'http://bks4.books.google.com/books?id=va1QAAAAMAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'),(2,'9780130523167','Prentice Hall Mathematics: Algebra 1','Allan Bellman','Pearson Prentice Hall',NULL,'books',NULL,NULL,NULL,'2013-10-20 14:55:42','2013-10-20 14:55:42',NULL,'http://bks5.books.google.com/books?id=Rd4tQwAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'),(3,'9781934356678','Pragmatic Guide to JavaScript','Christophe Porteneuve','Pragmatic Bookshelf',NULL,'books',NULL,NULL,NULL,'2013-10-21 21:42:12','2013-10-21 21:42:12',NULL,'http://bks7.books.google.com/books?id=yv6eSgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'),(4,'9781441942845','A Practical Guide to Service Learning: Strategies for Positive Development in Schools','Felicia L. Wilczenski, Susan M. Coomey','Springer',NULL,NULL,NULL,NULL,NULL,'2013-10-23 10:38:34','2013-10-23 10:38:34',NULL,'http://bks1.books.google.com/books?id=3eebcQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'),(5,'9780470485040','Fedora 11 and Red Hat Enterprise Linux Bible','Christopher Negus, Eric Foster-Johnson','John Wiley & Sons',NULL,NULL,NULL,NULL,NULL,'2013-10-23 19:41:42','2013-10-23 19:41:42',NULL,'http://bks3.books.google.com/books?id=EHQOdKnawU8C&printsec=frontcover&img=1&zoom=1&edge=none&source=gbs_api'),(6,'9780321528858','Trigonometry','Margaret L. Lial, E. John Hornsby, David I. Schneider','Addison-Wesley',NULL,NULL,NULL,NULL,NULL,'2013-10-26 00:26:18','2013-10-26 00:26:18',NULL,'http://bks4.books.google.com/books?id=HlVKNgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'),(7,'9780131337985','Prentice Hall Smith Charles Algebra 2 with Trigometry Student Edition 2006c','Charles Smith, Randalll I. Charles, John A. Dossey, Marvin L. Bittinger','Pearson Prentice Hall',NULL,NULL,NULL,NULL,NULL,'2013-11-02 15:05:56','2013-11-02 15:05:56',NULL,'http://bks6.books.google.com/books?id=oStaGwAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'),(8,'9780470929834','Do More Faster: TechStars Lessons to Accelerate Your Startup','Brad Feld, David Cohen','Wiley',NULL,NULL,NULL,NULL,NULL,'2013-11-03 03:24:12','2013-11-03 03:24:12',NULL,'http://bks6.books.google.com/books?id=1hjOkQEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api');
+/*!40000 ALTER TABLE `textbooks` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `textboxes`
+--
+
+DROP TABLE IF EXISTS `textboxes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `textboxes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `content` text COLLATE utf8_unicode_ci,
+  `course_asset_id` int(11) DEFAULT NULL,
+  `archived` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `textboxes`
+--
+
+LOCK TABLES `textboxes` WRITE;
+/*!40000 ALTER TABLE `textboxes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `textboxes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `videos`
+--
+
+DROP TABLE IF EXISTS `videos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `videos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `videofile` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `length` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `archived` tinyint(1) DEFAULT NULL,
+  `newversion_id` int(11) DEFAULT NULL,
+  `instructor_id` int(11) DEFAULT NULL,
+  `textbook_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `videofile_processed` int(11) DEFAULT NULL,
+  `videoable_id` int(11) DEFAULT NULL,
+  `videoable_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_videos_on_videoable_id_and_videoable_type` (`videoable_id`,`videoable_type`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `videos`
+--
+
+LOCK TABLES `videos` WRITE;
+/*!40000 ALTER TABLE `videos` DISABLE KEYS */;
+INSERT INTO `videos` VALUES (1,'Wildlife.mp4','00:00:30.07',NULL,NULL,1,2,'2013-03-14 19:41:01','2013-03-14 19:41:29',1,1,'Exercise'),(2,'AC.mov','00:00:19.73',NULL,NULL,1,2,'2013-12-24 21:18:26','2013-12-24 21:20:26',1,1,'Exercise');
+/*!40000 ALTER TABLE `videos` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2014-01-18 10:20:59

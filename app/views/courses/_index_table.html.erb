@@ -1,15 +1,14 @@
 <table class="index">
-  <tr>
-    <th>Name</th>
-    <th>Section</th>
-    <th>Term</th>
-    <th>Passphrase</th>
-	  <th>Archived</th>
-	  <th>Edit</th>
-		<th>Delete</th>
-  </tr>
-
-<% local_courses.each do |course| %>
-  <%= render 'course_table_row', :local_course => course %>
-<% end %>
+    <tr>
+      <th>Name</th>
+      <th>Section</th>
+      <th>Term</th>
+      <th>Passphrase</th>
+      <th>Archived</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+    <% local_courses.each do |course| %>
+    <%= render 'course_table_row', :local_course => course %>
+    <% end %>
 </table>
