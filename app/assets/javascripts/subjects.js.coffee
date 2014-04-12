@@ -6,8 +6,6 @@
 
 jQuery ->
   
-	$('.edit_subject').submitOnCheck()
-
 	$("#subject_category_name").autocomplete
 	  minLength: 0
 	  delay: 0

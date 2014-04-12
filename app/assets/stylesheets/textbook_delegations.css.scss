@@ -1,8 +1,8 @@
 .frontcover {
-	position:relative;
+  position:relative;
 	height:200px;
 	width:155px;
-	float:left;
+	float:left;  
 }
 
 .frontcover .text {
@@ -14,7 +14,7 @@
 }
 
 .frontcover img {
-	margin-top:10px;
+  margin-top:10px;
 	background-color:inherit;
 	border: 2px solid white;
 	z-index:-1;

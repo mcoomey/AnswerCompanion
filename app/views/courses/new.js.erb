@@ -2,9 +2,12 @@ $("#messages .alert").hide();
 $("#messages .ujs_alert").hide();
 $("#messages .notice").hide();
 $("#messages .ujs_notice").hide();
-if ($.cookie('horizontal_tabs_index') == "#current-courses") {
-	$("#buttonarea").hide().after("<%= j render 'new_course', :archived_val => false %>");
+if ($.cookie('horizontal_tabs_index') == ".current-tab") {
+	$("#buttonarea").hide().after("<%= j render 'new_course', :archived_val => 0 %>");
+	}
+else if ($.cookie('horizontal_tabs_index') == ".archived-tab") {
+	$("#buttonarea").hide().after("<%= j render 'new_course', :archived_val => 1 %>");
 	}
 else {
-	$("#buttonarea").hide().after("<%= j render 'new_course', :archived_val => true %>");
+	$("#buttonarea").hide().after("<%= j render 'new_course', :archived_val => 2 %>");
 	}

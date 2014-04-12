@@ -10,5 +10,4 @@
 	$("#buttonarea").show();
 	
   $('#edit_link_<%= @course.id %>').parent().parent().replaceWith("<%= j render 'course_table_row', :local_course => @course %>");
-	$("#edit_course_<%= @course.id %>").submitOnCheck();
 <% end %>

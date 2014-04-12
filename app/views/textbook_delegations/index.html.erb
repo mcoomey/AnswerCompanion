@@ -13,9 +13,9 @@
 	</div>
 	<div id="horizontal-tabs">
 		<ul class="static-tabs-nav">
-			<li><a href=".current-asset">Current</a></li>
-			<li><a href=".archived-asset">Archived</a></li>
-			<li><a href=".future-asset">Future</a></li>
+			<li><a href=".current-tab">Current</a></li>
+			<li><a href=".archived-tab">Archived</a></li>
+			<li><a href=".future-tab">Future</a></li>
 		</ul>
 	</div>
 	<div id="vertical-tabs">
@@ -26,30 +26,40 @@
   		<% end %>
 		</ul>
 		<div id="panel">
-			<div class="archived-asset">
-			<% if @textbookDels_archived %>
-				<% @textbookDels_archived.each do |tb_del| %>
-					<%= render 'frontcovers', :local_tb_del => tb_del %>
-				<% end %>
-			<% end %>
-  			<br class="clearfloat"/>
-			</div>
-			<div class="current-asset">
+      
+			<div class="current-tab">
 				<% if @textbookDels_current %>
-					<% @textbookDels_current.each do |tb_del| %>
-						<%= render 'frontcovers', :local_tb_del => tb_del %>
-					<% end %>
+          <ul id="current-ul">
+  					<% @textbookDels_current.each do |tb_del| %>
+  						<%= render 'frontcovers', :local_tb_del => tb_del %>
+  					<% end %>
+          </ul>
 				<% end %>
 				<br class="clearfloat"/>				
 			</div>
-			<div class="future-asset">
-			<% if @textbookDels_future %>
-				<% @textbookDels_future.each do |tb_del| %>
-					<%= render 'frontcovers', :local_tb_del => tb_del %>
-				<% end %>
+      
+			<div class="archived-tab">
+			<% if @textbookDels_archived %>
+          <ul id="archived-ul">
+    				<% @textbookDels_archived.each do |tb_del| %>
+    					<%= render 'frontcovers', :local_tb_del => tb_del %>
+    				<% end %>
+          </ul>
 			<% end %>
   			<br class="clearfloat"/>
-			</div>			
+			</div>
+      
+			<div class="future-tab">
+			<% if @textbookDels_future %>
+        <ul id="future-ul">
+  				<% @textbookDels_future.each do |tb_del| %>
+  					<%= render 'frontcovers', :local_tb_del => tb_del %>
+  				<% end %>
+          </ul>
+			<% end %>
+  			<br class="clearfloat"/>
+			</div>
+      
 		</div>
 		<br class="clearfloat"/>
 	</div>

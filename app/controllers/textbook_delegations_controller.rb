@@ -18,9 +18,9 @@ class TextbookDelegationsController < ApplicationController
     @course_assets = @course.course_assets
 		@textbookDels = @course_asset.try(:textbook_delegations)
 		if @textbookDels
-  		@textbookDels_current  = @textbookDels.where(:archived => 0)
-  		@textbookDels_archived = @textbookDels.where(:archived => 1)
-  		@textbookDels_future   = @textbookDels.where(:archived => 2)
+  		@textbookDels_current  = @textbookDels.where(:archived => 0).order(:position)
+  		@textbookDels_archived = @textbookDels.where(:archived => 1).order(:position)
+  		@textbookDels_future   = @textbookDels.where(:archived => 2).order(:position)
 		end
 		if (@textbookDels && @textbookDels.count == 0)
 			flash[:alert] = "No textbooks are currently assigned."
@@ -31,7 +31,7 @@ class TextbookDelegationsController < ApplicationController
 	
 	def show
     @instructor = current_instructor
-    @courses = @instructor.courses.where(:archived => false)
+    @courses = @instructor.courses.where(:archived => 0)
     if params[:course]
       @course = Course.find_by_id(params[:course][:id])
       @course_asset = @course.course_assets.try(:first)
@@ -142,8 +142,11 @@ class TextbookDelegationsController < ApplicationController
 	end
 	
 	def update
+    puts ">>>>>>>>>>>>>>>>>tbdel archive for id=#{params[:id]} set to #{params[:tbdel][:archive]}<<<<<<<<<<<<<<<<<<<<"
     tbdel = TextbookDelegation.find(params[:id])
     tbdel.archived = params[:tbdel][:archive]
+    newPosit = TextbookDelegation.where(:archived => params[:tbdel][:archive]).count + 1
+    tbdel.position = newPosit
     tbdel.save
 	end
   
@@ -151,16 +154,30 @@ class TextbookDelegationsController < ApplicationController
 		tbdel = TextbookDelegation.find(params[:id])
 		tbdel.destroy
   end
+  
+  def sort
+    puts ">>>>>>>>>>>>>> course_asset_textbook_delegation_sort <<<<<<<<<<<<<<<"
+    params.inspect
+    tbdels = params[:tbdel_id]
+    idx = 1
+    tbdels.each do |tbid|
+      tbdel = TextbookDelegation.find_by_id(tbid)
+      tbdel.position = idx
+      tbdel.save
+      idx = idx + 1
+    end
+      
+  end
 
 private 
 
   def current_horizontal_tab
 	  selected = cookies[:horizontal_tabs_index][1..-1] #remove first character (. or #)
-	  if selected == "current-asset"
+	  if selected == "current-tab"
 	    return :Current
-    elsif selected == "archived-asset"
+    elsif selected == "archived-tab"
       return :Archived
-    elsif selected == "future-asset"
+    elsif selected == "future-tab"
       return :Future
     else
       return nil

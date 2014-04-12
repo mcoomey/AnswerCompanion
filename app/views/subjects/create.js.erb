@@ -15,5 +15,4 @@
 	else {
 		$("#archived-subjects table tr:last").after("<%= j render 'subject_table_row', :local_subject => @subject %>");
 		}
-	$("#edit_subject_<%= @subject.id %>").submitOnCheck();	
 <% end %>

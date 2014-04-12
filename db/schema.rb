@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140330174548) do
+ActiveRecord::Schema.define(:version => 20140405175251) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(:version => 20140330174548) do
     t.string   "term"
     t.integer  "archived"
     t.string   "passphrase"
+    t.integer  "position"
   end
 
   add_index "courses", ["instructor_id"], :name => "index_courses_on_instructor_id"
@@ -289,6 +290,7 @@ ActiveRecord::Schema.define(:version => 20140330174548) do
     t.integer  "course_asset_id"
     t.integer  "textbook_id"
     t.integer  "archived"
+    t.integer  "position"
   end
 
   add_index "textbook_delegations", ["course_asset_id"], :name => "index_textbook_delegations_on_textable_id_and_textable_type"

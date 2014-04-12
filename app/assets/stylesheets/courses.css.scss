@@ -22,11 +22,11 @@ table.index {
 		padding:2px 15px 2px 15px;	
 		vertical-align:center;
 		font-size:14px;
-	}
+  }
   tr:nth-child(even) td{
 	background-color: $very-light-green;
-  }
+}
   tr:nth-child(odd) td{
 	background-color: white;
-  }
+}
 }

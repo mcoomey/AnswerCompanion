@@ -153,18 +153,21 @@
   width:$screen-width - 14px - 120px;
   height:514px;
 	float:left;
+  li {
+    list-style:none;
+  }
 }
-.archived-asset {
+.archived-tab {
 	display:none;
 	margin-top: 0;
 	padding-left: 20px;
 }
-.current-asset {
+.current-tab {
 	display:block;
 	margin-top: 0;
 	padding-left: 20px;
 }
-.future-asset {
+.future-tab {
 	display:none;
 	margin-top: 0;
 	padding-left: 20px;

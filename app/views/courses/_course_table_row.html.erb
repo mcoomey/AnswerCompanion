@@ -1,6 +1,6 @@
-<tr class="dragrow">
+<tr id="course_<%=local_course.id %>" data-model="course" data-model_id="<%= local_course.id %>" >
   <td>
-    <% if local_course.archived == 1 %>
+    <% if local_course.archived != 0 %>
       <%= local_course.name %>
     <% elsif local_course.course_assets.count > 0 %>
       <%= link_to local_course.name, send("course_asset_#{CourseAssetModelType.find_by_id(local_course.course_assets.first.model_type).model_name}_path", (local_course.course_assets.first)) %>
@@ -11,12 +11,6 @@
   <td><%= local_course.section %></td>
   <td><%= local_course.term %> </td>
   <td><%= local_course.passphrase %></td>
-  <td>
-    <%= form_for local_course, :url => course_toggle_archive_path(local_course), remote: true do |f| %>
-      <%= f.check_box :archived %>
-      <%= f.submit :update %>
-    <% end %>
-  </td>
   <td>
     <%= link_to "Edit", edit_course_path(local_course), id: "edit_link_#{local_course.id}" , remote: true %>
   </td>

@@ -1,5 +1,18 @@
 AnswerCompanion::Application.routes.draw do
 
+	resources :course_assets do
+    resources :textbook_delegations do
+      collection do
+        put 'sort'
+      end
+    end
+    resources :textbooks
+    resources :documents
+    resources :videos
+    resources :links
+    resources :textboxes
+	end
+	
   resources :course_asset_model_types
 
 
@@ -71,15 +84,6 @@ AnswerCompanion::Application.routes.draw do
 		resources :subjects
 	end
 	
-	resources :course_assets do
-    resources :textbook_delegations
-    resources :textbooks
-    resources :documents
-    resources :videos
-    resources :links
-    resources :textboxes
-	end
-	
 	resources :videos
   resources :section_titles
   resources :lessons
@@ -96,6 +100,8 @@ AnswerCompanion::Application.routes.draw do
 	match "subjects/toggle_archive", :to => "subjects#toggle_archive"
   # match "courses/toggle_archive", :to => "courses#toggle_archive"
 	match "screens/welcome", :to => "screens#welcome"
+
+	match "textbook_delegations/booksort", :to => "textbook_delegations#booksort"
 
    # The priority is based upon order of creation:
   # first created -> highest priority.
