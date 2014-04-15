@@ -1,5 +1,9 @@
 AnswerCompanion::Application.routes.draw do
 
+  resources :courses do
+    resources :course_assets
+  end
+  
 	resources :course_assets do
     resources :textbook_delegations do
       collection do
@@ -76,7 +80,11 @@ AnswerCompanion::Application.routes.draw do
 
 	resources :instructors do
 	  resources :schools
-		resources :courses 
+		resources :courses do
+      collection do
+        put 'sort'
+      end
+    end
 	end
 	
 	resources :students do
@@ -90,20 +98,12 @@ AnswerCompanion::Application.routes.draw do
   resources :exercises
   resources :schools
   
-  resources :courses do
-    put 'toggle_archive'
-    resources :course_assets
-  end
-  
 	root :to => "screens#index"
 	
 	match "subjects/toggle_archive", :to => "subjects#toggle_archive"
-  # match "courses/toggle_archive", :to => "courses#toggle_archive"
 	match "screens/welcome", :to => "screens#welcome"
 
-	match "textbook_delegations/booksort", :to => "textbook_delegations#booksort"
-
-   # The priority is based upon order of creation:
+  # The priority is based upon order of creation:
   # first created -> highest priority.
 
   # Sample of regular route:

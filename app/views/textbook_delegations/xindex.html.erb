@@ -1,9 +1,0 @@
-<ul id="current-ul">
-  <% @textbookDels_current.each do |tb_del| %>
-    <li class="frontcover" id= "tbdel_id_<%= tb_del.id %>" >
-        <%= link_to image_tag(tb_del.textbook.image_link, :alt => "Show Textbook" ), textbook_lessons_path(tb_del.textbook, course_asset_id: @course_asset, ) %>
-    </li>         
-  <% end %>
-</ul>
-<br class="clearfloat"/>				
-      

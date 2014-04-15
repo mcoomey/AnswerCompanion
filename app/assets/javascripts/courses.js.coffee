@@ -7,6 +7,4 @@ jQuery ->
     appendTo: "parent"
     helper: "clone"
     zIndex: 0
-    update: (event, ui) ->
-      data = $(this).sortable("serialize")
-      console.log "Sortable data = " + data
+    update: handleSortEvent

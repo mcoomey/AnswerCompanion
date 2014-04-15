@@ -142,12 +142,13 @@ class TextbookDelegationsController < ApplicationController
 	end
 	
 	def update
-    puts ">>>>>>>>>>>>>>>>>tbdel archive for id=#{params[:id]} set to #{params[:tbdel][:archive]}<<<<<<<<<<<<<<<<<<<<"
-    tbdel = TextbookDelegation.find(params[:id])
-    tbdel.archived = params[:tbdel][:archive]
-    newPosit = TextbookDelegation.where(:archived => params[:tbdel][:archive]).count + 1
-    tbdel.position = newPosit
-    tbdel.save
+    if params[:archived]
+      tbdel = TextbookDelegation.find_by_id(params[:id])
+      posit = tbdel.course_asset.textbook_delegations.where(:archived=>params[:archived]).count + 1
+      tbdel.archived = params[:archived]
+      tbdel.position = posit
+      tbdel.save
+    end
 	end
   
   def destroy
@@ -156,17 +157,16 @@ class TextbookDelegationsController < ApplicationController
   end
   
   def sort
-    puts ">>>>>>>>>>>>>> course_asset_textbook_delegation_sort <<<<<<<<<<<<<<<"
-    params.inspect
     tbdels = params[:tbdel_id]
     idx = 1
-    tbdels.each do |tbid|
-      tbdel = TextbookDelegation.find_by_id(tbid)
-      tbdel.position = idx
-      tbdel.save
-      idx = idx + 1
-    end
-      
+    if tbdels && tbdels.count > 0
+      tbdels.each do |tbid|
+        tbdel = TextbookDelegation.find_by_id(tbid)
+        tbdel.position = idx
+        tbdel.save
+        idx = idx + 1
+      end
+    end      
   end
 
 private 

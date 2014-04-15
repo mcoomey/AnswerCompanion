@@ -10,14 +10,14 @@ class CoursesController < ApplicationController
     if params[:instructor_id]
       @instructor = Instructor.find_by_id(params[:instructor_id])
       @courses = @instructor.courses
-      @current_courses = @instructor.courses.where(:archived => 0)
-      @archived_courses = @instructor.courses.where(:archived => 1)
-      @future_courses = @instructor.courses.where(:archived => 2)
+      @current_courses = @instructor.courses.where(:archived => 0).order(:position)
+      @archived_courses = @instructor.courses.where(:archived => 1).order(:position)
+      @future_courses = @instructor.courses.where(:archived => 2).order(:position)
     else
       @courses = Course.all
-      @current_courses = Course.where(:archived => 0)
-      @archived_courses = Course.where(:archived => 1)
-      @future_courses = @instructor.courses.where(:archived => 2)
+      @current_courses = Course.where(:archived => 0).order(:position)
+      @archived_courses = Course.where(:archived => 1).order(:position)
+      @future_courses = @instructor.courses.where(:archived => 2).order(:position)
     end
 
     respond_to do |format|
@@ -90,9 +90,19 @@ class CoursesController < ApplicationController
   # PUT /courses/1
   # PUT /courses/1.json
   def update
+    puts params.inspect
+      
     @course = Course.find_by_id(params[:id])
     @instructor = @course.instructor
-    if params[:commit] != "Cancel"
+    
+    if params[:archived]
+      posit = @instructor.courses.where(:archived => params[:archived]).count + 1
+      @course.archived = params[:archived]
+      @course.position = posit
+      @course.save
+    end
+        
+    if params[:commit] && params[:commit] != "Cancel"
       @course.update_attributes(params[:course])
       render "update"
     else
@@ -108,8 +118,17 @@ class CoursesController < ApplicationController
     @course.destroy
   end
 
-  def toggle_archive
-    @course = Course.find_by_id(params[:course_id])
-    @course.update_attributes!(params[:course])
+  def sort
+    courses = params[:course]
+    idx = 1
+    if courses && courses.count > 0
+      courses.each do |courseid|
+        course = Course.find_by_id(courseid)
+        course.position = idx
+        course.save
+        idx = idx + 1
+      end
+    end
   end
+
 end
