@@ -80,7 +80,6 @@ class VideosController < ApplicationController
   
   def load_videoable
     @resource, id = request.path.split('/')[1,2]
-    puts ">>>>>@resource = #{@resource}<<<<<<"
     if @resource == "videos"
       @videos = Video.all
       @video = Video.find_by_id(params[:id])

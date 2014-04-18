@@ -4,19 +4,10 @@ window.handleDropEvent = (event, ui) ->
   id = dragitem.data("model_id")  
   dropitem = $(this).find("a").attr("href")
   tabs = [".current-tab", ".archived-tab", ".future-tab"]
-  whichTab = tabs.indexOf(dropitem)
-
-  console.log ">>>>>>>>>>>>>>DROPPPED<<<<<<<<<<<<<<<<<"
-  console.log "model = " + model
-  console.log "id  = " + id 
-  console.log "dropitem = " + dropitem  
-  console.log "whichTab = " + whichTab
-  console.log "window.location.pathname = " + window.location.pathname
-  
+  whichTab = tabs.indexOf(dropitem)  
   secure_token = $("meta[name=\"csrf-token\"]").attr("content")
   dataString = "authenticity_token=" + secure_token + "&archived=" + whichTab + "&position=999"
   urlString = window.location.pathname + "/" + id
-  console.log "urlString = " + urlString
   
   $.ajax
     type: "PUT"
@@ -32,9 +23,8 @@ window.handleDropEvent = (event, ui) ->
 
 window.handleSortEvent = (event, ui) ->
   data = $(this).sortable('serialize')
-  console.log "HANDLE SORT EVENT data = " + data
   urlString = window.location.pathname + "/sort" 
-  console.log "urlString = " + urlString
+
   $.ajax
     type: "PUT"
     url: urlString

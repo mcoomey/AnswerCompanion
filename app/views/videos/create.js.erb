@@ -4,5 +4,5 @@ $("#messages .notice").hide();
 $("#messages .ujs_notice").html("<%= @videoNotice %>").show();
 $("#ujsform").remove();
 $("#buttonarea").show();
-$("#videopane table tr:last").after('<%= j render 'video', :video => @video  %>');
+$("#videopane tbody:last").append('<%= j render 'video', :video => @video  %>');
 VideoPoller.request();

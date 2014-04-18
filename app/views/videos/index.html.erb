@@ -7,8 +7,13 @@
 		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
 		           instructor_courses_path(@instructor) %>
 							 
-		<%=link_to image_tag("AddVideo.png",  :mouseover => "AddVideoHover.png",:class => "button", :alt => "Add a Video"), 
-		           new_exercise_video_path(@videoable, :course_asset_id => @course_asset.id), :id => "add_video", :remote => true %>
+		<% if @resource == "exercises" %>
+      <%=link_to image_tag("AddVideo.png",  :mouseover => "AddVideoHover.png",:class => "button", :alt => "Add a Video"), 
+  		           new_exercise_video_path(@videoable, :course_asset_id => @course_asset.id), :id => "add_video", :remote => true %>
+    <% else %>
+      <%=link_to image_tag("AddVideo.png",  :mouseover => "AddVideoHover.png",:class => "button", :alt => "Add a Video"), 
+  		           new_lesson_video_path(@videoable, :course_asset_id => @course_asset.id), :id => "add_video", :remote => true %>
+    <% end %>
 							 
 	</div>
 	<div id="horizontal-tabs">
