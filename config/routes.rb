@@ -14,7 +14,11 @@ AnswerCompanion::Application.routes.draw do
     resources :documents
     resources :videos
     resources :links
-    resources :textboxes
+    resources :textboxes do
+      collection do
+        put 'sort'
+      end
+    end
 	end
 	
   resources :course_asset_model_types

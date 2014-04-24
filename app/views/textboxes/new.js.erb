@@ -1,0 +1,15 @@
+$("#messages .alert").hide();
+$("#messages .ujs_alert").hide();
+$("#messages .notice").hide();
+$("#messages .ujs_notice").hide();
+$("#buttonarea").hide();
+
+if ($.cookie('horizontal_tabs_index') == ".current-tab") {
+	$(".current-tab ul").prepend("<%= j render 'form', :archived_val => 0 %>");
+	}
+else if ($.cookie('horizontal_tabs_index') == ".archived-tab") {
+	$(".archived-tab ul").prepend("<%= j render 'form', :archived_val => 1 %>");
+	}
+else {
+	$(".future-tab ul").prepend("<%= j render 'form', :archived_val => 2 %>");
+	}

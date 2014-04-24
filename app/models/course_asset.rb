@@ -9,9 +9,7 @@ class CourseAsset < ActiveRecord::Base
   has_many :textboxes
   
   belongs_to :course
-  
-  has_ancestry
-  
+    
 	validates :name, :presence => true
 	validates :name, :uniqueness => { :scope => [:course_id], :message => " already exists."}
   validates :model_type, :presence => true

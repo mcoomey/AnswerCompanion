@@ -153,6 +153,13 @@
   width:$screen-width - 14px - 120px;
   height:514px;
 	float:left;
+  padding:0;
+  margin:0;
+	overflow-y: scroll;
+  ul {
+    padding-left:10px;
+    margin:0;
+  }
   li {
     list-style:none;
   }
@@ -160,17 +167,14 @@
 .archived-tab {
 	display:none;
 	margin-top: 0;
-	padding-left: 20px;
 }
 .current-tab {
 	display:block;
 	margin-top: 0;
-	padding-left: 20px;
 }
 .future-tab {
 	display:none;
 	margin-top: 0;
-	padding-left: 20px;
 }
 .asset-tag {
 	position:relative;

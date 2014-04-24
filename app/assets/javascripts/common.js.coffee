@@ -9,15 +9,22 @@ window.handleDropEvent = (event, ui) ->
   dataString = "authenticity_token=" + secure_token + "&archived=" + whichTab + "&position=999"
   urlString = window.location.pathname + "/" + id
   
+  console.log "model = " + model
+  console.log "id = " + id
+  console.log "whichTab = " + whichTab
+  
   $.ajax
     type: "PUT"
     url: urlString
     data: dataString
 
   if model == "textbook_delegation"
-    $("div"+tabs[whichTab]+" ul").append("<li id=\"tbdel_id_"+id+"\" class=\"frontcover\" data-model_id=\"" + id + "\" data-model=\"textbook_delegation\"" + ">"+ dragitem.html() + "</li>");
+    $("div"+tabs[whichTab]+" ul").append("<li id=\"tbdel_id_"+id+"\" class=\"frontcover\" data-model_id=\"" + id + "\" data-model=\"textbook_delegation\"" + ">"+ dragitem.html() + "</li>")
   else if model == "course"
     $("div" + tabs[whichTab] + " table tr:last").after("<tr data-model=" + model + " data-model_id=" + id + ">" + dragitem.html() + "</tr>")
+  else
+    $("div"+tabs[whichTab]+" ul").prepend("<li class=\"textbox\" data-model_id=" + id + " id= tbox_id_" + id + "> "+ dragitem.html() + "<\li>")
+    # ("<li class=\"textbox\" id= \"tbox_id_" + id + " data-model=" + model + " data-model_id=" + id + ">" + dragitem.html() + " <\li>")
   dragitem.remove()
 
 

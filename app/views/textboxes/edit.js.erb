@@ -1,0 +1,2 @@
+// alert ("editing tbox_id_ <%= params[:id] %> for course_asset <%= params[:course_asset_id] %>");
+$("#tbox_id_<%= params[:id] %>").replaceWith("<%= j render 'form', :archived_val => @textbox.archived %>");
