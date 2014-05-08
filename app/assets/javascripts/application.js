@@ -34,4 +34,9 @@ jQuery(function() {
     update: handleSortEvent
   });
   
+  $("#vertical-tabs ul").sortable({
+    zIndex: 0,
+    update: handleSortEvent
+  });
+  
 });

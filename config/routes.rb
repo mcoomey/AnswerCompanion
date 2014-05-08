@@ -105,7 +105,7 @@ AnswerCompanion::Application.routes.draw do
 	root :to => "screens#index"
 	
 	match "subjects/toggle_archive", :to => "subjects#toggle_archive"
-	match "screens/welcome", :to => "screens#welcome"
+	get "screens/welcome" => "screens#welcome", as: :screens
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

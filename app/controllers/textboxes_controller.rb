@@ -4,7 +4,7 @@ class TextboxesController < ApplicationController
   def index
     
     @instructor = current_instructor
-    @courses = @instructor.courses.where(:archived => false)
+    @courses = @instructor.courses.where(:archived => 0)
     if params[:course]
       @course = Course.find_by_id(params[:course][:id])
       @course_asset = @course.course_assets.try(:first)
@@ -75,7 +75,6 @@ class TextboxesController < ApplicationController
   # PUT /textboxes/1
   # PUT /textboxes/1.json
 	def update
-    puts ">>>>>>>>>>>>>>>>>>>>>> updating <<<<<<<<<<<<<<<<<<<<"
     @textbox = Textbox.find_by_id(params[:id])
     
     if params[:archived]

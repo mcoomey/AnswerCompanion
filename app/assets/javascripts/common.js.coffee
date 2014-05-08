@@ -24,7 +24,6 @@ window.handleDropEvent = (event, ui) ->
     $("div" + tabs[whichTab] + " table tr:last").after("<tr data-model=" + model + " data-model_id=" + id + ">" + dragitem.html() + "</tr>")
   else
     $("div"+tabs[whichTab]+" ul").prepend("<li class=\"textbox\" data-model_id=" + id + " id= tbox_id_" + id + "> "+ dragitem.html() + "<\li>")
-    # ("<li class=\"textbox\" id= \"tbox_id_" + id + " data-model=" + model + " data-model_id=" + id + ">" + dragitem.html() + " <\li>")
   dragitem.remove()
 
 

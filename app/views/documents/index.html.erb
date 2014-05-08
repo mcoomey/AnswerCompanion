@@ -1,2 +1,60 @@
-<h1>Document#index</h1>
-<p>Find me in app/views/document/index.html.erb</p>
+<article>
+	<div id="buttonarea">
+		<%= form_for :course, :url => {:action => 'index' }, :html => { :method => 'get' } do |f| %>
+			<%= f.select(:id, @courses.collect{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
+		<% end %>
+		
+		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
+		           instructor_courses_path(@instructor) %>
+		<%=link_to image_tag("AddAsset.png",  :mouseover => "AddAssetHover.png",:class => "button", :alt => "Add Course Asset"), 
+		           new_course_asset_path(:course_id => @course.id), remote: true %>
+		<%=link_to image_tag("AddDocument.png",  :mouseover => "AddDocumentHover.png",:class => "button", :alt => "Add a Document"), 
+		           new_course_asset_document_path(@course_asset), remote: true %>
+	</div>
+	<div id="horizontal-tabs">
+		<ul class="static-tabs-nav">
+			<li><a href=".current-tab">Current</a></li>
+			<li><a href=".archived-tab">Archived</a></li>
+			<li><a href=".future-tab">Future</a></li>
+		</ul>
+	</div>
+	<div id="vertical-tabs">
+		<ul class="dynamic-tabs-nav">
+  		<span class="title">Course Assets</span>
+			<% @course_assets.each do |asset| %>
+				<%= render "shared/course_asset_tag", :local_asset => asset %>
+  		<% end %>
+		</ul>
+		<div id="panel">
+      
+			<div class="current-tab">
+				<% if @documents_current %>
+          <ul id="current-ul">
+  					<%= render 'document_table', local_docs: @documents_current, local_course_asset_id: @course_asset.id %>
+          </ul>
+				<% end %>
+				<br class="clearfloat"/>				
+			</div>
+      
+			<div class="archived-tab">
+			<% if @documents_archived %>
+          <ul id="archived-ul">
+  					<%= render 'document_table', local_docs: @documents_archived, local_course_asset_id: @course_asset.id %>
+          </ul>
+			<% end %>
+  			<br class="clearfloat"/>
+			</div>
+      
+			<div class="future-tab">
+			<% if @documents_future %>
+        <ul id="future-ul">
+  					<%= render 'document_table', local_docs: @documents_future, local_course_asset_id: @course_asset.id %>
+          </ul>
+			<% end %>
+  			<br class="clearfloat"/>
+			</div>
+      
+		</div>
+		<br class="clearfloat"/>
+	</div>
+</article>

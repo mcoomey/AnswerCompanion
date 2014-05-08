@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140419204006) do
+ActiveRecord::Schema.define(:version => 20140426232641) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20140419204006) do
     t.string   "ancestry"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "position"
   end
 
   add_index "course_assets", ["ancestry"], :name => "index_course_assets_on_ancestry"
@@ -76,6 +77,8 @@ ActiveRecord::Schema.define(:version => 20140419204006) do
     t.integer  "archived"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.integer  "position"
+    t.string   "docfile"
   end
 
   create_table "enrollments", :force => true do |t|

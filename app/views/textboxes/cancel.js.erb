@@ -3,13 +3,4 @@ $("#messages .ujs_alert").hide();
 $("#messages .alert").show();
 $("#messages .notice").show().html("<%= @action %> textbox action canceled.");
 
-
-if ($.cookie('horizontal_tabs_index') == ".current-tab") {
-  $(".current-tab ul li:first").remove();
-}
-else if ($.cookie('horizontal_tabs_index') == ".archived-tab") {
-  $(".archived-tab ul li:first").remove();
-}
-else {
-  $(".future-tab ul li:first").remove();
-}
+$("#edit_textbox_<%= params[:id] %>").closest("li").replaceWith("<%= j render 'tbox', local_tbox: @textbox, local_course_asset_id: params[:course_asset_id] %>");
