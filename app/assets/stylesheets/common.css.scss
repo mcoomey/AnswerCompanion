@@ -34,10 +34,16 @@
 #ujsform {
 	width:$screen-width - 24px;
 	height:30px;
+  margin-left: 10px;
 	label {
 		font-size:1em;
 		color:$main-green;
+    margin-left:10px;
 	}
+	input[type="file"] {
+		color:black;
+		font-size:1em;
+  }
 	input[type="submit"] {
 		color:black;
 		font-size:1em;

@@ -18,9 +18,9 @@ class DocumentsController < ApplicationController
     @documents = @course_asset.try(:documents)
 
 		if @documents
-  		@documents_current  = @documents.where(:archived => 0).order("position DESC")
-  		@documents_archived = @documents.where(:archived => 1).order("position DESC")
-  		@documents_future   = @documents.where(:archived => 2).order("position DESC")
+  		@documents_current  = @documents.where(:archived => 0).order("position")
+  		@documents_archived = @documents.where(:archived => 1).order("position")
+  		@documents_future   = @documents.where(:archived => 2).order("position")
 		end
     
 		if (@documents && @documents.count == 0)
@@ -42,6 +42,8 @@ class DocumentsController < ApplicationController
   def create
     @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
     @document = @course_asset.documents.build(params[:document])
+    @document.position = Document.all.count + 1
+    
    	if params[:commit]  != "Cancel"
       @document.save
       render "create"
@@ -52,13 +54,52 @@ class DocumentsController < ApplicationController
   end
 
   def edit
+    puts ">>>>>>>>>>>>>Edit Document<<<<<<<<<<<<<<<<<<"
+    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
+    @document = Document.find_by_id(params[:id])
   end
 
   def update
+    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
+    @document = Document.find_by_id(params[:id])
+    
+    if params[:archived]
+      posit = @course_asset.documents.where(:archived=>params[:archived]).count + 1
+      @document.archived = params[:archived]
+      @document.position = posit
+      @document.save
+      render nothing: true
+    
+    elsif params[:commit]  != "Cancel"
+      @document.description = params[:document][:description]
+      @document.save
+      
+    else
+      @document.destroy
+      @action = "Update"
+      render "cancel"
+    end
+    
   end
 
   def destroy    
     @document = Document.find_by_id(params[:id])
     @document.destroy
   end
+  
+  def sort
+    docs = params[:document_id]
+    idx = 0
+    if docs && docs.count > 0
+      docs.each do |doc_id|
+        document = Document.find_by_id(doc_id)
+        document.position = idx
+        document.save
+        idx = idx + 1
+      end
+    end      
+    render nothing: true
+  end
+  
+  
 end

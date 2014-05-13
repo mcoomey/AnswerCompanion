@@ -12,3 +12,40 @@ else if ($.cookie('horizontal_tabs_index') == ".archived-tab") {
 else {
 	$("#buttonarea").hide().after("<%= j render 'new_document', :archived_val => 2 %>");
 	}
+
+$('#new_document').fileupload({
+    dataType: "script",
+    add: function(e, data) {
+      var file, types;
+      types = /(\.|\/)(pdf)$/i;
+      file = data.files[0];
+      if (types.test(file.type) || types.test(file.name)) {
+        data.context = $(tmpl("template-upload", file).trim());
+        $('#new_document').append(data.context);
+        return data.submit();
+      } else {
+				$('#messages .ujs_alert').html("Error: Document must be a PDF file.").show();
+        return;
+      }
+    },
+    progress: function(e, data) {
+      var progress;
+      if (data.context) {
+        progress = parseInt(data.loaded / data.total * 100, 10);
+        return data.context.find('.bar').css('width', progress + '%');
+      }
+    },
+    start: function(e) {
+	    $('#ujsform form input').hide();
+      return $('#ujsform form label').hide();
+		},
+    fail: function(e, data) {
+      console.log(">>>>>>>>>>>>>>>>>>>>>>>FAIL<<<<<<<<<<<<<<<<<<<<<<<<<<")
+      console.log(data.jqXHR.responseText);
+	    return alert("The upload has failed.  Please check your file and try again.");
+		},
+	  done: function(e, data) {
+      return $('#messages .ujs_notice').html("New document has been uploaded.");
+    }
+
+  });

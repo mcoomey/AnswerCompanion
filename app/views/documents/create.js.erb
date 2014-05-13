@@ -2,6 +2,5 @@ $("#messages .alert").hide();
 $("#messages .ujs_alert").html("<%= @documentError %>").show();
 $("#messages .notice").hide();
 $("#messages .ujs_notice").html("<%= @documentNotice %>").show();
-$("#ujsform").remove();
-$("#buttonarea").show();
-alert("create document");
+$("#ujsform").append("<%= j render 'doc_description' %>");
+

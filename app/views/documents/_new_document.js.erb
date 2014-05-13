@@ -3,12 +3,18 @@
 		<%= f.label :file %>
 		<%= f.file_field :docfile, :id => "document_filename" %>
     
-    <%= f.label :description %>
-    <%= f.text_field :description %>
-    
     <%= f.hidden_field :archived, :value => archived_val %>
     
-    <%= f.submit :name => "commit" %>
 		<%= f.submit "Cancel", :name => "commit" %>
 	<% end %>
 </div>
+
+
+<script id="template-upload" type="text/x-tmpl">
+	<div class="upload">
+	  <div id="uploadfilename">
+			{%=o.name%}
+    </div>
+    <div class="progress"><div class="bar" style="width: 0%"></div></div>
+	</div>
+</script>

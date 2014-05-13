@@ -5,4 +5,13 @@ class Document < ActiveRecord::Base
   
   mount_uploader :docfile, DocfileUploader
   
+  after_destroy :remove_id_directory
+  
+  
+  # remove the id_directory after its content has been detroyed
+  def remove_id_directory
+    orig_dir = File.expand_path("..", Rails.root.to_s + "/public" + docfile_url)
+    FileUtils.rm_rf(orig_dir)
+  end
+
 end

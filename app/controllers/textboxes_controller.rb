@@ -104,6 +104,7 @@ class TextboxesController < ApplicationController
   
   
   def sort
+    puts ">>>>>>>>>>>>>>>params[:tbox_id] = #{params[:tbox_id]}<<<<<<<<<<<<<<<<<<<<"
     tboxes = params[:tbox_id]
     idx = 0
     if tboxes && tboxes.count > 0

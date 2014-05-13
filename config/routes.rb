@@ -11,7 +11,11 @@ AnswerCompanion::Application.routes.draw do
       end
     end
     resources :textbooks
-    resources :documents
+    resources :documents do
+      collection do
+        put 'sort'
+      end
+    end
     resources :videos
     resources :links
     resources :textboxes do

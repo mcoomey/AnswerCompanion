@@ -1,4 +1,4 @@
-<tr id="document_<%=local_doc.id %>" data-model="document" data-model_id="<%= local_doc.id %>" >
+<tr id="document_id_<%=local_doc.id %>" data-model="document" data-model_id="<%= local_doc.id %>" >
   <td>
     <%= link_to local_doc.docfile.file.filename, course_asset_document_path(local_course_asset_id, local_doc.id) %> 
   </td>
@@ -6,10 +6,11 @@
     <%= local_doc.description %>   
   </td>
   <td>
+    <%= link_to "edit", edit_course_asset_document_path(local_course_asset_id, local_doc.id), remote: true %>
   </td>
   <td>
     <%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png",:class => "button", :alt => "Delete Course"),  
     course_asset_document_path(local_course_asset_id, local_doc.id), :confirm => "Delete #{local_doc.docfile.file.filename} - Are you sure?", 
-    :method => :delete, :remote => true %>
+    method: :delete, remote: true %>
   </td>
 </tr>

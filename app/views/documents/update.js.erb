@@ -1,0 +1,8 @@
+$("#messages .alert").hide();
+$("#messages .ujs_alert").html("<%= @documentError %>").show();
+$("#messages .notice").hide();
+$("#messages .ujs_notice").html("<%= @documentNotice %>").show();
+$("#ujsform").remove();
+$("#buttonarea").show();
+
+$("#document_id_<%= @document.id %>").replaceWith("<%= j render 'doc_table_row', local_doc: @document, local_course_asset_id: @course_asset.id %>");
