@@ -25,7 +25,7 @@ window.handleDropEvent = (event, ui) ->
   else if model == "document"
     $("div" + tabs[whichTab] + " table tr:last").after("<tr id=document_id_" + id + " data-model=" + model + " data-model_id=" + id + ">" + dragitem.html() + "</tr>")
   else if model == "textbox"
-    $("div"+tabs[whichTab]+" ul").prepend("<li class=\"textbox\" data-model_id=" + id + " id= tbox_id_" + id + "> "+ dragitem.html() + "<\li>")
+    $("div"+tabs[whichTab]+" ul").prepend("<li class=\"textbox\" data-model_id=" + id + " id= tbox_id_" + id + " data-model=" + model + "> "+ dragitem.html() + "<\li>")
   else
     console.log "unhandled model type: " + model
   dragitem.remove()

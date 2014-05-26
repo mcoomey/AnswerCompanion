@@ -40,7 +40,6 @@ $('#new_document').fileupload({
       return $('#ujsform form label').hide();
 		},
     fail: function(e, data) {
-      console.log(">>>>>>>>>>>>>>>>>>>>>>>FAIL<<<<<<<<<<<<<<<<<<<<<<<<<<")
       console.log(data.jqXHR.responseText);
 	    return alert("The upload has failed.  Please check your file and try again.");
 		},
@@ -49,3 +48,4 @@ $('#new_document').fileupload({
     }
 
   });
+  

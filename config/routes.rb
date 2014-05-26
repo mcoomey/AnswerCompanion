@@ -27,21 +27,6 @@ AnswerCompanion::Application.routes.draw do
 	
   resources :course_asset_model_types
 
-
-  get "document/index"
-
-  get "document/show"
-
-  get "document/new"
-
-  get "document/create"
-
-  get "document/edit"
-
-  get "document/update"
-
-  get "document/destroy"
-
   resources :roles
 
 
@@ -109,7 +94,6 @@ AnswerCompanion::Application.routes.draw do
 	root :to => "screens#index"
 	
 	match "subjects/toggle_archive", :to => "subjects#toggle_archive"
-	get "screens/welcome" => "screens#welcome", as: :screens
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

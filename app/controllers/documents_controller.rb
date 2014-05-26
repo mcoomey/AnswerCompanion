@@ -32,6 +32,12 @@ class DocumentsController < ApplicationController
 
 
   def show
+    @instructor = current_instructor
+    @courses = @instructor.courses.where(:archived => 0)
+    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
+    @document = Document.find_by_id(params[:id])    
+    @course = @document.course_asset.course
+    @course_assets = @course.course_assets
   end
 
   def new
@@ -43,18 +49,17 @@ class DocumentsController < ApplicationController
     @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
     @document = @course_asset.documents.build(params[:document])
     @document.position = Document.all.count + 1
+    @action = "Create"
     
    	if params[:commit]  != "Cancel"
       @document.save
       render "create"
     else
-      @action = "Create"
       render "cancel"
     end
   end
 
   def edit
-    puts ">>>>>>>>>>>>>Edit Document<<<<<<<<<<<<<<<<<<"
     @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
     @document = Document.find_by_id(params[:id])
   end
@@ -62,6 +67,7 @@ class DocumentsController < ApplicationController
   def update
     @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
     @document = Document.find_by_id(params[:id])
+    @action = "Update"
     
     if params[:archived]
       posit = @course_asset.documents.where(:archived=>params[:archived]).count + 1
@@ -76,7 +82,6 @@ class DocumentsController < ApplicationController
       
     else
       @document.destroy
-      @action = "Update"
       render "cancel"
     end
     

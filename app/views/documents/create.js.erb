@@ -2,5 +2,16 @@ $("#messages .alert").hide();
 $("#messages .ujs_alert").html("<%= @documentError %>").show();
 $("#messages .notice").hide();
 $("#messages .ujs_notice").html("<%= @documentNotice %>").show();
+
+if ($.cookie('horizontal_tabs_index') == ".current-tab") {    
+	$(".current-tab table tr:last").after("<%= j render 'doc_table_row', local_doc: @document, local_course_asset_id: @course_asset.id %>");
+	}
+else if ($.cookie('horizontal_tabs_index') == ".archived-tab") {
+	$(".archived-tab table tr:last").after("<%= j render 'doc_table_row', local_doc: @document, local_course_asset_id: @course_asset.id %>");
+	}
+else {
+	$(".future-tab table tr:last").after("<%= j render 'doc_table_row', local_doc: @document, local_course_asset_id: @course_asset.id %>");
+  }
+$("#document_id_<%= @document.id %>").hide();
 $("#ujsform").append("<%= j render 'doc_description' %>");
 

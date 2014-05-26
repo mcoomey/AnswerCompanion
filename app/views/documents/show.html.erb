@@ -1,2 +1,52 @@
-<h1>Document#show</h1>
-<p>Find me in app/views/document/show.html.erb</p>
+<article>
+	<div id="buttonarea">
+		<%= form_for :course, :url => {:action => 'index' }, :html => { :method => 'get' } do |f| %>
+			<%= f.select(:id, @courses.collect{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
+		<% end %>
+		
+		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
+		           instructor_courses_path(@instructor) %>
+		<%=link_to image_tag("AddAsset.png",  :mouseover => "AddAssetHover.png",:class => "button", :alt => "Add Course Asset"), 
+		           new_course_asset_path(:course_id => @course.id), remote: true %>
+		<%=link_to image_tag("AddDocument.png",  :mouseover => "AddDocumentHover.png",:class => "button", :alt => "Add a Document"), 
+		           new_course_asset_document_path(@course_asset), remote: true %>
+	</div>
+	<div id="horizontal-tabs">
+		<ul class="static-tabs-nav">
+			<li><a href=".current-tab">Current</a></li>
+			<li><a href=".archived-tab">Archived</a></li>
+			<li><a href=".future-tab">Future</a></li>
+		</ul>
+	</div>
+	<div id="vertical-tabs">
+		<ul class="dynamic-tabs-nav">
+  		<span class="title">Course Assets</span>
+			<% @course_assets.each do |asset| %>
+				<%= render "shared/course_asset_tag", :local_asset => asset %>
+				<% if @course_asset == asset %>
+					<%= image_tag(@document.docfile_url(:thumb), class: "thumbnail") %>
+				<% end %>
+  		<% end %>
+		</ul>
+		<div id="panel">
+      
+			<div class="current-tab">
+    
+    <iframe src=<%= @document.docfile_url %>
+            width="100%" 
+            height="510" 
+            style="border: none;">
+    </iframe>
+    
+			</div>
+      
+			<div class="archived-tab">
+			</div>
+      
+			<div class="future-tab">
+			</div>
+      
+		</div>
+		<br class="clearfloat"/>
+	</div>
+</article>

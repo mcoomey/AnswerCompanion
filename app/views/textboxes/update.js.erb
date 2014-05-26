@@ -8,18 +8,6 @@
 	
 	$("#buttonarea").show();
 	
-  
-  if ($.cookie('horizontal_tabs_index') == ".current-tab") {
-    $(".current-tab ul li:first").remove();
-  	$(".current-tab ul").prepend("<%= j render 'tbox', local_tbox: @textbox, local_course_asset_id: params[:course_asset_id] %>");
-  	}
-  else if ($.cookie('horizontal_tabs_index') == ".archived-tab") {
-    $(".archived-tab ul li:first").remove();
-  	$(".archived-tab ul").prepend("<%= j render 'tbox', local_tbox: @textbox, local_course_asset_id: params[:course_asset_id] %>");
-  	}
-  else {
-    $(".future-tab ul li:first").remove();
-  	$(".future-tab ul").prepend("<%= j render 'tbox', local_tbox: @textbox, local_course_asset_id: params[:course_asset_id] %>");
-  	}
+  $("#edit_textbox_<%= @textbox.id %>").parent().replaceWith("<%= j render 'tbox', local_tbox: @textbox, local_course_asset_id: params[:course_asset_id] %>");
     
 <% end %>

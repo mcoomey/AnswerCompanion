@@ -39,7 +39,6 @@ class Video < ActiveRecord::Base
     f_ext = File.extname(fpath)[1..-1] # fpath[/(\.[^.]+$)/][1..-1]
     videobj = Voyeur::Media.new( filename: "#{fpath}")
     formats.each do |fmt|
-      puts ">>>>>>f_ext = #{f_ext}<<<<<<<>>>>>>>fmt = #{fmt}<<<<<<<<"
       if f_ext.casecmp(fmt) != 0 
         exitstatus = videobj.convert( to: fmt.to_sym)[:status]
       end  # if f_ext
