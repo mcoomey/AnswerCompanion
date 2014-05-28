@@ -44,7 +44,7 @@ class TextbookDelegationsController < ApplicationController
       @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
       @course = @course_asset.course
     end
-    @course_assets = @course.course_assets
+    @course_assets = @course.course_assets.order(:position)
     @textbook = TextbookDelegation.find_by_id(params[:id]).textbook
 		
 	end
@@ -149,6 +149,7 @@ class TextbookDelegationsController < ApplicationController
       tbdel.position = posit
       tbdel.save
     end
+    render nothing: true
 	end
   
   def destroy
@@ -167,6 +168,7 @@ class TextbookDelegationsController < ApplicationController
         idx = idx + 1
       end
     end      
+    render nothing: true
   end
 
 private 

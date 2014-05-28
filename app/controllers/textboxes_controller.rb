@@ -17,7 +17,7 @@ class TextboxesController < ApplicationController
       @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
       @course = @course_asset.course
     end
-    @course_assets = @course.course_assets
+    @course_assets = @course.course_assets.order(:position)
     @textboxes = @course_asset.try(:textboxes)
 
 		if @textboxes

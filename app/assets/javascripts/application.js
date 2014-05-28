@@ -36,7 +36,7 @@ jQuery(function() {
   
   $("#vertical-tabs ul").sortable({
     zIndex: 0,
-    update: handleSortEvent
+    update: handleVerticalSortEvent
   });
   
 });

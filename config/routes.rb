@@ -1,7 +1,13 @@
 AnswerCompanion::Application.routes.draw do
 
+  resources :course_assets do
+    collection do
+      put 'sort'
+    end
+  end
+
   resources :courses do
-    resources :course_assets
+    resources :course_assets 
   end
   
 	resources :course_assets do

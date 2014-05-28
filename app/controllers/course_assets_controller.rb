@@ -2,8 +2,13 @@ class CourseAssetsController < ApplicationController
   # GET /course_assets
   # GET /course_assets.json
   def index
-    @course_assets = CourseAsset.all
-
+    if params[:course_id]
+      @course = Course.find_by_id(params[:course_id])
+      @course_assets = @course.course_assets.order(:position)
+    else
+      @course_assets = CourseAsset.all
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @course_assets }
@@ -33,7 +38,7 @@ class CourseAssetsController < ApplicationController
       @course_asset = CourseAsset.new(params[:course_asset])
       if @course_asset.save
         @course_asset_error = nil
-        @course_assets = @course_asset.course.course_assets
+        @course_assets = @course_asset.course.course_assets.order(:position)
       else
         @course_assetError = @course_asset.errors.full_messages.first
       end
@@ -87,5 +92,20 @@ class CourseAssetsController < ApplicationController
       end
     end 
   end
+  
+  def sort
+    assets = params[:asset_tag]
+    idx = 1
+    if assets && assets.count > 0
+      assets.each do |assetid|
+        asset = CourseAsset.find_by_id(assetid)
+        asset.position = idx
+        asset.save
+        idx = idx + 1
+      end
+    end    
+    render nothing: true  
+  end
+
   
 end

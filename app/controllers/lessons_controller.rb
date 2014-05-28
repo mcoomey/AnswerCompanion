@@ -12,7 +12,7 @@ class LessonsController < ApplicationController
     @instructor = current_instructor
     @courses = @instructor.courses.where(:archived => false)
     @course = @course_asset.course
-    @course_assets = @course.course_assets
+    @course_assets = @course.course_assets.order(:position)
     @textbook = Textbook.find_by_id(params[:textbook_id])
     
     if params[:filters] && (params[:commit] != "Reset")

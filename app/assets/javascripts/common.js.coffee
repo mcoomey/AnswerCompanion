@@ -40,3 +40,12 @@ window.handleSortEvent = (event, ui) ->
     url: urlString
     data: data
     
+window.handleVerticalSortEvent = (event, ui) ->
+  data = $(this).sortable('serialize')
+  urlString = "/course_assets/sort" 
+
+  $.ajax
+    type: "PUT"
+    url: urlString
+    data: data
+    

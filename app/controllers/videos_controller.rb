@@ -80,6 +80,8 @@ class VideosController < ApplicationController
   
   def load_videoable
     @resource, id = request.path.split('/')[1,2]
+    
+    puts ">>>>>>>>>@resource = #{@resource}<<<<<<<<<<<<<<<"
     if @resource == "videos"
       @videos = Video.all
       @video = Video.find_by_id(params[:id])
@@ -89,7 +91,7 @@ class VideosController < ApplicationController
       @videos = @videoable.videos
       @course_asset = CourseAsset.find_by_id(params[:course_asset_id]) || CourseAsset.find_by_id(params[:video][:course_asset_id])
       @course = @course_asset.course
-      @course_assets = @course.course_assets
+      @course_assets = @course.course_assets.order(:position)
       @instructor = @course.instructor
       @courses = @instructor.courses
     end

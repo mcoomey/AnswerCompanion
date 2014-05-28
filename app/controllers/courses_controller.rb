@@ -45,7 +45,7 @@ class CoursesController < ApplicationController
       end
     else
       @course = Course.find_by_id(params[:id])
-      @course_assets = @course.course_assets
+      @course_assets = @course.course_assets.order(:position)
       if @course_assets.count == 0
   			flash[:alert] = "You must add a Course Asset."
       end

@@ -14,7 +14,7 @@ class DocumentsController < ApplicationController
       @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
       @course = @course_asset.course
     end
-    @course_assets = @course.course_assets
+    @course_assets = @course.course_assets.order(:position)
     @documents = @course_asset.try(:documents)
 
 		if @documents
@@ -37,7 +37,7 @@ class DocumentsController < ApplicationController
     @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
     @document = Document.find_by_id(params[:id])    
     @course = @document.course_asset.course
-    @course_assets = @course.course_assets
+    @course_assets = @course.course_assets.order(:position)
   end
 
   def new
