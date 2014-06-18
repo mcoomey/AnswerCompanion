@@ -36,6 +36,8 @@ class CourseAssetsController < ApplicationController
   def create
    	if params[:commit]  != "Cancel"
       @course_asset = CourseAsset.new(params[:course_asset])
+      # *** position should be handled by acts_as_list gem
+      # @course_asset.position = CourseAsset.where(:course_id => params[:course_asset][:course_id]).count + 1
       if @course_asset.save
         @course_asset_error = nil
         @course_assets = @course_asset.course.course_assets.order(:position)
@@ -94,16 +96,19 @@ class CourseAssetsController < ApplicationController
   end
   
   def sort
-    assets = params[:asset_tag]
-    idx = 1
-    if assets && assets.count > 0
-      assets.each do |assetid|
-        asset = CourseAsset.find_by_id(assetid)
-        asset.position = idx
-        asset.save
-        idx = idx + 1
-      end
-    end    
+    # assets = params[:asset_tag]
+    # idx = 1
+    # if assets && assets.count > 0
+    #   assets.each do |assetid|
+    #     asset = CourseAsset.find_by_id(assetid)
+    #     asset.position = idx
+    #     asset.save
+    #     idx = idx + 1
+    #   end
+    # end    
+    params[:asset_tag].each_with_index do |id, index|
+      CourseAsset.update_all({position: index+1}, {id: id})
+    end
     render nothing: true  
   end
 

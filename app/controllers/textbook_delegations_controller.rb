@@ -51,16 +51,24 @@ class TextbookDelegationsController < ApplicationController
 	
 	def new
 	  @textbook = Textbook.new
+    @textbook_delegation = TextbookDelegation.new
+    @textbook_delegation.archived = current_tab_index
+    
 	end
 	
 	def create
 	  
+    puts ">>>>>>>>Creating TextbookDelegation<<<<<<<<<<<<<<<<<"
 	  @textbook = Textbook.new
+    @textbook_delegation = TextbookDelegation.new
+    @textbook_delegation.archived = current_tab_index
+    @textbook_delegation.course_asset_id = params[:course_asset_id]
+    
 	  tabs = [:Current, :Archived, :Future]
 	  
    	if params[:commit]  != "Cancel"
   	  @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
-      isbn13 = params[:textbook][:isbn13]
+      isbn13 = params[:textbook_delegation][:isbn13]
     
       # check if textbook is currently in the database
       existingbook = Textbook.find_by_isbn13(isbn13)
@@ -73,7 +81,7 @@ class TextbookDelegationsController < ApplicationController
           @tbdelError = "Error, textbook already added to #{tabs[@tbdel.archived].to_s} tab."
         else  
           # otherwise, add it to the currently selected tab
-          add_to_current_tab(tabs, existingbook)
+          add_to_current_tab(existingbook)
         end
         
       # otherwise, if textbook is not already in the database... 
@@ -102,7 +110,7 @@ class TextbookDelegationsController < ApplicationController
                   break
                 else  
                   # otherwise, add it to the currently selected tab
-                  add_to_current_tab(tabs, existingbook)
+                  add_to_current_tab(existingbook)
                   break
                 end
 
@@ -115,7 +123,7 @@ class TextbookDelegationsController < ApplicationController
                 @textbook.save
             
                 # and then add it to the current asset
-                add_to_current_tab(tabs, @textbook)
+                add_to_current_tab(@textbook)
                 break
               end
                             
@@ -142,11 +150,12 @@ class TextbookDelegationsController < ApplicationController
 	end
 	
 	def update
+    puts ">>>>>>>>Updating TestbookDelegation<<<<<<<<<<<<"
     if params[:archived]
       tbdel = TextbookDelegation.find_by_id(params[:id])
-      posit = tbdel.course_asset.textbook_delegations.where(:archived=>params[:archived]).count + 1
+      # posit = tbdel.course_asset.textbook_delegations.where(:archived=>params[:archived]).count + 1
       tbdel.archived = params[:archived]
-      tbdel.position = posit
+      # tbdel.position = posit
       tbdel.save
     end
     render nothing: true
@@ -158,16 +167,9 @@ class TextbookDelegationsController < ApplicationController
   end
   
   def sort
-    tbdels = params[:tbdel_id]
-    idx = 1
-    if tbdels && tbdels.count > 0
-      tbdels.each do |tbid|
-        tbdel = TextbookDelegation.find_by_id(tbid)
-        tbdel.position = idx
-        tbdel.save
-        idx = idx + 1
-      end
-    end      
+    params[:tbdel_id].each_with_index do |id, index|
+      TextbookDelegation.update_all({position: index+1}, {id: id})
+    end
     render nothing: true
   end
 
@@ -186,14 +188,16 @@ private
     end
   end
 
-  def add_to_current_tab(tabs, textbook)
-    @course_asset.textbooks << textbook
-    @tbdel = @course_asset.textbook_delegations.where(:textbook_id => textbook.id).first
-    @tbdel.archived = tabs.index(current_horizontal_tab())
-    @tbdel.save
+  def add_to_current_tab(textbook)
+    @textbook_delegation.textbook_id = textbook.id
+    @textbook_delegation.save
     @tbdelError = nil
     @tbdelNotice = "Successfully added new textbook."
     flash[:alert] = nil
+  end
+  
+  def current_tab_index
+	  [:Current, :Archived, :Future].index(current_horizontal_tab())
   end
 
 end

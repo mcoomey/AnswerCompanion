@@ -5,6 +5,5 @@ $("#messages .ujs_notice").html("<%= @tbdelNotice %>").show();
 $("#ujsform").remove();
 $("#buttonarea").show();
 <% if !@tbdelError %>
-  $("#panel").find($.cookie("horizontal_tabs_index")).find(".clearfloat").before("<%= j render 'frontcovers', :local_tb_del => @tbdel %>");
-  $("#tbdel_id_<%= @tbdel.id %>").draggable({containment: 'document', revert: true, revertDuration: 100});
+  $("#panel").find($.cookie("horizontal_tabs_index")).find("ul").append("<%= j render 'frontcovers', :local_tb_del => @textbook_delegation %>");
 <% end %>

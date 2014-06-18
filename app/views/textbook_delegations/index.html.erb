@@ -25,44 +25,44 @@
 				<%= render "shared/course_asset_tag", :local_asset => asset %>
   		<% end %>
 		</ul>
-		<div id="panel">
-      
-			<div class="current-tab">
-				<% if @textbookDels_current %>
-          <ul id="current-ul">
-  					<% @textbookDels_current.each do |tb_del| %>
-  						<%= render 'frontcovers', :local_tb_del => tb_del %>
-  					<% end %>
-          </ul>
-				<% end %>
-				<br class="clearfloat"/>				
-			</div>
-      
-			<div class="archived-tab">
-			<% if @textbookDels_archived %>
-          <ul id="archived-ul">
-    				<% @textbookDels_archived.each do |tb_del| %>
-    					<%= render 'frontcovers', :local_tb_del => tb_del %>
-    				<% end %>
-          </ul>
+  </div>
+	<div id="panel">
+    
+		<div class="current-tab">
+			<% if @textbookDels_current %>
+        <ul id="current-ul">
+					<% @textbookDels_current.each do |tb_del| %>
+						<%= render 'frontcovers', :local_tb_del => tb_del %>
+					<% end %>
+        </ul>
 			<% end %>
-  			<br class="clearfloat"/>
-			</div>
-      
-			<div class="future-tab">
-			<% if @textbookDels_future %>
-        <ul id="future-ul">
-  				<% @textbookDels_future.each do |tb_del| %>
+			<br class="clearfloat"/>				
+		</div>
+    
+		<div class="archived-tab">
+		<% if @textbookDels_archived %>
+        <ul id="archived-ul">
+  				<% @textbookDels_archived.each do |tb_del| %>
   					<%= render 'frontcovers', :local_tb_del => tb_del %>
   				<% end %>
-          </ul>
-			<% end %>
-  			<br class="clearfloat"/>
-			</div>
-      
+        </ul>
+		<% end %>
+			<br class="clearfloat"/>
 		</div>
-		<br class="clearfloat"/>
+    
+		<div class="future-tab">
+		<% if @textbookDels_future %>
+      <ul id="future-ul">
+				<% @textbookDels_future.each do |tb_del| %>
+					<%= render 'frontcovers', :local_tb_del => tb_del %>
+				<% end %>
+        </ul>
+		<% end %>
+			<br class="clearfloat"/>
+		</div>
+    
 	</div>
-	<div id="textbook_choices_dialog"
+	<br class="clearfloat"/>
+	<div id="textbook_choices_dialog">
 	</div>
 </article>

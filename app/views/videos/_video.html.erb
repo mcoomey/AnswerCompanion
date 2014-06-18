@@ -8,19 +8,22 @@
       
 		<% if @resource == "exercises" %>
 	     <%= link_to 'Play', exercise_video_path(params[:exercise_id], video, :course_asset_id => @course_asset.id),  id:'video_processed_'+video.id.to_s, class: 'video_processed', data: {url: video_path(video)} %></td>
-    <% else %>
+    <% elsif @resource == "lessons" %>
 	     <%= link_to 'Play', lesson_video_path(params[:lesson_id], video, :course_asset_id => @course_asset.id),  id:'video_processed_'+video.id.to_s, class: 'video_processed', data: {url: video_path(video)} %></td>
     <% end %>
          
          
 	<% elsif video.videofile_processed < 0 %>
 		<td>Error</td>
+    
 	<% else %>
 		<td>
 			<% if @resource == "exercises" %>
 				<%= link_to 'Play', exercise_video_path(params[:exercise_id], video, :course_asset_id => @course_asset.id) %>
-			<% else %>
+			<% elsif @resource == "lessons"  %>
 				<%= link_to 'Play', lesson_video_path(params[:lesson_id], video, :course_asset_id => @course_asset.id) %>
+			<% elsif @resource == "course_assets"  %>
+				<%= link_to 'Play', course_asset_video_path(params[:course_asset_id], video, :course_asset_id => @course_asset.id) %>
 			<% end %>
 		</td>
 	<% end %>

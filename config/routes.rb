@@ -11,24 +11,31 @@ AnswerCompanion::Application.routes.draw do
   end
   
 	resources :course_assets do
+    
     resources :textbook_delegations do
       collection do
         put 'sort'
       end
     end
+    
     resources :textbooks
+    
     resources :documents do
       collection do
         put 'sort'
       end
     end
+    
     resources :videos
+    
     resources :links
+    
     resources :textboxes do
       collection do
         put 'sort'
       end
     end
+    
 	end
 	
   resources :course_asset_model_types

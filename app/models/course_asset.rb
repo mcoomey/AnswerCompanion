@@ -9,6 +9,7 @@ class CourseAsset < ActiveRecord::Base
   has_many :textboxes
   
   belongs_to :course
+  acts_as_list scope: :course
     
 	validates :name, :presence => true
 	validates :name, :uniqueness => { :scope => [:course_id], :message => " already exists."}

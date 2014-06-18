@@ -5,8 +5,21 @@ class VideosController < ApplicationController
   # GET /videos
   # GET /videos.json
   def index
+    
+    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
+    @course = @course_asset.course
+    @course_assets = @course.course_assets.order(:position)
+    @videos = @course_asset.videos
+    
     respond_to do |format|
-      format.html # index.html.erb
+      format.html {
+        if ((@resource == "exercises")||(@resource == "lessons"))
+          render "textbook_video_index"
+        else
+          @videos_current = @videos
+          render "index"
+        end
+      }
       format.json { }
     end
   end
@@ -85,7 +98,7 @@ class VideosController < ApplicationController
     if @resource == "videos"
       @videos = Video.all
       @video = Video.find_by_id(params[:id])
-    else
+    elsif (@resource == "exercises")||(@resource == "lessons")
       @videoable = @resource.singularize.classify.constantize.find_by_id(id)
       @textbook = @videoable.textbook
       @videos = @videoable.videos
@@ -94,6 +107,14 @@ class VideosController < ApplicationController
       @course_assets = @course.course_assets.order(:position)
       @instructor = @course.instructor
       @courses = @instructor.courses
+    else
+      @videoable = @resource.singularize.classify.constantize.find_by_id(id)
+      @videos = @videoable.videos
+      @course_asset = CourseAsset.find_by_id(params[:course_asset_id]) || CourseAsset.find_by_id(params[:video][:course_asset_id])
+      @course = @course_asset.course
+      @course_assets = @course.course_assets.order(:position)
+      @instructor = @course.instructor
+      @courses = @instructor.courses      
     end
   end
   

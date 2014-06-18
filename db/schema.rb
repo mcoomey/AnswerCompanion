@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140514174206) do
+ActiveRecord::Schema.define(:version => 20140530173833) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -334,6 +334,8 @@ ActiveRecord::Schema.define(:version => 20140514174206) do
     t.integer  "videofile_processed"
     t.integer  "videoable_id"
     t.string   "videoable_type"
+    t.string   "title"
+    t.string   "description"
   end
 
   add_index "videos", ["videoable_id", "videoable_type"], :name => "index_videos_on_videoable_id_and_videoable_type"
