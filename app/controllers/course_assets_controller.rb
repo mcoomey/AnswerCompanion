@@ -96,18 +96,10 @@ class CourseAssetsController < ApplicationController
   end
   
   def sort
-    # assets = params[:asset_tag]
-    # idx = 1
-    # if assets && assets.count > 0
-    #   assets.each do |assetid|
-    #     asset = CourseAsset.find_by_id(assetid)
-    #     asset.position = idx
-    #     asset.save
-    #     idx = idx + 1
-    #   end
-    # end    
-    params[:asset_tag].each_with_index do |id, index|
-      CourseAsset.update_all({position: index+1}, {id: id})
+    if params[:asset_tag]
+      params[:asset_tag].each_with_index do |id, index|
+        CourseAsset.update_all({position: index+1}, {id: id})
+      end
     end
     render nothing: true  
   end

@@ -153,9 +153,9 @@ class TextbookDelegationsController < ApplicationController
     puts ">>>>>>>>Updating TestbookDelegation<<<<<<<<<<<<"
     if params[:archived]
       tbdel = TextbookDelegation.find_by_id(params[:id])
-      # posit = tbdel.course_asset.textbook_delegations.where(:archived=>params[:archived]).count + 1
       tbdel.archived = params[:archived]
-      # tbdel.position = posit
+      # move it to the bottom of the target archived scope
+      tbdel.position = TextbookDelegation.where(:archived => params[:archived]).count+1
       tbdel.save
     end
     render nothing: true
@@ -167,8 +167,10 @@ class TextbookDelegationsController < ApplicationController
   end
   
   def sort
-    params[:tbdel_id].each_with_index do |id, index|
-      TextbookDelegation.update_all({position: index+1}, {id: id})
+    if params[:tbdel_id]
+      params[:tbdel_id].each_with_index do |id, index|
+        TextbookDelegation.update_all({position: index+1}, {id: id})
+      end
     end
     render nothing: true
   end

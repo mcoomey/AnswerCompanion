@@ -6,12 +6,8 @@ window.handleDropEvent = (event, ui) ->
   tabs = [".current-tab", ".archived-tab", ".future-tab"]
   whichTab = tabs.indexOf(dropitem)  
   secure_token = $("meta[name=\"csrf-token\"]").attr("content")
-  dataString = "authenticity_token=" + secure_token + "&archived=" + whichTab + "&position=999"
+  dataString = "authenticity_token=" + secure_token + "&archived=" + whichTab
   urlString = window.location.pathname + "/" + id
-  
-  console.log "model = " + model
-  console.log "id = " + id
-  console.log "whichTab = " + whichTab
   
   $.ajax
     type: "PUT"
