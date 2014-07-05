@@ -26,7 +26,11 @@ AnswerCompanion::Application.routes.draw do
       end
     end
     
-    resources :videos
+    resources :videos do
+      collection do
+        put 'sort'
+      end
+    end
     
     resources :links
     

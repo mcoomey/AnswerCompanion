@@ -9,18 +9,19 @@ class VideosController < ApplicationController
     @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
     @course = @course_asset.course
     @course_assets = @course.course_assets.order(:position)
-    @videos = @course_asset.videos
     
     respond_to do |format|
       format.html {
         if ((@resource == "exercises")||(@resource == "lessons"))
           render "textbook_video_index"
         else
-          @videos_current = @videos
+          @videos_current = @videos.where(archived:0).order("position")
+          @videos_archived = @videos.where(archived:1).order("position")
+          @videos_future = @videos.where(archived:2).order("position")
           render "index"
         end
       }
-      format.json { }
+      format.json { render json: @videos }
     end
   end
 
@@ -43,10 +44,13 @@ class VideosController < ApplicationController
   # POST /videos
   # POST /videos.json
   def create
+    puts ">>>>>>>>>>Creating new Video with @videoable = #{@videoable}<<<<<<<<<<<<<<"
    	if params[:commit]  == "Cancel"
       @videoNotice = "Add new video action canceled."
       render "cancel"
     else
+      params[:video].merge!({:instructor_id => @instructor.id})
+      puts ">>>>>>>>>>>>params[:video] = #{params[:video]}<<<<<<<<<<<<<<<"
       @video = @videoable.videos.new(params[:video].except(:course_asset_id))
       if @video.save
         @videoError = nil
@@ -61,21 +65,40 @@ class VideosController < ApplicationController
 
   # GET /videos/1/edit
   def edit
-    @video = Video.find(params[:id])
+    @video = Video.find_by_id(params[:id])
   end
 
   # PUT /videos/1
   # PUT /videos/1.json
   def update
-    @video = Video.find(params[:id])
+    @video = Video.find_by_id(params[:id])
+    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
 
-    respond_to do |format|
-      if @video.update_attributes(params[:video])
-        format.html { redirect_to @video, notice: 'Video was successfully updated.' }
-        format.json { head :no_content }
+    if params[:archived]
+      posit = @course_asset.videos.where(:archived=>params[:archived]).count + 1
+      puts ">>>>>>>>params[:archived] = #{params[:archived]}<<<<<<<<<<<<<<"
+      
+      @video.archived = params[:archived]
+      puts ">>>>>>>>@video.archived = #{@video.archived}<<<<<<<<<<<<<<"
+      @video.position = posit
+      puts ">>>>>>>>>>saving @video<<<<<<<<<<<<<<"
+      if @video.save
+        puts ">>>>>>>>>>>saved @video<<<<<<<<<"
       else
-        format.html { render action: "edit" }
-        format.json { render json: @video.errors, status: :unprocessable_entity }
+        puts ">>>>>>>>>>>failed to save @video<<<<<<<<<"
+      end
+      
+      render nothing: true
+    
+    else 
+      respond_to do |format|
+        if @video.update_attributes(params[:video])
+          format.html { redirect_to @video, notice: 'Video was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @video.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -89,6 +112,16 @@ class VideosController < ApplicationController
     @videoNotice = "Video has been successfully deleted."
   end
  
+  def sort
+    if params[:video_id]
+      params[:video_id].each_with_index do |id, index|
+        Video.update_all({position: index+1}, {id: id})
+      end
+    end
+    render nothing: true  
+  end
+  
+ 
   private
   
   def load_videoable
@@ -98,15 +131,6 @@ class VideosController < ApplicationController
     if @resource == "videos"
       @videos = Video.all
       @video = Video.find_by_id(params[:id])
-    elsif (@resource == "exercises")||(@resource == "lessons")
-      @videoable = @resource.singularize.classify.constantize.find_by_id(id)
-      @textbook = @videoable.textbook
-      @videos = @videoable.videos
-      @course_asset = CourseAsset.find_by_id(params[:course_asset_id]) || CourseAsset.find_by_id(params[:video][:course_asset_id])
-      @course = @course_asset.course
-      @course_assets = @course.course_assets.order(:position)
-      @instructor = @course.instructor
-      @courses = @instructor.courses
     else
       @videoable = @resource.singularize.classify.constantize.find_by_id(id)
       @videos = @videoable.videos
@@ -114,8 +138,13 @@ class VideosController < ApplicationController
       @course = @course_asset.course
       @course_assets = @course.course_assets.order(:position)
       @instructor = @course.instructor
-      @courses = @instructor.courses      
+      @courses = @instructor.courses
+      
+      if (@resource == "exercises")||(@resource == "lessons")
+        @textbook = @videoable.textbook
+      end
     end
+    
   end
   
 end

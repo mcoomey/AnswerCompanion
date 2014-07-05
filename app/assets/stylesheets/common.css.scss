@@ -95,3 +95,23 @@ ul.ui-autocomplete {
 	font-weight: normal;
 	color: #212121;
 }
+
+#scroll-panel{
+  width:890px;
+  height:514px;
+	float:left;
+  padding:0;
+  margin:0;
+	overflow-y: scroll;
+}
+
+#noscroll-panel{
+  width:890px;
+  height:514px;
+	float:left;
+  padding:0;
+  margin:0;
+	overflow-y: hidden;
+}
+
+

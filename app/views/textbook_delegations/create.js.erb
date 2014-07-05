@@ -5,5 +5,5 @@ $("#messages .ujs_notice").html("<%= @tbdelNotice %>").show();
 $("#ujsform").remove();
 $("#buttonarea").show();
 <% if !@tbdelError %>
-  $("#panel").find($.cookie("horizontal_tabs_index")).find("ul").append("<%= j render 'frontcovers', :local_tb_del => @textbook_delegation %>");
+  $("#scroll-panel").find($.cookie("horizontal_tabs_index")).find("ul").append("<%= j render 'frontcovers', :local_tb_del => @textbook_delegation %>");
 <% end %>

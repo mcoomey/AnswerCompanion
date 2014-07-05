@@ -93,17 +93,12 @@ class DocumentsController < ApplicationController
   end
   
   def sort
-    docs = params[:document_id]
-    idx = 0
-    if docs && docs.count > 0
-      docs.each do |doc_id|
-        document = Document.find_by_id(doc_id)
-        document.position = idx
-        document.save
-        idx = idx + 1
+    if params[:document_id]
+      params[:document_id].each_with_index do |id, index|
+        Document.update_all({position: index+1}, {id: id})
       end
-    end      
-    render nothing: true
+    end
+    render nothing: true  
   end
   
   

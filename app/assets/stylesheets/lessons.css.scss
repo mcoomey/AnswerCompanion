@@ -35,82 +35,8 @@
 	}
 }
 /* define height and width of scrollable area. Add 16px to width for scrollbar          */
-#lessonpane.tableContainer  {
-	clear: both;
-	width: 874px;
-	height: 504px;
-	padding: 0;
-	margin: 10px;
-	overflow: hidden;
-
-	thead.fixedHeader tr {
-		display: block;
-		background: $very-light-green;
-		width:840px;
-		height:37px;
-		color: black;
-		font-size:1em;
-		font-weight: bold;
-		vertical-align:center;
-		border-spacing: 0;
-		border-collapse: collapse;
-		padding:0;
-		th {
-			border: 1px solid $main-green;
-		  width: 619px;
-			height:34px;
-		}
-		th + th {
-			width:69px;
-		}
-		th + th + th {
-			width:69px;
-		}
-		th + th + th + th {
-			width:69px;
-		}
-	}
-
-	tbody.scrollContent {
-		display: block;
-		width: 854px;
-		height: 460px;
-		padding-top:0;
-		margin:0;
-		border-spacing: 0;
-		border-collapse: collapse;
-		border-bottom: 1px solid $main-green;
-		overflow-y: scroll;
-		tr:nth-child(even) td {
-			background-color: $very-light-green;
-		}
-		tr:nth-child(odd) td{
-			background-color: white;
-		}
-		td {
-			border-top: none;
-			border-right: 1px solid $main-green;
-			border-bottom: none;
-			border-left: 1px solid $main-green;
-			vertical-align:center;
-			font-size:14px;
-			padding-left:5px;
-		  width: 620px;
-			height:35px;
-		}
-		td + td {
-			width:65px;
-		}
-		td + td + td {
-			width:65px;
-		}
-		td + td + td + td {
-			width:65px;
-		}
-		tr:last-child td{
-			border-bottom: 1px solid $main-green;
-		};
-	}
+#lessonpane.tableContainer  { 
+  @include tablecontainer(636px, 69px, 69px, 69px, 0);
 }
 
 .field_with_errors {

@@ -11,7 +11,7 @@
 		</thead>
 		<tbody class="scrollContent">
 			<% videos.each do |video| %>
-				<%= render 'video', :video => video %>
+				<%= render 'video_table_row', :local_video => video %>
 			<% end %>
 		</tbody>
 	</table>

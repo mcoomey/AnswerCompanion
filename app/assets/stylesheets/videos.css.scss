@@ -1,4 +1,8 @@
-#panel {
+#videopane.tableContainer  {
+  @include tablecontainer(100px, 100px, 440px, 100px, 100px);
+}
+
+#noscroll-panel {
 	#breadcrumbs {
 	  width:$screen-width - 14px - 120px;
 	  height:24px;

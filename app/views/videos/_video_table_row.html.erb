@@ -1,0 +1,42 @@
+<tr id="video_id_<%= local_video.id %>" data-model="video" data-model_id="<%= local_video.id %>">
+    <td><%= local_video.length %></td>
+    <td><%= local_video.instructor.username %></td>
+		
+		
+	<% if !local_video.videofile_processed || local_video.videofile_processed == 0 %>
+		<td> <%= link_to 'Processing', '#',  id:'video_processing_'+local_video.id.to_s, class: 'video_processing', data: {url: video_path(local_video)} %>
+      
+		<% if @resource == "exercises" %>
+	     <%= link_to 'Play', exercise_video_path(params[:exercise_id], local_video, :course_asset_id => @course_asset.id),  id:'video_processed_'+local_video.id.to_s, class: 'video_processed', data: {url: video_path(local_video)} %></td>
+    <% elsif @resource == "lessons" %>
+	     <%= link_to 'Play', lesson_video_path(params[:lesson_id], local_video, :course_asset_id => @course_asset.id),  id:'video_processed_'+local_video.id.to_s, class: 'video_processed', data: {url: video_path(local_video)} %></td>
+    <% end %>
+         
+         
+	<% elsif local_video.videofile_processed < 0 %>
+		<td>Error</td>
+    
+	<% else %>
+		<td>
+			<% if @resource == "exercises" %>
+				<%= link_to 'Play', exercise_video_path(params[:exercise_id], local_video, :course_asset_id => @course_asset.id) %>
+			<% elsif @resource == "lessons"  %>
+				<%= link_to 'Play', lesson_video_path(params[:lesson_id], local_video, :course_asset_id => @course_asset.id) %>
+			<% elsif @resource == "course_assets"  %>
+				<%= link_to 'Play', course_asset_video_path(params[:course_asset_id], local_video, :course_asset_id => @course_asset.id) %>
+			<% end %>
+		</td>
+	<% end %>
+	
+	
+	<!-- only the video owner can replace or destroy it -->
+	<% if current_instructor %>
+		<% if current_instructor.id == local_video.instructor_id %>
+			<td><%=link_to 'Replace',  "#" %></td>
+		    <td><%= link_to 'Destroy', video_path(local_video), confirm:'Delete Video - Are you sure?', method: :delete, remote: true %></td>
+		<% else %>
+			<td></td>
+			<td></td>
+		<% end %>	
+	<% end %>
+</tr>

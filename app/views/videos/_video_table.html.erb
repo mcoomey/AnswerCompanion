@@ -1,0 +1,14 @@
+<table class="index">
+  <tbody class="sortableTable">
+	  <tr>
+	    <th>Length</th>
+	    <th>Instructor</th>
+			<th>Play/Purchase</th>
+			<th class="replace"></th>
+			<th class="destroy"></th>
+	  </tr>
+		<% local_videos.each do |video| %>
+			<%= render 'video_table_row', :local_video => video %>
+		<% end %>
+	</tbody>
+</table>

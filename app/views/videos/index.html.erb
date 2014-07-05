@@ -18,7 +18,6 @@
   		<li><a href=".future-tab">Future</a></li>
   	</ul>
 	</div>
-  
 	<div id="vertical-tabs">
 		<ul class="dynamic-tabs-nav">
   		<span class="title">Course Assets</span>
@@ -29,38 +28,30 @@
 				<% end %>
   		<% end %>
 		</ul>
-		<div id="panel">			
+  		<div id="scroll-panel">
 
-			<div class="current-tab">
-				<% if @videos_current %>
-          <ul id="current-ul">
-    				<%= render "video_index", :videos => @videos_current, local_course_asset_id: @course_asset.id %>
-          </ul>
-				<% end %>
-				<br class="clearfloat"/>				
-			</div>
+  			<div class="current-tab">
+  				<% if @videos_current %>
+      				<%= render "video_table", :local_videos => @videos_current, local_course_asset_id: @course_asset.id %>
+  				<% end %>
+  				<br class="clearfloat"/>				
+  			</div>
       
-			<div class="archived-tab">
-			<% if @videos_archived %>
-          <ul id="archived-ul">
-    				<%= render "video_index", :videos => @videos_archived, local_course_asset_id: @course_asset.id %>
-          </ul>
-			<% end %>
-  			<br class="clearfloat"/>
-			</div>
+  			<div class="archived-tab">
+  			<% if @videos_archived %>
+      				<%= render "video_table", :local_videos => @videos_archived, local_course_asset_id: @course_asset.id %>
+  			<% end %>
+    			<br class="clearfloat"/>
+  			</div>
       
-			<div class="future-tab">
-			<% if @videos_future %>
-        <ul id="future-ul">
-    				<%= render "video_index", :videos => @videos_future, local_course_asset_id: @course_asset.id %>
-          </ul>
-			<% end %>
-  			<br class="clearfloat"/>
-			</div>     
-      
-		</div>
-		<br class="clearfloat"/>
-	</div>
-	<div id="create_new_section_title_dialog"
+  			<div class="future-tab">
+  			<% if @videos_future %>
+      				<%= render "video_table", :local_videos => @videos_future, local_course_asset_id: @course_asset.id %>
+  			<% end %>
+    			<br class="clearfloat"/>
+  			</div>     
+        
+      </div>
+      <br class="clearfloat"/>
 	</div>
 </article>

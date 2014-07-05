@@ -1,5 +1,5 @@
 class Video < ActiveRecord::Base
-  attr_accessible :videofile, :length, :archived, :newversion_id, :instructor_id, :textbook_id
+  attr_accessible :videofile, :length, :archived, :newversion_id, :instructor_id, :textbook_id, :title, :description
   belongs_to :videoable, polymorphic: true
   belongs_to :instructor
   belongs_to :textbook
@@ -29,8 +29,8 @@ class Video < ActiveRecord::Base
   end
 
   def do_video_conversion
-    self.delay.my_convert_to_html5(videofile_url) if !video_processed?
-    # self.my_convert_to_html5(videofile_url) if !video_processed?
+    # self.delay.my_convert_to_html5(videofile_url) if !video_processed?
+    self.my_convert_to_html5(videofile_url) if !video_processed?
   end
   
   def my_convert_to_html5(original_video)

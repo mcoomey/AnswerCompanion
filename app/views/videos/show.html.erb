@@ -8,10 +8,15 @@
 		           instructor_courses_path(@instructor) %>
 							 
 	</div>
+  
 	<div id="horizontal-tabs">
 		<ul class="dynamic-tabs-nav">
-			<%= content_tag(:li, (link_to "Lessons", textbook_lessons_path(@textbook, :course_asset_id => @course_asset.id )), class: ("activeTab" if @resource == "lessons")) %>
-			<%= content_tag(:li, (link_to "Exercises", textbook_exercises_path(@textbook, :course_asset_id => @course_asset.id )), class: ("activeTab" if @resource == "exercises")) %>
+      <% if ((@resource == "exercises")||(@resource == "lessons")) %>
+  			<%= content_tag(:li, (link_to "Lessons", textbook_lessons_path(@textbook, :course_asset_id => @course_asset.id )), class: ("activeTab" if @resource == "lessons")) %>
+  			<%= content_tag(:li, (link_to "Exercises", textbook_exercises_path(@textbook, :course_asset_id => @course_asset.id )), class: ("activeTab" if @resource == "exercises")) %>
+      <% else %>
+			  <%= content_tag(:li, @video.description, class: "activeTab") %>
+      <% end %>
 		</ul>
 	</div>
 	<div id="vertical-tabs">
@@ -19,16 +24,16 @@
   		<span class="title">Course Assets</span>
 			<% @course_assets.each do |asset| %>
 				<%= render "shared/course_asset_tag", :local_asset => asset %>
-				<% if @course_asset == asset %>
+				<% if (@course_asset == asset)&&((@resource == "exercises")||(@resource == "lessons")) %>
 					<%= image_tag(@textbook.thumbnail, class: "thumbnail") %>
 				<% end %>
   		<% end %>
 		</ul>
-		<div id="panel">
+		<div id="noscroll-panel">
 			<div id="breadcrumbs">
 				<% if @resource == "exercises" %>
 					<%= link_to @videoable.section_title.name + " Exercise: " + @videoable.number, exercise_videos_path(@videoable, course_asset_id: @course_asset.id) %>
-				<% else%>
+				<% elsif @resource == "lessons"%>
 					<%= link_to @videoable.title + " Page: " + @videoable.page, lesson_videos_path(@videoable, course_asset_id: @course_asset.id) %>
 				<% end %>
 			</div>

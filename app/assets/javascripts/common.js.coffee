@@ -8,7 +8,8 @@ window.handleDropEvent = (event, ui) ->
   secure_token = $("meta[name=\"csrf-token\"]").attr("content")
   dataString = "authenticity_token=" + secure_token + "&archived=" + whichTab
   urlString = window.location.pathname + "/" + id
-  
+  console.log "urlString = " + urlString 
+  console.log "dataString = " + dataString 
   $.ajax
     type: "PUT"
     url: urlString
@@ -22,6 +23,8 @@ window.handleDropEvent = (event, ui) ->
     $("div" + tabs[whichTab] + " table tr:last").after("<tr id=document_id_" + id + " data-model=" + model + " data-model_id=" + id + ">" + dragitem.html() + "</tr>")
   else if model == "textbox"
     $("div"+tabs[whichTab]+" ul").prepend("<li class=\"textbox\" data-model_id=" + id + " id= tbox_id_" + id + " data-model=" + model + "> "+ dragitem.html() + "<\li>")
+  else if model == "video"
+    $("div" + tabs[whichTab] + " table tr:last").after("<tr id=video_id_" + id + " data-model_id=" + id + " data-model=" + model + ">" + dragitem.html() + "</tr>")
   else
     console.log "unhandled model type: " + model
   dragitem.remove()
