@@ -84,14 +84,16 @@ class LessonsController < ApplicationController
     @textbook = Textbook.find(params[:textbook_id])
     @lesson = Lesson.find(params[:id])
     @lessons = @textbook.lessons
+    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
   end
 
   # PUT /lessons/1
   # PUT /lessons/1.json
   def update
-    @lesson = Lesson.find(params[:id])
+    @lesson = Lesson.find_by_id(params[:id])
     if params[:commit]  != "Cancel"
       if @lesson.update_attributes(:title => params[:lesson][:title], :page => params[:lesson][:page])
+        @course_asset = CourseAsset.find_by_id(params[:lesson][:course_asset_id])
         @lessonError = nil
         @lessonNotice = "Successfully updated lesson."
       else  

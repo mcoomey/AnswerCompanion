@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 jQuery ->
   $("tbody.sortableTable").sortable
-    items: "> tr:not(:first)"
+    items: "> tr"
     appendTo: "parent"
     helper: "clone"
     zIndex: 0

@@ -6,6 +6,8 @@
 	<%= f.label :page %>
 	<%= f.text_field :page, :size => "10" %>
 	
+  <%= f.hidden_field :course_asset_id, :value => @course_asset.id %>
+  
 	<%= f.submit "Update"%>
 	<%= f.submit "Cancel"%>
 <% end %>
