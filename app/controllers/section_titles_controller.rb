@@ -30,6 +30,7 @@ class SectionTitlesController < ApplicationController
   # GET /section_titles/new
   # GET /section_titles/new.json
   def new
+    puts ">>>>>>>>>new sections_title_controller<<<<<<<<<<<<"
     @section_title = SectionTitle.new
 
     respond_to do |format|
@@ -46,6 +47,8 @@ class SectionTitlesController < ApplicationController
   # POST /section_titles
   # POST /section_titles.json
   def create
+    puts ">>>>>>>>>create sections_title_controller<<<<<<<<<<<<"
+    
     @section_title = SectionTitle.new(params[:section_title])
 
     respond_to do |format|

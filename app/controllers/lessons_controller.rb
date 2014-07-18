@@ -54,6 +54,7 @@ class LessonsController < ApplicationController
 
   def new
     @textbook = Textbook.find_by_id(params[:textbook_id])
+    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
     @lesson = Lesson.new
   end
 
@@ -61,6 +62,7 @@ class LessonsController < ApplicationController
   # POST /lessons.json
   def create
     @textbook = Textbook.find_by_id(params[:lesson][:textbook_id])
+    @course_asset = CourseAsset.find_by_id(params[:lesson][:course_asset_id])
     if params[:commit]  != "Cancel"
       @filterstring = nil
       @lesson = Lesson.new(:title => params[:lesson][:title], :page => params[:lesson][:page], 
@@ -112,6 +114,7 @@ class LessonsController < ApplicationController
   # DELETE /lessons/1.json
   def destroy
     @lesson = Lesson.find(params[:id])
+    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
     @textbook = @lesson.textbook
     @lesson.destroy
     @lessons = @textbook.lessons.sort{|a,b| a.page.to_i <=> b.page.to_i}

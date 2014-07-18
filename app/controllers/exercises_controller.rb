@@ -54,6 +54,7 @@ class ExercisesController < ApplicationController
 
   def new
     @textbook = Textbook.find_by_id(params[:textbook_id])
+    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
     @exercise = @textbook.exercises.new(params[:exercise])
     @new_section_title = false
   end
@@ -62,6 +63,7 @@ class ExercisesController < ApplicationController
   # POST /exercises.json
   def create
     @textbook = Textbook.find_by_id(params[:exercise][:textbook_id])
+    @course_asset = CourseAsset.find_by_id(params[:exercise][:course_asset_id])
     
     if params[:commit]  == "Cancel"
       @exerciseNotice = "Add new exercise action canceled."
@@ -73,17 +75,24 @@ class ExercisesController < ApplicationController
                                :section_title_name => params[:exercise][:section_title_name], 
                                :instructor_id => current_instructor.id)
       @section_title = @exercise.section_title
+      
+      # check to see if section_title exists in db
+      
       if @section_title && @section_title.new_record?
         @new_section_title = true;
+        
+        # render new view again with flag to confirm new_section creation
         render "new"
+        
       elsif @exercise.save
         @exerciseError = nil
-         @exerciseNotice = "Successfully created exercise."
+        @exerciseNotice = "Successfully created exercise."
       else  
         @exerciseNotice = nil
         @exerciseError = "Error! " + @exercise.errors.full_messages.first
       end
       @exercises = @textbook.exercises.sort{|a,b| a.page.to_i <=> b.page.to_i}
+      
       
     elsif params[:commit] == "Yes"
       @filterstring = nil
@@ -101,7 +110,10 @@ class ExercisesController < ApplicationController
       
     
     else  # params[:commit] == "No"
-      render('edit')
+      params[:exercise][:section_title_name] = ""
+      @exercise = @textbook.exercises.new(params[:exercise].except(:course_asset_id))
+      @new_section_title = false;
+      render('new')
     end
    
   end
@@ -109,6 +121,7 @@ class ExercisesController < ApplicationController
 
   # GET /exercises/1/edit
   def edit
+    puts ">>>>>>>>>>>>EDIT EXERCISES_CONTROLLER<<<<<<<<<<<<<<"
     @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
     @textbook = Textbook.find(params[:textbook_id])
     @exercise = Exercise.find(params[:id])
@@ -148,7 +161,7 @@ class ExercisesController < ApplicationController
       
     elsif params[:commit] == "Yes"
       @filterstring = nil
-      @exercise.assign_attributes(params[:exercise])
+      @exercise.assign_attributes(params[:exercise].except(:course_asset_id))
       if @exercise.save
         @exerciseError = nil
         @exerciseNotice = "Successfully updated exercise."
@@ -169,6 +182,7 @@ class ExercisesController < ApplicationController
   # DELETE /exercises/1.json
   def destroy
     @exercise = Exercise.find(params[:id])
+    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
     @textbook = @exercise.textbook
     @exercise.destroy
     @exercises = @textbook.exercises.sort{|a,b| a.page.to_i <=> b.page.to_i}

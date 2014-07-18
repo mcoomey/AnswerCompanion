@@ -21,6 +21,7 @@
 	$("#messages .ujs_alert").hide();
 	$("#messages .notice").hide();
 	$("#messages .ujs_notice").hide();
+  $("#ujsform").remove();
 	$("#buttonarea").hide().after('<%= j render("new_exercise") %>');
 	$("#exercise_section_title_name").autocomplete({
 		  minLength: 0,

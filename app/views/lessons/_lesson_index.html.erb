@@ -16,7 +16,7 @@
 				<% if current_instructor %>
 					<% if current_instructor.id == lesson.instructor_id %>
 						<td><%=link_to 'Edit',  edit_textbook_lesson_path(lesson.textbook, lesson, course_asset_id: @course_asset.id), remote: true %></td>
-					    <td><%= link_to 'Delete', lesson_path(lesson), confirm: 'Delete Lesson - Are you sure?', method: :delete, :remote => true %></td>
+					    <td><%= link_to 'Delete', lesson_path(lesson, course_asset_id: @course_asset.id), confirm: 'Delete Lesson - Are you sure?', method: :delete, :remote => true %></td>
 					<% else %>
 						<td></td>
 						<td></td>

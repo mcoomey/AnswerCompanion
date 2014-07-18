@@ -3,6 +3,7 @@
 	<%= f.hidden_field :page %>
 	<%= f.hidden_field :section_title_name %>
 	<%= f.hidden_field :textbook_id %>
+	<%= f.hidden_field :course_asset_id, :value => @course_asset.id %>
 	</br>
 	<%= f.submit "Yes", :name => "commit", :id => "confirm_yes" %>
 	<%= f.submit "No", :name => "commit",  :id => "confirm_no"  %>

@@ -4,10 +4,13 @@
 	<%= f.text_field :name, :size => "15" %>
 	
 	<%= f.label :section %>
-	<%= f.text_field :section, :size => "15" %>
+	<%= f.text_field :section, :size => "5" %>
 	
 	<%= f.label :term %>
-	<%= f.text_field :term, :size => "15" %>
+	<%= f.text_field :term, :size => "5" %>
+
+  <%= f.label :passphrase %>
+  <%= f.text_field :passphrase, :size => "35" %>
 
 	<%= f.hidden_field :archived, :value => archived_val %>
 	    
