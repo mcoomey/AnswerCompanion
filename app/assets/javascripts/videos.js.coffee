@@ -6,6 +6,7 @@
     if $(".video_processing").length > 0
       $(".video_processing").each (index) ->
         id = undefined
+        console.log "@dataset.url = " + @dataset.url
         $.getJSON @dataset.url, (data) ->
           $.each data, (k, v) ->
             if k == "id"

@@ -1,13 +1,17 @@
-<table class="index">
-  <tbody class="sortableTable">
-    <tr>
-      <th>Filename</th>
-      <th>Description</th>
-      <th>Edit</th>
-      <th>Delete</th>
-    </tr>
-    <% local_docs.each do |doc| %>
-      <%= render 'doc_table_row', local_doc: doc, local_course_asset_id: local_course_asset_id %>
-    <% end %>
-  </tbody>
-</table>
+<div id="documenttable"  class="tableContainer">
+  <table>
+    <thead class="fixedHeader">
+      <tr>
+        <th>Filename</th>
+        <th>Description</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody class="scrollContent sortableTable">
+      <% local_docs.each do |doc| %>
+        <%= render 'doc_table_row', local_doc: doc, local_course_asset_id: local_course_asset_id %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

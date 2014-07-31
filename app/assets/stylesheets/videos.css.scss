@@ -1,5 +1,9 @@
-#videopane.tableContainer  {
-  @include tablecontainer(120px, 120px, 420px, 80px, 80px);
+#videotable.tableContainer  {
+  @include tablecontainer(150px, 310px, 120px, 80px, 80px, 80px);
+}
+
+#tb_videotable.tableContainer  {
+  @include tablecontainer(120px, 300px, 90px, 150px, 80px, 80px);
 }
 
 #noscroll-panel {
@@ -26,6 +30,7 @@
 	margin-top: 0px;
 	margin-bottom: 0px;
 }
+
 #uploadfilename {
   float:left;
 	height: 30px;
@@ -51,3 +56,7 @@
     }
   }
 }
+
+td a.video_processed{
+  display:none;
+  }

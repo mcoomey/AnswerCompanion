@@ -1,19 +1,28 @@
 <div id="ujsform">
 	<%= form_for [@videoable, @video], remote: true do |f| %>
-		<%= f.label :video_filename %>
+  
+    <% if (@resource == "course_assets") %>
+      <%= f.label :title %>
+      <%= f.text_field :title, size: 25 %>
+    
+      <%= f.label :description %>
+      <%= f.text_field :description, size: 40 %>
+    <% end %>
+    
 		<%= f.file_field :videofile, :id => "video_filename" %>
+    
     <%= f.hidden_field :instructor_id, :value => @instructor.id %>
+    
     <% if ((@resource == "exercises")||(@resource == "lessons")) %>
       <%= f.hidden_field :textbook_id, :value => @textbook.id %>
-    <% else %>
-      <%= f.label :title %>
-      <%= f.text_field :title %>
-      <%= f.label :description %>
-      <%= f.text_field :description %>
     <% end %>
+    
     <%= f.hidden_field :course_asset_id, :value => @course_asset.id %>
+    
     <%= f.hidden_field :archived, :value => archived_val %>
+    
 		<%= f.submit "Cancel" %>
+    
 	<% end %>
 </div>
 

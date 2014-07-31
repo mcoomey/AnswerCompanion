@@ -2,4 +2,4 @@ $("#messages .alert").hide();
 $("#messages .ujs_alert").html("<%= @videoError %>").show();
 $("#messages .notice").hide();
 $("#messages .ujs_notice").html("<%= @videoNotice %>").show();
-$("tr#video_<%= @video.id %>").remove();
+$("tr#video_id_<%= @video.id %>").remove();

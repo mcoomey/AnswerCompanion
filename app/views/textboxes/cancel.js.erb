@@ -3,4 +3,8 @@ $("#messages .ujs_alert").hide();
 $("#messages .alert").show();
 $("#messages .notice").show().html("<%= @action %> textbox action canceled.");
 
-$("#edit_textbox_<%= params[:id] %>").closest("li").replaceWith("<%= j render 'tbox', local_tbox: @textbox, local_course_asset_id: params[:course_asset_id] %>");
+<% if @action == "Edit" %>
+  $("#edit_textbox_<%= params[:id] %>").closest("li").replaceWith("<%= j render 'tbox', local_tbox: @textbox, local_course_asset_id: params[:course_asset_id] %>");
+<% else %>
+  $("#new_textbox").closest("li").remove();
+<% end %>

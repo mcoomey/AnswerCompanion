@@ -5,13 +5,18 @@ class VideosController < ApplicationController
   # GET /videos
   # GET /videos.json
   def index
-    
+    puts ">>>>>>>>>>@videos.count = #{@videos.count}<<<<<<<<<<<<<<<<<"
     @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
     @course = @course_asset.course
     @course_assets = @course.course_assets.order(:position)
     
     respond_to do |format|
       format.html {
+        if (@videos.count == 0)
+          flash[:alert] = "No videos found."
+        end
+    
+        
         if ((@resource == "exercises")||(@resource == "lessons"))
           render "textbook_video_index"
         else
@@ -120,8 +125,7 @@ class VideosController < ApplicationController
     end
     render nothing: true  
   end
-  
- 
+    
   private
   
   def load_videoable

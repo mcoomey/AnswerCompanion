@@ -2,4 +2,8 @@ $("#ujsform").remove();
 $("#buttonarea").show();
 $("#messages .ujs_alert").hide();
 $("#messages .alert").show();
-$("#messages .ujs_notice").show().html("Add new document canceled.");
+<% if (@action == "Create") %>
+  $("#messages .ujs_notice").show().html("Add new document canceled.");
+<% else %>
+  $("#messages .ujs_notice").show().html("Edit document canceled.");
+<% end %>

@@ -2,7 +2,21 @@ $("#messages .alert").hide();
 $("#messages .ujs_alert").html("<%= @videoError %>").show();
 $("#messages .notice").hide();
 $("#messages .ujs_notice").html("<%= @videoNotice %>").show();
+
 $("#ujsform").remove();
 $("#buttonarea").show();
-$("#videopane tbody:last").append('<%= j render "video_table_row", :local_video => @video  %>');
+
+<% if (@resource == "lessons") || (@resource == "exercises") %>
+  $("#tb_videotable table > tbody:last").append('<%= j render "tb_video_table_row", :local_video => @video  %>');
+<% else %>
+  if ($.cookie('horizontal_tabs_index') == ".current-tab") {    
+  	$(".current-tab table > tbody:last").append("<%= j render 'video_table_row', local_video: @video, local_course_asset_id: @course_asset.id %>");
+  	}
+  else if ($.cookie('horizontal_tabs_index') == ".archived-tab") {
+  	$(".archived-tab table > tbody:last").append("<%= j render 'video_table_row', local_video: @video, local_course_asset_id: @course_asset.id %>");
+  	}
+  else {
+  	$(".future-tab table > tbody:last").append("<%= j render 'video_table_row', local_video: @video, local_course_asset_id: @course_asset.id %>");
+    }
+<% end %>
 VideoPoller.request();

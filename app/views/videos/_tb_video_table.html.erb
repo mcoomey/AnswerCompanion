@@ -1,9 +1,10 @@
-<div id="videopane" class="tableContainer">
+<div id="tb_videotable" class="tableContainer">
 	<table>
 		<thead class="fixedHeader">
 		  <tr>
 		    <th>Length</th>
 		    <th>Instructor</th>
+        <th>Rating</th>
 				<th>Play/Purchase</th>
 				<th class="replace"></th>
 				<th class="destroy"></th>
@@ -11,7 +12,7 @@
 		</thead>
 		<tbody class="scrollContent">
 			<% videos.each do |video| %>
-				<%= render 'video_table_row', :local_video => video %>
+				<%= render 'tb_video_table_row', :local_video => video %>
 			<% end %>
 		</tbody>
 	</table>

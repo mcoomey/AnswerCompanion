@@ -25,7 +25,7 @@ AnswerCompanion::Application.routes.draw do
         put 'sort'
       end
     end
-    
+       
     resources :videos do
       collection do
         put 'sort'

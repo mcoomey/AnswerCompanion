@@ -1,0 +1,8 @@
+$("#messages .alert").hide();
+$("#messages .ujs_alert").html("<%= @videoError %>").show();
+$("#messages .notice").hide();
+$("#messages .ujs_notice").html("<%= @videoNotice %>").show();
+$("#ujsform").remove();
+$("#buttonarea").show();
+
+$("#video_id_<%= @video.id %>").replaceWith("<%= j render 'video_table_row', local_video: @video, local_course_asset_id: @course_asset.id %>").show();

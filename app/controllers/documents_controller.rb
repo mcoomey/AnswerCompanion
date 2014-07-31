@@ -81,12 +81,11 @@ class DocumentsController < ApplicationController
       @document.save
       
     else
-      @document.destroy
       render "cancel"
     end
     
   end
-
+  
   def destroy    
     @document = Document.find_by_id(params[:id])
     @document.destroy

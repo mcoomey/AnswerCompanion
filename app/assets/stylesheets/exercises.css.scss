@@ -2,5 +2,5 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 #exercisepane.tableContainer  {
-  @include tablecontainer(100px, 100px, 440px, 100px, 100px);
+  @include tablecontainer(100px, 100px, 440px, 100px, 100px, 0);
 }
