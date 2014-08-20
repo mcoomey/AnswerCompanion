@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140704142907) do
+ActiveRecord::Schema.define(:version => 20140813123645) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -22,9 +22,9 @@ ActiveRecord::Schema.define(:version => 20140704142907) do
 
   create_table "course_asset_model_types", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.string   "model_name"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.string   "name_of_model"
   end
 
   create_table "course_assets", :force => true do |t|
@@ -295,6 +295,20 @@ ActiveRecord::Schema.define(:version => 20140704142907) do
   end
 
   add_index "textbook_delegations", ["course_asset_id"], :name => "index_textbook_delegations_on_textable_id_and_textable_type"
+
+  create_table "textbook_videos", :force => true do |t|
+    t.string   "videofile"
+    t.string   "length"
+    t.integer  "videofile_processed"
+    t.string   "videoable_type"
+    t.integer  "videoable_id"
+    t.integer  "textbook_id"
+    t.integer  "instructor_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "textbook_videos", ["videoable_id", "videoable_type"], :name => "index_textbook_videos_on_videoable_id_and_videoable_type"
 
   create_table "textbooks", :force => true do |t|
     t.string   "isbn13"

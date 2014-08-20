@@ -1,0 +1,13 @@
+$("#ujsform").remove();
+$("#buttonarea").show();
+$("#messages .ujs_alert").hide();
+$("#messages .alert").show();
+$("table tr td:nth-child(5) a").fadeTo("fast", 1).unbind('click');
+$("table tr td:nth-child(6) a").fadeTo("fast", 1).unbind('click');
+$("table tr td:nth-child(7) a").fadeTo("fast", 1).unbind('click');
+
+<% if (@action == "Create") %>
+  $("#messages .ujs_notice").show().html("Add new video canceled.");
+<% else %>
+  $("#messages .ujs_notice").show().html("Edit video canceled.");
+<% end %>

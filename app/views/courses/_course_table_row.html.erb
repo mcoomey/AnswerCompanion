@@ -1,7 +1,7 @@
 <tr id="course_<%=local_course.id %>" data-model="course" data-model_id="<%= local_course.id %>" >
   <td>
     <% if local_course.course_assets.count > 0 %>
-      <%= link_to local_course.name, send("course_asset_#{CourseAssetModelType.find_by_id(local_course.course_assets.first.model_type).model_name}_path", (local_course.course_assets.first)) %>
+      <%= link_to local_course.name, send("course_asset_#{CourseAssetModelType.find_by_id(local_course.course_assets.first.model_type).name_of_model}_path", (local_course.course_assets.first)) %>
     <% else %>
       <%= link_to local_course.name, course_path(local_course.id) %>
     <% end %>

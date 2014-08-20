@@ -1,9 +1,9 @@
-class Video < ActiveRecord::Base
-  attr_accessible :videofile, :length, :archived, :newversion_id, :instructor_id, :textbook_id, :title, :description, :course_asset_id
+class TextbookVideo < ActiveRecord::Base
+    
+  attr_accessible :instructor_id, :length, :textbook_id, :videoable_id, :videoable_type, :videofile, :videofile_processed
   belongs_to :videoable, polymorphic: true
   belongs_to :instructor
   belongs_to :textbook
-  has_one :newversion, :class_name => "Video", :foreign_key => "newversion_id"
 	
   mount_uploader :videofile, VideofileUploader
   
@@ -25,6 +25,7 @@ class Video < ActiveRecord::Base
   # remove the id_directory after its content has been detroyed
   def remove_id_directory
     orig_dir = File.expand_path("..", Rails.root.to_s + "/public" + videofile_url)
+    puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>DELETING #{orig_dir}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
     FileUtils.rm_rf(orig_dir)
   end
 
@@ -54,4 +55,5 @@ class Video < ActiveRecord::Base
    def video_processed?
      videofile_processed && videofile_processed > 0
    end
- end
+ 
+end

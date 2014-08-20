@@ -2,7 +2,7 @@ class Exercise < ActiveRecord::Base
   belongs_to :section_title
   belongs_to :textbook
   belongs_to :instructor
-  has_many :videos, as: :videoable
+  has_many :textbook_videos, as: :videoable
   
   before_destroy :destroy_lone_section_title
   

@@ -11,12 +11,8 @@
   
 	<div id="horizontal-tabs">
 		<ul class="dynamic-tabs-nav">
-      <% if ((@resource == "exercises")||(@resource == "lessons")) %>
   			<%= content_tag(:li, (link_to "Lessons", textbook_lessons_path(@textbook, :course_asset_id => @course_asset.id )), class: ("activeTab" if @resource == "lessons")) %>
   			<%= content_tag(:li, (link_to "Exercises", textbook_exercises_path(@textbook, :course_asset_id => @course_asset.id )), class: ("activeTab" if @resource == "exercises")) %>
-      <% else %>
-			  <%= content_tag(:li, @video.description, class: "activeTab") %>
-      <% end %>
 		</ul>
 	</div>
 	<div id="vertical-tabs">

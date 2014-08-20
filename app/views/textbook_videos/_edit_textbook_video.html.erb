@@ -1,0 +1,25 @@
+<div id="ujsform">
+	<%= form_for [@videoable, @video], remote: true do |f| %>
+  
+    <%= f.label :videofile, "Replace Video:" %>
+		<%= f.file_field :videofile, :id => "video_filename", :value => @video.videofile.file.original_filename %>
+    
+    <%= f.hidden_field :instructor_id, :value => @instructor.id %>
+    <%= f.hidden_field :course_asset_id, :value => @course_asset.id %>
+    <%= f.hidden_field :textbook_id, :value => @textbook.id %>
+    <%= f.hidden_field :videoable_type, :value => @video.videoable_type %>
+    <%= f.hidden_field :videoable_id, :value => @video.videoable_id %>
+
+		<%= f.submit "Cancel" %>
+    
+	<% end %>
+</div>
+
+<script id="template-upload" type="text/x-tmpl">
+	<div class="upload">
+	  <div id="uploadfilename">
+			{%=o.name%}
+    </div>
+    <div class="progress"><div class="bar" style="width: 0%"></div></div>
+	</div>
+</script>

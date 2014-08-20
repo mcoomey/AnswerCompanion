@@ -1,5 +1,8 @@
 AnswerCompanion::Application.routes.draw do
 
+  resources :textbook_videos
+
+
   resources :course_assets do
     collection do
       put 'sort'
@@ -71,13 +74,13 @@ AnswerCompanion::Application.routes.draw do
   end
  
   resources :exercises do
-    resources :videos do
+    resources :textbook_videos do
       post 'progress'
     end
   end
   
   resources :lessons do
-    resources :videos do
+    resources :textbook_videos do
       post 'progress'
     end
   end

@@ -101,10 +101,12 @@ class LessonsController < ApplicationController
       else  
         @lessonNotice = nil
         @lessonError = "Error! " + @lesson.errors.full_messages.first
+        @course_asset = CourseAsset.find_by_id(params[:lesson][:course_asset_id])
         render "edit"
       end
     else
       @lessonNotice = "Update lesson action canceled."
+      @course_asset = CourseAsset.find_by_id(params[:lesson][:course_asset_id])
     end
     @textbook = @lesson.textbook
     @lessons = @textbook.lessons.sort{|a,b| a.page.to_i <=> b.page.to_i}

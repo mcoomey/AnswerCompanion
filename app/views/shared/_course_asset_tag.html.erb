@@ -4,7 +4,7 @@
 	</div>
 	<li>
     <%= link_to local_asset.name, 
-                  url_for([local_asset, CourseAssetModelType.find_by_id(local_asset.model_type).model_name]), 
+                  url_for([local_asset, CourseAssetModelType.find_by_id(local_asset.model_type).name_of_model]), 
                   id: "link_to_asset_#{local_asset.id}"
                   %></li>
 </div>

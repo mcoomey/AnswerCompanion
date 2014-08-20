@@ -10,7 +10,7 @@ class Textbook < ActiveRecord::Base
 	has_many :section_titles
 	has_many :lessons
 	has_many :exercises
-	has_many :videos
+	has_many :textbook_videos
 	
 	accepts_nested_attributes_for :category
 	accepts_nested_attributes_for :subcategory

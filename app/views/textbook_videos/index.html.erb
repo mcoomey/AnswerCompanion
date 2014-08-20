@@ -7,17 +7,17 @@
 		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
 		           instructor_courses_path(@instructor) %>
 							 
+    <%=link_to image_tag("AddVideo.png",  :mouseover => "AddVideoHover.png",:class => "button", :alt => "Add a Video"), 
+		           new_polymorphic_path([@videoable, TextbookVideo.new], :course_asset_id => @course_asset.id), :id => "add_video", :remote => true %>
+							 
 	</div>
-  
 	<div id="horizontal-tabs">
+    
 		<ul class="dynamic-tabs-nav">
-      <% if ((@resource == "exercises")||(@resource == "lessons")) %>
-  			<%= content_tag(:li, (link_to "Lessons", textbook_lessons_path(@textbook, :course_asset_id => @course_asset.id )), class: ("activeTab" if @resource == "lessons")) %>
-  			<%= content_tag(:li, (link_to "Exercises", textbook_exercises_path(@textbook, :course_asset_id => @course_asset.id )), class: ("activeTab" if @resource == "exercises")) %>
-      <% else %>
-			  <%= content_tag(:li, @video.description, class: "activeTab") %>
-      <% end %>
+			<%= content_tag(:li, (link_to "Lessons", textbook_lessons_path(@textbook, :course_asset_id => @course_asset.id )), class: ("activeTab" if @resource == "lessons")) %>
+			<%= content_tag(:li, (link_to "Exercises", textbook_exercises_path(@textbook, :course_asset_id => @course_asset.id )), class: ("activeTab" if @resource == "exercises")) %>
 		</ul>
+    
 	</div>
 	<div id="vertical-tabs">
 		<ul class="dynamic-tabs-nav">
@@ -29,19 +29,19 @@
 				<% end %>
   		<% end %>
 		</ul>
-		<div id="noscroll-panel">
+		<div id="noscroll-panel">			
 			<div id="breadcrumbs">
 				<% if @resource == "exercises" %>
-					<%= link_to @videoable.section_title.name + " Exercise: " + @videoable.number, exercise_textbook_videos_path(@videoable, course_asset_id: @course_asset.id) %>
+					<%= @videoable.section_title.name + " Exercise: " + @videoable.number %>
 				<% elsif @resource == "lessons"%>
-					<%= link_to @videoable.title + " Page: " + @videoable.page, lesson_textbook_videos_path(@videoable, course_asset_id: @course_asset.id) %>
+					<%= @videoable.title + " Page: " + @videoable.page %>
 				<% end %>
 			</div>
-			<%= video_tag([@video.processed_video_url(:mp4), @video.processed_video_url(:ogv), @video.processed_video_url(:webm)],
-							:size => '800x480', 
-							:controls => true, 
-							:autoplay => true,
-							:autobuffer => true )%>
+
+			<div class="exercise-asset">
+				<%= render "tb_video_table", :videos => @textbook_videos %>
+				<br class="clearfloat"/>				
+			</div>
 		</div>
 		<br class="clearfloat"/>
 	</div>

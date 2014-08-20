@@ -5,14 +5,14 @@
         <th>Title</th>
   	    <th>Description</th>
   	    <th>Length</th>
-  			<th>Play</th>
-  			<th class="replace"></th>
-  			<th class="destroy"></th>
+  			<th></th>
+  			<th></th>
+  			<th></th>
   	  </tr>
     </thead>
     <tbody class="scrollContent sortableTable">
   		<% local_videos.each do |video| %>
-  			<%= render 'video_table_row', :local_video => video %>
+  			<%= render 'video_table_row', :local_course_asset => @course_asset, :local_video => video %>
   		<% end %>
   	</tbody>
   </table>

@@ -5,7 +5,6 @@ class VideosController < ApplicationController
   # GET /videos
   # GET /videos.json
   def index
-    puts ">>>>>>>>>>@videos.count = #{@videos.count}<<<<<<<<<<<<<<<<<"
     @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
     @course = @course_asset.course
     @course_assets = @course.course_assets.order(:position)
@@ -71,6 +70,8 @@ class VideosController < ApplicationController
   # GET /videos/1/edit
   def edit
     @video = Video.find_by_id(params[:id])
+    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
+    
   end
 
   # PUT /videos/1

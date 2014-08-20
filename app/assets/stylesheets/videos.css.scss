@@ -1,9 +1,9 @@
 #videotable.tableContainer  {
-  @include tablecontainer(150px, 310px, 120px, 80px, 80px, 80px);
+  @include tablecontainer(180px, 400px, 120px, 40px, 40px, 40px, 0, 0);
 }
 
 #tb_videotable.tableContainer  {
-  @include tablecontainer(120px, 300px, 90px, 150px, 80px, 80px);
+  @include tablecontainer(250px, 120px, 250px, 80px, 40px, 40px, 40px, 0);
 }
 
 #noscroll-panel {

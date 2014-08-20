@@ -1,0 +1,10 @@
+$("#messages .alert").hide();
+$("#messages .ujs_alert").html("<%= @videoError %>").show();
+$("#messages .notice").hide();
+$("#messages .ujs_notice").html("<%= @videoNotice %>").show();
+
+$("#ujsform").remove();
+$("#buttonarea").show();
+
+$("#tb_videotable table > tbody:last").append('<%= j render "tb_video_table_row", :local_video => @video  %>');
+VideoPoller.request();

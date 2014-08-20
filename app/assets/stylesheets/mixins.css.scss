@@ -1,4 +1,4 @@
-@mixin tablecontainer($v0, $v1, $v2, $v3, $v4, $v5) {
+@mixin tablecontainer($v0, $v1, $v2, $v3, $v4, $v5, $v6, $v7) {
 	clear: both;
 	width: 874px;
 	height: 504px;
@@ -37,6 +37,12 @@
 		}
 		th + th + th + th + th + th{
 			width:$v5;
+		}
+		th + th + th + th + th + th + th{
+			width:$v6;
+		}
+		th + th + th + th + th + th + th + th{
+			width:$v7;
 		}
 	}
 
@@ -80,6 +86,12 @@
 		}
 		td + td + td + td + td + td {
 			width:$v5;
+		}
+		td + td + td + td + td + td + td {
+			width:$v6;
+		}
+		td + td + td + td + td + td + td + td {
+			width:$v7;
 		}
 		tr:last-child td{
 			border-bottom: 1px solid $main-green;

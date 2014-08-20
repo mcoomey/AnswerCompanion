@@ -11,7 +11,7 @@
 		<tbody class="scrollContent">
 			<% lessons.each do |lesson| %>
 			  <tr>
-			    <td><%= link_to lesson.title, lesson_videos_path(lesson, course_asset_id: @course_asset.id) %></td>
+			    <td><%= link_to lesson.title, lesson_textbook_videos_path(lesson, course_asset_id: @course_asset.id) %></td>
 			    <td><%= lesson.page %></td>
 				<% if current_instructor %>
 					<% if current_instructor.id == lesson.instructor_id %>

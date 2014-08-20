@@ -5,22 +5,23 @@
 	
 	<td>
   	<% if !local_video.videofile_processed || local_video.videofile_processed == 0 %>
-  		<%= link_to 'Processing', '#',  id:'video_processing_'+local_video.id.to_s, class: 'video_processing', data: {url: video_path(local_video)} %>
-    	<%= link_to 'Play', course_asset_video_path(params[:course_asset_id], local_video, :course_asset_id => @course_asset.id),  id:'video_processed_'+local_video.id.to_s, class: 'video_processed', data: {url: video_path(local_video)} %>
+  		<%= link_to image_tag("WaitIcon.png",  :mouseover => "WaitIcon.png",:class => "button", :alt => "Video Processing"), '#',  id:'video_processing_'+local_video.id.to_s, class: 'video_processing', data: {url: video_path(local_video)} %>
+    	<%= link_to image_tag("PlayIcon.png",  :mouseover => "PlayIconHover.png",:class => "button", :alt => "Play Video"), course_asset_video_path(params[:course_asset_id], local_video, :course_asset_id => @course_asset.id),  id:'video_processed_'+local_video.id.to_s, class: 'video_processed', data: {url: video_path(local_video)} %>
        
   	<% elsif local_video.videofile_processed < 0 %>
   		Error
   
   	<% else %>
-  		<%= link_to 'Play', course_asset_video_path(params[:course_asset_id], local_video, :course_asset_id => @course_asset.id) %>
+  		<%= link_to image_tag("PlayIcon.png",  :mouseover => "PlayIconHover.png",:class => "button", :alt => "Play Video"), course_asset_video_path(params[:course_asset_id], local_video, :course_asset_id => @course_asset.id) %>
   
   	<% end %>
   </td>
 	<!-- only the video owner can replace or destroy it -->
 	<% if current_instructor %>
 		<% if current_instructor.id == local_video.instructor_id %>
-			<td><%=link_to 'Replace',  "#" %></td>
-		    <td><%= link_to 'Destroy', video_path(local_video), confirm:'Delete Video - Are you sure?', method: :delete, remote: true %></td>
+			<td><%=link_to image_tag("EditIcon.png",  :mouseover => "EditIconHover.png",:class => "button", :alt => "Edit Video"),  
+        edit_course_asset_video_path(local_course_asset.id, local_video.id), title: 'Edit Video', remote: true %></td>
+		    <td><%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png",:class => "button", :alt => "Delete Video"), video_path(local_video), confirm:'Delete Video - Are you sure?', method: :delete, remote: true %></td>
 		<% else %>
 			<td></td>
 			<td></td>
