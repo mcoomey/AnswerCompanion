@@ -33,6 +33,9 @@ AnswerCompanion::Application.routes.draw do
       collection do
         put 'sort'
       end
+      member do
+        get 'replace'
+      end
     end
     
     resources :links

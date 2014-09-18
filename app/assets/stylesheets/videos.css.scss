@@ -1,5 +1,5 @@
 #videotable.tableContainer  {
-  @include tablecontainer(180px, 400px, 120px, 40px, 40px, 40px, 0, 0);
+  @include tablecontainer(150px, 35px, 120px, 130px, 260px, 35px, 35px, 35px);
 }
 
 #tb_videotable.tableContainer  {
@@ -57,6 +57,6 @@
   }
 }
 
-td a.video_processed{
+td a.video_hide_icon{
   display:none;
   }

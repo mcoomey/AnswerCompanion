@@ -6,3 +6,5 @@ $("table tr td:nth-child(6) a").fadeTo("fast", 1).unbind('click');
 $("table tr td:nth-child(7) a").fadeTo("fast", 1).unbind('click');
 $("table tr td:nth-child(8) a").fadeTo("fast", 1).unbind('click');
 $("#messages .ujs_notice").show().html("<%= @videoNotice %>");
+$("table tr#video_id_<%= @video.id %>").replaceWith("<%= j render 'video_table_row', local_video:@video %>")
+VideoPoller.request();

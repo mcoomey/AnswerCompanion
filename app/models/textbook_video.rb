@@ -45,7 +45,7 @@ class TextbookVideo < ActiveRecord::Base
       end  # if f_ext
     end  # formats
     update_attribute :videofile_processed, 1
-    UserMailer.conversion_complete(Instructor.find_by_id(instructor_id).email, self).deliver
+    UserMailer.conversion_complete(Instructor.find_by_id(instructor_id).email, self, exitstatus).deliver
    end
    
    def processed_video_url(format=:mp4)

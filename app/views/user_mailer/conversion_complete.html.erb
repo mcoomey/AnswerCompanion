@@ -1,18 +1,25 @@
 The following Video conversion has completed.<br />
-<p>
-<% if @video.videoable.class.to_s == "Lesson" %>
-  Text: <%= @video.textbook.title %><br />
-  Lesson: <%= @video.videoable.title %><br />
-  Page: <%= @video.videoable.page %> <br />
 
-<% elsif @video.videoable.class.to_s == "Exercise" %>
-  Text: <%= @video.textbook.title %><br />
-  Section: <%= @video.videoable.section_title.name %> <br />
-  Page: <%= @video.videoable.page %> <br />
-  Exercise: <%= @video.videoable.number %>
+<% if @video.class.to_s == "Video"%>
+  <p>Filename: <%= @video.videofile.file.original_filename%><br />
+     Title: <%= @video.title %><br />
+ </p>
 
 <% else %>
-  ID: <%= @video.id %><br />
+  <% if @video.videoable.class.to_s == "Lesson" %>
+    Text: <%= @video.textbook.title %><br />
+    Lesson: <%= @video.videoable.title %><br />
+    Page: <%= @video.videoable.page %> <br />
 
+  <% elsif @video.videoable.class.to_s == "Exercise" %>
+    Text: <%= @video.textbook.title %><br />
+    Section: <%= @video.videoable.section_title.name %> <br />
+    Page: <%= @video.videoable.page %> <br />
+    Exercise: <%= @video.videoable.number %>
+
+  <% else %>
+    ID: <%= @video.id %><br />
+
+  <% end %>
 <% end %>
 </p>

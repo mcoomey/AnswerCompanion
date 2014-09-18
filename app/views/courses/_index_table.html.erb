@@ -1,5 +1,5 @@
 <table class="index">
-  <tbody class="sortableTable">
+  <thead class="fixedHeader">
     <tr>
       <th>Name</th>
       <th>Section</th>
@@ -8,8 +8,10 @@
       <th>Edit</th>
       <th>Delete</th>
     </tr>
+  </thead>
+  <tbody class="sortableTable">
     <% local_courses.each do |course| %>
-    <%= render 'course_table_row', :local_course => course %>
+      <%= render 'course_table_row', :local_course => course %>
     <% end %>
   </tbody>
 </table>

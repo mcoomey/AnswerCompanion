@@ -2,16 +2,7 @@ $("#messages .alert").hide();
 $("#messages .ujs_alert").hide();
 $("#messages .notice").hide();
 $("#messages .ujs_notice").hide();
-$("table tr td:nth-child(4) a").fadeTo("fast", 0.3).bind('click', false);
-$("table tr td:nth-child(5) a").fadeTo("fast", 0.3).bind('click', false);
 $("table tr td:nth-child(6) a").fadeTo("fast", 0.3).bind('click', false);
-if ($.cookie('horizontal_tabs_index') == ".current-tab") {
-	$("#buttonarea").hide().after("<%= j render 'edit_video', :archived_val => 0 %>");
-	}
-else if ($.cookie('horizontal_tabs_index') == ".archived-tab") {
-	$("#buttonarea").hide().after("<%= j render 'edit_video', :archived_val => 1 %>");
-	}
-else {
-	$("#buttonarea").hide().after("<%= j render 'edit_video', :archived_val => 2 %>");
-	}
-  
+$("table tr td:nth-child(7) a").fadeTo("fast", 0.3).bind('click', false);
+$("table tr td:nth-child(8) a").fadeTo("fast", 0.3).bind('click', false);
+$("#buttonarea").hide().after("<%= j render 'edit_video' %>");

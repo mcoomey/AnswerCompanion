@@ -54,22 +54,17 @@ class TextbookVideosController < ApplicationController
   # GET /videos/1/edit
   def edit
     @video = TextbookVideo.find_by_id(params[:id])
-    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
-    
-    puts ">>>>>>>>>>>>@textbook.id = #{@textbook.id} <<<<<<<<<<<<<"
-    
+    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])    
   end
 
   # PUT /videos/1
   # PUT /videos/1.json
   def update
-    puts ">>>>>>>>>>Updating new Video with @videoable = #{@videoable}<<<<<<<<<<<<<<"
     
    	if params[:commit]  == "Cancel"
       @videoNotice = "Edit video action canceled."
       render "cancel"
     else
-      puts ">>>>>>>>>>>>params[:textbook_video] = #{params[:textbook_video]}<<<<<<<<<<<<<<<"
       @new_video = TextbookVideo.new(params[:textbook_video].except(:course_asset_id))
       @course_asset = CourseAsset.find_by_id(params[:textbook_video][:course_asset_id])
       if @new_video.save
@@ -77,8 +72,6 @@ class TextbookVideosController < ApplicationController
         @videoNotice = "Successfully edited video."
         @old_video = TextbookVideo.find_by_id(params[:id])
         @old_video.destroy
-        @new_resource = @new_video.videoable_type.pluralize.downcase
-        puts ">>>>>>>>>>>>>>>>>@resource = #{@resource}<<<<<<<<<<<<<<<<<<<<<<<"
       else
         @videoNotice = nil
         @videoError = "Error! " + @video.errors.full_messages.first

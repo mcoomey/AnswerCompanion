@@ -8,7 +8,7 @@
 		           instructor_courses_path(@instructor) %>
 							 
     <%=link_to image_tag("AddVideo.png",  :mouseover => "AddVideoHover.png",:class => "button", :alt => "Add a Video"), 
-		           new_course_asset_video_path(@videoable, :course_asset_id => @course_asset.id), :id => "add_video", :remote => true %>
+		           new_course_asset_video_path(:course_asset_id => @course_asset.id), :id => "add_video", :remote => true %>
 							 
 	</div>
 	<div id="horizontal-tabs">

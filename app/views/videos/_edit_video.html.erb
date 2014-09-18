@@ -1,34 +1,17 @@
 <div id="ujsform">
-	<%= form_for [@videoable, @video], remote: true do |f| %>
+	<%= form_for @video, remote: true do |f| %>
   
-    <% if (@resource == "course_assets") %>
-      <%= f.label :title %>
-      <%= f.text_field :title, size: 25 %>
+    <%= f.label :title %>
+    <%= f.text_field :title, size: 25 %>
+  
+    <%= f.label :description %>
+    <%= f.text_field :description, size: 40 %>
     
-      <%= f.label :description %>
-      <%= f.text_field :description, size: 40 %>
-    <% end %>
+    <%= f.hidden_field :course_asset_id, :value => @course_asset.id %>
     
-		<%= f.file_field :videofile, :id => "video_filename", :value => @video.videofile.file.original_filename %>
-    
-    <%= f.hidden_field :instructor_id, :value => @instructor.id %>
-    
-    <% if ((@resource == "exercises")||(@resource == "lessons")) %>
-      <%= f.hidden_field :textbook_id, :value => @textbook.id %>
-    <% end %>
-        
-    <%= f.hidden_field :archived, :value => archived_val %>
-    
+		<%= f.submit "OK" %>
 		<%= f.submit "Cancel" %>
     
 	<% end %>
+  
 </div>
-
-<script id="template-upload" type="text/x-tmpl">
-	<div class="upload">
-	  <div id="uploadfilename">
-			{%=o.name%}
-    </div>
-    <div class="progress"><div class="bar" style="width: 0%"></div></div>
-	</div>
-</script>

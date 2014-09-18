@@ -37,9 +37,13 @@
   margin-left: 10px;
 	label {
 		font-size:1em;
-		color:$main-green;
+    color:$main-green;
     margin-left:10px;
-	}
+  }
+  label.attention {
+		font-size:1.5em;
+    color:red;
+  }
 	input[type="file"] {
 		color:black;
 		font-size:1em;

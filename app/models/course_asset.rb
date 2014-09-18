@@ -3,7 +3,7 @@ class CourseAsset < ActiveRecord::Base
   
   has_many :textbook_delegations, dependent: :destroy
   has_many :textbooks, :through => :textbook_delegations, dependent: :destroy
-  has_many :videos, as: :videoable
+  has_many :videos
   has_many :documents
   has_many :links
   has_many :textboxes

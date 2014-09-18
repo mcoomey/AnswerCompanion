@@ -1,19 +1,26 @@
-The following video has been submitted for conversion.<br />
-You will be informed when it is ready for viewing.
+The following Video conversion has failed.<br />
+
 <% if @video.class.to_s == "Video"%>
   <p>Filename: <%= @video.videofile.file.original_filename%><br />
      Title: <%= @video.title %><br />
+     Error: <%= @error_message %>
  </p>
 
 <% else %>
-  <p>Text: <%= @video.textbook.title %><br />
   <% if @video.videoable.class.to_s == "Lesson" %>
+    Text: <%= @video.textbook.title %><br />
     Lesson: <%= @video.videoable.title %><br />
     Page: <%= @video.videoable.page %> <br />
+
   <% elsif @video.videoable.class.to_s == "Exercise" %>
+    Text: <%= @video.textbook.title %><br />
     Section: <%= @video.videoable.section_title.name %> <br />
     Page: <%= @video.videoable.page %> <br />
     Exercise: <%= @video.videoable.number %>
+
+  <% else %>
+    ID: <%= @video.id %><br />
+
   <% end %>
-  </p>
 <% end %>
+
