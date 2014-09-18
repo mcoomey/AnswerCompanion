@@ -7,6 +7,6 @@ $("#buttonarea").show();
 
 $("#video_id_<%= @video.id %>").replaceWith("<%= j render 'video_table_row', local_video: @video, local_course_asset_id: @course_asset.id %>").show();
 
-$("table tr td:nth-child(6) a").fadeTo("fast", 1).unbind('click');
+$("table tr td:nth-child(6) a:not(.video_hide_icon)").fadeTo("fast", 1).unbind('click');
 $("table tr td:nth-child(7) a").fadeTo("fast", 1).unbind('click');
 $("table tr td:nth-child(8) a").fadeTo("fast", 1).unbind('click');
