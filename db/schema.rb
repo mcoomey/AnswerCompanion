@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140904192633) do
+ActiveRecord::Schema.define(:version => 20140923134927) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -306,6 +306,7 @@ ActiveRecord::Schema.define(:version => 20140904192633) do
     t.integer  "instructor_id"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+    t.integer  "old_version_id"
   end
 
   add_index "textbook_videos", ["videoable_id", "videoable_type"], :name => "index_textbook_videos_on_videoable_id_and_videoable_type"

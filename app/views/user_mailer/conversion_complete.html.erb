@@ -6,6 +6,8 @@ The following Video conversion has completed.<br />
  </p>
 
 <% else %>
+  <p>Filename: <%= @video.videofile.file.original_filename%><br />
+
   <% if @video.videoable.class.to_s == "Lesson" %>
     Text: <%= @video.textbook.title %><br />
     Lesson: <%= @video.videoable.title %><br />

@@ -8,7 +8,6 @@ class TextbookVideosController < ApplicationController
     respond_to do |format|
       format.html {
         flash[:alert] = "No videos found."  if (@textbook_videos.count == 0)
-        render :index
       }
       format.json { render json: @textbook_videos }
     end
@@ -28,21 +27,66 @@ class TextbookVideosController < ApplicationController
   # GET /videos/new.json
   def new
     @video = @videoable.textbook_videos.new
-    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
+  end
+  
+  def replace
+    @old_version_id = params[:id]
+    @video = @videoable.textbook_videos.new
   end
 
   # POST /videos
   # POST /videos.json
+  
   def create
-    puts ">>>>>>>>>>Creating new Video with @videoable = #{@videoable}<<<<<<<<<<<<<<"
    	if params[:commit]  == "Cancel"
-      @videoNotice = "Add new video action canceled."
+      if params[:textbook_video][:replace_flag]
+        @videoNotice = "Replace video action canceled."
+      else
+        @videoNotice = "Add new video action canceled."
+      end
       render "cancel"
-    else
-      @video = @videoable.textbook_videos.new(params[:textbook_video].except(:course_asset_id))
+      
+    elsif params[:textbook_video][:replace_flag]
+      # find the original video that is being replaced
+      @video = TextbookVideo.find_by_id(params[:textbook_video][:old_version_id])
+      
+      # delete all the files in the associated directory
+      FileUtils.rm_rf(Dir.glob(File.join(@video.videofile.root, @video.videofile.store_dir, '*')))
+      
+      # get @videoable from the old version
+      @videoable = @video.videoable
+      
+      # build a new video from the new videofile 
+      @new_video = @videoable.textbook_videos.new(params[:textbook_video].except(:course_asset_id))
+      
+      # copy new videofile into original video and clear videofile_processed flag
+      @video.videofile = @new_video.videofile
+      @video.get_video_duration
+      @video.videofile_processed = 0
+      
+      # save the new version and submit for processing
       if @video.save
         @videoError = nil
-        @videoNotice = "Successfully added new video."
+        @videoNotice = "Video replacement has been submitted for processing."
+        @video.do_video_conversion
+        render "update_replacement"
+        
+      else
+        @videoNotice = nil
+        @videoError = "Error! " + @video.errors.full_messages.first
+        @old_version_id = params[:id]
+        @video = @course_asset.videos.new
+        render "replace"
+      end
+
+    # else create a brand new video
+    else
+      @video = @videoable.textbook_videos.new(params[:textbook_video].except(:course_asset_id))
+      @action = "Create"
+      if @video.save
+        @videoError = nil
+        @videoNotice = "Video upload has been submitted for processing."
+        @video.do_video_conversion
       else
         @videoNotice = nil
         @videoError = "Error! " + @video.errors.full_messages.first
@@ -50,6 +94,7 @@ class TextbookVideosController < ApplicationController
       end
     end
   end
+
 
   # GET /videos/1/edit
   def edit
@@ -90,31 +135,23 @@ class TextbookVideosController < ApplicationController
     @videoNotice = "Video has been successfully deleted."
   end
  
-  def sort
-    if params[:video_id]
-      params[:video_id].each_with_index do |id, index|
-        Video.update_all({position: index+1}, {id: id})
-      end
-    end
-    render nothing: true  
-  end
-    
   private
   
   def load_videoable
     @resource, id = request.path.split('/')[1,2]
     @videoable = @resource.singularize.classify.constantize.find_by_id(id)
-    @textbook = @videoable.textbook
-    if @resource == "textbook_videos"
-      @textbook_videos = @textbook.textbook_videos
-    else
+    if @videoable
+      @textbook = @videoable.textbook
       @textbook_videos = @videoable.textbook_videos
     end
+    
     @course_asset = CourseAsset.find_by_id(params[:course_asset_id]) || CourseAsset.find_by_id(params[:textbook_video][:course_asset_id])
-    @course = @course_asset.course
-    @course_assets = @course.course_assets.order(:position)
-    @instructor = @course.instructor
-    @courses = @instructor.courses    
+    if @course_asset
+      @course = @course_asset.course
+      @course_assets = @course.course_assets.order(:position)
+      @instructor = @course.instructor
+      @courses = @instructor.courses    
+    end
   end
   
 end

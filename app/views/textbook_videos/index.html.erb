@@ -7,6 +7,9 @@
 		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
 		           instructor_courses_path(@instructor) %>
 							 
+		<%=link_to image_tag("AddAsset.png",  :mouseover => "AddAssetHover.png",:class => "button", :alt => "Add Course Asset"), 
+		           new_course_asset_path(:course_id => @course.id), remote: true %>
+
     <%=link_to image_tag("AddVideo.png",  :mouseover => "AddVideoHover.png",:class => "button", :alt => "Add a Video"), 
 		           new_polymorphic_path([@videoable, TextbookVideo.new], :course_asset_id => @course_asset.id), :id => "add_video", :remote => true %>
 							 

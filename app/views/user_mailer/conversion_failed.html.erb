@@ -3,10 +3,10 @@ The following Video conversion has failed.<br />
 <% if @video.class.to_s == "Video"%>
   <p>Filename: <%= @video.videofile.file.original_filename%><br />
      Title: <%= @video.title %><br />
-     Error: <%= @error_message %>
  </p>
 
 <% else %>
+  <p>Filename: <%= @video.videofile.file.original_filename%><br />
   <% if @video.videoable.class.to_s == "Lesson" %>
     Text: <%= @video.textbook.title %><br />
     Lesson: <%= @video.videoable.title %><br />
@@ -22,5 +22,7 @@ The following Video conversion has failed.<br />
     ID: <%= @video.id %><br />
 
   <% end %>
+    <p>Error: <%= @error_message %></p>
+</p>
 <% end %>
 

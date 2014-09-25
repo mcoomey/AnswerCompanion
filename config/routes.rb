@@ -1,8 +1,5 @@
 AnswerCompanion::Application.routes.draw do
 
-  resources :textbook_videos
-
-
   resources :course_assets do
     collection do
       put 'sort'
@@ -79,13 +76,19 @@ AnswerCompanion::Application.routes.draw do
   resources :exercises do
     resources :textbook_videos do
       post 'progress'
-    end
+      member do
+        get 'replace'
+      end
+     end
   end
   
   resources :lessons do
     resources :textbook_videos do
       post 'progress'
-    end
+      member do
+        get 'replace'
+      end
+     end
   end
   
   devise_for :instructors, :controllers => {:registrations => "instructors/registrations"} 
@@ -109,6 +112,7 @@ AnswerCompanion::Application.routes.draw do
 	end
 	
 	resources :videos
+  resources :textbook_videos
   resources :section_titles
   resources :lessons
   resources :exercises

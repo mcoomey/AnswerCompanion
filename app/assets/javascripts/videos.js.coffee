@@ -17,11 +17,13 @@
               $("#video_processing_"+id).removeClass("video_processing").addClass("video_hide_icon")
               $("#video_processed_"+id).removeClass("video_hide_icon")
               $("#processing_error_"+id).addClass("video_hide_icon")
+              $("#messages span.ujs_notice").html("")
             if (k == "videofile_processed") && (v < 0)
               console.log "video(" + id +  ")" + "processing has failed."
               $("#video_processing_"+id).removeClass("video_processing").addClass("video_hide_icon")
               $("#video_processed_"+id).addClass("video_hide_icon")
               $("#processing_error_"+id).removeClass("video_hide_icon")
+              $("#messages span.ujs_notice").html("")
               
       setTimeout (->
         VideoPoller.request()
