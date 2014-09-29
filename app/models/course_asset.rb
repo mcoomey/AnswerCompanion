@@ -1,5 +1,5 @@
 class CourseAsset < ActiveRecord::Base
-  attr_accessible :name, :model_type, :course_id, :ancestry
+  attr_accessible :name, :model_type, :course_id
   
   has_many :textbook_delegations, dependent: :destroy
   has_many :textbooks, :through => :textbook_delegations, dependent: :destroy
@@ -9,7 +9,6 @@ class CourseAsset < ActiveRecord::Base
   has_many :textboxes
   
   belongs_to :course
-  acts_as_list scope: :course
     
 	validates :name, :presence => true
 	validates :name, :uniqueness => { :scope => [:course_id], :message => " already exists."}

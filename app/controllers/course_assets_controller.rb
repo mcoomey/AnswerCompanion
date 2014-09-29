@@ -36,8 +36,6 @@ class CourseAssetsController < ApplicationController
   def create
    	if params[:commit]  != "Cancel"
       @course_asset = CourseAsset.new(params[:course_asset])
-      # *** position should be handled by acts_as_list gem
-      # @course_asset.position = CourseAsset.where(:course_id => params[:course_asset][:course_id]).count + 1
       if @course_asset.save
         @course_asset_error = nil
         @course_assets = @course_asset.course.course_assets.order(:position)

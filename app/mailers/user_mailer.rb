@@ -1,12 +1,6 @@
 class UserMailer < ActionMailer::Base
   default from: "registrar@answercompanion.com"
   
-  def conversion_submitted(email, video, exit_status)
-    @video = video
-    @exit_status = exit_status
-    mail(:to => email, :from => "Do_Not_Reply@answercompanion.com", :subject => "Video conversion submitted")
-  end
-
   def conversion_complete(email, video, exit_status)
     @video = video
     @exit_status = exit_status

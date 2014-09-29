@@ -55,12 +55,7 @@ AnswerCompanion::Application.routes.draw do
   get "instructor/index"
 
   get "screens/index"
-  get "screens/welcome"
   
-  resources :categories do
-    resources :subcategories
-  end
-
   resources :textbooks do
     resources :exercises
   end
@@ -120,8 +115,6 @@ AnswerCompanion::Application.routes.draw do
   
 	root :to => "screens#index"
 	
-	match "subjects/toggle_archive", :to => "subjects#toggle_archive"
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

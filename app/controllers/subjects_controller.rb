@@ -3,8 +3,8 @@ class SubjectsController < ApplicationController
   def index
     @student = Student.find_by_id(params[:student_id]) || current_student
     @subjects = @student.subjects
-    @current_subjects = @student.subjects.where(:archived => false)
-    @archived_subjects = @student.subjects.where(:archived => true)
+    @current_subjects = @student.subjects.where(:archived => 0)
+    @archived_subjects = @student.subjects.where(:archived => 1)
 
     respond_to do |format|
       format.html # index.html.erb

@@ -11,14 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140923134927) do
-
-  create_table "categories", :force => true do |t|
-    t.string   "name"
-    t.text     "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
+ActiveRecord::Schema.define(:version => 20140929183205) do
 
   create_table "course_asset_model_types", :force => true do |t|
     t.string   "name"
@@ -31,13 +24,10 @@ ActiveRecord::Schema.define(:version => 20140923134927) do
     t.string   "name"
     t.integer  "model_type"
     t.integer  "course_id"
-    t.string   "ancestry"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "position"
   end
-
-  add_index "course_assets", ["ancestry"], :name => "index_course_assets_on_ancestry"
 
   create_table "courses", :force => true do |t|
     t.string   "name"
@@ -267,20 +257,11 @@ ActiveRecord::Schema.define(:version => 20140923134927) do
   add_index "students", ["reset_password_token"], :name => "index_students_on_reset_password_token", :unique => true
   add_index "students", ["unlock_token"], :name => "index_students_on_unlock_token", :unique => true
 
-  create_table "subcategories", :force => true do |t|
-    t.string   "name"
-    t.integer  "category_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
   create_table "subjects", :force => true do |t|
     t.string   "name"
     t.integer  "student_id"
-    t.integer  "category_id"
-    t.integer  "subcategory_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.boolean  "archived"
     t.string   "term"
   end
@@ -316,14 +297,8 @@ ActiveRecord::Schema.define(:version => 20140923134927) do
     t.string   "title"
     t.string   "author"
     t.string   "publisher"
-    t.string   "edition"
-    t.string   "frontcover"
-    t.integer  "category_id"
-    t.integer  "subcategory_id"
-    t.string   "userisbn"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.integer  "instructor_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.string   "image_link"
   end
 

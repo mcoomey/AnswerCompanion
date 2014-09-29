@@ -129,6 +129,7 @@ class CoursesController < ApplicationController
         idx = idx + 1
       end
     end
+    render nothing: true
   end
 
 end
