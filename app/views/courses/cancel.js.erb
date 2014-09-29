@@ -2,9 +2,6 @@ $("#ujsform").remove();
 $("#buttonarea").show();
 $("#messages .ujs_alert").hide();
 $("#messages .alert").show();
-<% if @action == "Create" %>
-  $("#messages .notice").show().html("<%= @action %> course action canceled.");
-<% else %>
-  $("#messages .notice").show().html("<%= @action %> course action canceled.");
-  $('#edit_link_<%= @course.id %>').parent().parent().fadeTo(0,1);
-<% end %>
+$("#messages .notice").show().html("<%= @action %> course action canceled.");
+$("table tr td:nth-child(5) a").fadeTo("fast", 1).unbind('click');
+$("table tr td:nth-child(6) a").fadeTo("fast", 1).unbind('click');

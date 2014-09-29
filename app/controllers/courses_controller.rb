@@ -17,7 +17,7 @@ class CoursesController < ApplicationController
       @courses = Course.all
       @current_courses = Course.where(:archived => 0).order(:position)
       @archived_courses = Course.where(:archived => 1).order(:position)
-      @future_courses = @instructor.courses.where(:archived => 2).order(:position)
+      @future_courses = Course.where(:archived => 2).order(:position)
     end
 
     respond_to do |format|

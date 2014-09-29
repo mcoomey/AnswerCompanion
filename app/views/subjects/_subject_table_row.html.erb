@@ -6,10 +6,7 @@
 	<% end %>
 	<td><%= local_subject.term %></td>
 	<td><%= local_subject.category_name %></td>
-	<td><%= form_for local_subject, remote: true do |f| %>
-			<%= f.check_box :archived %>
-			<%= f.submit :toggle_archive %>
-		<% end %>
+	<td>
 	</td>
 	<td>
 		<%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png",:class => "button", :alt => "Delete Course"),  

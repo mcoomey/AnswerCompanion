@@ -1,4 +1,5 @@
-$('#edit_link_<%= @course.id %>').parent().parent().fadeTo(0,.4);
+$("table tr td:nth-child(5) a").fadeTo("fast", 0.3).bind('click', false);
+$("table tr td:nth-child(6) a").fadeTo("fast", 0.3).bind('click', false);
 $("#messages .alert").hide();
 $("#messages .ujs_alert").hide();
 $("#messages .notice").hide();

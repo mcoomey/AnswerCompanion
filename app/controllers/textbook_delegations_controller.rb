@@ -68,79 +68,88 @@ class TextbookDelegationsController < ApplicationController
 	  
    	if params[:commit]  != "Cancel"
   	  @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
-      isbn13 = params[:textbook_delegation][:isbn13]
+      #get isbn from form, strip out the dashes and convert to ISBN13
+      isbn = params[:textbook_delegation][:isbn13].delete("-")
+      if ISBN.valid?(isbn)
     
-      # check if textbook is currently in the database
-      existingbook = Textbook.find_by_isbn13(isbn13)
-    
-      if existingbook
-        # if so, check to see if it's already in the asset
-        @tbdel = @course_asset.textbook_delegations.where(:textbook_id => existingbook.id).first
-        if @tbdel
-          #if so, report error and inform which tab
-          @tbdelError = "Error, textbook already added to #{tabs[@tbdel.archived].to_s} tab."
-        else  
-          # otherwise, add it to the currently selected tab
-          add_to_current_tab(existingbook)
-        end
+        isbn13 = ISBN.thirteen(isbn)
         
-      # otherwise, if textbook is not already in the database... 
-      else
-        # check for a match in Google books
-        result = GoogleBooks.search('isbn:' + isbn13, {count: 4}) # return up to 4 results
-        # if something close is found...
-        if (result && result.count > 0)
+        # check if textbook is currently in the database
+        existingbook = Textbook.find_by_isbn13(isbn13)
+    
+        if existingbook
+          # if so, check to see if it's already in the asset
+          @tbdel = @course_asset.textbook_delegations.where(:textbook_id => existingbook.id).first
+          if @tbdel
+            #if so, report error and inform which tab
+            @tbdelError = "Error, textbook already added to #{tabs[@tbdel.archived].to_s} tab."
+          else  
+            # otherwise, add it to the currently selected tab
+            add_to_current_tab(existingbook)
+          end
+        
+        # otherwise, if textbook is not already in the database... 
+        else
+          # check for a match in Google books
+          result = GoogleBooks.search('isbn:' + isbn13, {count: 4}) # return up to 4 results
+          # if something close is found...
+          if (result && result.count > 0)
           
-          #check each result
-          result.each do |candidate|
+            #check each result
+            result.each do |candidate|
             
-            # if it's an exact match 
-            if isbn13 == candidate.isbn_13
-              @textbook.isbn13 = candidate.isbn_13
+              # if it's an exact match 
+              if isbn13 == candidate.isbn_13
+                @textbook.isbn13 = candidate.isbn_13
               
-              # check to see if the matching result is already in the database
-              existingbook = Textbook.find_by_isbn13(@textbook.isbn13)
+                # check to see if the matching result is already in the database
+                existingbook = Textbook.find_by_isbn13(@textbook.isbn13)
               
-              if existingbook
-                # if so, check to see if it's already in the asset
-                @tbdel = @course_asset.textbook_delegations.where(:textbook_id => existingbook.id).first
-                if @tbdel
-                  #if so, report error and inform which tab
-                  @tbdelError = "Error, textbook already added to #{tabs[@tbdel.archived].to_s} tab."
-                  break
-                else  
-                  # otherwise, add it to the currently selected tab
-                  add_to_current_tab(existingbook)
+                if existingbook
+                  # if so, check to see if it's already in the asset
+                  @tbdel = @course_asset.textbook_delegations.where(:textbook_id => existingbook.id).first
+                  if @tbdel
+                    #if so, report error and inform which tab
+                    @tbdelError = "Error, textbook already added to #{tabs[@tbdel.archived].to_s} tab."
+                    break
+                  else  
+                    # otherwise, add it to the currently selected tab
+                    add_to_current_tab(existingbook)
+                    break
+                  end
+
+                # otherwise, if textbook is not already in the database add the new book to the database
+                else
+                  @textbook.title = candidate.title
+                  @textbook.author = candidate.authors
+                  @textbook.publisher = candidate.publisher
+                  @textbook.image_link = candidate.image_link
+                  @textbook.save
+            
+                  # and then add it to the current asset
+                  add_to_current_tab(@textbook)
                   break
                 end
-
-              # otherwise, if textbook is not already in the database add the new book to the database
-              else
-                @textbook.title = candidate.title
-                @textbook.author = candidate.authors
-                @textbook.publisher = candidate.publisher
-                @textbook.image_link = candidate.image_link
-                @textbook.save
-            
-                # and then add it to the current asset
-                add_to_current_tab(@textbook)
-                break
-              end
                             
-            end  #end exact isbn match if
+              end  #end exact isbn match if
               
-          end  #end each candidate loop
+            end  #end each candidate loop
           
-        # matching textbook ISBN not found
-        else
-          @tbdelError = "A book with matching ISBN was not found."
-        end
+          # matching textbook ISBN not found
+          else
+            @tbdelError = "A book with matching ISBN was not found."
+          end
       
+        end
+      else
+        @tbdelError = "Invalid ISBN was entered"
+        render "new"
       end
       
     else
       # user canceled the action
       @tbdelNotice = "Add new textbook action canceled."
+      @tbdelError = nil
       render "cancel"
     end
   end
