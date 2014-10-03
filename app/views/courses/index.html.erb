@@ -15,15 +15,15 @@
 	<div id="static-tabs">
     
 		<div class="current-tab">
-			<%= render 'index_table', :local_courses => @current_courses %>
+			<%= render 'courses_index_table', :local_courses => @current_courses %>
 		</div>
     
 		<div class="archived-tab">
-			<%= render 'index_table', :local_courses => @archived_courses %>
+			<%= render 'courses_index_table', :local_courses => @archived_courses %>
 		</div>
     
     <div class="future-tab">
-      <%= render 'index_table', :local_courses => @future_courses %>
+      <%= render 'courses_index_table', :local_courses => @future_courses %>
     </div>
     
 	</div>	

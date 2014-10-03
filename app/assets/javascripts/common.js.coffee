@@ -17,17 +17,10 @@ window.handleDropEvent = (event, ui) ->
 
   if model == "textbook_delegation"
     $("div"+tabs[whichTab]+" ul").append("<li id=\"tbdel_id_"+id+"\" class=\"frontcover\" data-model_id=\"" + id + "\" data-model=\"textbook_delegation\"" + ">"+ dragitem.html() + "</li>")
-  else if model == "course"
-    $("div" + tabs[whichTab] + " table tr:last").after("<tr data-model=" + model + " data-model_id=" + id + ">" + dragitem.html() + "</tr>")
-  else if model == "document"
-    $("div" + tabs[whichTab] + " table > tbody:last").append("<tr id=document_id_" + id + " data-model=" + model + " data-model_id=" + id + ">" + dragitem.html() + "</tr>")
   else if model == "textbox"
     $("div"+tabs[whichTab]+" ul").prepend("<li class=\"textbox\" data-model_id=" + id + " id= tbox_id_" + id + " data-model=" + model + "> "+ dragitem.html() + "<\li>")
-  else if model == "video"
-    $("div" + tabs[whichTab] + " table > tbody:last").append("<tr id=video_id_" + id + " data-model_id=" + id + " data-model=" + model + ">" + dragitem.html() + "</tr>")
-    
   else
-    console.log "unhandled model type: " + model
+    $("div" + tabs[whichTab] + " table > tbody:last").append(ui.draggable.clone(true, true).show())
   dragitem.remove()
 
 

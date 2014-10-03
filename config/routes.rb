@@ -103,7 +103,11 @@ AnswerCompanion::Application.routes.draw do
 	
 	resources :students do
 	  resources :schools
-		resources :subjects
+		resources :subjects do
+      collection do
+        put 'sort'
+      end
+    end
 	end
 	
 	resources :videos

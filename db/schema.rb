@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140929183205) do
+ActiveRecord::Schema.define(:version => 20141001152323) do
 
   create_table "course_asset_model_types", :force => true do |t|
     t.string   "name"
@@ -259,11 +259,13 @@ ActiveRecord::Schema.define(:version => 20140929183205) do
 
   create_table "subjects", :force => true do |t|
     t.string   "name"
+    t.string   "description", :limit => 256
+    t.string   "term",        :limit => 256
     t.integer  "student_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.boolean  "archived"
-    t.string   "term"
+    t.integer  "archived"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.integer  "position"
   end
 
   create_table "textbook_delegations", :force => true do |t|

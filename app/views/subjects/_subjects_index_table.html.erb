@@ -1,0 +1,18 @@
+<div id="subjects_table" class="tableContainer"> 
+  <table>
+    <thead class="fixedHeader">
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Term</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody class="scrollContent sortableTable">
+      <% local_subjects.each do |subject| %>
+      <%= render 'subject_table_row', :local_subject => subject %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

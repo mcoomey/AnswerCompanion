@@ -1,4 +1,118 @@
 @mixin tablecontainer($v0, $v1, $v2, $v3, $v4, $v5, $v6, $v7) {
+  
+  $table_width:$v0+$v1+$v2+$v3+$v4+$v5+$v6+$v7;       /* table width is sum of column widths ...                  */
+                                                      /* plus 6px for each column (5px padding + 1 px border)     */
+  @if $v0 != 0 { $table_width: $table_width + 6px;}
+  @if $v1 != 0 { $table_width: $table_width + 6px;}
+  @if $v2 != 0 { $table_width: $table_width + 6px;}
+  @if $v3 != 0 { $table_width: $table_width + 6px;}
+  @if $v4 != 0 { $table_width: $table_width + 6px;}
+  @if $v5 != 0 { $table_width: $table_width + 6px;}
+  @if $v6 != 0 { $table_width: $table_width + 6px;}
+  @if $v7 != 0 { $table_width: $table_width + 6px;}
+  
+  $table_width: $table_width + 5px;                   /* plus 5px for some unknown reason ??? scroll bar maybe?   */
+    
+	clear: both;
+	width: $table_width + 2px;
+	height: 504px;
+	overflow: hidden;
+  margin:10px 0 0 10px;
+
+	thead.fixedHeader tr {
+		display: block;
+		background: $very-light-green;
+		width:$table_width;
+		height:37px;
+		margin:0;
+		color: black;
+		font-size:1em;
+		font-weight: bold;
+		vertical-align:center;
+  	border-collapse: collapse;
+    
+		th {
+			border: 1px solid $main-green;
+			height:34px;
+		  width: $v0;
+      padding-left: 5px;
+		}
+		th + th {
+			width:$v1;
+		}
+		th + th + th {
+			width:$v2;
+		}
+		th + th + th + th {
+			width:$v3;
+		}
+		th + th + th + th + th {
+			width:$v4;
+		}
+		th + th + th + th + th + th{
+			width:$v5;
+		}
+		th + th + th + th + th + th + th{
+			width:$v6;
+		}
+		th + th + th + th + th + th + th + th{
+			width:$v7;
+		}
+	}
+
+	tbody.scrollContent {
+		display: block;
+		width: $table_width;
+		height: 460px;
+		margin:0;
+		border-spacing: 0;
+		border-collapse: collapse;
+		border-bottom: 1px solid $main-green;
+		overflow-y: scroll;
+		tr:nth-child(even) td {
+			background-color: $very-light-green;
+		}
+		tr:nth-child(odd) td{
+			background-color: white;
+		}
+		td {
+			border-top: none;
+			border-right: 1px solid $main-green;
+			border-bottom: none;
+			border-left: 1px solid $main-green;
+			vertical-align:center;
+			font-size:14px;
+      padding-left: 5px;
+		  width: $v0;
+			height:35px;
+		}
+		td + td {
+			width:$v1;
+		}
+		td + td + td {
+			width:$v2;
+		}
+		td + td + td + td {
+			width:$v3;
+		}
+		td + td + td + td + td {
+			width:$v4;
+		}
+		td + td + td + td + td + td {
+			width:$v5;
+		}
+		td + td + td + td + td + td + td {
+			width:$v6;
+		}
+		td + td + td + td + td + td + td + td {
+			width:$v7;
+		}
+		tr:last-child td{
+			border-bottom: 1px solid $main-green;
+		};
+	}
+}
+@mixin OLD_tablecontainer($v0, $v1, $v2, $v3, $v4, $v5, $v6, $v7) {
 	clear: both;
 	width: 874px;
 	height: 504px;

@@ -36,7 +36,7 @@
 }
 /* define height and width of scrollable area. Add 16px to width for scrollbar          */
 #lessonpane.tableContainer  { 
-  @include tablecontainer(636px, 69px, 69px, 69px, 0, 0, 0, 0);
+  @include tablecontainer(703px, 70px, 35px, 35px, 0, 0, 0, 0);
 }
 
 .field_with_errors {

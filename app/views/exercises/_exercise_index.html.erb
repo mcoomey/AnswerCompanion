@@ -5,8 +5,8 @@
 		    <th>Number</th>
 		    <th>Page</th>
 		    <th>Section</th>
-				<th>Edit</th>
-				<th>Delete</th>
+				<th></th>
+				<th></th>
 		  </tr>
 		</thead>
 		<tbody class="scrollContent">
@@ -17,8 +17,10 @@
 			    <td><%= exercise.section_title.name %></td>
 				<% if current_instructor %>
 					<% if current_instructor.id == exercise.instructor_id %>
-						<td><%=link_to 'Edit',  edit_textbook_exercise_path(exercise.textbook, exercise, course_asset_id: @course_asset.id), remote: true %></td>
-					    <td><%= link_to 'Delete', exercise_path(exercise, course_asset_id: @course_asset.id), confirm: 'Delete Exercise - Are you sure?', method: :delete, :remote => true %></td>
+						<td><%= link_to image_tag("EditIcon.png",  :mouseover => "EditIconHover.png",:class => "button", :alt => "Edit Exercise"),
+                     edit_textbook_exercise_path(exercise.textbook, exercise, course_asset_id: @course_asset.id), remote: true %></td>
+					  <td><%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png",:class => "button", :alt => "Delete Exercise"),
+                     exercise_path(exercise, course_asset_id: @course_asset.id), confirm: 'Delete Exercise - Are you sure?', method: :delete, :remote => true %></td>
 					<% else %>
 						<td></td>
 						<td></td>

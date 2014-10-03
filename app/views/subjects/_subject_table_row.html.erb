@@ -1,14 +1,17 @@
-<tr>
+<tr id="subject_<%=local_subject.id %>" data-model="subject" data-model_id="<%= local_subject.id %>">
 	<% if local_subject.archived? %>
 		<td><%= local_subject.name %></td>
 	<% else %>
 		<td><%= link_to local_subject.name, student_subject_path(local_subject.student.id, local_subject.id) %></td>
 	<% end %>
+	<td><%= local_subject.description %></td>
 	<td><%= local_subject.term %></td>
 	<td>
+    <%= link_to image_tag("EditIcon.png",  :mouseover => "EditIconHover.png",:class => "button", :alt => "Edit Subject"), 
+    edit_student_subject_path(current_student.id, local_subject), id: "edit_link_#{local_subject.id}" , remote: true %>
 	</td>
 	<td>
-		<%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png",:class => "button", :alt => "Delete Course"),  
+		<%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png",:class => "button", :alt => "Delete Subject"),  
 			        student_subject_path(current_student.id, local_subject.id), :confirm => "Delete #{local_subject.name} - Are you sure?", 
 			        :method => :delete, :remote => true %>
 	</td>

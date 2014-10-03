@@ -11,7 +11,7 @@
   <td><%= local_course.instructor.username %> </td>
   <td><%= local_course.instructor.schools.first.name %></td>
   <td>
-    <%= link_to image_tag("EditIcon.png",  :mouseover => "EditIconHover.png",:class => "button", :alt => "Edit Video"), 
+    <%= link_to image_tag("EditIcon.png",  :mouseover => "EditIconHover.png",:class => "button", :alt => "Edit Course"), 
     edit_course_path(local_course), id: "edit_link_#{local_course.id}" , remote: true %>
   </td>
   <td>

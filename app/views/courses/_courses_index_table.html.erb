@@ -1,0 +1,20 @@
+<div id="courses_table" class="tableContainer"> 
+  <table>
+    <thead class="fixedHeader">
+      <tr>
+        <th>Name</th>
+        <th>Section</th>
+        <th>Term</th>
+        <th>Instructor</th>
+        <th>School</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody class="scrollContent sortableTable">
+      <% local_courses.each do |course| %>
+      <%= render 'course_table_row', :local_course => course %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

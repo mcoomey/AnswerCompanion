@@ -1,14 +1,15 @@
 class SubjectsController < ApplicationController
 
   def index
-    @student = Student.find_by_id(params[:student_id]) || current_student
+    @student = Student.find_by_id(params[:student_id])
     @subjects = @student.subjects
-    @current_subjects = @student.subjects.where(:archived => 0)
-    @archived_subjects = @student.subjects.where(:archived => 1)
+    @current_subjects = @subjects.where(:archived => 0)
+    @archived_subjects = @subjects.where(:archived => 1)
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @courses }
+      format.json { render json: @subjects }
+      format.xml { render xml: @subjects }
     end
   		
   end
@@ -70,6 +71,13 @@ class SubjectsController < ApplicationController
     @student = current_student or Student.find(params[:student_id])
     @subject = Subject.find(params[:id])
     
+    if params[:archived]
+      posit = @student.subjects.where(:archived => params[:archived]).count + 1
+      @subject.archived = params[:archived]
+      @subject.position = posit
+      @subject.save
+    end
+    
     if params[:commit] == "Cancel"       # form submitted to cancel the edit
       @action = "Edit"
       render('cancel')
@@ -89,10 +97,6 @@ class SubjectsController < ApplicationController
       
     elsif params[:commit] == "No"
       render('edit')
- 
-    else                                    # form was submitted via jquery to toggle archive
-      @subject.update_attributes!(params[:subject])
-      render('toggle_archive')
     end
     
   end
@@ -103,4 +107,21 @@ class SubjectsController < ApplicationController
     @subject = Subject.find(params[:id])
     @subject.destroy
   end
+  
+  def sort
+    subjects = params[:subject]
+    idx = 1
+    if subjects && subjects.count > 0
+      subjects.each do |subjectid|
+        subject = Subject.find_by_id(subjectid)
+        subject.position = idx
+        subject.save
+        idx = idx + 1
+      end
+    end
+    render nothing: true
+  end
+
+  
+  
 end

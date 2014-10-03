@@ -7,14 +7,14 @@
 	</div>
 	<div id="horizontal-tabs">
 		<ul class="static-tabs-nav">
-			<li><a href="#current-subjects">Current Subjects</a></li>
-			<li><a href="#archived-subjects">Archived Subjects</a></li>
+			<li><a href=".current-tab">Current Subjects</a></li>
+			<li><a href=".archived-tab">Archived Subjects</a></li>
 		</ul>
-		<div id="current-subjects">
-			<%= render 'index_table', :local_subjects => @current_subjects %>
+		<div class="current-tab">
+			<%= render 'subjects_index_table', :local_subjects => @current_subjects %>
 		</div>
-		<div id="archived-subjects">
-			<%= render 'index_table', :local_subjects => @archived_subjects %>
+		<div class="archived-tab">
+			<%= render 'subjects_index_table', :local_subjects => @archived_subjects %>
 		</div>
 	</div>	
 </article>

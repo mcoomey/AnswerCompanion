@@ -1,29 +1,31 @@
 <div id="lessonpane" class="tableContainer">
-	<table>
-		<thead class="fixedHeader">
-		  <tr>
-		    <th class="title">Title</th>
-		    <th class="page">Page</th>
-				<th class="edit">Edit</th>
-				<th class="destroy">Delete</th>
-		  </tr>
-		</thead>
-		<tbody class="scrollContent">
-			<% lessons.each do |lesson| %>
-			  <tr>
-			    <td><%= link_to lesson.title, lesson_textbook_videos_path(lesson, course_asset_id: @course_asset.id) %></td>
-			    <td><%= lesson.page %></td>
-				<% if current_instructor %>
-					<% if current_instructor.id == lesson.instructor_id %>
-						<td><%=link_to 'Edit',  edit_textbook_lesson_path(lesson.textbook, lesson, course_asset_id: @course_asset.id), remote: true %></td>
-					    <td><%= link_to 'Delete', lesson_path(lesson, course_asset_id: @course_asset.id), confirm: 'Delete Lesson - Are you sure?', method: :delete, :remote => true %></td>
-					<% else %>
-						<td></td>
-						<td></td>
-					<% end %>	
-				<% end %>
-			  </tr>
-			<% end %>
-		</tbody>
-	</table>
+  <table>
+    <thead class="fixedHeader">
+      <tr>
+        <th>Title</th>
+        <th>Page</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody class="scrollContent">
+      <% lessons.each do |lesson| %>
+      <tr>
+        <td><%= link_to lesson.title, lesson_textbook_videos_path(lesson, course_asset_id: @course_asset.id) %></td>
+        <td><%= lesson.page %></td>
+        <% if current_instructor %>
+          <% if current_instructor.id == lesson.instructor_id %>
+            <td><%= link_to image_tag("EditIcon.png",  :mouseover => "EditIconHover.png",:class => "button", :alt => "Edit Lesson"),
+                     edit_textbook_lesson_path(lesson.textbook, lesson, course_asset_id: @course_asset.id), remote: true %></td>
+            <td><%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png",:class => "button", :alt => "Delete Lesson"),
+                     lesson_path(lesson, course_asset_id: @course_asset.id), confirm: 'Delete Lesson - Are you sure?', method: :delete, :remote => true %></td>
+          <% else %>
+            <td></td>
+            <td></td>
+          <% end %>	
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>

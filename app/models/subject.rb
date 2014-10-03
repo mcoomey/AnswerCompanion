@@ -1,5 +1,6 @@
 class Subject < ActiveRecord::Base
 	
+  attr_accessible :name, :description, :term, :archived
 	belongs_to :student
   has_many :enrollments
   
