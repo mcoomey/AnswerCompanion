@@ -4,6 +4,7 @@ class Course < ActiveRecord::Base
   
   belongs_to :instructor
   has_many :enrollments, dependent: :destroy
+  has_many :subjects, :through => :enrollments
   has_many :course_assets, dependent: :destroy
   
 	validates :name, :presence => true

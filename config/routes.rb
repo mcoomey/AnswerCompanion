@@ -10,6 +10,10 @@ AnswerCompanion::Application.routes.draw do
     resources :course_assets 
   end
   
+  resources :subjects do
+    resources :enrollments
+  end
+  
 	resources :course_assets do
     
     resources :textbook_delegations do
