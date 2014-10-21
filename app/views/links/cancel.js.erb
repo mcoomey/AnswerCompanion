@@ -1,0 +1,10 @@
+$("#ujsform").remove();
+$("#buttonarea").show();
+$("#messages .ujs_alert").hide();
+$("#messages .alert").show();
+
+<% if (@action == "Create") %>
+  $("#messages .ujs_notice").show().html("Add new link canceled.");
+<% else %>
+  $("#messages .ujs_notice").show().html("Edit link canceled.");
+<% end %>

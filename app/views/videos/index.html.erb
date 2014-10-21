@@ -7,6 +7,9 @@
 		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
 		           instructor_courses_path(@instructor) %>
 							 
+		<%=link_to image_tag("AddAsset.png",  :mouseover => "AddAssetHover.png",:class => "button", :alt => "Add Course Asset"), 
+		           new_course_asset_path(:course_id => @course.id), remote: true %>
+
     <%=link_to image_tag("AddVideo.png",  :mouseover => "AddVideoHover.png",:class => "button", :alt => "Add a Video"), 
 		           new_course_asset_video_path(:course_asset_id => @course_asset.id), :id => "add_video", :remote => true %>
 							 
@@ -31,21 +34,21 @@
   		<div id="noscroll-panel">
 
   			<div class="current-tab">
-  				<% if @videos_current %>
+  				<% if @videos_current.any? %>
       				<%= render "video_table", :local_videos => @videos_current, local_course_asset_id: @course_asset.id %>
   				<% end %>
   				<br class="clearfloat"/>				
   			</div>
       
   			<div class="archived-tab">
-  			<% if @videos_archived %>
+  			<% if @videos_archived.any? %>
       				<%= render "video_table", :local_videos => @videos_archived, local_course_asset_id: @course_asset.id %>
   			<% end %>
     			<br class="clearfloat"/>
   			</div>
       
   			<div class="future-tab">
-  			<% if @videos_future %>
+  			<% if @videos_future.any? %>
       				<%= render "video_table", :local_videos => @videos_future, local_course_asset_id: @course_asset.id %>
   			<% end %>
     			<br class="clearfloat"/>

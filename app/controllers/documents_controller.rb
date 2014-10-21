@@ -6,7 +6,7 @@ class DocumentsController < ApplicationController
       @course = Course.find_by_id(params[:course][:id])
       @course_asset = @course.course_assets.try(:first)
       if @course_asset
-        redirect_to course_asset_documents_path(@course_asset)
+        redirect_to course_asset_links_path(@course_asset)
       else
         redirect_to course_path(@course)
       end

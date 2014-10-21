@@ -78,6 +78,9 @@ class CoursesController < ApplicationController
   def create
     @instructor = Instructor.find_by_id(params[:instructor_id]) || current_instructor
     @course = @instructor.courses.build(params[:course])
+    @course.archived = current_tab_index
+    posit = @instructor.courses.where(:archived => current_tab_index).count + 1
+    @course.position = posit
    	if params[:commit]  != "Cancel"
     	@course.save
       render "create"

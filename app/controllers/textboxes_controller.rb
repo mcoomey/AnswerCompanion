@@ -62,6 +62,7 @@ class TextboxesController < ApplicationController
   def create
     @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
     @textbox = @course_asset.textboxes.build(params[:textbox])
+    @textbox.archived = current_tab_index
     @textbox.position = Textbox.all.count + 1
    	if params[:commit]  != "Cancel"
     	@textbox.save

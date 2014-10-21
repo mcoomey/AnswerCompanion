@@ -39,7 +39,11 @@ AnswerCompanion::Application.routes.draw do
       end
     end
     
-    resources :links
+    resources :links do
+      collection do
+        put 'sort'
+      end
+    end
     
     resources :textboxes do
       collection do

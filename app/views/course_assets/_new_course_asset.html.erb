@@ -1,13 +1,11 @@
 <div id="ujsform">
-  <%= form_for @course_asset, :url => { :controller => 'course_assets', :action => 'create' }, :html => { :method => 'post' }, remote: true do |f| %>
+  <%= form_for [@course, @course_asset], remote: true do |f| %>
 
     <%= f.label :name %>
     <%= f.text_field :name %>
 	
     <%= f.label :model_type, "Asset Type" %>
     <%= f.collection_select :model_type, CourseAssetModelType.all, :id, :name, include_blank: true %>
-	
-  	<%= f.hidden_field :course_id, :value => @course.id %>
 	
     <%= f.submit "Submit", :name => "commit" %>
     <%= f.submit "Cancel", :name => "commit" %>

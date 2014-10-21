@@ -8,14 +8,6 @@
 	
 	$("#ujsform").remove();
 	$("#buttonarea").show();
-	
-	if ($.cookie('horizontal_tabs_index') == ".current-tab") {    
-		$(".current-tab table tr:last").after("<%= j render 'course_table_row', :local_course => @course %>");
-		}
-	else if ($.cookie('horizontal_tabs_index') == ".archived-tab") {
-		$(".archived-tab table tr:last").after("<%= j render 'course_table_row', :local_course => @course %>");
-		}
-  else {
-		$(".future-tab table tr:last").after("<%= j render 'course_table_row', :local_course => @course %>");     
-    }
+
+  $("tbody:visible:last").append("<%= j render 'course_table_row', :local_course => @course %>");
 <% end %>

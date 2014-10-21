@@ -1,0 +1,14 @@
+<div id="ujsform">
+  <%= form_for [@course_asset, @link], remote: true do |f| %>
+
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+	
+    <%= f.label :url %>
+    <%= f.text_field :url %>
+    	
+    <%= f.submit "Submit", :name => "commit" %>
+    <%= f.submit "Cancel", :name => "commit" %>
+
+  <% end %>
+</div>

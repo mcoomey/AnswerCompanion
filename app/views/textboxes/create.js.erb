@@ -6,20 +6,9 @@
 	$("#messages .alert").show();
 	$("#messages .notice").show().html("Successfully created textbox.");
 	
-	$("#buttonarea").show();
-	
+  $("#buttonarea").show().css('visibility', 'visible');
   
-  if ($.cookie('horizontal_tabs_index') == ".current-tab") {
-    $(".current-tab ul li:first").remove();
-  	$(".current-tab ul").prepend("<%= j render 'tbox', local_tbox: @textbox, local_course_asset_id: params[:course_asset_id] %>");
-  	}
-  else if ($.cookie('horizontal_tabs_index') == ".archived-tab") {
-    $(".archived-tab ul li:first").remove();
-  	$(".archived-tab ul").prepend("<%= j render 'tbox', local_tbox: @textbox, local_course_asset_id: params[:course_asset_id] %>");
-  	}
-  else {
-    $(".future-tab ul li:first").remove();
-  	$(".future-tab ul").prepend("<%= j render 'tbox', local_tbox: @textbox, local_course_asset_id: params[:course_asset_id] %>");
-  	}
-    
+  $("#panel ul:visible li:first").remove()
+  $("#panel ul:visible").prepend("<%= j render 'tbox', local_tbox: @textbox, local_course_asset_id: params[:course_asset_id] %>");
+
 <% end %>

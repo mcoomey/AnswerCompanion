@@ -8,8 +8,8 @@
 		           instructor_courses_path(@instructor) %>
 		<%=link_to image_tag("AddAsset.png",  :mouseover => "AddAssetHover.png",:class => "button", :alt => "Add Course Asset"), 
 		           new_course_asset_path(:course_id => @course.id), remote: true %>
-		<%=link_to image_tag("AddTextbook.png",  :mouseover => "AddTextbookHover.png",:class => "button", :alt => "Add a Textbook"), 
-		           new_course_asset_textbook_delegation_path(@course_asset), remote: true %>
+		<%=link_to image_tag("AddLink.png",  :mouseover => "AddLinkHover.png",:class => "button", :alt => "Add a Link"), 
+		           new_course_asset_link_path(@course_asset), remote: true %>
 	</div>
 	<div id="horizontal-tabs">
 		<ul class="static-tabs-nav">
@@ -25,44 +25,30 @@
 				<%= render "shared/course_asset_tag", :local_asset => asset %>
   		<% end %>
 		</ul>
-  </div>
-	<div id="scroll-panel">
-    
-		<div class="current-tab">
-			<% if @textbookDels_current.any? %>
-        <ul id="current-ul">
-					<% @textbookDels_current.each do |tb_del| %>
-						<%= render 'frontcovers', :local_tb_del => tb_del %>
-					<% end %>
-        </ul>
-			<% end %>
-			<br class="clearfloat"/>				
-		</div>
-    
-		<div class="archived-tab">
-		<% if @textbookDels_archived.any? %>
-        <ul id="archived-ul">
-  				<% @textbookDels_archived.each do |tb_del| %>
-  					<%= render 'frontcovers', :local_tb_del => tb_del %>
-  				<% end %>
-        </ul>
-		<% end %>
-			<br class="clearfloat"/>
-		</div>
-    
-		<div class="future-tab">
-		<% if @textbookDels_future.any? %>
-      <ul id="future-ul">
-				<% @textbookDels_future.each do |tb_del| %>
-					<%= render 'frontcovers', :local_tb_del => tb_del %>
+		<div id="noscroll-panel">
+      
+			<div class="current-tab">
+				<% if @links_current.any? %>
+					<%= render 'link_table', local_links: @links_current, local_course_asset_id: @course_asset.id %>
 				<% end %>
-        </ul>
-		<% end %>
-			<br class="clearfloat"/>
+				<br class="clearfloat"/>				
+			</div>
+      
+			<div class="archived-tab">
+			<% if @links_archived.any? %>
+					<%= render 'link_table', local_links: @links_archived, local_course_asset_id: @course_asset.id %>
+			<% end %>
+  			<br class="clearfloat"/>
+			</div>
+      
+			<div class="future-tab">
+			<% if @links_future.any? %>
+					<%= render 'link_table', local_links: @links_future, local_course_asset_id: @course_asset.id %>
+			<% end %>
+  			<br class="clearfloat"/>
+			</div>
+      
 		</div>
-    
-	</div>
-	<br class="clearfloat"/>
-	<div id="textbook_choices_dialog">
+		<br class="clearfloat"/>
 	</div>
 </article>

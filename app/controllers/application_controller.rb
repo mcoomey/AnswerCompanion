@@ -13,5 +13,21 @@ class ApplicationController < ActionController::Base
 		(current_student || current_instructor || current_parent)
 	end
 	
+  def current_horizontal_tab
+	  selected = cookies[:horizontal_tabs_index][1..-1] #remove first character (. or #)
+	  if selected == "current-tab"
+	    return :Current
+    elsif selected == "archived-tab"
+      return :Archived
+    elsif selected == "future-tab"
+      return :Future
+    else
+      return nil
+    end
+  end
+
+  def current_tab_index
+	  [:Current, :Archived, :Future].index(current_horizontal_tab())
+  end
 	
 end

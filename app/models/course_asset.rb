@@ -1,5 +1,5 @@
 class CourseAsset < ActiveRecord::Base
-  attr_accessible :name, :model_type, :course_id
+  attr_accessible :name, :model_type, :course_id, :position
   
   has_many :textbook_delegations, dependent: :destroy
   has_many :textbooks, :through => :textbook_delegations, dependent: :destroy

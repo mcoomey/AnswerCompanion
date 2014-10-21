@@ -4,6 +4,8 @@ class Subject < ActiveRecord::Base
 	belongs_to :student
   has_one :enrollment
   has_one :course, :through => :enrollment, dependent: :destroy
+  has_many :subject_assets, dependent: :destroy
+  
 	validates :name, :uniqueness => { :scope => :student_id, :message => " already exists."}
 	validates :name, :presence => true
 	

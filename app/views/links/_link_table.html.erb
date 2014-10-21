@@ -1,0 +1,17 @@
+<div id="linktable"  class="tableContainer">
+  <table>
+    <thead class="fixedHeader">
+      <tr>
+        <th>Description</th>
+        <th>URL</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody class="scrollContent sortableTable">
+      <% local_links.each do |link| %>
+        <%= render 'link_table_row', local_link: link, local_course_asset_id: local_course_asset_id %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

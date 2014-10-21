@@ -73,7 +73,6 @@ class TextbookDelegationsController < ApplicationController
       if ISBN.valid?(isbn)
     
         isbn13 = ISBN.thirteen(isbn)
-        
         # check if textbook is currently in the database
         existingbook = Textbook.find_by_isbn13(isbn13)
     
@@ -95,11 +94,15 @@ class TextbookDelegationsController < ApplicationController
           # if something close is found...
           if (result && result.count > 0)
           
+            match_found = false
             #check each result
             result.each do |candidate|
             
+              puts ">>>>>>isbn13=#{isbn13} and candidate.isbn_13=#{candidate.isbn_13}<<<<<<<<"
               # if it's an exact match 
               if isbn13 == candidate.isbn_13
+                match_found = true
+                puts ">>>>>>match found: #{candidate.isbn_13}<<<<<<"
                 @textbook.isbn13 = candidate.isbn_13
               
                 # check to see if the matching result is already in the database
@@ -134,10 +137,14 @@ class TextbookDelegationsController < ApplicationController
               end  #end exact isbn match if
               
             end  #end each candidate loop
-          
+            if !match_found
+              @tbdelError = "A book with matching ISBN was not found."
+              render "new"
+            end
           # matching textbook ISBN not found
           else
             @tbdelError = "A book with matching ISBN was not found."
+            render "new"
           end
       
         end
@@ -186,19 +193,6 @@ class TextbookDelegationsController < ApplicationController
 
 private 
 
-  def current_horizontal_tab
-	  selected = cookies[:horizontal_tabs_index][1..-1] #remove first character (. or #)
-	  if selected == "current-tab"
-	    return :Current
-    elsif selected == "archived-tab"
-      return :Archived
-    elsif selected == "future-tab"
-      return :Future
-    else
-      return nil
-    end
-  end
-
   def add_to_current_tab(textbook)
     @textbook_delegation.textbook_id = textbook.id
     @textbook_delegation.save
@@ -207,8 +201,4 @@ private
     flash[:alert] = nil
   end
   
-  def current_tab_index
-	  [:Current, :Archived, :Future].index(current_horizontal_tab())
-  end
-
 end

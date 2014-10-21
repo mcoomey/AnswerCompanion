@@ -35,7 +35,9 @@ class CourseAssetsController < ApplicationController
    # POST /course_assets
   def create
    	if params[:commit]  != "Cancel"
-      @course_asset = CourseAsset.new(params[:course_asset])
+      @course = Course.find_by_id(params[:course_id])
+      posit = @course.course_assets.count + 1
+      @course_asset = @course.course_assets.build(params[:course_asset].merge(position: posit))
       if @course_asset.save
         @course_asset_error = nil
         @course_assets = @course_asset.course.course_assets.order(:position)

@@ -64,7 +64,7 @@ class VideosController < ApplicationController
       @video.get_video_duration
       @video.videofile_processed = 0
       
-      # save the new version ans submit for processing
+      # save the new version and submit for processing
       if @video.save
         @videoError = nil
         @videoNotice = "Video replacement has been submitted for processing."
@@ -82,7 +82,8 @@ class VideosController < ApplicationController
     # else create a brand new video
     else
       @video = @course_asset.videos.build(params[:video].merge({:instructor_id => current_instructor.id}))
-      @video.position = Video.all.count + 1
+      @video.position = @course_asset.videos.where(:archived => current_tab_index).count + 1 
+      @video.archived = current_tab_index
       @action = "Create"
       if @video.save
         @videoError = nil

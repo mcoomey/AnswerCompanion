@@ -1,0 +1,9 @@
+$("#messages .alert").hide();
+$("#messages .ujs_alert").html("<%= @linkError %>").show();
+$("#messages .notice").hide();
+$("#messages .ujs_notice").html("<%= @linkNotice %>").show();
+
+$("#ujsform").remove();
+$("#buttonarea").show();
+
+$("tbody:visible:last").append("<%= j render 'link_table_row', :local_link => @link, local_course_asset_id: @course_asset.id %>");
