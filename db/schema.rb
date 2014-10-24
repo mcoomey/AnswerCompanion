@@ -24,9 +24,9 @@ ActiveRecord::Schema.define(:version => 20141017001404) do
     t.string   "name"
     t.integer  "model_type"
     t.integer  "course_id"
-    t.integer  "position"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "position"
   end
 
   create_table "courses", :force => true do |t|
@@ -269,25 +269,26 @@ ActiveRecord::Schema.define(:version => 20141017001404) do
 
   create_table "subjects", :force => true do |t|
     t.string   "name"
-    t.string   "description", :limit => 256
-    t.string   "term",        :limit => 256
     t.integer  "student_id"
-    t.integer  "archived"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.boolean  "archived"
+    t.string   "term"
+    t.string   "description"
     t.integer  "position"
   end
 
   create_table "textbook_delegations", :force => true do |t|
+    t.integer  "textbook_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.integer  "course_asset_id"
-    t.integer  "textbook_id"
     t.integer  "archived"
     t.integer  "position"
   end
 
   add_index "textbook_delegations", ["course_asset_id"], :name => "index_textbook_delegations_on_textable_id_and_textable_type"
+  add_index "textbook_delegations", ["textbook_id"], :name => "index_textbook_delegations_on_textbook_id_and_subject_id"
 
   create_table "textbook_videos", :force => true do |t|
     t.string   "videofile"
@@ -326,16 +327,16 @@ ActiveRecord::Schema.define(:version => 20141017001404) do
 
   create_table "videos", :force => true do |t|
     t.string   "videofile"
-    t.string   "title"
-    t.string   "description"
     t.string   "length"
-    t.integer  "videofile_processed"
-    t.integer  "position"
     t.integer  "archived"
-    t.integer  "course_asset_id"
-    t.integer  "instructor_id"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+    t.integer  "videofile_processed"
+    t.string   "title"
+    t.string   "description"
+    t.integer  "position"
+    t.integer  "course_asset_id"
+    t.integer  "instructor_id"
     t.integer  "old_version_id"
   end
 

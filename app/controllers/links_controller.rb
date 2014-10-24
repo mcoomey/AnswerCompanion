@@ -83,8 +83,16 @@ class LinksController < ApplicationController
   end
 
   def destroy
+    @link = Link.find_by_id(params[:id])
+    @link.destroy
   end
 
   def sort
+    if params[:link_id]
+      params[:link_id].each_with_index do |id, index|
+        Link.update_all({position: index+1}, {id: id})
+      end
+    end
+    render nothing: true  
   end
 end

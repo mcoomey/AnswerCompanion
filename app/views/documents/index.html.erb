@@ -28,23 +28,17 @@
 		<div id="noscroll-panel">
       
 			<div class="current-tab">
-				<% if @documents_current.any? %>
-					<%= render 'document_table', local_docs: @documents_current, local_course_asset_id: @course_asset.id %>
-				<% end %>
+				<%= render 'document_table', local_docs: @documents_current, local_course_asset_id: @course_asset.id %>
 				<br class="clearfloat"/>				
 			</div>
       
 			<div class="archived-tab">
-			<% if @documents_archived.any? %>
-					<%= render 'document_table', local_docs: @documents_archived, local_course_asset_id: @course_asset.id %>
-			<% end %>
+				<%= render 'document_table', local_docs: @documents_archived, local_course_asset_id: @course_asset.id %>
   			<br class="clearfloat"/>
 			</div>
       
 			<div class="future-tab">
-			<% if @documents_future.any? %>
-					<%= render 'document_table', local_docs: @documents_future, local_course_asset_id: @course_asset.id %>
-			<% end %>
+				<%= render 'document_table', local_docs: @documents_future, local_course_asset_id: @course_asset.id %>
   			<br class="clearfloat"/>
 			</div>
       

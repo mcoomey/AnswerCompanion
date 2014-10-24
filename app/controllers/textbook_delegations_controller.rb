@@ -50,9 +50,9 @@ class TextbookDelegationsController < ApplicationController
 	end
 	
 	def new
+    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
 	  @textbook = Textbook.new
     @textbook_delegation = TextbookDelegation.new
-    @textbook_delegation.archived = current_tab_index
     
 	end
 	

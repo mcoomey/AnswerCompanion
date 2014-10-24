@@ -48,7 +48,8 @@ class DocumentsController < ApplicationController
   def create
     @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
     @document = @course_asset.documents.build(params[:document])
-    @document.position = Document.all.count + 1
+    @document.position = @course_asset.documents.where(:archived => current_tab_index).count + 1
+    @document.archived = current_tab_index
     @action = "Create"
     
    	if params[:commit]  != "Cancel"

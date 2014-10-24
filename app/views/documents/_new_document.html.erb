@@ -5,9 +5,7 @@
   <%= f.text_field :description, size: 40 %>
   
 	<%= f.file_field :docfile, :id => "document_filename" %>
-  
-  <%= f.hidden_field :archived, :value => archived_val %>
-  
+    
 		<%= f.submit "Cancel", :name => "commit" %>
 	<% end %>
 </div>

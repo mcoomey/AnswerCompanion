@@ -37,21 +37,11 @@ class DocfileUploader < CarrierWave::Uploader::Base
     process :cover
     process :resize_to_fill => [60, 60, Magick::CenterGravity]
     process :convert => 'png'
-    # process :myConvert
     def full_filename (for_file = model.source.file)
       super.chomp(File.extname(super)) + '.png'
     end
   end
 
-  def myConvert
-    directory = File.dirname(current_path)
-    command = "convert " + current_path + "[0] -resize 56x80^ " + directory + "/" + full_original_filename
-    puts ">>>>>>>>>>myConvert => command = #{command}<<<<<<<<<<<<"
-    
-    result = `#{command}`
-    puts ">>>>>>>>>>result = #{result}<<<<<<<<<<"
-  end
-  
   def cover
     manipulate! do |frame, index|
       frame if index.zero?

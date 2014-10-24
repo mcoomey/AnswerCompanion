@@ -34,23 +34,17 @@
   		<div id="noscroll-panel">
 
   			<div class="current-tab">
-  				<% if @videos_current.any? %>
-      				<%= render "video_table", :local_videos => @videos_current, local_course_asset_id: @course_asset.id %>
-  				<% end %>
+    				<%= render "video_table", :local_videos => @videos_current, local_course_asset_id: @course_asset.id %>
   				<br class="clearfloat"/>				
   			</div>
       
   			<div class="archived-tab">
-  			<% if @videos_archived.any? %>
-      				<%= render "video_table", :local_videos => @videos_archived, local_course_asset_id: @course_asset.id %>
-  			<% end %>
+    				<%= render "video_table", :local_videos => @videos_archived, local_course_asset_id: @course_asset.id %>
     			<br class="clearfloat"/>
   			</div>
       
   			<div class="future-tab">
-  			<% if @videos_future.any? %>
-      				<%= render "video_table", :local_videos => @videos_future, local_course_asset_id: @course_asset.id %>
-  			<% end %>
+    				<%= render "video_table", :local_videos => @videos_future, local_course_asset_id: @course_asset.id %>
     			<br class="clearfloat"/>
   			</div>     
         

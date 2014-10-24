@@ -4,4 +4,4 @@ $("#messages .notice").hide();
 $("#messages .ujs_notice").hide();
 $("#buttonarea").css('visibility', 'hidden') //.hide() not used to preserve the space on the screen
 
-$("#panel ul:visible").prepend("<%= j render 'form', :archived_val => 0 %>")
+$("#panel ul:visible").prepend("<%= j render 'new_textbox' %>")

@@ -1,0 +1,10 @@
+$("#messages .alert").hide();
+$("#messages .ujs_alert").html("<%= @linkError %>").show();
+$("#messages .notice").hide();
+$("#messages .ujs_notice").html("<%= @linkNotice %>").show();
+$("#ujsform").remove();
+$("#buttonarea").show();
+$("table tr td:nth-child(3) a").fadeTo("fast", 1).unbind('click');
+$("table tr td:nth-child(4) a").fadeTo("fast", 1).unbind('click');
+
+$("#link_id_<%= @link.id %>").replaceWith("<%= j render 'link_table_row', local_link: @link, local_course_asset_id: @course_asset.id %>").show();

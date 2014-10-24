@@ -29,35 +29,35 @@
 	<div id="scroll-panel">
     
 		<div class="current-tab">
-			<% if @textbookDels_current.any? %>
-        <ul id="current-ul">
-					<% @textbookDels_current.each do |tb_del| %>
-						<%= render 'frontcovers', :local_tb_del => tb_del %>
-					<% end %>
-        </ul>
-			<% end %>
+      <ul id="current-ul">
+    		<% if @textbookDels_current.any? %>
+    				<% @textbookDels_current.each do |tb_del| %>
+    					<%= render 'frontcovers', :local_tb_del => tb_del %>
+    				<% end %>
+    		<% end %>
+      </ul>
 			<br class="clearfloat"/>				
 		</div>
     
 		<div class="archived-tab">
-		<% if @textbookDels_archived.any? %>
-        <ul id="archived-ul">
-  				<% @textbookDels_archived.each do |tb_del| %>
-  					<%= render 'frontcovers', :local_tb_del => tb_del %>
-  				<% end %>
-        </ul>
-		<% end %>
-			<br class="clearfloat"/>
+      <ul id="archived-ul">
+        <% if @textbookDels_archived.any? %>
+          <% @textbookDels_archived.each do |tb_del| %>
+            <%= render 'frontcovers', :local_tb_del => tb_del %>
+          <% end %>
+        <% end %>
+      </ul>
+      <br class="clearfloat"/>
 		</div>
     
 		<div class="future-tab">
-		<% if @textbookDels_future.any? %>
       <ul id="future-ul">
-				<% @textbookDels_future.each do |tb_del| %>
-					<%= render 'frontcovers', :local_tb_del => tb_del %>
-				<% end %>
-        </ul>
-		<% end %>
+    		<% if @textbookDels_future.any? %>
+  				<% @textbookDels_future.each do |tb_del| %>
+  					<%= render 'frontcovers', :local_tb_del => tb_del %>
+  				<% end %>
+    		<% end %>
+      </ul>
 			<br class="clearfloat"/>
 		</div>
     
