@@ -76,16 +76,22 @@ class CoursesController < ApplicationController
   # POST /courses
   # POST /courses.json
   def create
-    @instructor = Instructor.find_by_id(params[:instructor_id]) || current_instructor
-    @course = @instructor.courses.build(params[:course])
-    @course.archived = current_tab_index
-    posit = @instructor.courses.where(:archived => current_tab_index).count + 1
-    @course.position = posit
-   	if params[:commit]  != "Cancel"
-    	@course.save
-      render "create"
+    if params[:commit] == "Create"
+      @instructor = Instructor.find_by_id(params[:instructor_id]) || current_instructor
+      @course = @instructor.courses.build(params[:course])
+      @course.archived = current_tab_index
+      @course.position = @instructor.courses.where(:archived => current_tab_index).count + 1
+      if @course.save
+        @ujsNotice = "Course was successfully created."
+        @ujsAlert = nil
+        render "create"
+      else
+        @ujsNotice = nil
+        @ujsAlert = @course.errors.full_messages.first
+        render "new"
+      end
     else
-      @action = "Create"
+      @ujsNotice = "Create course action was canceled."
       render "cancel"
     end
   end
@@ -103,13 +109,22 @@ class CoursesController < ApplicationController
       @course.archived = params[:archived]
       @course.position = posit
       @course.save
-    end
-        
-    if params[:commit] && params[:commit] != "Cancel"
-      @course.update_attributes(params[:course])
+      @ujsNotice = "Course has been moved to #{current_drop_tab.to_s} tab."
       render "update"
+      
+    elsif params[:commit] && params[:commit] != "Cancel"
+      if @course.update_attributes(params[:course])
+        @ujsNotice = "Course was successfully updated."
+        @ujsAlert = nil
+        render "update"
+      else
+        @ujsNotice = nil
+        @ujsAlert = @course.errors.full_messages.first
+        render "edit"
+      end
     else
-      @action = "Edit"
+      @ujsNotice = "Update course action was canceled."
+      @ujsAlert = nil
       render "cancel"
     end
   end
@@ -119,6 +134,7 @@ class CoursesController < ApplicationController
   def destroy
     @course = Course.find_by_id(params[:id])
     @course.destroy
+    @ujsNotice = "Course was successfully deleted."
   end
 
   def sort

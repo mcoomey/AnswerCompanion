@@ -43,9 +43,9 @@ class VideosController < ApplicationController
   def create
    	if params[:commit]  == "Cancel"
       if params[:video][:replace_flag]
-        @videoNotice = "Replace video action canceled."
+        @ujsNotice = "Replace video action canceled."
       else
-        @videoNotice = "Add new video action canceled."
+        @ujsNotice = "Add new video action canceled."
       end
       render "cancel"
       
@@ -66,14 +66,14 @@ class VideosController < ApplicationController
       
       # save the new version and submit for processing
       if @video.save
-        @videoError = nil
-        @videoNotice = "Video replacement has been submitted for processing."
+        @ujsAlert = nil
+        @ujsNotice = "Video replacement has been submitted for processing."
         @video.do_video_conversion
         render "update_replacement"
         
       else
-        @videoNotice = nil
-        @videoError = "Error! " + @video.errors.full_messages.first
+        @ujsNotice = nil
+        @ujsAlert = "Error! " + @video.errors.full_messages.first
         @old_version_id = params[:id]
         @video = @course_asset.videos.new
         render "replace"
@@ -86,12 +86,12 @@ class VideosController < ApplicationController
       @video.archived = current_tab_index
       @action = "Create"
       if @video.save
-        @videoError = nil
-        @videoNotice = "Video upload has been submitted for processing."
+        @ujsAlert = nil
+        @ujsNotice = "Video upload has been submitted for processing."
         @video.do_video_conversion
       else
-        @videoNotice = nil
-        @videoError = "Error! " + @video.errors.full_messages.first
+        @ujsNotice = nil
+        @ujsAlert = "Error! " + @video.errors.full_messages.first
         render "new"
       end
     end
@@ -110,7 +110,7 @@ class VideosController < ApplicationController
     @video = Video.find_by_id(params[:id])
 
    	if params[:commit]  == "Cancel"
-      @videoNotice = "Edit video action canceled."
+      @ujsNotice = "Edit video action canceled."
       render "cancel"
       
     elsif params[:archived]
@@ -129,11 +129,11 @@ class VideosController < ApplicationController
       @course_asset = CourseAsset.find_by_id(params[:video][:course_asset_id])
       @video.update_attributes(:title => params[:video][:title], :description => params[:video][:description])
       if @video.save
-        @videoError = nil
-        @videoNotice = "Successfully edited video."
+        @ujsAlert = nil
+        @ujsNotice = "Successfully edited video."
       else
-        @videoNotice = nil
-        @videoError = "Error! " + @video.errors.full_messages.first
+        @ujsNotice = nil
+        @ujsAlert = "Error! " + @video.errors.full_messages.first
         render "edit"
       end
     end
@@ -148,8 +148,8 @@ class VideosController < ApplicationController
   def destroy
     @video = Video.find(params[:id])
     @video.destroy
-    @videoError = nil
-    @videoNotice = "Video has been successfully deleted."
+    @ujsAlert = nil
+    @ujsNotice = "Video has been successfully deleted."
   end
  
   def sort

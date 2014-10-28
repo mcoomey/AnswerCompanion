@@ -1,8 +1,5 @@
-$("#messages .alert").hide();
-$("#messages .ujs_alert").html("<%= @exerciseError %>").show();
-$("#messages .notice").hide();
-$("#messages .ujs_notice").html("<%= @exerciseNotice %>").show();
 $("#ujsform").remove();
+ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
 $("#buttonarea").hide().after('<%= j render("edit_exercise") %>');
 $("#exercise_section_title_name").autocomplete({
 	  minLength: 0,

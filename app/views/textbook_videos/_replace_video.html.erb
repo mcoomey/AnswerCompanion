@@ -1,7 +1,7 @@
 <div id="ujsform">
 	<%= form_for @video, remote: true do |f| %>
   
-    <%= f.label :replace_video, :class => "attention" %>
+    <%= f.label "Replace Video:", :class => "attention" %>
 		<%= f.file_field :videofile, :id => "video_filename" %>
     
     <%= f.hidden_field :replace_flag, :value => "1" %>

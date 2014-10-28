@@ -66,7 +66,7 @@ class ExercisesController < ApplicationController
     @course_asset = CourseAsset.find_by_id(params[:exercise][:course_asset_id])
     
     if params[:commit]  == "Cancel"
-      @exerciseNotice = "Add new exercise action canceled."
+      @ujsNotice = "Add new exercise action canceled."
       render "cancel"
     
     elsif params[:commit] == "Create"
@@ -85,14 +85,15 @@ class ExercisesController < ApplicationController
         render "new"
         
       elsif @exercise.save
-        @exerciseError = nil
-        @exerciseNotice = "Successfully created exercise."
+        @exercises = @textbook.exercises.sort{|a,b| a.page.to_i <=> b.page.to_i}
+        @ujsAlert = nil
+        @ujsNotice = "Successfully created exercise."
+        render "create"
       else  
-        @exerciseNotice = nil
-        @exerciseError = "Error! " + @exercise.errors.full_messages.first
-      end
-      @exercises = @textbook.exercises.sort{|a,b| a.page.to_i <=> b.page.to_i}
-      
+        @ujsNotice = nil
+        @ujsAlert = "Error! " + @exercise.errors.full_messages.first
+        render "new"
+      end      
       
     elsif params[:commit] == "Yes"
       @filterstring = nil
@@ -100,19 +101,21 @@ class ExercisesController < ApplicationController
                                :section_title_name => params[:exercise][:section_title_name], 
                                :instructor_id => current_instructor.id)
       if @exercise.save
-        @exerciseError = nil
-        @exerciseNotice = "Successfully created exercise."
+        @exercises = @textbook.exercises.sort{|a,b| a.page.to_i <=> b.page.to_i}
+        @ujsAlert = nil
+        @ujsNotice = "Successfully created exercise."
+        render "create"
       else  
-        @exerciseNotice = nil
-        @exerciseError = "Error! " + @exercise.errors.full_messages.first
+        @ujsNotice = nil
+        @ujsAlert = "Error! " + @exercise.errors.full_messages.first
+        render "new"
       end
-      @exercises = @textbook.exercises.sort{|a,b| a.page.to_i <=> b.page.to_i}
-      
     
     else  # params[:commit] == "No"
       params[:exercise][:section_title_name] = ""
       @exercise = @textbook.exercises.new(params[:exercise].except(:course_asset_id))
       @new_section_title = false;
+      @ujsNotice = "Please re-enter the section title."
       render('new')
     end
    
@@ -136,8 +139,8 @@ class ExercisesController < ApplicationController
     @course_asset = CourseAsset.find_by_id(params[:exercise][:course_asset_id])
     
     if params[:commit]  == "Cancel"
-      @exerciseNotice = "Update exercise action canceled."
-      @exerciseAlert = nil
+      @ujsNotice = "Update exercise action canceled."
+      @ujsAlert = nil
       render "cancel"
       
     elsif params[:commit] == "Update"
@@ -151,11 +154,13 @@ class ExercisesController < ApplicationController
         if old_section_title.exercises.count == 0
           old_section_title.delete
         end
-        @exerciseError = nil
-        @exerciseNotice = "Successfully updated exercise."
+        @ujsAlert = nil
+        @ujsNotice = "Successfully updated exercise."
+        @exercises = @textbook.exercises.sort{|a,b| a.page.to_i <=> b.page.to_i}
+        render "update"
       else  
-        @exerciseNotice = nil
-        @exerciseError = "Error! " + @exercise.errors.full_messages.first
+        @ujsNotice = nil
+        @ujsAlert = "Error! " + @exercise.errors.full_messages.first
         render "edit"
       end
       
@@ -163,18 +168,20 @@ class ExercisesController < ApplicationController
       @filterstring = nil
       @exercise.assign_attributes(params[:exercise].except(:course_asset_id))
       if @exercise.save
-        @exerciseError = nil
-        @exerciseNotice = "Successfully updated exercise."
+        @ujsAlert = nil
+        @ujsNotice = "Successfully updated exercise."
+        render "update"
       else  
-        @exerciseNotice = nil
-        @exerciseError = "Error! " + @exercise.errors.full_messages.first
+        @ujsNotice = nil
+        @ujsAlert = "Error! " + @exercise.errors.full_messages.first
+        render "edit"
       end
     
     else  # params[:commit] == "No"
+      @ujsNotice = "Please re-enter the section title."
       render('edit')
     end
 
-    @exercises = @textbook.exercises.sort{|a,b| a.page.to_i <=> b.page.to_i}
     
   end
 
@@ -186,8 +193,8 @@ class ExercisesController < ApplicationController
     @textbook = @exercise.textbook
     @exercise.destroy
     @exercises = @textbook.exercises.sort{|a,b| a.page.to_i <=> b.page.to_i}
-    @exerciseError = nil
-    @exerciseNotice = "Exercise has been successfully deleted."
+    @ujsAlert = nil
+    @ujsNotice = "Exercise has been successfully deleted."
   end
 
 end

@@ -50,12 +50,19 @@ class DocumentsController < ApplicationController
     @document = @course_asset.documents.build(params[:document])
     @document.position = @course_asset.documents.where(:archived => current_tab_index).count + 1
     @document.archived = current_tab_index
-    @action = "Create"
     
    	if params[:commit]  != "Cancel"
-      @document.save
-      render "create"
+      if @document.save
+        @ujsAlert = nil
+        @ujsNotice = "Successfully added document."
+        render "create"
+      else
+        @ujsNotice = nil
+        @ujsAlert = "Error! " + @document.errors.full_messages.first
+        render "new"
+      end
     else
+      @ujsNotice = "Add new document action canceled."
       render "cancel"
     end
   end
@@ -75,13 +82,23 @@ class DocumentsController < ApplicationController
       @document.archived = params[:archived]
       @document.position = posit
       @document.save
-      render nothing: true
+      @ujsNotice = "Document has been moved to #{current_drop_tab.to_s} tab."
+      render "update"
     
     elsif params[:commit]  != "Cancel"
       @document.description = params[:document][:description]
-      @document.save
-      
+      if @document.save
+        @ujsNotice = "Document was successfully updated."
+        @ujsAlert = nil
+        render "update"
+      else
+        @ujsNotice = nil
+        @ujsAlert = @document.errors.full_messages.first
+        render "edit"
+      end
     else
+      @ujsNotice = "Update document action was canceled."
+      @ujsAlert = nil
       render "cancel"
     end
     
@@ -90,6 +107,7 @@ class DocumentsController < ApplicationController
   def destroy    
     @document = Document.find_by_id(params[:id])
     @document.destroy
+    @ujsNotice = "Document was successfully deleted."
   end
   
   def sort

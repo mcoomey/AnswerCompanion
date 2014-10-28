@@ -64,11 +64,19 @@ class TextboxesController < ApplicationController
     @textbox = @course_asset.textboxes.build(params[:textbox])
     @textbox.archived = current_tab_index
     @textbox.position = @course_asset.textboxes.where(:archived => current_tab_index).count + 1
+    
    	if params[:commit]  != "Cancel"
-    	@textbox.save
-      render "create"
+    	if @textbox.save
+        @ujsAlert = nil
+        @ujsNotice = "Successfully added textbox."
+        render "create"
+      else
+        @ujsNotice = nil
+        @ujsAlert = "Error! " + @textbox.errors.full_messages.first
+        render "new"
+      end
     else
-      @action = "Create"
+      @ujsNotice = "Add new textbox action canceled."
       render "cancel"
     end
   end

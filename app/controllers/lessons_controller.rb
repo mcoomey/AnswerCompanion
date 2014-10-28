@@ -68,15 +68,16 @@ class LessonsController < ApplicationController
       @lesson = Lesson.new(:title => params[:lesson][:title], :page => params[:lesson][:page], 
                            :textbook_id => @textbook.id, :instructor_id => current_instructor.id)
       if @lesson.save
-        @lessonError = nil
-        @lessonNotice = "Successfully created lesson."
+        @ujsAlert = nil
+        @ujsNotice = "Successfully created lesson."
       else  
-        @lessonNotice = nil
-        @lessonError = "Error! " + @lesson.errors.full_messages.first
+        @ujsNotice = nil
+        @ujsAlert = "Error! " + @lesson.errors.full_messages.first
+        render "new"
       end
       @lessons = @textbook.lessons.sort{|a,b| a.page.to_i <=> b.page.to_i}
     else
-      @lessonNotice = "Add new lesson action canceled."
+      @ujsNotice = "Add new lesson action canceled."
       render "cancel"
     end
 	end
@@ -96,16 +97,16 @@ class LessonsController < ApplicationController
     if params[:commit]  != "Cancel"
       if @lesson.update_attributes(:title => params[:lesson][:title], :page => params[:lesson][:page])
         @course_asset = CourseAsset.find_by_id(params[:lesson][:course_asset_id])
-        @lessonError = nil
-        @lessonNotice = "Successfully updated lesson."
+        @ujsAlert = nil
+        @ujsNotice = "Successfully updated lesson."
       else  
-        @lessonNotice = nil
-        @lessonError = "Error! " + @lesson.errors.full_messages.first
+        @ujsNotice = nil
+        @ujsAlert = "Error! " + @lesson.errors.full_messages.first
         @course_asset = CourseAsset.find_by_id(params[:lesson][:course_asset_id])
         render "edit"
       end
     else
-      @lessonNotice = "Update lesson action canceled."
+      @ujsNotice = "Update lesson action canceled."
       @course_asset = CourseAsset.find_by_id(params[:lesson][:course_asset_id])
     end
     @textbook = @lesson.textbook
@@ -120,8 +121,8 @@ class LessonsController < ApplicationController
     @textbook = @lesson.textbook
     @lesson.destroy
     @lessons = @textbook.lessons.sort{|a,b| a.page.to_i <=> b.page.to_i}
-    @lessonError = nil
-    @lessonNotice = "Lesson has been successfully deleted."
+    @ujsAlert = nil
+    @ujsNotice = "Lesson has been successfully deleted."
   end
   
 end

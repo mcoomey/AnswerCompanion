@@ -1,7 +1,4 @@
-$("#messages .alert").hide();
-$("#messages .ujs_alert").html("<%= @tbdelError %>").show();
-$("#messages .notice").hide();
-$("#messages .ujs_notice").html("<%= @tbdelNotice %>").show();
+ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
 $("#ujsform").remove();
 $("#buttonarea").show();
 <% if !@tbdelError %>

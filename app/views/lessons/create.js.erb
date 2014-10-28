@@ -1,7 +1,4 @@
-$("#messages .alert").hide();
-$("#messages .ujs_alert").html("<%= @lessonError %>").show();
-$("#messages .notice").hide();
-$("#messages .ujs_notice").html("<%= @lessonNotice %>").show();
+ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
 $("#ujsform").remove();
 $("#buttonarea").show();
 $("#filters_pagefilter").val("");

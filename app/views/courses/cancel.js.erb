@@ -1,7 +1,5 @@
 $("#ujsform").remove();
 $("#buttonarea").show();
-$("#messages .ujs_alert").hide();
-$("#messages .alert").show();
-$("#messages .notice").show().html("<%= @action %> course action canceled.");
+ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
 $("table tr td:nth-child(5) a").fadeTo("fast", 1).unbind('click');
 $("table tr td:nth-child(6) a").fadeTo("fast", 1).unbind('click');

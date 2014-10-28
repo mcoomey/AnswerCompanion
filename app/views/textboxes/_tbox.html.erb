@@ -1,8 +1,14 @@
 <li class="textbox" id= "tbox_id_<%= local_tbox.id %>" data-model="textbox" data-model_id="<%= local_tbox.id %>">
   <fieldset><legend><%=link_to local_tbox.title, edit_course_asset_textbox_path(local_course_asset_id, local_tbox.id), remote: true %></legend>
     <div class="textboxdelete">
-		<%= button_to 'X', course_asset_textbox_path(local_course_asset_id, local_tbox.id), :confirm => 'Remove Textbox. Are you sure?', 
+      
+    <%= link_to image_tag("EditIcon.png",  :mouseover => "EditIconHover.png",:class => "button", :alt => "Edit Textbox"), 
+        edit_course_asset_textbox_path(local_course_asset_id, local_tbox.id), title: 'Edit Textbox', remote: true, :class => "buttonTo" %>
+      
+    <%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png",:class => "button", :alt => "Delete Document"),  
+    course_asset_textbox_path(local_course_asset_id, local_tbox.id), :confirm => 'Remove Textbox. Are you sure?', 
       :method => :delete, :remote => true, :class => "buttonTo"%>
+      
     </div>
 		<%= simple_format(local_tbox.content) %>
   </fieldset>

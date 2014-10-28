@@ -14,7 +14,7 @@
 			  <tr>
 			    <td><%= link_to exercise.number, exercise_textbook_videos_path(exercise, course_asset_id: @course_asset.id) %></td>
 			    <td><%= exercise.page %></td>
-			    <td><%= exercise.section_title.name %></td>
+			    <td><%= exercise.section_title.name if exercise.section_title %></td>
 				<% if current_instructor %>
 					<% if current_instructor.id == exercise.instructor_id %>
 						<td><%= link_to image_tag("EditIcon.png",  :mouseover => "EditIconHover.png",:class => "button", :alt => "Edit Exercise"),

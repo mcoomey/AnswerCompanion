@@ -1,12 +1,5 @@
 $("#ujsform").remove();
 $("#buttonarea").show();
-$("#messages .ujs_alert").hide();
-$("#messages .alert").show();
+ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
 $("table tr td:nth-child(3) a").fadeTo("fast", 1).unbind('click');
 $("table tr td:nth-child(4) a").fadeTo("fast", 1).unbind('click');
-
-<% if (@action == "Create") %>
-  $("#messages .ujs_notice").show().html("Add new link canceled.");
-<% else %>
-  $("#messages .ujs_notice").show().html("Edit link canceled.");
-<% end %>

@@ -1,15 +1,7 @@
-<% if @course.errors.any? %>
-	$("#messages .alert").hide();
-	$("#messages .ujs_alert").show().html("ERROR! <%= j @course.errors.full_messages.first %>" ).show();
-<% else %>
-	$("#messages .ujs_alert").hide();
-	$("#messages .alert").show();
-	$("#messages .notice").show().html("Successfully updated course.");
-	
-	$("#ujsform").remove();
-	$("#buttonarea").show();
-	
-  $('#edit_link_<%= @course.id %>').parent().parent().replaceWith("<%= j render 'course_table_row', :local_course => @course %>");
-  $("table tr td:nth-child(5) a").fadeTo("fast", 1).unbind('click');
-  $("table tr td:nth-child(6) a").fadeTo("fast", 1).unbind('click');
-<% end %>
+ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
+$("#ujsform").remove();
+$("#buttonarea").show();
+
+$('#edit_link_<%= @course.id %>').parent().parent().replaceWith("<%= j render 'course_table_row', :local_course => @course %>");
+$("table tr td:nth-child(5) a").fadeTo("fast", 1).unbind('click');
+$("table tr td:nth-child(6) a").fadeTo("fast", 1).unbind('click');

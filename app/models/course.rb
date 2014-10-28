@@ -8,5 +8,5 @@ class Course < ActiveRecord::Base
   has_many :course_assets, dependent: :destroy
   
 	validates :name, :presence => true
-	validates :name, :uniqueness => { :scope => [:instructor_id, :section], :message => " already exists."}
+	validates :name, :uniqueness => { :scope => [:instructor_id, :section, :term], :message => " already exists."}
 end

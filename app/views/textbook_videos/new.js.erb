@@ -1,8 +1,5 @@
-$("#messages .alert").hide();
-$("#messages .ujs_alert").hide();
-$("#messages .notice").hide();
-$("#messages .ujs_notice").hide();
-
+ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
+$("#ujsform").remove();
 $("#buttonarea").hide().after("<%= j render 'new_textbook_video' %>");
 
 $('#new_textbook_video').fileupload({

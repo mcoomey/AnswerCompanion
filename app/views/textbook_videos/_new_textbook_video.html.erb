@@ -1,6 +1,7 @@
 <div id="ujsform">
 	<%= form_for [@videoable, @video], remote: true do |f| %>
   
+    <%= f.label "New Video:", :class => "attention" %>
 		<%= f.file_field :videofile, :id => "video_filename" %>
     
     <%= f.hidden_field :instructor_id, :value => @instructor.id %>

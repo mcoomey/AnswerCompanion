@@ -1,8 +1,4 @@
-$("#messages .alert").hide();
-$("#messages .ujs_alert").html("<%= @linkError %>").show();
-$("#messages .notice").hide();
-$("#messages .ujs_notice").html("<%= @linkNotice %>").show();
-
+ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
 $("#ujsform").remove();
 $("#buttonarea").show();
 

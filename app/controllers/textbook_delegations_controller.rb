@@ -57,8 +57,6 @@ class TextbookDelegationsController < ApplicationController
 	end
 	
 	def create
-	  
-    puts ">>>>>>>>Creating TextbookDelegation<<<<<<<<<<<<<<<<<"
 	  @textbook = Textbook.new
     @textbook_delegation = TextbookDelegation.new
     @textbook_delegation.archived = current_tab_index
@@ -81,7 +79,8 @@ class TextbookDelegationsController < ApplicationController
           @tbdel = @course_asset.textbook_delegations.where(:textbook_id => existingbook.id).first
           if @tbdel
             #if so, report error and inform which tab
-            @tbdelError = "Error, textbook already added to #{tabs[@tbdel.archived].to_s} tab."
+            @ujsAlert = "Error, textbook already added to #{tabs[@tbdel.archived].to_s} tab."
+            render "new"
           else  
             # otherwise, add it to the currently selected tab
             add_to_current_tab(existingbook)
@@ -138,25 +137,25 @@ class TextbookDelegationsController < ApplicationController
               
             end  #end each candidate loop
             if !match_found
-              @tbdelError = "A book with matching ISBN was not found."
+              @ujsAlert = "A book with matching ISBN was not found."
               render "new"
             end
           # matching textbook ISBN not found
           else
-            @tbdelError = "A book with matching ISBN was not found."
+            @ujsAlert = "A book with matching ISBN was not found."
             render "new"
           end
       
         end
       else
-        @tbdelError = "Invalid ISBN was entered"
+        @ujsAlert = "Invalid ISBN was entered"
         render "new"
       end
       
     else
       # user canceled the action
-      @tbdelNotice = "Add new textbook action canceled."
-      @tbdelError = nil
+      @ujsNotice = "Add new textbook action canceled."
+      @ujsAlert = nil
       render "cancel"
     end
   end
@@ -166,20 +165,21 @@ class TextbookDelegationsController < ApplicationController
 	end
 	
 	def update
-    puts ">>>>>>>>Updating TestbookDelegation<<<<<<<<<<<<"
     if params[:archived]
       tbdel = TextbookDelegation.find_by_id(params[:id])
       tbdel.archived = params[:archived]
       # move it to the bottom of the target archived scope
       tbdel.position = TextbookDelegation.where(:archived => params[:archived]).count+1
       tbdel.save
+      @ujsNotice = "Textbook has been moved to #{current_drop_tab.to_s} tab."
     end
-    render nothing: true
+    render "update"
 	end
   
   def destroy
 		tbdel = TextbookDelegation.find(params[:id])
 		tbdel.destroy
+    @ujsNotice = "Textbook was successfully removed."
   end
   
   def sort
@@ -196,8 +196,8 @@ private
   def add_to_current_tab(textbook)
     @textbook_delegation.textbook_id = textbook.id
     @textbook_delegation.save
-    @tbdelError = nil
-    @tbdelNotice = "Successfully added new textbook."
+    @ujsAlert = nil
+    @ujsNotice = "Successfully added new textbook."
     flash[:alert] = nil
   end
   

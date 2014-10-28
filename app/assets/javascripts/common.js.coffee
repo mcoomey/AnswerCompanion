@@ -1,10 +1,13 @@
 window.handleDropEvent = (event, ui) ->
+  $("#ujsform").remove()
+  $("#buttonarea").show()
   dragitem = ui.draggable
   model = dragitem.data("model")
   id = dragitem.data("model_id")  
   dropitem = $(this).find("a").attr("href")
   tabs = [".current-tab", ".archived-tab", ".future-tab"]
   whichTab = tabs.indexOf(dropitem)  
+  $.cookie("dropTab", dropitem, path: '/')
   secure_token = $("meta[name=\"csrf-token\"]").attr("content")
   dataString = "authenticity_token=" + secure_token + "&archived=" + whichTab
   urlString = window.location.pathname + "/" + id
@@ -42,3 +45,6 @@ window.handleVerticalSortEvent = (event, ui) ->
     url: urlString
     data: data
     
+window.ujsMessages = (ujsAlert, ujsNotice) ->
+  $("#messages .ujs_alert").html ujsAlert
+  $("#messages .ujs_notice").html ujsNotice

@@ -21,7 +21,7 @@ class Exercise < ActiveRecord::Base
   
   def destroy_lone_section_title
     st = self.section_title
-    if st.exercises.count == 1
+    if st && st.exercises.count == 1
       st.destroy
     end
   end

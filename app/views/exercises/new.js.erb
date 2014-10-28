@@ -1,11 +1,20 @@
 <% if @new_section_title  %>
   $("#create_new_section_title_dialog").html("<%= j render 'new_section_title_dialog' %>");
-	$("#create_new_section_title_dialog").prepend("<span class=\"title\"> <%= j @section_title.name %> </span>");
-	$("#create_new_section_title_dialog").dialog({
-	  title: "Create New Section Title?",
-	  resizeable: false,
-	  modal: true
-	  });
+  
+  <% if @section_title.name? %>
+  	$("#create_new_section_title_dialog").prepend("<span class=\"title\"> <%= j @section_title.name %> </span>");
+  	$("#create_new_section_title_dialog").dialog({
+  	  title: "Create New Section Title?",
+  	  resizeable: false,
+  	  modal: true
+  	  });
+  <% else %>
+  	$("#create_new_section_title_dialog").dialog({
+  	  title: "Leave Section Title blank ?",
+  	  resizeable: false,
+  	  modal: true
+  	  });
+  <% end %>
 
 	$("#confirm_yes").click(function(){
 		$("#create_new_section_title_dialog").dialog("close");
@@ -17,12 +26,9 @@
 	});
 
 <% else %>
-	$("#messages .alert").hide();
-	$("#messages .ujs_alert").hide();
-	$("#messages .notice").hide();
-	$("#messages .ujs_notice").hide();
+  ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
   $("#ujsform").remove();
-	$("#buttonarea").hide().after('<%= j render("new_exercise") %>');
+	$("#buttonarea").hide().after('<%= j render "new_exercise" %>');
 	$("#exercise_section_title_name").autocomplete({
 		  minLength: 0,
 		  delay: 0,

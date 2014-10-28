@@ -1,13 +1,4 @@
-<% if @course.errors.any? %>
-	$("#messages .alert").hide();
-	$("#messages .ujs_alert").show().html("ERROR! <%= j @course.errors.full_messages.first %>" ).show();
-<% else %>
-	$("#messages .ujs_alert").hide();
-	$("#messages .alert").show();
-	$("#messages .notice").show().html("Successfully created course.");
-	
-	$("#ujsform").remove();
-	$("#buttonarea").show();
-
-  $("tbody:visible:last").append("<%= j render 'course_table_row', :local_course => @course %>");
-<% end %>
+ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
+$("#ujsform").remove();
+$("#buttonarea").show();
+$("tbody:visible:last").append("<%= j render 'course_table_row', :local_course => @course %>");

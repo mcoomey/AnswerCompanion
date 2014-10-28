@@ -51,9 +51,17 @@ class LinksController < ApplicationController
     @action = "Create"
     
    	if params[:commit]  != "Cancel"
-      @link.save
-      render "create"
+      if @link.save
+        @ujsAlert = nil
+        @ujsNotice = "Successfully added link."
+        render "create"
+      else
+        @ujsNotice = nil
+        @ujsAlert = "Error! " + @link.errors.full_messages.first
+        render "new"
+      end
     else
+      @ujsNotice = "Add new link action canceled."
       render "cancel"
     end
     
@@ -69,14 +77,25 @@ class LinksController < ApplicationController
       @link.archived = params[:archived]
       @link.position = posit
       @link.save
-      render nothing: true
+      @ujsNotice = "Link has been moved to #{current_drop_tab.to_s} tab."
+      render "update"
     
     elsif params[:commit]  != "Cancel"
       @link.description = params[:link][:description]
       @link.url = params[:link][:url]
-      @link.save
+      if @link.save
+        @ujsAlert = nil
+        @ujsNotice = "Successfully added link."
+        render "update"
+      else
+        @ujsNotice = nil
+        @ujsAlert = "Error! " + @link.errors.full_messages.first
+        render "new"
+      end
       
     else
+      @ujsNotice = "Update link action was canceled."
+      @ujsAlert = nil
       render "cancel"
     end
     
@@ -85,6 +104,7 @@ class LinksController < ApplicationController
   def destroy
     @link = Link.find_by_id(params[:id])
     @link.destroy
+    @ujsNotice = "Link was successfully deleted."
   end
 
   def sort

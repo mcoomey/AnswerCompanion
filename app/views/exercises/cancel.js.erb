@@ -1,6 +1,3 @@
-$("#messages .alert").show();
-$("#messages .ujs_alert").html("<%= @exerciseError %>").show();
-$("#messages .notice").show();
-$("#messages .ujs_notice").html("<%= @exerciseNotice %>").show();
 $("#ujsform").remove();
 $("#buttonarea").show();
+ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");

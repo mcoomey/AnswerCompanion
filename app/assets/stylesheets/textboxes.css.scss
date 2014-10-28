@@ -36,15 +36,10 @@ li.textbox {
 .textboxdelete .buttonTo {
 	cursor:pointer;
 	position:relative;
-	left:785px;
-	top:-25px;
+	left:770px;
+	top:-30px;
 	color:$main-green;
 	background-color:white;
 	font-weight:bold;
 	font-size:1.5em;
-	border:2px solid $main-green;
-}
-.textboxdelete .buttonTo:hover {
-	color:red;
-	border:2px solid red;
 }

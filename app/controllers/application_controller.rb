@@ -26,6 +26,19 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def current_drop_tab
+	  selected = cookies[:dropTab][1..-1] #remove first character (. or #)
+	  if selected == "current-tab"
+	    return :Current
+    elsif selected == "archived-tab"
+      return :Archived
+    elsif selected == "future-tab"
+      return :Future
+    else
+      return :Unknown
+    end
+  end
+
   def current_tab_index
 	  [:Current, :Archived, :Future].index(current_horizontal_tab())
   end

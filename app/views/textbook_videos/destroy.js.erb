@@ -1,5 +1,2 @@
-$("#messages .alert").hide();
-$("#messages .ujs_alert").html("<%= @videoError %>").show();
-$("#messages .notice").hide();
-$("#messages .ujs_notice").html("<%= @videoNotice %>").show();
+ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
 $("tr#textbook_video_id_<%= @video.id %>").remove();
