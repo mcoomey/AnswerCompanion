@@ -3,5 +3,5 @@ class Textbox < ActiveRecord::Base
   
   belongs_to :course_asset
   
-  validates_presence_of :content
+  validates_presence_of :content, :title
 end

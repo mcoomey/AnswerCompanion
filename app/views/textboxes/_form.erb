@@ -2,7 +2,7 @@
 <%= form_for [@course_asset, @textbox], remote: true do |f| %>
   <%= f.text_field :title, placeholder: "Textbox Title", size: "25" %>
   </br>
-  <%= f.text_area :content, placeholder: "Textbox Content", rows: "4" %>
+  <%= f.text_area :content, placeholder: "Textbox Content", rows: @text_rows %>
   </br>
   <%= f.submit :name => "commit" %>
   <%= f.submit "Cancel", :name => "commit" %>

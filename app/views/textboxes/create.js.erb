@@ -1,14 +1,6 @@
-<% if @textbox.errors.any? %>
-	$("#messages .alert").hide();
-	$("#messages .ujs_alert").show().html("ERROR! <%= j @textbox.errors.full_messages.first %>" ).show();
-<% else %>
-	$("#messages .ujs_alert").hide();
-	$("#messages .alert").show();
-	$("#messages .notice").show().html("Successfully created textbox.");
-	
-  $("#buttonarea").show().css('visibility', 'visible');
-  
-  $("#panel ul:visible li:first").remove()
-  $("#panel ul:visible").prepend("<%= j render 'tbox', local_tbox: @textbox, local_course_asset_id: params[:course_asset_id] %>");
+ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
+$("#new_textbox").closest("li").remove();  //remove the <li> element that contains the form
+$("#buttonarea").show().css('visibility', 'visible');
 
-<% end %>
+$("#panel ul:visible li:first").remove()
+$("#panel ul:visible").prepend("<%= j render 'tbox', local_tbox: @textbox, local_course_asset_id: params[:course_asset_id] %>");

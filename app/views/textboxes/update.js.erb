@@ -1,13 +1,5 @@
-<% if @textbox.errors.any? %>
-	$("#messages .alert").hide();
-	$("#messages .ujs_alert").show().html("ERROR! <%= j @textbox.errors.full_messages.first %>" ).show();
-<% else %>
-	$("#messages .ujs_alert").hide();
-	$("#messages .alert").show();
-	$("#messages .notice").show().html("Successfully updated textbox.");
+ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
+$("#ujsform").remove();
+$("#buttonarea").show();
 	
-	$("#buttonarea").show();
-	
-  $("#edit_textbox_<%= @textbox.id %>").parent().replaceWith("<%= j render 'tbox', local_tbox: @textbox, local_course_asset_id: params[:course_asset_id] %>");
-    
-<% end %>
+$("#edit_textbox_<%= @textbox.id %>").parent().replaceWith("<%= j render 'tbox', local_tbox: @textbox, local_course_asset_id: params[:course_asset_id] %>");

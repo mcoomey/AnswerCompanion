@@ -1,5 +1,5 @@
 ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
-$("#ujsform").remove();
-$("#buttonarea").css('visibility', 'hidden') //.hide() not used to preserve the space on the screen
+$("#new_textbox").closest("li").remove();  //remove the <li> element that contains the form
+$("#buttonarea").css('visibility', 'hidden'); //.hide() not used to preserve the space on the screen
 
-$("#panel ul:visible").prepend("<%= j render 'form' %>")
+$("#panel ul:visible").prepend("<%= j render 'form' %>");

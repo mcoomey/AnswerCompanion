@@ -1,5 +1,5 @@
 <li class="textbox" id= "tbox_id_<%= local_tbox.id %>" data-model="textbox" data-model_id="<%= local_tbox.id %>">
-  <fieldset><legend><%=link_to local_tbox.title, edit_course_asset_textbox_path(local_course_asset_id, local_tbox.id), remote: true %></legend>
+  <fieldset><legend><%=local_tbox.title %></legend>
     <div class="textboxdelete">
       
     <%= link_to image_tag("EditIcon.png",  :mouseover => "EditIconHover.png",:class => "button", :alt => "Edit Textbox"), 

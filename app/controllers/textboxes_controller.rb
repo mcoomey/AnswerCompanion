@@ -49,12 +49,14 @@ class TextboxesController < ApplicationController
   def new
     @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
     @textbox = Textbox.new
+    @text_rows = "4"
   end
 
   # GET /textboxes/1/edit
   def edit
     @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
     @textbox = Textbox.find(params[:id])
+    @text_rows = [@textbox.content.lines.count, 4].max.to_s
   end
 
   # POST /textboxes
@@ -77,6 +79,7 @@ class TextboxesController < ApplicationController
       end
     else
       @ujsNotice = "Add new textbox action canceled."
+      @action = "Create"
       render "cancel"
     end
   end
@@ -85,21 +88,29 @@ class TextboxesController < ApplicationController
   # PUT /textboxes/1.json
 	def update
     @textbox = Textbox.find_by_id(params[:id])
+    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
     
     if params[:archived]
-      posit = @textbox.course_asset.textboxes.where(:archived=>params[:archived]).count + 1
+      posit = @course_asset.textboxes.where(:archived=>params[:archived]).count + 1
       @textbox.archived = params[:archived]
       @textbox.position = posit
       @textbox.save
-      render nothing: true
-    elsif params[:commit] && params[:commit] != "Cancel"
-      @textbox.update_attributes(params[:textbox])
+      @ujsNotice = "Textbox has been moved to #{current_drop_tab.to_s} tab."
       render "update"
+    elsif params[:commit] && params[:commit] != "Cancel"
+      if @textbox.update_attributes(params[:textbox])
+        @ujsAlert = nil
+        @ujsNotice = "Successfully updated textbox."
+        render "update"
+      else
+        @ujsNotice = nil
+        @ujsAlert = "Error! " + @textbox.errors.full_messages.first
+        render "edit"
+      end
     else
       @action = "Edit"
       render "cancel"
     end
-    
     
 	end
   
@@ -109,6 +120,8 @@ class TextboxesController < ApplicationController
   def destroy
     @textbox = Textbox.find(params[:id])
     @textbox.destroy
+    @ujsNotice = "Textbox was successfully deleted."
+    
   end
   
   
