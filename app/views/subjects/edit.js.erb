@@ -1,33 +1,5 @@
-<% if @new_category  %>
-  $("#create_new_category_dialog").html("<%= j render 'new_category_dialog' %>");
-	$("#create_new_category_dialog").prepend("<span class=\"title\"> <%= j @category.name %> </span>");
-	$("#create_new_category_dialog").dialog({
-	  title: "Create New Subject Category?",
-	  resizeable: false,
-	  modal: true
-	  });
-
-	$("#confirm_yes").click(function(){
-		$("#create_new_category_dialog").dialog("close");
-	});
-
-	$("#confirm_no").click(function(){
-		$("#subject_category_name").val("");
-		$("#create_new_category_dialog").dialog("close");
-	});
-
-<% else %>
-  $("#ujsform").remove();
-	$("#messages .alert").hide();
-	$("#messages .ujs_alert").hide();
-	$("#messages .notice").hide();
-	$("#messages .ujs_notice").hide();
-	$("#buttonarea").hide().after('<%= j render 'edit_subject', :archived_val => false %>');
-<% end %>
-
-$("#subject_category_name").autocomplete({
-  minLength: 0,
-  delay: 0,
-  source: $("#subject_category_name").data("autocomplete-source"),
-  messages: {noResults: '', results: ''}
-	});
+$("#ujsform").remove();
+ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
+$("table tr td:nth-child(4) a").fadeTo("fast", 0.3).bind('click', false);
+$("table tr td:nth-child(5) a").fadeTo("fast", 0.3).bind('click', false);
+$("#buttonarea").hide().after("<%= j render 'edit_subject' %>");

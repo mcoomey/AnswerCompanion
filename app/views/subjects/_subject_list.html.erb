@@ -1,8 +1,0 @@
-<li>
-	<%= link_to sbj.name, subject_textbook_delegations_path(sbj)+"#tabs-"+(i+1).to_s, :class => "tab-markers" %>
-	<% if current_student %>
-		<%= link_to 'X', student_subject_path(current_student.id, sbj.id), :confirm => 'Remove Subject - Are you sure?', :method => :delete, :class => "buttonTo" %>
-	<% elsif current_instructor %>
-		<%= link_to 'X', instructor_subject_path(current_instructor.id, sbj.id), :confirm => 'Remove Subject - Are you sure?', :method => :delete, :class => "buttonTo" %>
-	<% end %>
-</li>

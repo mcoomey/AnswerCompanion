@@ -1,9 +1,0 @@
-<%= form_for @subject, remote:true do |f| %>
-	<%= f.hidden_field :name %>
-	<%= f.hidden_field :term %>
-	<%= f.hidden_field :category_name %>
-	<%= f.hidden_field :archived %>
-	</br>
-	<%= f.submit "Yes", :name => "commit", :id => "confirm_yes" %>
-	<%= f.submit "No", :name => "commit",  :id => "confirm_no"  %>
-<% end %>

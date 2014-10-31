@@ -28,6 +28,7 @@ class CoursesController < ApplicationController
         end
         }
       format.json { render json: @courses }
+      format.xml { render xml: @courses}
     end
   end
 
@@ -99,7 +100,6 @@ class CoursesController < ApplicationController
   # PUT /courses/1
   # PUT /courses/1.json
   def update
-    puts params.inspect
       
     @course = Course.find_by_id(params[:id])
     @instructor = @course.instructor

@@ -10,8 +10,6 @@
 	<%= f.label :term %>
 	<%= f.text_field :term, :size => "15" %>
 
-	<%= f.hidden_field :archived, :value => archived_val %>
-
 	<%= f.submit "Create", :name => "commit" %>
 	<%= f.submit "Cancel", :name => "commit" %>
 <% end %>

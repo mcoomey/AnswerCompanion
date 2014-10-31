@@ -1,18 +1,4 @@
-<% if @subject.errors.any? %>
-	$("#messages .alert").hide();
-	$("#messages .ujs_alert").html("ERROR! <%= j @subject.errors.full_messages.first %>" ).show();
-<% else %>	
-	$("#messages .ujs_alert").hide();
-	$("#messages .alert").show();
-	$("#messages .notice").show();
-	
-	$("#ujsform").remove();
-	$("#buttonarea").show();
-	
-	if ($.cookie('index_tab') == "#current-subjects") {
-		$("#current-subjects table tr:last").after("<%= j render 'subject_table_row', :local_subject => @subject %>");
-		}
-	else {
-		$("#archived-subjects table tr:last").after("<%= j render 'subject_table_row', :local_subject => @subject %>");
-		}
-<% end %>
+ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
+$("#ujsform").remove();
+$("#buttonarea").show();
+$("tbody:visible:last").append("<%= j render 'subject_table_row', :local_subject => @subject %>");

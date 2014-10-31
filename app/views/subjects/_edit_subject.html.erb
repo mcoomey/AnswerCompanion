@@ -5,13 +5,11 @@
 	<%= f.label :subject %>
 	<%= f.text_field :name, :size => "20" %>
 
+	<%= f.label :description %>
+	<%= f.text_field :description, :size => "40" %>
+
 	<%= f.label :term %>
 	<%= f.text_field :term, :size => "15" %>
-
-	<%= f.label :category %>
-	<%= f.text_field :category_name, :size => "20", data: {autocomplete_source: categories_path } %>
-
-	<%= f.hidden_field :archived, :value => archived_val %>
 
 	<%= f.submit "Update", :name => "commit" %>
 	<%= f.submit "Cancel", :name => "commit" %>
