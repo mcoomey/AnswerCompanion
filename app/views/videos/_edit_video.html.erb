@@ -1,5 +1,5 @@
 <div id="ujsform">
-	<%= form_for @video, remote: true do |f| %>
+	<%= form_for [@course_asset, @video], remote: true do |f| %>
   
     <%= f.label :title %>
     <%= f.text_field :title, size: 25 %>

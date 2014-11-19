@@ -12,6 +12,7 @@ AnswerCompanion::Application.routes.draw do
   
   resources :subjects do
     resources :enrollments
+    resources :course_assets 
   end
   
 	resources :course_assets do

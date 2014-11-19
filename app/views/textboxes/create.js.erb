@@ -2,5 +2,4 @@ ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
 $("#new_textbox").closest("li").remove();  //remove the <li> element that contains the form
 $("#buttonarea").show().css('visibility', 'visible');
 
-$("#panel ul:visible li:first").remove()
 $("#panel ul:visible").prepend("<%= j render 'tbox', local_tbox: @textbox, local_course_asset_id: params[:course_asset_id] %>");

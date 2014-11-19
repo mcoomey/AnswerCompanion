@@ -100,8 +100,7 @@ class VideosController < ApplicationController
   # GET /videos/1/edit
   def edit
     @video = Video.find_by_id(params[:id])
-    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
-    
+    # @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
   end
 
   # PUT /videos/1
@@ -118,10 +117,9 @@ class VideosController < ApplicationController
       posit = @course_asset.videos.where(:archived=>params[:archived]).count + 1
       @video.archived = params[:archived]
       @video.position = posit
-      if @video.save
-        puts ">>>>>>>>>>>saved @video<<<<<<<<<"
-      else
-        puts ">>>>>>>>>>>failed to save @video<<<<<<<<<"
+      if !@video.save
+        @ujsNotice = nil
+        @ujsAlert = "Error! " + @video.errors.full_messages.first
       end
       render nothing: true
       
@@ -164,13 +162,24 @@ class VideosController < ApplicationController
   private
   
   def load_videos
-    
-    @course_asset = CourseAsset.find_by_id(params[:course_asset_id]) || CourseAsset.find_by_id(params[:video][:course_asset_id])
-    @course = @course_asset.course
-    @course_assets = @course.course_assets.order(:position)
-    @instructor = @course.instructor
-    @courses = @instructor.courses
-    @videos = @course_asset.videos
+ 
+    if current_user.class.to_s == "Instructor"
+      @user = current_instructor
+      @choices = @user.courses.where(:archived => 0)
+    elsif current_user.class.to_s == "Student"
+      @user = current_student
+      @choices = @user.subjects.where(:archived => 0)
+    else
+      @user = current_parent
+      # to_be_completed
+    end
+ 
+    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
+    if @course_asset
+      @assetable = @course_asset.assetable
+      @course_assets = @assetable.course_assets.order(:position)
+      @videos = @course_asset.videos
+    end
     
   end
 end

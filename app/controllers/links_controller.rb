@@ -1,36 +1,58 @@
 class LinksController < ApplicationController
+  
+  before_filter :load_user, :only => [:index, :show]
+  
+  
   def index
-    @instructor = current_instructor
-    @courses = @instructor.courses.where(:archived => 0)
-    if params[:course]
-      @course = Course.find_by_id(params[:course][:id])
-      @course_asset = @course.course_assets.try(:first)
+    
+    if params[:assetable]
+      @assetable = @choices.find_by_id(params[:assetable][:id])
+      @course_asset = @assetable.course_assets.try(:first)
       if @course_asset
-        redirect_to course_asset_links_path(@course_asset)
+        redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset)
       else
-        redirect_to course_path(@course)
+        redirect_to polymorphic_path(@assetable)
       end
+
     else
       @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
-      @course = @course_asset.course
-    end
-    @course_assets = @course.course_assets.order(:position)
-    @links = @course_asset.try(:links)
+      @assetable = @course_asset.assetable
+      @course_assets = @assetable.course_assets.order(:position)
+      
+      @links = @course_asset.try(:links)
 
-		if @links
-  		@links_current  = @links.where(:archived => 0).order("position")
-  		@links_archived = @links.where(:archived => 1).order("position")
-  		@links_future   = @links.where(:archived => 2).order("position")
-		end
+  		if @links
+    		@links_current  = @links.where(:archived => 0).order("position")
+    		@links_archived = @links.where(:archived => 1).order("position")
+    		@links_future   = @links.where(:archived => 2).order("position")
+  		end
     
-		if (@links && @links.count == 0)
-			flash[:alert] = "There currently are not any links."
-		else
-			flash[:alert] = nil
-		end
+  		if (@links && @links.count == 0)
+  			flash[:alert] = "There currently are not any links."
+  		else
+  			flash[:alert] = nil
+  		end
+      
+    end
   end
 
   def show
+    if params[:assetable]
+      @assetable = @choices.find_by_id(params[:assetable][:id])
+      @course_asset = @assetable.course_assets.try(:first)
+      if @course_asset
+        redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset)
+      else
+        redirect_to polymorphic_path(@assetable)
+      end
+
+    else
+      @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
+      @assetable = @course_asset.assetable
+      @course_assets = @assetable.course_assets.order(:position)
+      @link = Link.find_by_id(params[:id])    
+      @response = Net::HTTP.get_response( URI.parse("http://www.google.com"))
+    end
   end
 
   def new
@@ -115,4 +137,22 @@ class LinksController < ApplicationController
     end
     render nothing: true  
   end
+  
+  private
+  
+  def load_user
+    if current_user.class.to_s == "Instructor"
+      @user = current_instructor
+      @choices = @user.courses.where(:archived => 0)
+    elsif current_user.class.to_s == "Student"
+      @user = current_student
+      @choices = @user.subjects.where(:archived => 0)
+    else
+      @user = current_parent
+      # to_be_completed
+    end
+  end
+  
+  
+  
 end

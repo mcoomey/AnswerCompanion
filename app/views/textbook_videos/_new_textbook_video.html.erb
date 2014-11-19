@@ -4,7 +4,7 @@
     <%= f.label "New Video:", :class => "attention" %>
 		<%= f.file_field :videofile, :id => "video_filename" %>
     
-    <%= f.hidden_field :instructor_id, :value => @instructor.id %>
+    <%= f.hidden_field :instructor_id, :value => @user.id %>
     
     <%= f.hidden_field :textbook_id, :value => @textbook.id %>
     

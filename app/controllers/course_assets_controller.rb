@@ -1,14 +1,12 @@
 class CourseAssetsController < ApplicationController
+  
+  before_filter :load_assetable
+    
   # GET /course_assets
   # GET /course_assets.json
   def index
-    if params[:course_id]
-      @course = Course.find_by_id(params[:course_id])
-      @course_assets = @course.course_assets.order(:position)
-    else
-      @course_assets = CourseAsset.all
-    end
-    
+    @course_assets = @assetable? @assetable.course_assets.order(:position) : []
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @course_assets }
@@ -28,24 +26,23 @@ class CourseAssetsController < ApplicationController
 
   # GET /course_assets/new
   def new
-    @course_asset = CourseAsset.new
-    @course = Course.find_by_id(params[:course_id])
+    @course_asset = @assetable.course_assets.new
   end
 
    # POST /course_assets
   def create
-   	if params[:commit]  != "Cancel"
-      @course = Course.find_by_id(params[:course_id])
-      posit = @course.course_assets.count + 1
-      @course_asset = @course.course_assets.build(params[:course_asset].merge(position: posit))
+   	if params[:commit]  != "Cancel"      
+      posit = @assetable.course_assets.count + 1
+      @course_asset = @assetable.course_assets.new(params[:course_asset].merge(position: posit))
       if @course_asset.save
-        @course_asset_error = nil
-        @course_assets = @course_asset.course.course_assets.order(:position)
+        @ujsAlert = nil
+        @course_assets = @course_asset.assetable.course_assets.order(:position)
       else
-        @course_assetError = @course_asset.errors.full_messages.first
+        @ujsAlert = @course_asset.errors.full_messages.first
+        render "new"
       end
     else
-      @course_assetNotice = "Add new asset action canceled."
+      @ujsNotice = "Add new asset action canceled."
       render "cancel"
     end
   end
@@ -74,7 +71,7 @@ class CourseAssetsController < ApplicationController
   # DELETE /course_assets/1
   def destroy
     @course_asset = CourseAsset.find(params[:id])
-    @course = @course_asset.course
+    @assetable = @course_asset.assetable
     @course_asset.destroy
 
     ref_url = request.referrer.to_s
@@ -83,14 +80,14 @@ class CourseAssetsController < ApplicationController
     # if user is deleting the currently selected asset
     if (ref_url.index orig_url) == 0
       # if there are any other assets associated with the course then render the first one
-      @course_asset = @course.course_assets.try(:first)
+      @course_asset = @assetable.course_assets.try(:first)
       if @course_asset
         new_path = send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset)
         render :js => "window.location.href = '#{new_path}'"
         
         # otherwise just render the course
       else
-        render :js => "window.location.href = '#{course_path(@course)}'"
+        render :js => "window.location.href = '#{course_path(@assetable)}'"
       end
     end 
   end
@@ -104,5 +101,12 @@ class CourseAssetsController < ApplicationController
     render nothing: true  
   end
 
+  private
   
+  def load_assetable
+    @resource, id = request.path.split('/')[1,2]
+    @assetable = @resource.singularize.classify.constantize.find_by_id(id)
+  end
+  
+    
 end

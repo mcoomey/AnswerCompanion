@@ -25,9 +25,9 @@
  		</header>
     <div id="messages">
 	  	<span class="notice"><%= notice %></span>
-			<span class="ujs_notice"></span>
+			<span class="ujs_notice"><%= @ujsNotice %></span>
 	  	<span class="alert"><%= alert %></span>
-			<span class="ujs_alert"></span>
+			<span class="ujs_alert"><%= @ujsAlert %></span>
   	</div>
 		<%= yield :asset_table %>
 		<%= yield %>

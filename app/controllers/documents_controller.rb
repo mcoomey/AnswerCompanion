@@ -1,43 +1,58 @@
 class DocumentsController < ApplicationController
+  
+  before_filter :load_user, :only => [:index, :show]
+  
   def index
-    @instructor = current_instructor
-    @courses = @instructor.courses.where(:archived => 0)
-    if params[:course]
-      @course = Course.find_by_id(params[:course][:id])
-      @course_asset = @course.course_assets.try(:first)
+    
+    if params[:assetable]
+      @assetable = @choices.find_by_id(params[:assetable][:id])
+      @course_asset = @assetable.course_assets.try(:first)
       if @course_asset
-        redirect_to course_asset_links_path(@course_asset)
+        redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset)
       else
-        redirect_to course_path(@course)
+        redirect_to polymorphic_path(@assetable)
       end
+
     else
       @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
-      @course = @course_asset.course
-    end
-    @course_assets = @course.course_assets.order(:position)
-    @documents = @course_asset.try(:documents)
+      @assetable = @course_asset.assetable
+      @course_assets = @assetable.course_assets.order(:position)
+      @documents = @course_asset.try(:documents)
 
-		if @documents
-  		@documents_current  = @documents.where(:archived => 0).order("position")
-  		@documents_archived = @documents.where(:archived => 1).order("position")
-  		@documents_future   = @documents.where(:archived => 2).order("position")
-		end
+  		if @documents
+    		@documents_current  = @documents.where(:archived => 0).order("position")
+    		@documents_archived = @documents.where(:archived => 1).order("position")
+    		@documents_future   = @documents.where(:archived => 2).order("position")
+  		end
     
-		if (@documents && @documents.count == 0)
-			flash[:alert] = "There currently are not any documents."
-		else
-			flash[:alert] = nil
-		end
+  		if (@documents && @documents.count == 0)
+  			flash[:alert] = "There currently are not any documents."
+  		else
+  			flash[:alert] = nil
+  		end
+      
+    end
+    
   end
 
 
   def show
-    @instructor = current_instructor
-    @courses = @instructor.courses.where(:archived => 0)
-    @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
-    @document = Document.find_by_id(params[:id])    
-    @course = @document.course_asset.course
-    @course_assets = @course.course_assets.order(:position)
+    if params[:assetable]
+      @assetable = @choices.find_by_id(params[:assetable][:id])
+      @course_asset = @assetable.course_assets.try(:first)
+      if @course_asset
+        redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset)
+      else
+        redirect_to polymorphic_path(@assetable)
+      end
+
+    else
+      @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
+      @assetable = @course_asset.assetable
+      @course_assets = @assetable.course_assets.order(:position)
+      @document = Document.find_by_id(params[:id])    
+    end
+    
   end
 
   def new
@@ -119,5 +134,19 @@ class DocumentsController < ApplicationController
     render nothing: true  
   end
   
+  private
+  
+  def load_user
+    if current_user.class.to_s == "Instructor"
+      @user = current_instructor
+      @choices = @user.courses.where(:archived => 0)
+    elsif current_user.class.to_s == "Student"
+      @user = current_student
+      @choices = @user.subjects.where(:archived => 0)
+    else
+      @user = current_parent
+      # to_be_completed
+    end
+  end
   
 end

@@ -23,8 +23,8 @@ class CoursesController < ApplicationController
     respond_to do |format|
       format.html { # index.html.erb
         if @courses.count == 0
-          flash[:notice] = "You don't have any courses defined.  "
-          flash[:alert] = "Please add a course."
+          @ujsNotice = "You don't have any courses defined.  "
+          @ujsAlert = "Please add a course."
         end
         }
       format.json { render json: @courses }
@@ -39,16 +39,16 @@ class CoursesController < ApplicationController
       @course = Course.find_by_id(params[:course][:id])
       @course_asset = @course.course_assets.try(:first)
       if @course_asset
-        redirect_to course_asset_textbook_delegations_path(@course_asset)
+        redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", (@course_asset))
       else
-  			flash[:alert] = "You must add a Course Asset."
+  			@ujsAlert = "You must add a Course Asset."
         redirect_to course_path(@course)
       end
     else
       @course = Course.find_by_id(params[:id])
       @course_assets = @course.course_assets.order(:position)
       if @course_assets.count == 0
-  			flash[:alert] = "You must add a Course Asset."
+  			@ujsAlert = "You must add a Course Asset."
       end
       @instructor = @course.instructor
       @courses = @instructor.courses.where(:archived => false)

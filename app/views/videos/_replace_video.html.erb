@@ -1,13 +1,11 @@
 <div id="ujsform">
-	<%= form_for @video, remote: true do |f| %>
+	<%= form_for [@course_asset, @video], remote: true do |f| %>
   
     <%= f.label :replace_video, :class => "attention" %>
 		<%= f.file_field :videofile, :id => "video_filename" %>
     
     <%= f.hidden_field :replace_flag, :value => "1" %>
             
-    <%= f.hidden_field :course_asset_id, :value => @course_asset.id %>
-    
     <%= f.hidden_field :old_version_id, :value => @old_version_id %>
         
 		<%= f.submit "Cancel" %>

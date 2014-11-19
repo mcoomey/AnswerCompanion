@@ -114,12 +114,22 @@ class TextbookVideosController < ApplicationController
       @textbook_videos = @videoable.textbook_videos
     end
     
+    if current_user.class.to_s == "Instructor"
+      @user = current_instructor
+      @choices = @user.courses.where(:archived => 0)
+    elsif current_user.class.to_s == "Student"
+      @user = current_student
+      @choices = @user.subjects.where(:archived => 0)
+    else
+      @user = current_parent
+      # to_be_completed
+    end
+    
+    
     @course_asset = CourseAsset.find_by_id(params[:course_asset_id]) || CourseAsset.find_by_id(params[:textbook_video][:course_asset_id])
     if @course_asset
-      @course = @course_asset.course
-      @course_assets = @course.course_assets.order(:position)
-      @instructor = @course.instructor
-      @courses = @instructor.courses    
+      @assetable = @course_asset.assetable
+      @course_assets = @assetable.course_assets.order(:position)
     end
   end
   

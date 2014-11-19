@@ -1,22 +1,23 @@
 <article>
 	<div id="buttonarea">
-		<%= form_for :course, :url => course_asset_textbook_delegations_path(@course_asset), :html => { :method => 'get' } do |f| %>
-			<%= f.select(:id, @courses.collect{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
+    
+		<%= form_for :assetable, :url => course_asset_textbook_delegations_path(@course_asset), :html => { :method => 'get' } do |f| %>
+			<%= f.select(:id, @choices.collect{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
 		<% end %>
 		
-		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
-		           instructor_courses_path(@instructor) %>
-							 
+		<% if @user.class.to_s == "Instructor" %>
+  		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
+  		           instructor_courses_path(@user) %>
+    <% else %>
+  		<%=link_to image_tag("BackToSubjects.png",  :mouseover => "BackToSubjectsHover.png",:class => "button", :alt => "Back to Subjects"), 
+  		           student_subjects_path(@user) %>
+    <% end %>
+    
 	</div>
   
 	<div id="horizontal-tabs">
 		<ul class="dynamic-tabs-nav">
-      <% if ((@resource == "exercises")||(@resource == "lessons")) %>
-  			<%= content_tag(:li, (link_to "Lessons", textbook_lessons_path(@textbook, :course_asset_id => @course_asset.id )), class: ("activeTab" if @resource == "lessons")) %>
-  			<%= content_tag(:li, (link_to "Exercises", textbook_exercises_path(@textbook, :course_asset_id => @course_asset.id )), class: ("activeTab" if @resource == "exercises")) %>
-      <% else %>
-			  <%= content_tag(:li, @video.description, class: "activeTab") %>
-      <% end %>
+		  <%= content_tag(:li, @video.description, class: "activeTab") %>
 		</ul>
 	</div>
 	<div id="vertical-tabs">

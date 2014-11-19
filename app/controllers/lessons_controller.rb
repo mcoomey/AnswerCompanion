@@ -4,29 +4,53 @@ class LessonsController < ApplicationController
   # GET /lessons.json
   def index
     
-    if params[:filters]
-      @course_asset = CourseAsset.find_by_id(params[:filters][:course_asset_id])
+    if current_user.class.to_s == "Instructor"
+      @user = current_instructor
+      @choices = @user.courses.where(:archived => 0)
+    elsif current_user.class.to_s == "Student"
+      @user = current_student
+      @choices = @user.subjects.where(:archived => 0)
     else
-      @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
+      @user = current_parent
+      # to_be_completed
     end
-    @instructor = current_instructor
-    @courses = @instructor.courses.where(:archived => false)
-    @course = @course_asset.course
-    @course_assets = @course.course_assets.order(:position)
+    
     @textbook = Textbook.find_by_id(params[:textbook_id])
     
-    if params[:filters] && (params[:commit] != "Reset")
-      @filterstring = params[:filters][:pagefilter]
-      if @filterstring.include?('-')
-        range = @filterstring.split('-')
-        @lessons = @textbook.lessons.where("page between ? and ?", range[0].to_i, range[1].to_i).sort{|a,b| a.page.to_i <=> b.page.to_i}
+    if params[:assetable]
+      @assetable = @choices.find_by_id(params[:assetable][:id])
+      @course_asset = @assetable.course_assets.try(:first)
+      if @course_asset
+        redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset)
       else
-        @lessons = @textbook.lessons.where("page = ?", @filterstring)
+        redirect_to polymorphic_path(@assetable)
       end
+    
+    elsif params[:filters]
+      @course_asset = CourseAsset.find_by_id(params[:filters][:course_asset_id])
+      @assetable = @course_asset.assetable
+      @course_assets = @assetable.course_assets.order(:position)
+      
+      if (params[:commit] != "Reset")
+        @filterstring = params[:filters][:pagefilter]
+        if @filterstring.include?('-')
+          range = @filterstring.split('-')
+          @lessons = @textbook.lessons.where("page between ? and ?", range[0].to_i, range[1].to_i).sort{|a,b| a.page.to_i <=> b.page.to_i}
+        else
+          @lessons = @textbook.lessons.where("page = ?", @filterstring)
+        end
         
+      else
+        @filterstring = nil
+        @lessons = @textbook.lessons.sort{|a,b| a.page.to_i <=> b.page.to_i}
+      end
+
     else
-      @filterstring = nil
       @lessons = @textbook.lessons.sort{|a,b| a.page.to_i <=> b.page.to_i}
+      @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
+      @assetable = @course_asset.assetable
+      @course_assets = @assetable.course_assets.order(:position)
+      
     end
     
     flash[:alert] = nil

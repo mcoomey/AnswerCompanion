@@ -1,24 +1,27 @@
 class TextboxesController < ApplicationController
+  
+  before_filter :load_user, :only => [:index, :show]
+  
   # GET /textboxes
   # GET /textboxes.json
   def index
     
-    @instructor = current_instructor
-    @courses = @instructor.courses.where(:archived => 0)
-    if params[:course]
-      @course = Course.find_by_id(params[:course][:id])
-      @course_asset = @course.course_assets.try(:first)
+    if params[:assetable]
+      @assetable = @choices.find_by_id(params[:assetable][:id])
+      @course_asset = @assetable.course_assets.try(:first)
       if @course_asset
-        redirect_to course_asset_textbook_delegations_path(@course_asset)
+        redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset)
       else
-        redirect_to course_path(@course)
+        redirect_to polymorphic_path(@assetable)
       end
+
     else
       @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
-      @course = @course_asset.course
+      @assetable = @course_asset.assetable
+      @course_assets = @assetable.course_assets.order(:position)
+      @textboxes = @course_asset.try(:textboxes)
+
     end
-    @course_assets = @course.course_assets.order(:position)
-    @textboxes = @course_asset.try(:textboxes)
 
 		if @textboxes
   		@textboxes_current  = @textboxes.where(:archived => 0).order("position DESC")
@@ -138,5 +141,22 @@ class TextboxesController < ApplicationController
     end      
     render nothing: true
   end
+  
+  
+  private
+  
+  def load_user
+    if current_user.class.to_s == "Instructor"
+      @user = current_instructor
+      @choices = @user.courses.where(:archived => 0)
+    elsif current_user.class.to_s == "Student"
+      @user = current_student
+      @choices = @user.subjects.where(:archived => 0)
+    else
+      @user = current_parent
+      # to_be_completed
+    end
+  end
+  
   
 end
