@@ -6,81 +6,28 @@
 		
 		<%=link_to image_tag("BackToSubjects.png",  :mouseover => "BackToSubjectsHover.png",:class => "button", :alt => "Back to Subjects"), 
 		           student_subjects_path(@student) %>
-		<%=link_to image_tag("Edit.png",  :mouseover => "EditHover.png",:class => "button", :alt => "Edit Subject"), 
+		<%=link_to image_tag("Enroll.png",  :mouseover => "EnrollHover.png",:class => "button", :alt => "Enroll in course"), 
 		           edit_subject_path(@subject), remote: true %>
+		<%=link_to image_tag("AddAsset.png",  :mouseover => "AddAssetHover.png",:class => "button", :alt => "Add Course Asset"), 
+		           new_polymorphic_path([@subject, CourseAsset.new]), remote: true %>
 	</div>
-	<div id="create_new_category_dialog">
-	</div>	
 	<div id="horizontal-tabs">
 		<ul class="static-tabs-nav">
 			<li><a href=".current-asset">Current</a></li>
 			<li><a href=".archived-asset">Archived</a></li>
-			<li><a href=".future-asset">Future</a></li>
 		</ul>
 	</div>
 	<div id="vertical-tabs">
-		<ul class="static-tabs-nav">
-			<li><%= link_to "Textbooks", "#asset-1", :class => "tab-markers" %></li>
-			<li><%= link_to "Handouts", "#asset-2", :class => "tab-markers" %></li>
-			<li><%= link_to "Lectures", "#asset-3", :class => "tab-markers" %></li>
-			<li><%= link_to "Assignments", "#asset-4", :class => "tab-markers" %></li>
-			<li><%= link_to "Assessments", "#asset-5", :class => "tab-markers" %></li>
+		<ul class="dynamic-tabs-nav">
+  		<span class="title">Subject Assets</span>
+			<% @course_assets.each do |asset| %>
+				<%= render "shared/course_asset_tag", :local_asset => asset %>
+  		<% end %>
 		</ul>
 		<div id="panel">
-			<div id="asset-1">
-				<div class="archived-asset">
-					Archived Textbooks
-				</div>
-				<div class="current-asset">
-					Current Textbooks
-				</div>
-				<div class="future-asset">
-					Future Textbooks
-				</div>			
+			<div class="archived-tab">
 			</div>
-			<div id="asset-2">
-				<div class="archived-asset">
-					Archived Handouts
-				</div>
-				<div class="current-asset">
-					Current Handouts
-				</div>
-				<div class="future-asset">
-					Future Handouts
-				</div>			
-			</div>
-			<div id="asset-3">
-				<div class="archived-asset">
-					Archived Lectures
-				</div>
-				<div class="current-asset">
-					Current Lectures
-				</div>
-				<div class="future-asset">
-					Future Lectures
-				</div>			
-			</div>
-			<div id="asset-4">
-				<div class="archived-asset">
-					Archived Assignments
-				</div>
-				<div class="current-asset">
-					Current Assignments
-				</div>
-				<div class="future-asset">
-					Future Assignments
-				</div>			
-			</div>
-			<div id="asset-5">
-				<div class="archived-asset">
-					Archived Assessments
-				</div>
-				<div class="current-asset">
-					Current Assessments
-				</div>
-				<div class="future-asset">
-					Future Assessments
-				</div>			
+			<div class="current-tab">
 			</div>
 		</div>
 		<br class="clearfloat"/>

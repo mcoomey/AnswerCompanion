@@ -6,7 +6,7 @@ jQuery.fn.setDynamicTabs = ->
     $loca = location.pathname
     
     # if $(this).attr("href") == location.pathname
-    if $loca.indexOf($href) > -1
+    if $href.indexOf($loca) > -1
       $(this).parent().addClass("activeTab")
     else
       $(this).parent().removeClass("activeTab")

@@ -1,9 +1,13 @@
 <tr id="subject_<%=local_subject.id %>" data-model="subject" data-model_id="<%= local_subject.id %>">
-	<% if local_subject.archived? %>
-		<td><%= local_subject.name %></td>
-	<% else %>
-		<td><%= link_to local_subject.name, student_subject_path(local_subject.student.id, local_subject.id) %></td>
-	<% end %>
+  <td>
+  	<% if local_subject.course_assets.count > 0 %>
+      <%= link_to local_subject.name, send("course_asset_#{CourseAssetModelType.find_by_id(local_subject.course_assets.first.model_type).name_of_model}_path", 
+                                            local_subject.course_assets.first,
+                                            subject_id: local_subject.id ) %>
+  	<% else %>
+  		<%= link_to local_subject.name, student_subject_path(current_student, local_subject.id, subject_id: local_subject.id) %>
+  	<% end %>
+  </td>
 	<td><%= local_subject.description %></td>
 	<td><%= local_subject.term %></td>
 	<td>

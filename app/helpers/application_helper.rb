@@ -59,5 +59,5 @@ module ApplicationHelper
 
     link_to(image_tag(img,  :mouseover => imghvr), '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
   end
-
+  
 end

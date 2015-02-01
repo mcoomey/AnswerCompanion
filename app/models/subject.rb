@@ -9,4 +9,15 @@ class Subject < ActiveRecord::Base
 	validates :name, :uniqueness => { :scope => [:student_id, :archived], :message => " already exists."}
 	validates :name, :presence => true
 	
+  # virtual attribute to mimic Course class
+  
+  def section
+    @section
+  end
+  
+  def section=(val)
+    @section = val
+  end
+   
+  
 end

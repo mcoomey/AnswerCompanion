@@ -7,6 +7,7 @@ class CoursesController < ApplicationController
   # GET /courses
   # GET /courses.json
   def index
+    
     if params[:instructor_id]
       @instructor = Instructor.find_by_id(params[:instructor_id])
       @courses = @instructor.courses
@@ -39,7 +40,7 @@ class CoursesController < ApplicationController
       @course = Course.find_by_id(params[:course][:id])
       @course_asset = @course.course_assets.try(:first)
       if @course_asset
-        redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", (@course_asset))
+        redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset, {:course_id => @course.id})
       else
   			@ujsAlert = "You must add a Course Asset."
         redirect_to course_path(@course)
@@ -52,9 +53,7 @@ class CoursesController < ApplicationController
       end
       @instructor = @course.instructor
       @courses = @instructor.courses.where(:archived => false)
-      
-      @selections = @courses.map{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}
-
+      @asset_type = "Course Assets"
       respond_to do |format|
         format.html # show.html.erb
         format.json { render json: @course }

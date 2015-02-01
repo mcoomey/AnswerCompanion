@@ -32,6 +32,13 @@ class CourseAssetsController < ApplicationController
    # POST /course_assets
   def create
    	if params[:commit]  != "Cancel"      
+      if current_user.class.to_s == "Instructor"
+        @user_mode = :instructor
+      else
+        @user_mode = :student
+      end
+      
+      
       posit = @assetable.course_assets.count + 1
       @course_asset = @assetable.course_assets.new(params[:course_asset].merge(position: posit))
       if @course_asset.save

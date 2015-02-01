@@ -1,42 +1,90 @@
 class TextbookDelegationsController < ApplicationController
 
+  before_filter :get_user_mode
+  
   def index
-    if current_user.class.to_s == "Instructor"
-      @user = current_instructor
+        
+    if @user_mode == "instructor"
+      
       @choices = @user.courses.where(:archived => 0)
-    elsif current_user.class.to_s == "Student"
-      @user = current_student
-      @choices = @user.subjects.where(:archived => 0)
+      @asset_type = "Course Assets"
+    
+      if params[:course] # drop-down menu
+        @course = Course.find_by_id(params[:course][:id])
+        @query_string = {:course_id => @course.id}
+        @course_assets = @course.course_assets
+        @course_asset = @course.course_assets.try(:first)
+        if @course_asset
+          redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset, @query_string)
+        else
+          redirect_to course_path(@course, @query_string)
+        end
+      else
+        @course = Course.find_by_id(params[:course_id])
+        @query_string = {:course_id => @course.id}
+        @course_assets = @course.course_assets
+        @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
+    		@textbookDels = @course_asset.try(:textbook_delegations)
+        
+    		if @textbookDels
+      		@textbookDels_current  = @textbookDels.where(:archived => 0).order(:position)
+      		@textbookDels_archived = @textbookDels.where(:archived => 1).order(:position)
+      		@textbookDels_future   = @textbookDels.where(:archived => 2).order(:position)
+      		if (@textbookDels.count == 0)
+      			@ujsAlert = "No textbooks are currently assigned."
+      		else
+      			@ujsAlert = nil
+      		end
+    		end
+        @assetable = @course
+      end
+      
+    elsif @user_mode == "student"
+
+    
+      if params[:subject]
+        @subject = Subject.find_by_id(params[:subject][:id])
+        @query_string = {:subject_id => @subject.id}
+        @course_assets = @subject.course_assets
+        @course_asset = @subject.course_assets.try(:first)
+        if @course_asset
+          redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset, @query_string)
+        else
+          redirect_to subject_path(@subject)
+        end
+      else
+        @subject = Subject.find_by_id(params[:subject_id])
+        @query_string = {:subject_id => @subject.id}
+        @choices = @user.subjects.where(:archived => 0)
+        @asset_type = "Subject Assets"
+        @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
+        @course_assets = @subject.course_assets
+        @enrolled_assets = @subject.enrollment.try(:course).try(:course_assets)
+    		@textbookDels = @course_asset.try(:textbook_delegations)
+        
+    		if @textbookDels
+      		@textbookDels_current  = @textbookDels.where(:archived => 0).order(:position)
+      		@textbookDels_archived = @textbookDels.where(:archived => 1).order(:position)
+      		@textbookDels_future   = @textbookDels.where(:archived => 2).order(:position)
+      		if (@textbookDels.count == 0)
+      			@ujsAlert = "No textbooks are currently assigned."
+      		else
+      			@ujsAlert = nil
+      		end
+    		end
+        @assetable = @subject
+      end
+            
     else
-      @user = current_parent
-      # to_be_completed
+      
+      # user must be a parent (@user_mode == :parent)
+      
+      # ***** TO BE COMPLETED *****
+      
     end
     
-    if params[:assetable]
-      @assetable = @choices.find_by_id(params[:assetable][:id])
-      @course_asset = @assetable.course_assets.try(:first)
-      if @course_asset
-        redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset)
-      else
-        redirect_to polymorphic_path(@assetable)
-      end
-    else
-      @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
-      @assetable = @course_asset.assetable
-      @course_assets = @assetable.course_assets.order(:position)
-  		@textbookDels = @course_asset.try(:textbook_delegations)
-  		if @textbookDels
-    		@textbookDels_current  = @textbookDels.where(:archived => 0).order(:position)
-    		@textbookDels_archived = @textbookDels.where(:archived => 1).order(:position)
-    		@textbookDels_future   = @textbookDels.where(:archived => 2).order(:position)
-    		if (@textbookDels.count == 0)
-    			@ujsAlert = "No textbooks are currently assigned."
-    		else
-    			@ujsAlert = nil
-    		end
-  		end
-    end
-	end
+  end
+  
 		
 	def new
     @course_asset = CourseAsset.find_by_id(params[:course_asset_id])

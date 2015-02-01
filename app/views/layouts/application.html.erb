@@ -20,6 +20,12 @@
 					<% if current_instructor || current_student %>
 						Account Balance: <%= number_to_currency(current_user.accountbalance, :unit => "$") %></br>
 					<% end %>
+          <% if instructor_signed_in? %>
+            INSTRUCTOR
+          <% else %>
+            STUDENT 
+          <% end %>
+          
 				<% end %>
 			</div>   
  		</header>
@@ -31,7 +37,7 @@
   	</div>
 		<%= yield :asset_table %>
 		<%= yield %>
-    <footer> Version 0.0&nbsp;&nbsp;&nbsp;&nbsp;&copy;2012 Answer Companion Incorporated&nbsp;&nbsp;&nbsp;&nbsp;Paxton, MA 01612 </footer>
+    <footer> Version 0.0&nbsp;&nbsp;&nbsp;&nbsp;&copy;2015 Answer Companion, Incorporated&nbsp;&nbsp;&nbsp;&nbsp;Paxton, MA 01612 </footer>
   </div>
 </div>
 </body>

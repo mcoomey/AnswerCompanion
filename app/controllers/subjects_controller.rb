@@ -15,19 +15,32 @@ class SubjectsController < ApplicationController
   end
 
   def show
-    @student = Student.find_by_id(params[:student_id]) || current_student
-    @subjects = @student.subjects.where(:archived => false)
+    
     if params[:subject]
-      @subject = Subject.where(:student_id => @student).find(params[:subject][:id])
+      @subject = Subject.find_by_id(params[:subject][:id])
+      @query_string = {:subject_id => @subject.id}
+      @course_assets = @subject.course_assets
+      @course_asset = @subject.course_assets.try(:first)
+      if @course_asset
+        redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset, @query_string)
+      else
+        redirect_to subject_path(@subject, @query_string)
+      end
     else
-      @subject = Subject.where(:student_id => @student).find(params[:id])
+      @subject = Subject.find_by_id(params[:id])
+      @course_assets = @subject.course_assets.order(:position)
+      if @course_assets.count == 0
+  			@ujsAlert = "You must add a Subject Asset or enroll in a course."
+      end
+      @student = @subject.student
+      @subjects = @student.subjects.where(:archived => 0)
+      
+      respond_to do |format|
+        format.html # show.html.erb
+        format.json { render json: @subject }
+      end
     end
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @subject }
-    end
-
+    
   end
 
   def new

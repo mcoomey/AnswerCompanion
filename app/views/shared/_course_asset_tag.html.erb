@@ -1,10 +1,13 @@
 <div class="asset-tag" id="asset_tag_<%= local_asset.id %>">
-	<div class="asset-tag-delete">
-		<%= button_to 'X', course_asset_path(local_asset), :confirm => "Delete Asset Tag - #{local_asset.name}.\nAll content will be lost!\n\nAre you sure?", :method => :delete, :remote => true, :class => "buttonTo" %>
-	</div>
-	<li>
+  <div class="asset-tag-delete">
+    <% if @user_mode == "instructor" || local_asset.assetable_type == "Subject" %>
+      <%= button_to 'X', course_asset_path(local_asset), :confirm => "Delete Asset Tag - #{local_asset.name}.\nAll content will be lost!\n\nAre you sure?", :method => :delete, :remote => true, :class => "buttonTo" %>
+    <% end %>
+  </div>
+  <li>
     <%= link_to local_asset.name, 
-                  url_for([local_asset, CourseAssetModelType.find_by_id(local_asset.model_type).name_of_model]), 
-                  id: "link_to_asset_#{local_asset.id}"
-                  %></li>
+    send("course_asset_#{CourseAssetModelType.find_by_id(local_asset.model_type).name_of_model}_path", local_asset, @query_string),
+    id: "link_to_asset_#{local_asset.id}"
+    %>
+  </li>
 </div>

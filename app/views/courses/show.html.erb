@@ -1,6 +1,6 @@
 <article>
 	<div id="buttonarea">
-		<%= form_for :course, :url => { :action => 'show' }, :html => { :method => 'get' } do |f| %>
+		<%= form_for @course, :url => { :action => 'show' }, :html => { :method => 'get' } do |f| %>
 			<%= f.select(:id, @courses.collect{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
 		<% end %>
 		
@@ -18,10 +18,15 @@
 	</div>
 	<div id="vertical-tabs">
 		<ul class="dynamic-tabs-nav">
-  		<span class="title">Course Assets</span>
-			<% @course_assets.each do |asset| %>
+      
+  		<span class="title"><%= @asset_type %></span>
+      <% @enrolled_assets.try :each do |asset| %>
 				<%= render "shared/course_asset_tag", :local_asset => asset %>
-  		<% end %>
+      <% end %>
+			<% @course_assets.try :each do |asset| %>
+				<%= render "shared/course_asset_tag", :local_asset => asset %>
+      <% end %>
+      
 		</ul>
 		<div id="panel">
 			<div class="archived-tab">
