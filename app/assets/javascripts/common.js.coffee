@@ -28,22 +28,26 @@ window.handleDropEvent = (event, ui) ->
 
 
 window.handleSortEvent = (event, ui) ->
-  data = $(this).sortable('serialize')
+  dataString = $(this).sortable('serialize')
   urlString = window.location.pathname + "/sort" 
+  console.log "urlString = " + urlString 
+  console.log "dataString = " + dataString 
 
   $.ajax
     type: "PUT"
     url: urlString
-    data: data
+    data: dataString
     
 window.handleVerticalSortEvent = (event, ui) ->
-  data = $(this).sortable('serialize')
+  dataString = $(this).sortable('serialize')
   urlString = "/course_assets/sort" 
+  console.log "urlString = " + urlString 
+  console.log "dataString = " + dataString 
 
   $.ajax
     type: "PUT"
     url: urlString
-    data: data
+    data: dataString
     
 window.ujsMessages = (ujsAlert, ujsNotice) ->
   $("#messages .ujs_alert").html ujsAlert

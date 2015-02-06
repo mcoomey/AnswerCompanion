@@ -28,7 +28,7 @@
 	<div id="vertical-tabs">
 		<ul class="dynamic-tabs-nav">
   		<span class="title">Course Assets</span>
-			<% @course_assets.each do |asset| %>
+			<% @course_assets.try :eacheach do |asset| %>
 				<%= render "shared/course_asset_tag", :local_asset => asset %>
   		<% end %>
 		</ul>

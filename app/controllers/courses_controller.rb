@@ -48,7 +48,7 @@ class CoursesController < ApplicationController
     else
       @course = Course.find_by_id(params[:id])
       @course_assets = @course.course_assets.order(:position)
-      if @course_assets.count == 0
+      if @course_assets.try :eachcount == 0
   			@ujsAlert = "You must add a Course Asset."
       end
       @instructor = @course.instructor

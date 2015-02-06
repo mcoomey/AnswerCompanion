@@ -23,7 +23,7 @@
       <% @enrolled_assets.try :each do |asset| %>
 				<%= render "shared/course_asset_tag", :local_asset => asset %>
       <% end %>
-			<% @course_assets.try :each do |asset| %>
+			<% @course_assets.try :eachtry :each do |asset| %>
 				<%= render "shared/course_asset_tag", :local_asset => asset %>
       <% end %>
       

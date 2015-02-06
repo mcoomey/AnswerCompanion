@@ -29,7 +29,7 @@ class SubjectsController < ApplicationController
     else
       @subject = Subject.find_by_id(params[:id])
       @course_assets = @subject.course_assets.order(:position)
-      if @course_assets.count == 0
+      if @course_assets.try :eachcount == 0
   			@ujsAlert = "You must add a Subject Asset or enroll in a course."
       end
       @student = @subject.student

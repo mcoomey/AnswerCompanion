@@ -89,6 +89,8 @@
   ul.dynamic-tabs-nav {
     width: 120px;
     height: 514px;
+  	overflow-y: scroll;
+    overflow-x: hidden;
     float: left;
   	background: $main-green;
   	list-style:none outside none;

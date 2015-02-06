@@ -29,7 +29,7 @@ jQuery(function() {
     drop:handleDropEvent 
   });
   
-  $("#current-ul, #archived-ul, #future-ul").sortable({
+  $("#current-ul-sortable, #archived-ul-sortable, #future-ul-sortable").sortable({
     zIndex: 0,
     update: handleSortEvent
   });

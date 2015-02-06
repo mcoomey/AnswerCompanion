@@ -40,18 +40,18 @@
 	<div id="vertical-tabs">
 		<ul class="dynamic-tabs-nav">
   		<span class="title"><%= @asset_type %></span>
-      <% @enrolled_assets.try :each do |asset| %>
-				<%= render "shared/course_asset_tag", :local_asset => asset %>
-      <% end %>
-			<% @course_assets.try :each do |asset| %>
-				<%= render "shared/course_asset_tag", :local_asset => asset %>
-      <% end %>
+        <% @enrolled_assets.try :each do |asset| %>
+  				<%= render "shared/course_asset_tag", :local_asset => asset %>
+        <% end %>
+  			<% @course_assets.try :each do |asset| %>
+  				<%= render "shared/course_asset_tag", :local_asset => asset %>
+        <% end %>
 		</ul>
   </div>
 	<div id="scroll-panel">
     
 		<div class="current-tab">
-      <ul id="current-ul">
+      <ul id="current-ul-<%= @sortable %>" >
     		<% if @textbookDels_current.any? %>
     				<% @textbookDels_current.each do |tb_del| %>
     					<%= render 'frontcovers', :local_tb_del => tb_del %>
@@ -62,7 +62,7 @@
 		</div>
     
 		<div class="archived-tab">
-      <ul id="archived-ul">
+      <ul id="archived-ul-<%= @sortable %>" >
         <% if @textbookDels_archived.any? %>
           <% @textbookDels_archived.each do |tb_del| %>
             <%= render 'frontcovers', :local_tb_del => tb_del %>
@@ -73,7 +73,7 @@
 		</div>
     
 		<div class="future-tab">
-      <ul id="future-ul">
+      <ul id="future-ul-<%= @sortable %>" >
     		<% if @textbookDels_future.any? %>
   				<% @textbookDels_future.each do |tb_del| %>
   					<%= render 'frontcovers', :local_tb_del => tb_del %>
