@@ -1,0 +1,16 @@
+<div id="ujsform">
+  <%= form_for @course_asset, remote: true do |f| %>
+
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+	
+    <%= f.label :model_type, "Asset Type" %>
+    <%= f.collection_select :model_type, CourseAssetModelType.all, :id, :name, include_blank: true %>
+	
+    <%= f.submit "Submit", :name => "commit" %>
+    <%= f.submit "Cancel", :name => "commit" %>
+    <%= link_to image_tag("Delete.png"), course_asset_path(@course_asset), :confirm => "Delete Asset Tag - #{@course_asset.name}.\nAll content will be lost!\n\nAre you sure?", :method => :delete, :remote => true, :class => "asset-tag-delete" %>
+    
+
+  <% end %>
+</div>

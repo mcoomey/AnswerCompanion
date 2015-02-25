@@ -1,0 +1,4 @@
+ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
+$("#ujsform").remove();
+$("#buttonarea").hide().after("<%= j render 'edit_course_asset' %>");
+$("form#edit_course_asset input#course_asset_name").focus()

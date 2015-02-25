@@ -2,4 +2,4 @@ ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
 $("#ujsform").remove();
 $("#buttonarea").show();
 
-$("#asset_tag_<%= params[:id] %>").remove();
+$("#link_to_asset_<%= @course_asset.id %>").text("<%= @course_asset.name %>");

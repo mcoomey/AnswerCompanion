@@ -3,5 +3,5 @@ $("#ujsform").remove();
 $("#buttonarea").show();
 
 $('#edit_link_<%= @course.id %>').parent().parent().replaceWith("<%= j render 'course_table_row', :local_course => @course %>");
+$("table tr td:nth-child(5) a").fadeTo("fast", 1).unbind('click');
 $("table tr td:nth-child(6) a").fadeTo("fast", 1).unbind('click');
-$("table tr td:nth-child(7) a").fadeTo("fast", 1).unbind('click');

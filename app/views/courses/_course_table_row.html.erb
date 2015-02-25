@@ -10,8 +10,7 @@
   </td>
   <td><%= local_course.section %></td>
   <td><%= local_course.term %> </td>
-  <td><%= local_course.instructor.username %> </td>
-  <td><%= local_course.instructor.schools.first.name %></td>
+  <td><%= local_course.passphrase %> </td>
   <td>
     <%= link_to image_tag("EditIcon.png",  :mouseover => "EditIconHover.png",:class => "button", :alt => "Edit Course"), 
     edit_course_path(local_course), id: "edit_link_#{local_course.id}" , remote: true %>

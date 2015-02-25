@@ -1,6 +1,11 @@
 <tr id="subject_<%=local_subject.id %>" data-model="subject" data-model_id="<%= local_subject.id %>">
   <td>
-  	<% if local_subject.course_assets.count > 0 %>
+    <% if local_subject.enrollment.try(:course).try(:course_assets) %>
+      <%= link_to local_subject.name, send("course_asset_#{CourseAssetModelType.find_by_id(local_subject.enrollment.course.course_assets.first.model_type).name_of_model}_path", 
+                                            local_subject.enrollment.course.course_assets.first,
+                                            subject_id: local_subject.id ) %>
+    
+  	<% elsif local_subject.course_assets.count > 0 %>
       <%= link_to local_subject.name, send("course_asset_#{CourseAssetModelType.find_by_id(local_subject.course_assets.first.model_type).name_of_model}_path", 
                                             local_subject.course_assets.first,
                                             subject_id: local_subject.id ) %>

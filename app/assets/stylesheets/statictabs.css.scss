@@ -74,6 +74,8 @@
 }
 
 #vertical-tabs{
+  width: 120px;
+  float:left;
   padding: 0 1px 0 1px;
 	position: relative;
   border-bottom-right-radius: 4px;
@@ -86,23 +88,46 @@
 	color: black;  
 	font-family: Verdana,Arial,sans-serif;
 	font-size: 0.75em;
+  
+  #asset-title {
+  	background: $main-green;
+    width:120px;
+    height:20px;
+  	.title {
+    	background: $main-green;
+  	  color:white;
+  	  font-size: 14px;
+  	  margin-left:10px;
+  	}
+  }
+  
+  #enrolled_assets {
+  }
+  
+  #course_assets {
+  }
+  
+  .height-fix:after {
+    content:"";
+    display:table;
+    clear:both;
+  }
+  
+  #all-assets{
+    width:120px;
+    height:494px;
+  	background: $main-green;
+    overflow-y:scroll;
+    overflow-x:hidden;
+  }
   ul.dynamic-tabs-nav {
     width: 120px;
-    height: 514px;
-  	overflow-y: scroll;
-    overflow-x: hidden;
-    float: left;
   	background: $main-green;
   	list-style:none outside none;
   	margin: 0;
     padding: 0 0 0 0;
   	font-size: 12px;
   	
-  	.title {
-  	  color:white;
-  	  font-size: 14px;
-  	  margin-left:10px;
-  	}
 
   	li {
   		position:relative;
@@ -187,7 +212,7 @@
 	float:left;
 	z-index:1;
 }
-.asset-tag-delete .buttonTo {
+.asset-tag-edit .buttonTo {
 	cursor:pointer;
 	position:absolute;
 	left:95px;
@@ -199,7 +224,16 @@
 	border:none;
 	z-index:2;
 }
-.asset-tag-delete .buttonTo:hover {
+
+.asset-tag-edit .buttonTo:hover {
 	color:red;
 	z-index:2;
+}
+
+.asset-tag-delete img {
+	cursor:pointer;
+	position:relative;
+	left:30px;
+	top:5px;
+	background-color:inherit;
 }

@@ -16,9 +16,13 @@
     
   		<%=link_to image_tag("BackToSubjects.png",  :mouseover => "BackToSubjectsHover.png",:class => "button", :alt => "Back to Subjects"), 
   		           student_subjects_path(@user) %>
-
-  		<%=link_to image_tag("Enroll.png",  :mouseover => "EnrollHover.png",:class => "button", :alt => "Enroll in course"), 
-  		           "#", remote: true %>
+      <% if @subject.enrollment %>
+    		<%=link_to image_tag("Drop.png",  :mouseover => "DropHover.png",:class => "button", :alt => "Enroll in course"), 
+    		           "#", remote: true %>
+      <% else %>
+    		<%=link_to image_tag("Enroll.png",  :mouseover => "EnrollHover.png",:class => "button", :alt => "Enroll in course"), 
+    		           "#", remote: true %>
+      <% end %>
     <% end %>
     
 		<%=link_to image_tag("AddAsset.png",  :mouseover => "AddAssetHover.png",:class => "button", :alt => "Add Course Asset"), 
@@ -37,17 +41,36 @@
 			<li><a href=".future-tab">Future</a></li>
 		</ul>
 	</div>
+  
+  
 	<div id="vertical-tabs">
-		<ul class="dynamic-tabs-nav">
+    
+    <div id="asset-title">
   		<span class="title"><%= @asset_type %></span>
+    </div>
+    
+    <div id="all-assets">
+  
+      <div id="enrolled_assets" class="height-fix">
+        <ul class="dynamic-tabs-nav <%= @sortable_assets %>">
         <% @enrolled_assets.try :each do |asset| %>
   				<%= render "shared/course_asset_tag", :local_asset => asset %>
         <% end %>
-  			<% @course_assets.try :each do |asset| %>
-  				<%= render "shared/course_asset_tag", :local_asset => asset %>
-        <% end %>
-		</ul>
+        </ul>
+      </div>
+      
+      <div id="course_assets" class="height-fix">
+        <ul class="dynamic-tabs-nav  sortable">
+    			<% @course_assets.try :each do |asset| %>
+    				<%= render "shared/course_asset_tag", :local_asset => asset %>
+          <% end %>
+        </ul> 
+      </div>
+      
+    </div>
+        
   </div>
+  
 	<div id="scroll-panel">
     
 		<div class="current-tab">

@@ -34,8 +34,17 @@ jQuery(function() {
     update: handleSortEvent
   });
   
-  $("#vertical-tabs ul").sortable({
+  $("#enrolled_assets ul.sortable").sortable({
     zIndex: 0,
+    axis: "y",
+    containment: "#enrolled_assets",
+    update: handleVerticalSortEvent
+  });
+  
+  $("#course_assets ul.sortable").sortable({
+    zIndex: 0,
+    axis: "y",
+    containment: "#course_assets",
     update: handleVerticalSortEvent
   });
   

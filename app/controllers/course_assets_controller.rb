@@ -31,19 +31,20 @@ class CourseAssetsController < ApplicationController
 
    # POST /course_assets
   def create
-   	if params[:commit]  != "Cancel"      
-      if current_user.class.to_s == "Instructor"
-        @user_mode = :instructor
-      else
-        @user_mode = :student
-      end
-      
+   	if params[:commit]  != "Cancel"  
+      get_user_mode
       
       posit = @assetable.course_assets.count + 1
       @course_asset = @assetable.course_assets.new(params[:course_asset].merge(position: posit))
       if @course_asset.save
         @ujsAlert = nil
         @course_assets = @course_asset.assetable.course_assets.order(:position)
+        @ujsNotice = "Successfully added new asset."
+        if @assetable.class.to_s == "Course"
+          @query_string = {:course_id => @assetable.id}
+        else
+          @query_string = {:subject_id => @assetable.id}
+        end
       else
         @ujsAlert = @course_asset.errors.full_messages.first
         render "new"
@@ -63,15 +64,20 @@ class CourseAssetsController < ApplicationController
   # PUT /course_assets/1.json
   def update
     @course_asset = CourseAsset.find(params[:id])
-
-    respond_to do |format|
+    
+    if params[:commit] != "Cancel"
       if @course_asset.update_attributes(params[:course_asset])
-        format.html { redirect_to @course_asset, notice: 'Course asset was successfully updated.' }
-        format.json { head :no_content }
+        @ujsNotice = "Course asset was successfully updated."
+        @ujsAlert = nil
+        render "update"
       else
-        format.html { render action: "edit" }
-        format.json { render json: @course_asset.errors, status: :unprocessable_entity }
+        @ujsNotice = nil
+        @ujsAlert = @course_asset.errors.full_messages.first
+        render "edit"
       end
+    else
+      @ujsNotice = "Update Course Asset action was canceled."
+      render "cancel"
     end
   end
 
@@ -79,6 +85,11 @@ class CourseAssetsController < ApplicationController
   def destroy
     @course_asset = CourseAsset.find(params[:id])
     @assetable = @course_asset.assetable
+    if @assetable.class.to_s == "Course"
+      @query_string = {:course_id => @assetable.id}
+    else
+      @query_string = {:subject_id => @assetable.id}
+    end
     @course_asset.destroy
 
     ref_url = request.referrer.to_s
@@ -89,13 +100,16 @@ class CourseAssetsController < ApplicationController
       # if there are any other assets associated with the course then render the first one
       @course_asset = @assetable.course_assets.try(:first)
       if @course_asset
-        new_path = send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset)
+        new_path = send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset, @query_string)
         render :js => "window.location.href = '#{new_path}'"
         
         # otherwise just render the course
       else
-        render :js => "window.location.href = '#{course_path(@assetable)}'"
+        render :js => "window.location.href = '#{course_path(@assetable, @query_string)}'"
       end
+    else
+      @ujsAlert = nil
+      @ujsNotice = "Course Asset has been deleted."
     end 
   end
   

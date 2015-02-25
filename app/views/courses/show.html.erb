@@ -17,17 +17,31 @@
 		</ul>
 	</div>
 	<div id="vertical-tabs">
-		<ul class="dynamic-tabs-nav">
+
+    <div id="asset-title">
+  		<span class="title">Course Assets</span>
+    </div>
+    
+    <div id="all-assets">
+  
+      <div id="enrolled_assets" class="height-fix">
+        <ul class="dynamic-tabs-nav <%= @sortable_assets %>">
+        <% @enrolled_assets.try :each do |asset| %>
+  				<%= render "shared/course_asset_tag", :local_asset => asset %>
+        <% end %>
+        </ul>
+      </div>
       
-  		<span class="title"><%= @asset_type %></span>
-      <% @enrolled_assets.try :each do |asset| %>
-				<%= render "shared/course_asset_tag", :local_asset => asset %>
-      <% end %>
-			<% @course_assets.try :eachtry :each do |asset| %>
-				<%= render "shared/course_asset_tag", :local_asset => asset %>
-      <% end %>
+      <div id="course_assets" class="height-fix">
+        <ul class="dynamic-tabs-nav  sortable">
+    			<% @course_assets.try :each do |asset| %>
+    				<%= render "shared/course_asset_tag", :local_asset => asset %>
+          <% end %>
+        </ul> 
+      </div>
       
-		</ul>
+    </div>
+
 		<div id="panel">
 			<div class="archived-tab">
 			</div>

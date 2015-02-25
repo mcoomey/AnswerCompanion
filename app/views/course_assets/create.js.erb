@@ -1,12 +1,8 @@
-$("#messages .alert").hide();
-$("#messages .ujs_alert").html("<%= @course_assetError %>").show();
-$("#messages .notice").hide();
-$("#messages .ujs_notice").html("<%= @course_assetNotice %>").show();
+ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
 $("#ujsform").remove();
 $("#buttonarea").show();
-$("#vertical-tabs ul.dynamic-tabs-nav").append("<%= j render 'shared/course_asset_tag', :local_asset => @course_asset %>");
-
+$("#vertical-tabs #course_assets ul.dynamic-tabs-nav").append("<%= j render 'shared/course_asset_tag', :local_asset => @course_asset %>");
 // if this is the first asset added, then follow the link to load it
-<% if @course_assets.try :eachcount == 1 %>
+<% if @course_assets.count == 1 %>
 	$("a#link_to_asset_<%= @course_asset.id %>")[0].click();
 <% end %>

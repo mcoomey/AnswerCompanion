@@ -56,11 +56,12 @@ class ApplicationController < ActionController::Base
       
       @choices = @user.courses.where(:archived => 0)
       @asset_type = "Course Assets"
+      @sortable_assets = "sortable"
     
       if params[:course] # drop-down menu
         @course = Course.find_by_id(params[:course][:id])
         @query_string = {:course_id => @course.id}
-        @course_assets = @course.course_assets.order(:position)
+        @course_assets = @course.course_assets.try(:sort_by, &:position)
         @course_asset = @course.course_assets.try(:first)
         if @course_asset
           redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset, @query_string)
@@ -70,7 +71,7 @@ class ApplicationController < ActionController::Base
       else
         @course = Course.find_by_id(params[:course_id])
         @query_string = {:course_id => @course.id}
-        @course_assets = @course.course_assets.order(:position)
+        @course_assets = @course.course_assets.try(:sort_by, &:position)
         @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
         @assetable = @course
       end
@@ -79,13 +80,18 @@ class ApplicationController < ActionController::Base
 
       @choices = @user.subjects.where(:archived => 0)
       @asset_type = "Subject Assets"
+      @sortable_assets = "not-sortable"
     
       if params[:subject]
         @subject = Subject.find_by_id(params[:subject][:id])
         @query_string = {:subject_id => @subject.id}
-        @course_assets = @subject.course_assets.order(:position)
+        @course_assets = @subject.course_assets.try(:sort_by, &:position)
         @course_asset = @subject.course_assets.try(:first)
-        if @course_asset
+        @enrolled_assets = @subject.enrollment.try(:course).try(:course_assets).try(:sort_by, &:position)
+        @enrolled_asset = @enrolled_assets.try(:first)
+        if @enrolled_asset
+          redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@enrolled_asset.model_type).name_of_model}_path", @enrolled_asset, @query_string)
+        elsif @course_asset
           redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset, @query_string)
         else
           redirect_to subject_path(@subject)
@@ -93,9 +99,9 @@ class ApplicationController < ActionController::Base
       else
         @subject = Subject.find_by_id(params[:subject_id])
         @query_string = {:subject_id => @subject.id}
-        @course_assets = @subject.course_assets.order(:position)
+        @course_assets = @subject.course_assets.try(:sort_by, &:position)
         @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
-        @enrolled_assets = @subject.enrollment.try(:course).try(:course_assets).order(:position)
+        @enrolled_assets = @subject.enrollment.try(:course).try(:course_assets).try(:sort_by, &:position)
         @assetable = @subject
       end
             
