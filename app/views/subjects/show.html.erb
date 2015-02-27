@@ -15,6 +15,7 @@
 		<ul class="static-tabs-nav">
 			<li><a href=".current-asset">Current</a></li>
 			<li><a href=".archived-asset">Archived</a></li>
+			<li><a href=".future-tab">Future</a></li>
 		</ul>
 	</div>
 	<div id="vertical-tabs">
@@ -22,16 +23,32 @@
   		<span class="title">Subject Assets</span>
     </div>
     
-		<ul class="dynamic-tabs-nav">
-			<% @course_assets.try :each do |asset| %>
-				<%= render "shared/course_asset_tag", :local_asset => asset %>
-  		<% end %>
-		</ul>
+    <div id="all-assets">
+  
+      <div id="enrolled_assets" class="height-fix">
+        <ul class="dynamic-tabs-nav <%= @sortable_assets %>">
+        <% @enrolled_assets.try :each do |asset| %>
+  				<%= render "shared/course_asset_tag", :local_asset => asset %>
+        <% end %>
+        </ul>
+      </div>
+      
+      <div id="course_assets" class="height-fix">
+        <ul class="dynamic-tabs-nav  sortable">
+    			<% @course_assets.try :each do |asset| %>
+    				<%= render "shared/course_asset_tag", :local_asset => asset %>
+          <% end %>
+        </ul> 
+      </div>
+      
+    </div>
 		<div id="panel">
 			<div class="archived-tab">
 			</div>
 			<div class="current-tab">
 			</div>
+			<div class="future-tab">
+			</div>			
 		</div>
 		<br class="clearfloat"/>
 	</div>	

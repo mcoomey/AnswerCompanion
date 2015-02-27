@@ -6,10 +6,13 @@
 	
     <%= f.label :model_type, "Asset Type" %>
     <%= f.collection_select :model_type, CourseAssetModelType.all, :id, :name, include_blank: true %>
+    
+    <%= f.hidden_field :course_id, value: @course.id if @course %>
+    <%= f.hidden_field :subject_id, value: @subject.id if @subject %>
 	
     <%= f.submit "Submit", :name => "commit" %>
     <%= f.submit "Cancel", :name => "commit" %>
-    <%= link_to image_tag("Delete.png"), course_asset_path(@course_asset), :confirm => "Delete Asset Tag - #{@course_asset.name}.\nAll content will be lost!\n\nAre you sure?", :method => :delete, :remote => true, :class => "asset-tag-delete" %>
+    <%= f.submit "Delete", :name => "commit", data: {confirm: "Are you sure you want to delete #{@course_asset.name}?\nAll content will be lost!" } %>
     
 
   <% end %>
