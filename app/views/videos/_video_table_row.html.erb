@@ -1,7 +1,8 @@
 <tr id="video_id_<%= local_video.id %>" data-model="video" data-model_id="<%= local_video.id %>">
   <td><%= local_video.videofile.file.original_filename %></td>
   <td><%= link_to image_tag("replaceIcon.png",  :mouseover => "replaceIconHover.png", :class => "button", :alt => "Replace Video"),
-                  replace_course_asset_video_path(@course_asset.id, local_video), title: 'Replace Video', id: 'replace_video_'+local_video.id.to_s, method: :get, remote: true %>
+                  replace_course_asset_video_path(@course_asset.id, local_video, @query_string), title: 'Replace Video', 
+                  id: 'replace_video_'+local_video.id.to_s, method: :get, remote: true %>
   </td>
   <td><%= local_video.length %></td>
   <td><%= local_video.title %></td>
@@ -13,22 +14,22 @@
     
   		<%= link_to image_tag("WaitSpinner.gif", :class => "button", :alt => "Processing Video"),
                   '#',  id:'video_processing_'+local_video.id.to_s, class: 'video_processing',
-                  title: 'Processing Video', data: {url: course_asset_video_path(local_video.course_asset.id, local_video)} %>
+                  title: 'Processing Video', data: {url: course_asset_video_path(local_video.course_asset.id, local_video, @query_string)} %>
                   
   		<%= link_to image_tag("ErrorIcon.png", :class => "button", :alt => "Processing Error"),
                   '#',  id:'processing_error_'+local_video.id.to_s, class: 'video_hide_icon',
-                  title: 'Processing Error', data: {url: course_asset_video_path(local_video.course_asset.id, local_video)} %>
+                  title: 'Processing Error', data: {url: course_asset_video_path(local_video.course_asset.id, local_video, @query_string)} %>
                   
     	<%= link_to image_tag("PlayIcon.png",  :mouseover => "PlayIconHoverPaid.png",:class => "button", :alt => "Play Video"),
-                  course_asset_video_path(local_video.course_asset.id, local_video),  id:'video_processed_'+local_video.id.to_s, class: 'video_hide_icon',
-                  title: 'Play Video', data: {url: course_asset_video_path(local_video.course_asset.id, local_video)} %>
+                  course_asset_video_path(local_video.course_asset.id, local_video, @query_string),  id:'video_processed_'+local_video.id.to_s, class: 'video_hide_icon',
+                  title: 'Play Video', data: {url: course_asset_video_path(local_video.course_asset.id, local_video, @query_string)}, remote:true %>
        
   	<% elsif local_video.videofile_processed < 0 %>
   		<%= link_to image_tag("ErrorIcon.png", :class => "button", :alt => "ERROR"), "#", title: 'Processing Error' %>
   
   	<% else %>
     	<%= link_to image_tag("PlayIcon.png",  :mouseover => "PlayIconHoverPaid.png",:class => "button", :alt => "Play Video"),
-                  course_asset_video_path(local_video.course_asset.id, local_video), title: 'Play Video' %>
+                  course_asset_video_path(local_video.course_asset.id, local_video, @query_string), title: 'Play Video', remote:true %>
   
   	<% end %>
   </td>
@@ -37,10 +38,10 @@
 		<% if current_instructor.id == local_video.instructor_id %>
     
 			<td><%=link_to image_tag("EditIcon.png",  :mouseover => "EditIconHover.png",:class => "button", :alt => "Edit Video"),  
-        edit_course_asset_video_path(local_video.course_asset.id, local_video), title: 'Edit Video', remote: true %></td>
+        edit_course_asset_video_path(local_video.course_asset.id, local_video, @query_string), title: 'Edit Video', remote: true %></td>
         
 	    <td><%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png",:class => "button", :alt => "Delete Video"),
-        course_asset_video_path(local_video.course_asset.id, local_video), title: 'Delete Video', confirm:'Delete Video - Are you sure?', method: :delete, remote: true %></td>
+        course_asset_video_path(local_video.course_asset.id, local_video, @query_string), title: 'Delete Video', confirm:'Delete Video - Are you sure?', method: :delete, remote: true %></td>
         
 		<% else %>
 			<td></td>

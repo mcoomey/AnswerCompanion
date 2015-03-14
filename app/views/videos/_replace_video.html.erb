@@ -8,6 +8,9 @@
             
     <%= f.hidden_field :old_version_id, :value => @old_version_id %>
         
+    <%= f.hidden_field :course_id, value: params[:course_id] if params[:course_id] %>
+    <%= f.hidden_field :subject_id, value: params[:subject_id] if params[:subject_id] %>
+                       
 		<%= f.submit "Cancel" %>
     
 	<% end %>

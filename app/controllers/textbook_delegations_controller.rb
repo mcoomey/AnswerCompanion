@@ -6,18 +6,27 @@ class TextbookDelegationsController < ApplicationController
     
     get_drop_menu_data
     
-    @textbookDels = @course_asset.try(:textbook_delegations)
+    set_query_string
     
-		if @textbookDels
-  		@textbookDels_current  = @textbookDels.where(:archived => 0).order(:position)
-  		@textbookDels_archived = @textbookDels.where(:archived => 1).order(:position)
-  		@textbookDels_future   = @textbookDels.where(:archived => 2).order(:position)
-  		if (@textbookDels.count == 0)
-  			@ujsAlert = "No textbooks are currently assigned."
-  		else
-  			@ujsAlert = nil
-  		end
-		end
+    @textbookDels = @course_asset.try(:textbook_delegations)
+
+    respond_to do |format|
+      format.html {
+    		if @textbookDels
+      		@textbookDels_current  = @textbookDels.where(:archived => 0).order(:position)
+      		@textbookDels_archived = @textbookDels.where(:archived => 1).order(:position)
+      		@textbookDels_future   = @textbookDels.where(:archived => 2).order(:position)
+      		if (@textbookDels.count == 0)
+      			@ujsAlert = "No textbooks are currently assigned."
+      		else
+      			@ujsAlert = nil
+      		end
+    		end
+      }
+      format.json {
+        render json: @textbookDels
+      }
+    end
     
     if @user_mode == "instructor" || @course_asset.try(:assetable_type) == "Subject"
       @sortable = "sortable"

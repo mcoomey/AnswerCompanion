@@ -1,0 +1,6 @@
+var url = location.origin + "/course_assets/<%= @video.course_asset.id %>/videos/<%= @video.id %>?<%=request.query_string %>";
+var stateObj = {id: <%= @video.id %>};
+history.pushState(stateObj, null, url);
+$("#videotables").replaceWith("<%= j render 'show_video', :local_video => @video %> ");
+$("#horizontal-tabs ul").html("<li><%= @video.description %></li>");
+$("#horizontal-tabs ul li").addClass("activeTab");

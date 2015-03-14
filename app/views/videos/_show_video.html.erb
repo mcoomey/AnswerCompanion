@@ -1,0 +1,7 @@
+<div id="videotable" >
+  <%= video_tag([local_video.processed_video_url(:mp4), local_video.processed_video_url(:ogv), local_video.processed_video_url(:webm)],
+  				:size => '800x480', 
+  				:controls => true, 
+  				:autoplay => true,
+  				:autobuffer => true )%>
+</div>

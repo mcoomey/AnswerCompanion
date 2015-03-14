@@ -52,3 +52,8 @@ window.handleVerticalSortEvent = (event, ui) ->
 window.ujsMessages = (ujsAlert, ujsNotice) ->
   $("#messages .ujs_alert").html ujsAlert
   $("#messages .ujs_notice").html ujsNotice
+  
+window.onpopstate = (event) ->
+  console.log "on popstate: " + JSON.stringify(event.state)
+  location.reload()
+    

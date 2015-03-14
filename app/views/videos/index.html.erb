@@ -16,7 +16,7 @@
 		           new_polymorphic_path([@assetable, CourseAsset.new]), remote: true %>
                
     <%=link_to image_tag("AddVideo.png",  :mouseover => "AddVideoHover.png",:class => "button", :alt => "Add a Video"), 
-		           new_polymorphic_path([@videoable, Video.new], :course_asset_id => @course_asset.id), :id => "add_video", :remote => true %>
+		           new_polymorphic_path([@videoable, Video.new], {:course_asset_id => @course_asset.id}.merge(@query_string)), :id => "add_video", :remote => true %>
 							 
 	</div>
 	<div id="horizontal-tabs">
@@ -26,34 +26,59 @@
   		<li><a href=".future-tab">Future</a></li>
   	</ul>
 	</div>
+  
 	<div id="vertical-tabs">
-		<ul class="dynamic-tabs-nav">
-  		<span class="title">Course Assets</span>
-			<% @course_assets.try :each do |asset| %>
-				<%= render "shared/course_asset_tag", :local_asset => asset %>
-				<% if (@course_asset == asset)&&((@resource == "exercises")||(@resource == "lessons")) %>
-					<%= image_tag(@textbook.thumbnail, class: "thumbnail") %>
-				<% end %>
-  		<% end %>
-		</ul>
-  		<div id="noscroll-panel">
+    
+    <div id="asset-title">
+  		<span class="title"><%= @asset_type %></span>
+    </div>
+  
+    <div id="all-assets">
 
-  			<div class="current-tab">
-    				<%= render "video_table", :local_videos => @videos_current, local_course_asset_id: @course_asset.id %>
-  				<br class="clearfloat"/>				
-  			</div>
-      
-  			<div class="archived-tab">
-    				<%= render "video_table", :local_videos => @videos_archived, local_course_asset_id: @course_asset.id %>
-    			<br class="clearfloat"/>
-  			</div>
-      
-  			<div class="future-tab">
-    				<%= render "video_table", :local_videos => @videos_future, local_course_asset_id: @course_asset.id %>
-    			<br class="clearfloat"/>
-  			</div>     
-        
+      <div id="enrolled_assets" class="height-fix">
+        <ul class="dynamic-tabs-nav <%= @sortable_assets %>">
+        <% @enrolled_assets.try :each do |asset| %>
+  				<%= render "shared/course_asset_tag", :local_asset => asset %>
+        <% end %>
+        </ul>
       </div>
+    
+      <div id="course_assets" class="height-fix">
+        <ul class="dynamic-tabs-nav  sortable">
+    			<% @course_assets.try :each do |asset| %>
+    				<%= render "shared/course_asset_tag", :local_asset => asset %>
+          <% end %>
+        </ul> 
+      </div>
+    
+    </div>
+      
+  </div>
+  
+	<div id="noscroll-panel">
+    <div id="videotables">
+  		<div class="current-tab">
+        <div id="current-videotable"  class="tableContainer">
+  				<%= render "video_table", :local_videos => @videos_current, local_course_asset_id: @course_asset.id %>
+        </div>
+  			<br class="clearfloat"/>				
+  		</div>
+  
+  		<div class="archived-tab">
+        <div id="archived-videotable"  class="tableContainer">
+  				<%= render "video_table", :local_videos => @videos_archived, local_course_asset_id: @course_asset.id %>
+        </div>
+  			<br class="clearfloat"/>
+  		</div>
+  
+  		<div class="future-tab">
+        <div id="future-videotable"  class="tableContainer">
+  				<%= render "video_table", :local_videos => @videos_future, local_course_asset_id: @course_asset.id %>
+        </div>
+  			<br class="clearfloat"/>
+  		</div>     
       <br class="clearfloat"/>
+    </div>
 	</div>
+  
 </article>

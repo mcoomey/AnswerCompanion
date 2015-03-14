@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
     
       if params[:course] # drop-down menu
         @course = Course.find_by_id(params[:course][:id])
-        @query_string = {:course_id => @course.id}
+        # @query_string = {:course_id => @course.id}
         @course_assets = @course.course_assets.try(:sort_by, &:position)
         @course_asset = @course.course_assets.try(:first)
         if @course_asset
@@ -70,7 +70,7 @@ class ApplicationController < ActionController::Base
         end
       else
         @course = Course.find_by_id(params[:course_id])
-        @query_string = {:course_id => @course.id}
+        # @query_string = {:course_id => @course.id}
         @course_assets = @course.course_assets.try(:sort_by, &:position)
         @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
         @assetable = @course
@@ -84,7 +84,7 @@ class ApplicationController < ActionController::Base
     
       if params[:subject]
         @subject = Subject.find_by_id(params[:subject][:id])
-        @query_string = {:subject_id => @subject.id}
+        # @query_string = {:subject_id => @subject.id}
         @course_assets = @subject.course_assets.try(:sort_by, &:position)
         @course_asset = @subject.course_assets.try(:first)
         @enrolled_assets = @subject.enrollment.try(:course).try(:course_assets).try(:sort_by, &:position)
@@ -98,7 +98,7 @@ class ApplicationController < ActionController::Base
         end
       else
         @subject = Subject.find_by_id(params[:subject_id])
-        @query_string = {:subject_id => @subject.id}
+        # @query_string = {:subject_id => @subject.id}
         @course_assets = @subject.course_assets.try(:sort_by, &:position)
         @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
         @enrolled_assets = @subject.enrollment.try(:course).try(:course_assets).try(:sort_by, &:position)
@@ -114,5 +114,18 @@ class ApplicationController < ActionController::Base
  
   end
   
+  
+  def set_query_string
+    
+    model = controller_name.classify.constantize.to_s.downcase
+    
+    if params.has_key?(model)
+      @query_string = {:course_id => params[model][:course_id]} if params[model][:course_id]
+      @query_string = {:subject_id => params[model][:subject_id]} if params[model][:subject_id]
+    else
+      @query_string = {:course_id => params[:course_id]} if params[:course_id]
+      @query_string = {:subject_id => params[:subject_id]} if params[:subject_id]
+    end
+  end
   
 end

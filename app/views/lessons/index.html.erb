@@ -40,7 +40,7 @@
 			<% @course_assets.try :each do |asset| %>
 				<%= render "shared/course_asset_tag", :local_asset => asset %>
 				<% if @course_asset == asset %>
-					<%= image_tag(@textbook.thumbnail, class: "thumbnail") %>
+					<<%= image_tag(@textbook.thumbnail, class: >"thumbnail") %>
 				<% end %>
   		<% end %>
 		</ul>

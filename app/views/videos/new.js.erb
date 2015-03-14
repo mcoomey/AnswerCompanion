@@ -10,7 +10,7 @@ $('#new_video').fileupload({
       file = data.files[0];
       if (types.test(file.type) || types.test(file.name)) {
         data.context = $(tmpl("template-upload", file).trim());
-        $('#new_video').append(data.context);
+        $('#new_video').replaceWith(data.context);
         return data.submit();
       } else {
 				$('#messages .ujs_alert').html("Error: Unrecognized video format.");

@@ -1,10 +1,14 @@
-#videotable.tableContainer  {
-  @include tablecontainer(150px, 35px, 120px, 130px, 279px, 35px, 35px, 35px);
-}
+#current-videotable, #archived-videotable, #future-videotable{
+  &.tableContainer  {
+    @include tablecontainer(150px, 35px, 120px, 130px, 279px, 35px, 35px, 35px);
+    }
+  }
 
-#tb_videotable.tableContainer  {
-  @include tablecontainer(255px, 35px, 120px, 230px, 115px, 35px, 35px, 0);
-}
+#tb_videotable{
+  &.tableContainer  {
+    @include tablecontainer(255px, 35px, 120px, 230px, 115px, 35px, 35px, 0);
+    }
+  }
 
 #noscroll-panel {
 	#breadcrumbs {

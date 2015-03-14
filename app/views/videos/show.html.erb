@@ -1,6 +1,5 @@
 <article>
 	<div id="buttonarea">
-    
 		<%= form_for :assetable, :url => course_asset_textbook_delegations_path(@course_asset), :html => { :method => 'get' } do |f| %>
 			<%= f.select(:id, @choices.collect{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
 		<% end %>
@@ -20,32 +19,68 @@
 		  <%= content_tag(:li, @video.description, class: "activeTab") %>
 		</ul>
 	</div>
-	<div id="vertical-tabs">
-		<ul class="dynamic-tabs-nav">
-  		<span class="title">Course Assets</span>
-			<% @course_assets.try :each do |asset| %>
-				<%= render "shared/course_asset_tag", :local_asset => asset %>
-				<% if (@course_asset == asset)&&((@resource == "exercises")||(@resource == "lessons")) %>
-					<%= image_tag(@textbook.thumbnail, class: "thumbnail") %>
-				<% end %>
-  		<% end %>
-		</ul>
-		<div id="noscroll-panel">
-			<div id="breadcrumbs">
-				<% if @resource == "exercises" %>
-					<%= link_to @videoable.section_title.name + " Exercise: " + @videoable.number, exercise_textbook_videos_path(@videoable, course_asset_id: @course_asset.id) %>
-				<% elsif @resource == "lessons"%>
-					<%= link_to @videoable.title + " Page: " + @videoable.page, lesson_textbook_videos_path(@videoable, course_asset_id: @course_asset.id) %>
-				<% end %>
-			</div>
-			<%= video_tag([@video.processed_video_url(:mp4), @video.processed_video_url(:ogv), @video.processed_video_url(:webm)],
-							:size => '800x480', 
-							:controls => true, 
-							:autoplay => true,
-							:autobuffer => true )%>
-		</div>
-		<br class="clearfloat"/>
+  
+  <div id="vertical-tabs">
+    
+    <div id="asset-title">
+  		<span class="title"><%= @asset_type %></span>
+    </div>
+  
+    <div id="all-assets">
+
+      <div id="enrolled_assets" class="height-fix">
+        <ul class="dynamic-tabs-nav <%= @sortable_assets %>">
+        <% @enrolled_assets.try :each do |asset| %>
+  				<%= render "shared/course_asset_tag", :local_asset => asset %>
+        <% end %>
+        </ul>
+      </div>
+    
+      <div id="course_assets" class="height-fix">
+        <ul class="dynamic-tabs-nav  sortable">
+    			<% @course_assets.try :each do |asset| %>
+    				<%= render "shared/course_asset_tag", :local_asset => asset %>
+            <% if asset == @course_asset %>
+ 
+            <% end %>
+          <% end %>
+        </ul> 
+      </div>
+    
+    </div>
+      
+  </div>
+       
+	<div id="noscroll-panel">
+    <%= render "show_video", :local_video => @video %>
 	</div>
-	<div id="create_new_section_title_dialog"
-	</div>
+	<br class="clearfloat"/>
+  
 </article>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,10 +1,13 @@
 class VideosController < ApplicationController
     
-  before_filter :load_videos
+  before_filter :get_user_mode, :load_videos, :set_query_string
   
   # GET /videos
   # GET /videos.json
   def index
+
+    get_drop_menu_data
+     
     respond_to do |format|
       format.html {
         flash[:alert] = "No videos found." if (@videos.count == 0)
@@ -22,8 +25,13 @@ class VideosController < ApplicationController
   def show
     @video = Video.find(params[:id])
     respond_to do |format|
-      format.html # show.html.erb
+      format.html {
+        get_drop_menu_data        
+      }# show.html.erb
       format.json { render json: @video }
+      format.js {
+        get_drop_menu_data
+      } # show.js.erb
     end
   end
 
@@ -41,6 +49,7 @@ class VideosController < ApplicationController
   # POST /videos
   # POST /videos.json
   def create
+    
    	if params[:commit]  == "Cancel"
       if params[:video][:replace_flag]
         @ujsNotice = "Replace video action canceled."
@@ -57,7 +66,7 @@ class VideosController < ApplicationController
       FileUtils.rm_rf(Dir.glob(File.join(@video.videofile.root, @video.videofile.store_dir, '*')))
       
       # build a new video from the new videofile 
-      @new_video = @course_asset.videos.build(params[:video])
+      @new_video = @course_asset.videos.build(params[:video].merge({:instructor_id => current_instructor.id}).except(:course_id, :subject_id))
       
       # copy new videofile into original video and clear videofile_processed flag
       @video.videofile = @new_video.videofile
@@ -81,7 +90,7 @@ class VideosController < ApplicationController
 
     # else create a brand new video
     else
-      @video = @course_asset.videos.build(params[:video].merge({:instructor_id => current_instructor.id}))
+      @video = @course_asset.videos.build(params[:video].merge({:instructor_id => current_instructor.id}).except(:course_id, :subject_id))
       @video.position = @course_asset.videos.where(:archived => current_tab_index).count + 1 
       @video.archived = current_tab_index
       @action = "Create"
@@ -106,6 +115,7 @@ class VideosController < ApplicationController
   # PUT /videos/1
   # PUT /videos/1.json
   def update
+       
     @video = Video.find_by_id(params[:id])
 
    	if params[:commit]  == "Cancel"
@@ -163,17 +173,6 @@ class VideosController < ApplicationController
   
   def load_videos
  
-    if current_user.class.to_s == "Instructor"
-      @user = current_instructor
-      @choices = @user.courses.where(:archived => 0)
-    elsif current_user.class.to_s == "Student"
-      @user = current_student
-      @choices = @user.subjects.where(:archived => 0)
-    else
-      @user = current_parent
-      # to_be_completed
-    end
- 
     @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
     if @course_asset
       @assetable = @course_asset.assetable
@@ -182,4 +181,5 @@ class VideosController < ApplicationController
     end
     
   end
+  
 end

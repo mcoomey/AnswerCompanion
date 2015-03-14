@@ -18,7 +18,7 @@ module VideoModelMixin
   end
 
   def do_video_conversion
-    self.delay.my_convert_to_html5(videofile_url) if !video_processed?
+    # self.delay.my_convert_to_html5(videofile_url) if !video_processed?
     # self.my_convert_to_html5(videofile_url) if !video_processed?
   end
 

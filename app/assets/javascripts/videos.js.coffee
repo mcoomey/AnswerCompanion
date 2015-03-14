@@ -6,20 +6,20 @@
     if $(".video_processing").length > 0
       $(".video_processing").each (index) ->
         id = undefined
-        console.log "@dataset.url = " + @dataset.url
+        # console.log "@dataset.url = " + @dataset.url
         $.getJSON @dataset.url, (data) ->
           $.each data, (k, v) ->
-            console.log "k=" + k + "   v=" + v
+            # console.log "k=" + k + "   v=" + v
             if k == "id"
               id = v
             if (k == "videofile_processed") && (v == 1)
-              console.log "video(" + id+ ")" + "has finished processing."
+              # console.log "video(" + id+ ")" + "has finished processing."
               $("#video_processing_"+id).removeClass("video_processing").addClass("video_hide_icon")
               $("#video_processed_"+id).removeClass("video_hide_icon")
               $("#processing_error_"+id).addClass("video_hide_icon")
               $("#messages span.ujs_notice").html("")
             if (k == "videofile_processed") && (v < 0)
-              console.log "video(" + id +  ")" + "processing has failed."
+              # console.log "video(" + id +  ")" + "processing has failed."
               $("#video_processing_"+id).removeClass("video_processing").addClass("video_hide_icon")
               $("#video_processed_"+id).addClass("video_hide_icon")
               $("#processing_error_"+id).removeClass("video_hide_icon")
