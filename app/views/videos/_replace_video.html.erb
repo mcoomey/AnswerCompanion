@@ -5,8 +5,14 @@
 		<%= f.file_field :videofile, :id => "video_filename" %>
     
     <%= f.hidden_field :replace_flag, :value => "1" %>
+    <%= f.hidden_field :archived, :value => @old_video.archived %>
+    <%= f.hidden_field :title, :value => @old_video.title %>
+    <%= f.hidden_field :description, :value => @old_video.description %>
+    <%= f.hidden_field :position, :value => @old_video.position %>
+    <%= f.hidden_field :instructor_id, :value => @old_video.instructor_id %>
+    
+    <%= f.hidden_field :old_version_id, :value => @old_video.id %>
             
-    <%= f.hidden_field :old_version_id, :value => @old_version_id %>
         
     <%= f.hidden_field :course_id, value: params[:course_id] if params[:course_id] %>
     <%= f.hidden_field :subject_id, value: params[:subject_id] if params[:subject_id] %>

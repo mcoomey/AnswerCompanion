@@ -11,9 +11,9 @@ class VideosController < ApplicationController
     respond_to do |format|
       format.html {
         flash[:alert] = "No videos found." if (@videos.count == 0)
-        @videos_current = @videos.where(archived:0).where("old_version_id IS NULL").order("position")
-        @videos_archived = @videos.where(archived:1).where("old_version_id IS NULL").order("position")
-        @videos_future = @videos.where(archived:2).where("old_version_id IS NULL").order("position")
+        @videos_current = @videos.where(archived:0).order("position")
+        @videos_archived = @videos.where(archived:1).order("position")
+        @videos_future = @videos.where(archived:2).order("position")
         render "index"
       }
       format.json { render json: @videos }
@@ -42,7 +42,7 @@ class VideosController < ApplicationController
   end
 
   def replace
-    @old_version_id = params[:id]
+    @old_video = Video.find_by_id(params[:id])
     @video = @course_asset.videos.new
   end
   
@@ -50,7 +50,7 @@ class VideosController < ApplicationController
   # POST /videos.json
   def create
     
-   	if params[:commit]  == "Cancel"
+    if params[:commit]  == "Cancel"
       if params[:video][:replace_flag]
         @ujsNotice = "Replace video action canceled."
       else
@@ -60,18 +60,13 @@ class VideosController < ApplicationController
       
     elsif params[:video][:replace_flag]
       # find the original video that is being replaced
-      @video = Video.find_by_id(params[:video][:old_version_id])
-      
-      # delete all the files in the associated directory
-      FileUtils.rm_rf(Dir.glob(File.join(@video.videofile.root, @video.videofile.store_dir, '*')))
-      
-      # build a new video from the new videofile 
-      @new_video = @course_asset.videos.build(params[:video].merge({:instructor_id => current_instructor.id}).except(:course_id, :subject_id))
-      
-      # copy new videofile into original video and clear videofile_processed flag
-      @video.videofile = @new_video.videofile
+      @old_video = Video.find_by_id(params[:video][:old_version_id])
+
+      # build a new video from the new videofile
+      @video = @course_asset.videos.build(params[:video].except(:course_id, :subject_id))
       @video.get_video_duration
-      @video.videofile_processed = 0
+      
+      @action = "Replace"
       
       # save the new version and submit for processing
       if @video.save
@@ -79,7 +74,6 @@ class VideosController < ApplicationController
         @ujsNotice = "Video replacement has been submitted for processing."
         @video.do_video_conversion
         render "update_replacement"
-        
       else
         @ujsNotice = nil
         @ujsAlert = "Error! " + @video.errors.full_messages.first
@@ -88,7 +82,7 @@ class VideosController < ApplicationController
         render "replace"
       end
 
-    # else create a brand new video
+      # else create a brand new video
     else
       @video = @course_asset.videos.build(params[:video].merge({:instructor_id => current_instructor.id}).except(:course_id, :subject_id))
       @video.position = @course_asset.videos.where(:archived => current_tab_index).count + 1 

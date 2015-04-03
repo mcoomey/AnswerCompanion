@@ -1,8 +1,11 @@
 <li class="frontcover" id= "tbdel_id_<%= local_tb_del.id %>" data-model="textbook_delegation" data-model_id="<%= local_tb_del.id %>">
-  <%= link_to image_tag(local_tb_del.textbook.image_link, :alt => "Show Textbook" ), textbook_lessons_path(local_tb_del.textbook, {course_asset_id: @course_asset}.merge(@query_string)) %>
+  <%= link_to image_tag(local_tb_del.textbook.image_link, :alt => "Show Textbook" ), 
+              textbook_lessons_path(local_tb_del.textbook, {course_asset_id: @course_asset}.merge(@query_string)) %>
 	<div class="frontcoverdelete">
     <% if @user_mode == "instructor" || @course_asset.assetable_type == "Subject" %>
-  		<%= button_to 'X', course_asset_textbook_delegation_path(@course_asset, local_tb_del), :confirm => 'Remove Textbook. Are you sure?', :method => :delete, :remote => true, :class => "buttonTo"%>
+  		<%= button_to 'X', course_asset_textbook_delegation_path(@course_asset, local_tb_del), 
+          :confirm => 'Remove Textbook. Are you sure?', 
+          :method => :delete, :remote => true, :class => "buttonTo"%>
     <% end %>
 	</div>
 </li>

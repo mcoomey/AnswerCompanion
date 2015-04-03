@@ -35,30 +35,6 @@ class VideofileUploader < CarrierWave::Uploader::Base
   #   # do something
   # end
 
-  def encode_video (format='mp4', *args)
-    # move upload to local cache
-    cache_stored_file! if !cached?
-
-    directory = File.dirname( current_path )
-
-    # move upload to tmp file - encoding result will be saved to
-    # original file name
-    tmp_path   = File.join( directory, "tmpfile" )
-    File.rename current_path, tmp_path
-
-    # encode
-    exitstatus = Voyeur::Media.new( filename: tmp_path ).convert( to: format.to_sym, output_filename: current_path )
-
-    # because encoding video will change file extension, change it 
-    # to old one
-    fixed_name = File.basename(current_path, '.*') + "." + format.to_s
-    File.rename File.join( directory, fixed_name ), current_path
-
-    # delete tmp file
-    File.delete tmp_path
-  end
-  
-  
   # Create different versions of your uploaded files:
   # version :thumb do
   #   process :scale => [50, 50]

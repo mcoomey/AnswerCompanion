@@ -7,7 +7,7 @@ class Video < ActiveRecord::Base
   belongs_to :instructor
   
   mount_uploader :videofile, VideofileUploader
-  before_create :get_video_duration  
+  before_create :get_video_duration
   # after_save :do_video_conversion
   after_destroy :remove_id_directory
 

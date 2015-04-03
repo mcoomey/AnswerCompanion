@@ -18,14 +18,15 @@ module VideoModelMixin
   end
 
   def do_video_conversion
-    # self.delay.my_convert_to_html5(videofile_url) if !video_processed?
+    self.delay.my_convert_to_html5(videofile_url) if !video_processed?
     # self.my_convert_to_html5(videofile_url) if !video_processed?
   end
 
   def my_convert_to_html5(original_video)
-
+    
     # desired formats for html5 web display for all supported browsers
     formats = ["mp4", "ogv", "webm"]
+    # formats = ["mp4"]
 
     # build path to video and isolate the extension
     fpath = Rails.root.to_s + "/public" + original_video
@@ -55,15 +56,35 @@ module VideoModelMixin
     # if there were no processing errors
     if error_flag == 0
       
+      update_attribute :videofile_processed, 1
+      
       # check to see if video is being replaced
       if self.old_version_id
+          
         old_video = Video.find_by_id(self.old_version_id)
+        
         old_video.videofile = self.videofile
+        old_video.length = self.length
+        old_video.videofile_processed = 1
+        old_video.archived = self.archived
+        
         if old_video.save
-          update_attribute :videofile_processed, 1
+          
+          #remove the old_video directory and its contents
+          old_dir = File.expand_path("..", Rails.root.to_s + "/public" + old_video.videofile_url)
+          FileUtils.rm_rf(old_dir)
+        
+          #rename the new video directory to replace the old_video directory just deleted
+          new_dir = File.expand_path("..", Rails.root.to_s + "/public" + videofile_url)
+          FileUtils.mv new_dir, old_dir
+         
+        
+          # safe to destroy the new copy now that it's been saved as the old id
+          # self.destroy
           UserMailer.conversion_complete(Instructor.find_by_id(instructor_id).email, self, nil).deliver
         else
           update_attribute :videofile_processed, -1
+          UserMailer.conversion_failed(Instructor.find_by_id(instructor_id).email, self, "Unable to save converted videofile.").deliver
         end
 
       # else video is being created

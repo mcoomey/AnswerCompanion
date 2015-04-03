@@ -14,7 +14,7 @@
     
   		<%= link_to image_tag("WaitSpinner.gif", :class => "button", :alt => "Processing Video"),
                   '#',  id:'video_processing_'+local_video.id.to_s, class: 'video_processing',
-                  title: 'Processing Video', data: {url: course_asset_video_path(local_video.course_asset.id, local_video, @query_string)} %>
+                  title: 'Processing Video', data: {url: course_asset_video_path(local_video.course_asset.id, local_video, @query_string), replacing: @old_video.try(:id)} %>
                   
   		<%= link_to image_tag("ErrorIcon.png", :class => "button", :alt => "Processing Error"),
                   '#',  id:'processing_error_'+local_video.id.to_s, class: 'video_hide_icon',
