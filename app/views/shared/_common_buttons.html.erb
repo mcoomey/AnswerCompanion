@@ -1,0 +1,19 @@
+		<% if @user_mode == "instructor" %>
+  		<%= form_for @course, :url => {:controller => 'textbook_delegations', :action => 'index' }, :html => { :method => 'get' } do |f| %>
+  			<%= f.select(:id, @choices.collect{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
+  		<% end %>
+    
+  		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
+  		           instructor_courses_path(@user) %>
+    <% else %>
+  		<%= form_for @subject, :url => {:controller => 'textbook_delegations', :action => 'index' }, :html => { :method => 'get' } do |f| %>
+  			<%= f.select(:id, @choices.collect{|x| [x.name , x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
+  		<% end %>
+    
+  		<%=link_to image_tag("BackToSubjects.png",  :mouseover => "BackToSubjectsHover.png",:class => "button", :alt => "Back to Subjects"), 
+  		           student_subjects_path(@user) %>
+    <% end %>
+    
+		<%=link_to image_tag("AddAsset.png",  :mouseover => "AddAssetHover.png",:class => "button", :alt => "Add Course Asset"), 
+		           new_polymorphic_path([@assetable, CourseAsset.new]), remote: true %>
+               

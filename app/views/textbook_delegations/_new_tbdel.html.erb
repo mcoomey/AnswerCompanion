@@ -2,6 +2,8 @@
   <%= form_for [@course_asset, @textbook_delegation], remote: true do |f| %>
     <%= f.label :isbn13, "Textbook ISBN: " %>
     <%= f.text_field :isbn13, :size => "20" %>
+    <%= f.hidden_field :course_id, value: params[:course_id] if params[:course_id] %>
+    <%= f.hidden_field :subject_id, value: params[:subject_id] if params[:subject_id] %>
     <%= f.submit "Submit", :name => "commit" %>
     <%= f.submit "Cancel", :name => "commit" %>
   <% end %>

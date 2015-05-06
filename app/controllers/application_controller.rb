@@ -53,12 +53,12 @@ class ApplicationController < ActionController::Base
   def get_drop_menu_data
     
     if @user_mode == "instructor"
-      
       @choices = @user.courses.where(:archived => 0)
       @asset_type = "Course Assets"
       @sortable_assets = "sortable"
     
       if params[:course] # drop-down menu
+        @query_string = {:course_id => params[:course][:id]}
         @course = Course.find_by_id(params[:course][:id])
         @course_assets = @course.course_assets.try(:sort_by, &:position)
         @course_asset = @course.course_assets.try(:first)
@@ -81,6 +81,7 @@ class ApplicationController < ActionController::Base
       @sortable_assets = "not-sortable"
     
       if params[:subject]
+        @query_string = {:subject_id => params[:subject][:id]}
         @subject = Subject.find_by_id(params[:subject][:id])
         @course_assets = @subject.course_assets.try(:sort_by, &:position)
         @course_asset = @subject.course_assets.try(:first)
@@ -112,9 +113,7 @@ class ApplicationController < ActionController::Base
   
   
   def set_query_string
-    
-    model = controller_name.classify.constantize.to_s.downcase
-    
+    model = controller_name.singularize.to_sym   # .classify.constantize.to_s.downcase
     if params.has_key?(model)
       @query_string = {:course_id => params[model][:course_id]} if params[model][:course_id]
       @query_string = {:subject_id => params[model][:subject_id]} if params[model][:subject_id]

@@ -1,38 +1,31 @@
 class DocumentsController < ApplicationController
   
-  before_filter :load_user, :only => [:index, :show]
+  before_filter :get_user_mode, :set_query_string
   
   def index
     
-    if params[:assetable]
-      @assetable = @choices.find_by_id(params[:assetable][:id])
-      @course_asset = @assetable.course_assets.try(:first)
-      if @course_asset
-        redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset)
-      else
-        redirect_to polymorphic_path(@assetable)
-      end
+    get_drop_menu_data
 
-    else
-      @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
-      @assetable = @course_asset.assetable
-      @course_assets = @assetable.course_assets.order(:position)
-      @documents = @course_asset.try(:documents)
+    @documents = @course_asset.try(:documents)
 
-  		if @documents
-    		@documents_current  = @documents.where(:archived => 0).order("position")
-    		@documents_archived = @documents.where(:archived => 1).order("position")
-    		@documents_future   = @documents.where(:archived => 2).order("position")
-  		end
-    
-  		if (@documents && @documents.count == 0)
-  			flash[:alert] = "There currently are not any documents."
-  		else
-  			flash[:alert] = nil
-  		end
-      
+    respond_to do |format|
+      format.html {
+    		if @documents
+      		@documents_current  = @documents.where(:archived => 0).order("position")
+      		@documents_archived = @documents.where(:archived => 1).order("position")
+      		@documents_future   = @documents.where(:archived => 2).order("position")
+      		if (@documents && @documents.count == 0)
+      			@ujsAlert = "There currently are not any documents."
+      		else
+      			@ujsAlert = nil
+      		end
+    		end    
+      }
+      format.json {
+        render json: @documents
+      }
     end
-    
+        
   end
 
 
@@ -133,20 +126,5 @@ class DocumentsController < ApplicationController
     end
     render nothing: true  
   end
-  
-  private
-  
-  def load_user
-    if current_user.class.to_s == "Instructor"
-      @user = current_instructor
-      @choices = @user.courses.where(:archived => 0)
-    elsif current_user.class.to_s == "Student"
-      @user = current_student
-      @choices = @user.subjects.where(:archived => 0)
-    else
-      @user = current_parent
-      # to_be_completed
-    end
-  end
-  
+    
 end

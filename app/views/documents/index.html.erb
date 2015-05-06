@@ -1,23 +1,9 @@
 <article>
 	<div id="buttonarea">
-		<%= form_for :assetable, :url => {:controller => 'textbook_delegations', :action => 'index' }, :html => { :method => 'get' } do |f| %>
-			<%= f.select(:id, @choices.collect{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
-		<% end %>
-    
-		<% if @user.class.to_s == "Instructor" %>
-  		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
-  		           instructor_courses_path(@user) %>
-    <% else %>
-  		<%=link_to image_tag("BackToSubjects.png",  :mouseover => "BackToSubjectsHover.png",:class => "button", :alt => "Back to Subjects"), 
-  		           student_subjects_path(@user) %>
-    <% end %>
-    
-		<%=link_to image_tag("AddAsset.png",  :mouseover => "AddAssetHover.png",:class => "button", :alt => "Add Course Asset"), 
-		           new_polymorphic_path([@assetable, CourseAsset.new]), remote: true %>
-               
-		<%=link_to image_tag("AddDocument.png",  :mouseover => "AddDocumentHover.png",:class => "button", :alt => "Add a Document"), 
-		           new_course_asset_document_path(@course_asset), remote: true %>
+    <%= render 'shared/common_buttons' %>
+    <%= render 'local_buttons' %>
 	</div>
+  
 	<div id="horizontal-tabs">
 		<ul class="static-tabs-nav">
 			<li><a href=".current-tab">Current</a></li>
@@ -25,13 +11,35 @@
 			<li><a href=".future-tab">Future</a></li>
 		</ul>
 	</div>
+  
+  
 	<div id="vertical-tabs">
-		<ul class="dynamic-tabs-nav">
-  		<span class="title">Course Assets</span>
-			<% @course_assets.try :each do |asset| %>
-				<%= render "shared/course_asset_tag", :local_asset => asset %>
-  		<% end %>
-		</ul>
+
+    <div id="asset-title">
+  		<span class="title"><%= @asset_type %></span>
+    </div>
+    
+    <div id="all-assets">
+  
+      <div id="enrolled_assets" class="height-fix">
+        <ul class="dynamic-tabs-nav <%= @sortable_assets %>">
+        <% @enrolled_assets.try :each do |asset| %>
+  				<%= render "shared/course_asset_tag", :local_asset => asset %>
+        <% end %>
+        </ul>
+      </div>
+      
+      <div id="course_assets" class="height-fix">
+        <ul class="dynamic-tabs-nav  sortable">
+    			<% @course_assets.try :each do |asset| %>
+    				<%= render "shared/course_asset_tag", :local_asset => asset %>
+          <% end %>
+        </ul> 
+      </div>
+      
+    </div>
+    
+  </div>
 		<div id="noscroll-panel">
       
 			<div class="current-tab">
@@ -48,7 +56,6 @@
 				<%= render 'document_table', local_docs: @documents_future, local_course_asset_id: @course_asset.id %>
   			<br class="clearfloat"/>
 			</div>
-      
 		</div>
 		<br class="clearfloat"/>
 	</div>

@@ -1,0 +1,5 @@
+    <% if @user_mode == "instructor" || @course_asset.assetable_type == "Subject" %>
+  		<%=link_to image_tag("AddTextbook.png",  :mouseover => "AddTextbookHover.png",:class => "button", :alt => "Add a Textbook"), 
+  		           new_course_asset_textbook_delegation_path(@course_asset, @query_string), remote: true %>
+    <% end %>  
+    

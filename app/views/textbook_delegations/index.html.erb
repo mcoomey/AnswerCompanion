@@ -1,39 +1,9 @@
 <article>
 	<div id="buttonarea">
-		<% if @user_mode == "instructor" %>
-  		<%= form_for @course, :url => {:controller => 'textbook_delegations', :action => 'index' }, :html => { :method => 'get' } do |f| %>
-  			<%= f.select(:id, @choices.collect{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
-        <%= f.hidden_field :im_hidden, :value => "hidden_course_thing" %>
-  		<% end %>
-    
-  		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
-  		           instructor_courses_path(@user) %>
-    <% else %>
-  		<%= form_for @subject, :url => {:controller => 'textbook_delegations', :action => 'index' }, :html => { :method => 'get' } do |f| %>
-  			<%= f.select(:id, @choices.collect{|x| [x.name , x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
-        <%= f.hidden_field :im_hidden, :value => "hidden_subject_thing" %>
-  		<% end %>
-    
-  		<%=link_to image_tag("BackToSubjects.png",  :mouseover => "BackToSubjectsHover.png",:class => "button", :alt => "Back to Subjects"), 
-  		           student_subjects_path(@user) %>
-      <% if @subject.enrollment %>
-    		<%=link_to image_tag("Drop.png",  :mouseover => "DropHover.png",:class => "button", :alt => "Enroll in course"), 
-    		           "#", remote: true %>
-      <% else %>
-    		<%=link_to image_tag("Enroll.png",  :mouseover => "EnrollHover.png",:class => "button", :alt => "Enroll in course"), 
-    		           "#", remote: true %>
-      <% end %>
-    <% end %>
-    
-		<%=link_to image_tag("AddAsset.png",  :mouseover => "AddAssetHover.png",:class => "button", :alt => "Add Course Asset"), 
-		           new_polymorphic_path([@assetable, CourseAsset.new]), remote: true %>
-               
-    <% if @user_mode == "instructor" || @course_asset.assetable_type == "Subject" %>
-  		<%=link_to image_tag("AddTextbook.png",  :mouseover => "AddTextbookHover.png",:class => "button", :alt => "Add a Textbook"), 
-  		           new_course_asset_textbook_delegation_path(@course_asset), remote: true %>
-    <% end %>
-    
-	</div>
+    <%= render 'shared/common_buttons' %>
+    <%= render 'local_buttons' %>
+	</div> 
+  
 	<div id="horizontal-tabs">
 		<ul class="static-tabs-nav">
 			<li><a href=".current-tab">Current</a></li>
@@ -42,34 +12,7 @@
 		</ul>
 	</div>
   
-  
-	<div id="vertical-tabs">
-    
-    <div id="asset-title">
-  		<span class="title"><%= @asset_type %></span>
-    </div>
-    
-    <div id="all-assets">
-  
-      <div id="enrolled_assets" class="height-fix">
-        <ul class="dynamic-tabs-nav <%= @sortable_assets %>">
-        <% @enrolled_assets.try :each do |asset| %>
-  				<%= render "shared/course_asset_tag", :local_asset => asset %>
-        <% end %>
-        </ul>
-      </div>
-      
-      <div id="course_assets" class="height-fix">
-        <ul class="dynamic-tabs-nav  sortable">
-    			<% @course_assets.try :each do |asset| %>
-    				<%= render "shared/course_asset_tag", :local_asset => asset %>
-          <% end %>
-        </ul> 
-      </div>
-      
-    </div>
-        
-  </div>
+  <%= render 'shared/vertical_tabs' %>
   
 	<div id="scroll-panel">
     

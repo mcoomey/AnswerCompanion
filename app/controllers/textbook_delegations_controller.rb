@@ -1,12 +1,10 @@
 class TextbookDelegationsController < ApplicationController
 
-  before_filter :get_user_mode
+  before_filter :get_user_mode, :set_query_string
   
   def index
     
     get_drop_menu_data
-    
-    set_query_string
     
     @textbookDels = @course_asset.try(:textbook_delegations)
 
@@ -17,7 +15,7 @@ class TextbookDelegationsController < ApplicationController
       		@textbookDels_archived = @textbookDels.where(:archived => 1).order(:position)
       		@textbookDels_future   = @textbookDels.where(:archived => 2).order(:position)
       		if (@textbookDels.count == 0)
-      			@ujsAlert = "No textbooks are currently assigned."
+      			@ujsAlert = "No textbooks are currently assigned.!!!"
       		else
       			@ujsAlert = nil
       		end
@@ -144,6 +142,7 @@ class TextbookDelegationsController < ApplicationController
       @ujsAlert = nil
       render "cancel"
     end
+
   end
   
 	def edit
