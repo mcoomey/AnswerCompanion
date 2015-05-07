@@ -1,18 +1,7 @@
 <article>
 	<div id="buttonarea">
-    
-		<%= form_for :assetable, :url => {:controller => 'textbook_delegations', :action => 'index' }, :html => { :method => 'get' } do |f| %>
-			<%= f.select(:id, @choices.collect{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
-		<% end %>
-    
-		<% if @user.class.to_s == "Instructor" %>
-  		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
-  		           instructor_courses_path(@user) %>
-    <% else %>
-  		<%=link_to image_tag("BackToSubjects.png",  :mouseover => "BackToSubjectsHover.png",:class => "button", :alt => "Back to Subjects"), 
-  		           student_subjects_path(@user) %>
-    <% end %>
-    
+    <%= render 'shared/common_buttons' %>
+    <%= render 'local_buttons' %>
 	</div>
   
 	<div id="horizontal-tabs">
@@ -20,23 +9,12 @@
 		  <%= content_tag(:li, @document.description, class: "activeTab") %>
 		</ul>
 	</div>
-	<div id="vertical-tabs">
-		<ul class="dynamic-tabs-nav">
-  		<span class="title">Course Assets</span>
-			<% @course_assets.try :each do |asset| %>
-				<%= render "shared/course_asset_tag", :local_asset => asset %>
-				<% if @course_asset == asset %>
-					<%= image_tag(@document.docfile_url(:thumb), class: "thumbnail") %>
-				<% end %>
-  		<% end %>
-		</ul>
-		<div id="panel">    
-      <iframe src=<%= @document.docfile_url %>
-              width="100%" 
-              height="510" 
-              style="border: none;">
-      </iframe>
-		</div>
-		<br class="clearfloat"/>
+
+  <%= render 'shared/vertical_tabs' %>  
+        
+	<div id="panel">    
+    <%= render 'show_document', local_document: @document %>
 	</div>
+	<br class="clearfloat"/>
+
 </article>

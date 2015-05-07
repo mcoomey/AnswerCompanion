@@ -1,0 +1,7 @@
+var url = location.origin + "/course_assets/<%= @link.course_asset.id %>/links/<%= @link.id %>?<%=request.query_string %>";
+var stateObj = {id: <%= @link.id %>};
+history.pushState(stateObj, null, url);
+
+$("#linktables").replaceWith("<%= j render 'show_link' %> ");
+$("#horizontal-tabs ul").html("<li><%= @link.description %></li>");
+$("#horizontal-tabs ul li").addClass("activeTab");

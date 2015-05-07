@@ -1,32 +1,14 @@
 class ExercisesController < ApplicationController
   
-  # GET /exercises
-  # GET /exercises.json
+  before_filter :get_user_mode, :set_query_string
+  
   def index
     
-    if current_user.class.to_s == "Instructor"
-      @user = current_instructor
-      @choices = @user.courses.where(:archived => 0)
-    elsif current_user.class.to_s == "Student"
-      @user = current_student
-      @choices = @user.subjects.where(:archived => 0)
-    else
-      @user = current_parent
-      # to_be_completed
-    end
-    
+    get_drop_menu_data
+       
     @textbook = Textbook.find_by_id(params[:textbook_id])
     
-    if params[:assetable]
-      @assetable = @choices.find_by_id(params[:assetable][:id])
-      @course_asset = @assetable.course_assets.try(:first)
-      if @course_asset
-        redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset)
-      else
-        redirect_to polymorphic_path(@assetable)
-      end
-    
-    elsif params[:filters]
+    if params[:filters]
       @course_asset = CourseAsset.find_by_id(params[:filters][:course_asset_id])
       @assetable = @course_asset.assetable
       @course_assets = @assetable.course_assets.order(:position)
@@ -53,10 +35,10 @@ class ExercisesController < ApplicationController
       
     end
     
-    flash[:alert] = nil
+    @ujsAlert = nil
     
     if (@exercises.count == 0)
-      flash[:alert] = "No exercises found."
+      f@ujsAlert = "No exercises found."
     end
     
     respond_to do |format|

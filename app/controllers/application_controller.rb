@@ -52,6 +52,8 @@ class ApplicationController < ActionController::Base
   
   def get_drop_menu_data
     
+    puts "**** Current Controller = #{params[:controller]} ****"
+    
     if @user_mode == "instructor"
       @choices = @user.courses.where(:archived => 0)
       @asset_type = "Course Assets"

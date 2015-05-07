@@ -1,12 +1,12 @@
 		<% if @user_mode == "instructor" %>
-  		<%= form_for @course, :url => {:controller => 'textbook_delegations', :action => 'index' }, :html => { :method => 'get' } do |f| %>
+		  <%= form_for @course, :url => course_asset_textbook_delegations_path(@course_asset), :html => { :method => 'get' } do |f| %>
   			<%= f.select(:id, @choices.collect{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
   		<% end %>
     
   		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
   		           instructor_courses_path(@user) %>
     <% else %>
-  		<%= form_for @subject, :url => {:controller => 'textbook_delegations', :action => 'index' }, :html => { :method => 'get' } do |f| %>
+		  <%= form_for @subject, :url => course_asset_textbook_delegations_path(@course_asset), :html => { :method => 'get' } do |f| %>
   			<%= f.select(:id, @choices.collect{|x| [x.name , x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
   		<% end %>
     

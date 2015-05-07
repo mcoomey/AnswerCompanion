@@ -1,39 +1,31 @@
 class TextboxesController < ApplicationController
   
-  before_filter :load_user, :only => [:index, :show]
+  before_filter :get_user_mode, :set_query_string
   
-  # GET /textboxes
-  # GET /textboxes.json
   def index
     
-    if params[:assetable]
-      @assetable = @choices.find_by_id(params[:assetable][:id])
-      @course_asset = @assetable.course_assets.try(:first)
-      if @course_asset
-        redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset)
-      else
-        redirect_to polymorphic_path(@assetable)
-      end
+    get_drop_menu_data
 
-    else
-      @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
-      @assetable = @course_asset.assetable
-      @course_assets = @assetable.course_assets.order(:position)
-      @textboxes = @course_asset.try(:textboxes)
+    @textboxes = @course_asset.try(:textboxes)
 
+    respond_to do |format|
+      format.html {
+    		if @textboxes
+      		@textboxes_current  = @textboxes.where(:archived => 0).order("position")
+      		@textboxes_archived = @textboxes.where(:archived => 1).order("position")
+      		@textboxes_future   = @textboxes.where(:archived => 2).order("position")
+      		if (@textboxes && @textboxes.count == 0)
+      			@ujsAlert = "There currently are not any textboxes."
+      		else
+      			@ujsAlert = nil
+      		end
+    		end    
+      }
+      format.json {
+        render json: @textboxes
+      }
     end
 
-		if @textboxes
-  		@textboxes_current  = @textboxes.where(:archived => 0).order("position DESC")
-  		@textboxes_archived = @textboxes.where(:archived => 1).order("position DESC")
-  		@textboxes_future   = @textboxes.where(:archived => 2).order("position DESC")
-		end
-    
-		if (@textboxes && @textboxes.count == 0)
-			flash[:alert] = "There currently are not any textboxes."
-		else
-			flash[:alert] = nil
-		end
   end
 
   # GET /textboxes/1
@@ -143,20 +135,5 @@ class TextboxesController < ApplicationController
   end
   
   
-  private
-  
-  def load_user
-    if current_user.class.to_s == "Instructor"
-      @user = current_instructor
-      @choices = @user.courses.where(:archived => 0)
-    elsif current_user.class.to_s == "Student"
-      @user = current_student
-      @choices = @user.subjects.where(:archived => 0)
-    else
-      @user = current_parent
-      # to_be_completed
-    end
-  end
-  
-  
 end
+

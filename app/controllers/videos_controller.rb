@@ -25,13 +25,9 @@ class VideosController < ApplicationController
   def show
     @video = Video.find(params[:id])
     respond_to do |format|
-      format.html {
-        get_drop_menu_data        
-      }# show.html.erb
+      format.html { get_drop_menu_data }# show.html.erb
       format.json { render json: @video }
-      format.js {
-        get_drop_menu_data
-      } # show.js.erb
+      format.js   { get_drop_menu_data } # show.js.erb
     end
   end
 

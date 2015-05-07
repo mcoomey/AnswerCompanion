@@ -3,7 +3,7 @@
     <%= local_link.description %>   
   </td>
   <td>
-    <%= link_to local_link.url, course_asset_link_path(local_course_asset_id, local_link.id), title: 'View Link' %> 
+    <%= link_to local_link.url, course_asset_link_path(local_course_asset_id, local_link.id, @query_string), remote: true, title: 'View Link' %> 
   </td>
   <td>
     <%= link_to image_tag("EditIcon.png",  :mouseover => "EditIconHover.png",:class => "button", :alt => "Edit link"), 

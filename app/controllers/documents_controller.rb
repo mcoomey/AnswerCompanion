@@ -30,22 +30,12 @@ class DocumentsController < ApplicationController
 
 
   def show
-    if params[:assetable]
-      @assetable = @choices.find_by_id(params[:assetable][:id])
-      @course_asset = @assetable.course_assets.try(:first)
-      if @course_asset
-        redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset)
-      else
-        redirect_to polymorphic_path(@assetable)
-      end
-
-    else
-      @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
-      @assetable = @course_asset.assetable
-      @course_assets = @assetable.course_assets.order(:position)
-      @document = Document.find_by_id(params[:id])    
-    end
-    
+    @document = Document.find_by_id(params[:id])    
+    respond_to do |format|
+      format.html { get_drop_menu_data }# show.html.erb
+      format.json { render json: @video }
+      format.js   { get_drop_menu_data } # show.js.erb
+    end    
   end
 
   def new

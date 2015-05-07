@@ -1,0 +1,7 @@
+var url = location.origin + "/course_assets/<%= @document.course_asset.id %>/documents/<%= @document.id %>?<%=request.query_string %>";
+var stateObj = {id: <%= @document.id %>};
+history.pushState(stateObj, null, url);
+
+$("#documenttables").replaceWith("<%= j render 'show_document', local_document:@document %> ");
+$("#horizontal-tabs ul").html("<li><%= @document.description %></li>");
+$("#horizontal-tabs ul li").addClass("activeTab");

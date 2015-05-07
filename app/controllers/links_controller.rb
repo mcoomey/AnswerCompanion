@@ -1,58 +1,38 @@
 class LinksController < ApplicationController
   
-  before_filter :load_user, :only => [:index, :show]
-  
+  before_filter  :get_user_mode, :set_query_string
   
   def index
     
-    if params[:assetable]
-      @assetable = @choices.find_by_id(params[:assetable][:id])
-      @course_asset = @assetable.course_assets.try(:first)
-      if @course_asset
-        redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset)
-      else
-        redirect_to polymorphic_path(@assetable)
-      end
-
-    else
-      @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
-      @assetable = @course_asset.assetable
-      @course_assets = @assetable.course_assets.order(:position)
-      
-      @links = @course_asset.try(:links)
-
-  		if @links
-    		@links_current  = @links.where(:archived => 0).order("position")
-    		@links_archived = @links.where(:archived => 1).order("position")
-    		@links_future   = @links.where(:archived => 2).order("position")
-  		end
+    get_drop_menu_data
     
+    @links = @course_asset.try(:links)
+    
+
+		if @links
+  		@links_current  = @links.where(:archived => 0).order("position")
+  		@links_archived = @links.where(:archived => 1).order("position")
+  		@links_future   = @links.where(:archived => 2).order("position")
   		if (@links && @links.count == 0)
-  			flash[:alert] = "There currently are not any links."
+  			@ujsAlert = "There currently are not any links."
   		else
-  			flash[:alert] = nil
-  		end
-      
+  			@ujsAlert = nil
+      end
     end
   end
 
   def show
-    if params[:assetable]
-      @assetable = @choices.find_by_id(params[:assetable][:id])
-      @course_asset = @assetable.course_assets.try(:first)
-      if @course_asset
-        redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset)
-      else
-        redirect_to polymorphic_path(@assetable)
-      end
-
+    @link = Link.find_by_id(params[:id])    
+    if @link.url.match(/^http/)
+      @target_url = @link.url
     else
-      @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
-      @assetable = @course_asset.assetable
-      @course_assets = @assetable.course_assets.order(:position)
-      @link = Link.find_by_id(params[:id])    
-      @response = Net::HTTP.get_response( URI.parse("http://www.google.com"))
+      @target_url = "http://"+@link.url
     end
+    respond_to do |format|
+      format.html { get_drop_menu_data }# show.html.erb
+      format.json { render json: @link }
+      format.js   { get_drop_menu_data } # show.js.erb
+    end    
   end
 
   def new
@@ -139,20 +119,5 @@ class LinksController < ApplicationController
   end
   
   private
-  
-  def load_user
-    if current_user.class.to_s == "Instructor"
-      @user = current_instructor
-      @choices = @user.courses.where(:archived => 0)
-    elsif current_user.class.to_s == "Student"
-      @user = current_student
-      @choices = @user.subjects.where(:archived => 0)
-    else
-      @user = current_parent
-      # to_be_completed
-    end
-  end
-  
-  
   
 end

@@ -12,51 +12,29 @@
 		</ul>
 	</div>
   
-  
-	<div id="vertical-tabs">
+  <%= render 'shared/vertical_tabs' %>
 
-    <div id="asset-title">
-  		<span class="title"><%= @asset_type %></span>
-    </div>
+	<div id="noscroll-panel">
+    <div id="documenttables">
     
-    <div id="all-assets">
-  
-      <div id="enrolled_assets" class="height-fix">
-        <ul class="dynamic-tabs-nav <%= @sortable_assets %>">
-        <% @enrolled_assets.try :each do |asset| %>
-  				<%= render "shared/course_asset_tag", :local_asset => asset %>
-        <% end %>
-        </ul>
-      </div>
-      
-      <div id="course_assets" class="height-fix">
-        <ul class="dynamic-tabs-nav  sortable">
-    			<% @course_assets.try :each do |asset| %>
-    				<%= render "shared/course_asset_tag", :local_asset => asset %>
-          <% end %>
-        </ul> 
-      </div>
+  		<div class="current-tab">
+  			<%= render 'document_table', local_docs: @documents_current, local_course_asset_id: @course_asset.id %>
+  			<br class="clearfloat"/>				
+  		</div>
+    
+  		<div class="archived-tab">
+  			<%= render 'document_table', local_docs: @documents_archived, local_course_asset_id: @course_asset.id %>
+  			<br class="clearfloat"/>
+  		</div>
+    
+  		<div class="future-tab">
+  			<%= render 'document_table', local_docs: @documents_future, local_course_asset_id: @course_asset.id %>
+  			<br class="clearfloat"/>
+  		</div>
       
     </div>
-    
-  </div>
-		<div id="noscroll-panel">
-      
-			<div class="current-tab">
-				<%= render 'document_table', local_docs: @documents_current, local_course_asset_id: @course_asset.id %>
-				<br class="clearfloat"/>				
-			</div>
-      
-			<div class="archived-tab">
-				<%= render 'document_table', local_docs: @documents_archived, local_course_asset_id: @course_asset.id %>
-  			<br class="clearfloat"/>
-			</div>
-      
-			<div class="future-tab">
-				<%= render 'document_table', local_docs: @documents_future, local_course_asset_id: @course_asset.id %>
-  			<br class="clearfloat"/>
-			</div>
-		</div>
-		<br class="clearfloat"/>
 	</div>
+  
+	<br class="clearfloat"/>
+
 </article>

@@ -1,55 +1,37 @@
 <article>
 	<div id="buttonarea">
+    <%= render 'shared/common_buttons' %>
+    <%= render 'local_buttons' %>
+	</div> 
     
-		<%= form_for :assetable, :url => course_asset_textbook_delegations_path(@course_asset), :html => { :method => 'get' } do |f| %>
-			<%= f.select(:id, @choices.collect{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
-		<% end %>
-		
-		<% if @user.class.to_s == "Instructor" %>
-  		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
-  		           instructor_courses_path(@user) %>
-    <% else %>
-  		<%=link_to image_tag("BackToSubjects.png",  :mouseover => "BackToSubjectsHover.png",:class => "button", :alt => "Back to Subjects"), 
-  		           student_subjects_path(@user) %>
-    <% end %>
-    
-		<%=link_to image_tag("AddLesson.png",  :mouseover => "AddLessonHover.png",:class => "button", :alt => "Add a Lesson"), 
-		           new_textbook_lesson_path(@textbook, course_asset_id: @course_asset.id), :remote => true %>
-							 
- 		<div id="filterpane">
- 			<div id="filters">
- 				<%= form_for :filters, :url => textbook_lessons_path(@textbook), :html => { :method => 'get'} do |f| %>
-	 				<%= f.label :page, "Page Filter:" %>
-	 				<%= f.text_field :pagefilter, :size => 10, :value => @filterstring %>
-					<%= f.hidden_field :course_asset_id, :value => @course_asset.id %>
-	 				<%= f.submit "Apply", :class => "button"%>
-	 				<%= f.submit "Reset", :commit => "Reset", :class => "button" %>
-	 			<% end %>
- 			</div>
- 		</div>
+	<div id="filterpane">
+		<div id="filters">
+			<%= form_for :filters, :url => textbook_lessons_path(@textbook), :html => { :method => 'get'} do |f| %>
+ 				<%= f.label :page, "Page Filter:" %>
+ 				<%= f.text_field :pagefilter, :size => 10, :value => @filterstring %>
+				<%= f.hidden_field :course_asset_id, :value => @course_asset.id %>
+ 				<%= f.submit "Apply", :class => "button"%>
+ 				<%= f.submit "Reset", :commit => "Reset", :class => "button" %>
+ 			<% end %>
+		</div>
 	</div>
+
 	<div id="horizontal-tabs">
 		<ul class="dynamic-tabs-nav">
-			<li class="activeTab"><%= link_to "Lessons", textbook_lessons_path(@textbook, :course_asset_id => @course_asset.id ) %></li>
-			<li><%= link_to "Exercises", textbook_exercises_path(@textbook, :course_asset_id => @course_asset.id ) %></li>
+			<li class="activeTab"><%= link_to "Lessons", textbook_lessons_path(@textbook, ({:course_asset_id => @course_asset.id}).merge(@query_string)) %></li>
+			<li><%= link_to "Exercises", textbook_exercises_path(@textbook, ({:course_asset_id => @course_asset.id}).merge(@query_string)) %></li>
 		</ul>
 	</div>
-	<div id="vertical-tabs">
-		<ul class="dynamic-tabs-nav">
-  		<span class="title">Course Assets</span>
-			<% @course_assets.try :each do |asset| %>
-				<%= render "shared/course_asset_tag", :local_asset => asset %>
-				<% if @course_asset == asset %>
-					<<%= image_tag(@textbook.thumbnail, class: >"thumbnail") %>
-				<% end %>
-  		<% end %>
-		</ul>
-		<div id="noscroll-panel">
-				<%= render 'lessons/lesson_index', :lessons => @lessons %>
-  			<br class="clearfloat"/>
-		</div>
+  
+  <%= render 'shared/vertical_tabs' %>
+  
+	<div id="noscroll-panel">
+		<%= render 'lessons/lesson_index', :lessons => @lessons %>
 		<br class="clearfloat"/>
 	</div>
-	<div id="textbook_choices_dialog"
+  
+	<br class="clearfloat"/>
+
+	<div id="textbook_choices_dialog">
 	</div>
 </article>

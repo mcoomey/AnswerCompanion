@@ -18,6 +18,12 @@
         <ul class="dynamic-tabs-nav  sortable">
     			<% @course_assets.try :each do |asset| %>
     				<%= render "shared/course_asset_tag", :local_asset => asset %>
+            
+    				<% if (((params[:controller] == "lessons")||(params[:controller] == "exercises"))&& (@course_asset == asset)) %>
+    					<%= image_tag(@textbook.thumbnail, class: "thumbnail") %>
+    				<% end %>
+            
+            
           <% end %>
         </ul> 
       </div>
