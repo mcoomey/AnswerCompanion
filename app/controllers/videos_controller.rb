@@ -85,9 +85,11 @@ class VideosController < ApplicationController
       @video.archived = current_tab_index
       @action = "Create"
       if @video.save
+        puts "************* SAVED NEW VIDEO ***********"
         @ujsAlert = nil
         @ujsNotice = "Video upload has been submitted for processing."
         @video.do_video_conversion
+        render "create"
       else
         @ujsNotice = nil
         @ujsAlert = "Error! " + @video.errors.full_messages.first

@@ -10,6 +10,11 @@
         <ul class="dynamic-tabs-nav <%= @sortable_assets %>">
         <% @enrolled_assets.try :each do |asset| %>
   				<%= render "shared/course_asset_tag", :local_asset => asset %>
+          
+    				<% if (((params[:controller] == "lessons")||(params[:controller] == "exercises"))&& (@course_asset.id == asset.id)) %>
+    					<%= image_tag(@textbook.textbook_image_url(:thumb), class: "thumbnail") %>
+    				<% end %>
+            
         <% end %>
         </ul>
       </div>
@@ -19,10 +24,9 @@
     			<% @course_assets.try :each do |asset| %>
     				<%= render "shared/course_asset_tag", :local_asset => asset %>
             
-    				<% if (((params[:controller] == "lessons")||(params[:controller] == "exercises"))&& (@course_asset == asset)) %>
-    					<%= image_tag(@textbook.thumbnail, class: "thumbnail") %>
+    				<% if (((params[:controller] == "lessons")||(params[:controller] == "exercises"))&& (@course_asset.id == asset.id)) %>
+    					<%= image_tag(@textbook.textbook_image_url(:thumb), class: "thumbnail") %>
     				<% end %>
-            
             
           <% end %>
         </ul> 

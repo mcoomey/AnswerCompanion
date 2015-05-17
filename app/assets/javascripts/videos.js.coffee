@@ -11,7 +11,7 @@
         new_version_url = @dataset.url
         $.getJSON @dataset.url, (data) ->
           $.each data, (k, v) ->
-            # console.log "k=" + k + "   v=" + v
+            console.log "k=" + k + "   v=" + v
             if k == "id"
               id = v
             if k == "old_version_id"
@@ -28,18 +28,20 @@
             $("#processing_error_"+id).addClass("video_hide_icon")
             $("#messages span.ujs_notice").html("")
             
-            # fix the html so that the old_version_id is reflected in links and id's
-            re1 = new RegExp("videos/"+id, "g")
-            re2 = new RegExp("video_"+id, "g")
-            content = $("tr#video_id_"+id).html().replace(re1, "videos/"+old_version_id).replace(re2, "video_"+old_version_id)
-            $("tr#video_id_"+id).html(content)
+            # if video is being replaced...
+            if old_version_id
+              # fix the html so that the old_version_id is reflected in links and id's
+              re1 = new RegExp("videos/"+id, "g")
+              re2 = new RegExp("video_"+id, "g")
+              content = $("tr#video_id_"+id).html().replace(re1, "videos/"+old_version_id).replace(re2, "video_"+old_version_id)
+              $("tr#video_id_"+id).html(content)
             
-            # now remove the new record from the db as it has been copied over the old record
-            $.ajax
-              type: 'POST'
-              url: new_version_url
-              dataType: 'json'
-              data: '_method': 'delete'
+              # now remove the new record from the db as it has been copied over the old record
+              $.ajax
+                type: 'POST'
+                url: new_version_url
+                dataType: 'json'
+                data: '_method': 'delete'
           
           if videofile_processed < 0
             # console.log "video(" + id +  ")" + "processing has failed."

@@ -92,6 +92,7 @@ class TextbookDelegationsController < ApplicationController
                 existingbook = Textbook.find_by_isbn13(@textbook.isbn13)
               
                 if existingbook
+                  
                   # if so, check to see if it's already in the asset
                   @tbdel = @course_asset.textbook_delegations.where(:textbook_id => existingbook.id).first
                   if @tbdel
@@ -106,10 +107,12 @@ class TextbookDelegationsController < ApplicationController
 
                 # otherwise, if textbook is not already in the database add the new book to the database
                 else
+                  
                   @textbook.title = candidate.title
                   @textbook.author = candidate.authors
                   @textbook.publisher = candidate.publisher
                   @textbook.image_link = candidate.image_link
+                  @textbook.remote_textbook_image_url = candidate.image_link
                   @textbook.save
             
                   # and then add it to the current asset
@@ -132,7 +135,7 @@ class TextbookDelegationsController < ApplicationController
       
         end
       else
-        @ujsAlert = "Invalid ISBN was entered"
+        @ujsAlert = "Invalid ISBN was entered"        
         render "new"
       end
       
@@ -154,7 +157,7 @@ class TextbookDelegationsController < ApplicationController
       tbdel = TextbookDelegation.find_by_id(params[:id])
       tbdel.archived = params[:archived]
       # move it to the bottom of the target archived scope
-      tbdel.position = TextbookDelegation.where(:archived => params[:archived]).count+1
+      tbdel.position = tbdel.course_asset.textbook_delegations.where(archived:tbdel.archived).count + 1
       tbdel.save
       @ujsNotice = "Textbook has been moved to #{current_drop_tab.to_s} tab."
     end
@@ -180,6 +183,8 @@ private
 
   def add_to_current_tab(textbook)
     @textbook_delegation.textbook_id = textbook.id
+    posit = @textbook_delegation.course_asset.textbook_delegations.where(archived:@textbook_delegation.archived).count + 1
+    @textbook_delegation.position = posit
     @textbook_delegation.save
     @ujsAlert = nil
     @ujsNotice = "Successfully added new textbook."

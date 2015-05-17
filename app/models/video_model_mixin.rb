@@ -60,6 +60,8 @@ module VideoModelMixin
       
       # check to see if video is being replaced
       if self.old_version_id
+        
+        puts "****************** REPLACING OLD VIDEO ********************"
           
         old_video = Video.find_by_id(self.old_version_id)
         
