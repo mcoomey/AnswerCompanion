@@ -2,4 +2,4 @@ ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
 $("#ujsform").remove();
 $("#buttonarea").show();
 
-$("tbody:visible:last").append("<%= j render 'doc_table_row', local_doc: @document, local_course_asset_id: @course_asset.id %>");
+$("tbody:visible:last").append("<%= j render 'doc_table_row', local_doc: @document, local_course_asset: @course_asset %>");

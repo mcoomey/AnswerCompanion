@@ -13,6 +13,17 @@ window.handleDropEvent = (event, ui) ->
   urlString = window.location.pathname + "/" + id
   console.log "urlString = " + urlString 
   console.log "dataString = " + dataString 
+  console.log "dragitem.html() = " + dragitem.html()
+  for key of ui
+    console.log "key = " + key + "  value = " + ui[key]
+    if key == "helper"
+      subobj = ui[key]
+      for key2 of subobj
+        console.log "    key2 = " + key2 + "  value = " + subobj[key2]
+  #     subsub = subobj[key2]
+  #     for key3 of subsub
+  #       console.log "        key3 = " + key3
+  #
   $.ajax
     type: "PUT"
     url: urlString

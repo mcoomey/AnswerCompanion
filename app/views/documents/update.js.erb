@@ -5,4 +5,4 @@ $("#buttonarea").show();
 $("table tr td:nth-child(3) a").fadeTo("fast", 1).unbind('click');
 $("table tr td:nth-child(4) a").fadeTo("fast", 1).unbind('click');
 
-$("#document_id_<%= @document.id %>").replaceWith("<%= j render 'doc_table_row', local_doc: @document, local_course_asset_id: @course_asset.id %>").show();
+$("#document_id_<%= @document.id %>").replaceWith("<%= j render 'doc_table_row', local_doc: @document, local_course_asset: @course_asset %>").show();

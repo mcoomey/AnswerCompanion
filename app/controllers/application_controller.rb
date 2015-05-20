@@ -115,15 +115,13 @@ class ApplicationController < ActionController::Base
   
   
   def set_query_string
-    puts "***** CURRENT VALUE OF @query_string=#{@query_string}******"
     model = controller_name.singularize.to_sym   # .classify.constantize.to_s.downcase
-    puts "****************************** MODEL = #{model} ******************************"
+    
+    puts "****** model = #{model} ******"
     if params.has_key?(model)
-      puts "****************************** params.has_key #{model} ******************************"
       @query_string = {:course_id => params[model][:course_id]} if params[model][:course_id]
       @query_string = {:subject_id => params[model][:subject_id]} if params[model][:subject_id]
     else
-      puts "****************************** params DOES NOT have_key #{model} ******************************"
       @query_string = {:course_id => params[:course_id]} if params[:course_id]
       @query_string = {:subject_id => params[:subject_id]} if params[:subject_id]
     end
@@ -131,5 +129,5 @@ class ApplicationController < ActionController::Base
     puts "****** SETTING @query_string TO #{@query_string}******"
     
   end
- 
- end
+
+end

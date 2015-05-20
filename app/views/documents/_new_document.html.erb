@@ -3,6 +3,10 @@
   
   <%= f.label :description %>
   <%= f.text_field :description, size: 40 %>
+  <%= f.hidden_field :course_id, value: params[:document][:course_id] if params[:document]&&params[:document][:course_id] %>
+  <%= f.hidden_field :subject_id, value: params[:document][:subject_id] if params[:document]&&params[:document][:subject_id] %>
+  <%= f.hidden_field :course_id, value: params[:course_id] if params[:course_id] %>
+  <%= f.hidden_field :subject_id, value: params[:subject_id] if params[:subject_id] %>
   
 	<%= f.file_field :docfile, :id => "document_filename" %>
     

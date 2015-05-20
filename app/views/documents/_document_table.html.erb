@@ -1,17 +1,15 @@
-<div id="documenttable"  class="tableContainer">
-  <table>
-    <thead class="fixedHeader">
-      <tr>
-        <th>Filename</th>
-        <th>Description</th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody class="scrollContent sortableTable">
-      <% local_docs.each do |doc| %>
-        <%= render 'doc_table_row', local_doc: doc, local_course_asset_id: local_course_asset_id %>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+<table>
+  <thead class="fixedHeader">
+    <tr>
+      <th>Filename</th>
+      <th>Description</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody class="scrollContent sortableTable">
+    <% local_docs.each do |doc| %>
+      <%= render 'doc_table_row', local_doc: doc, local_course_asset: local_course_asset %>
+    <% end %>
+  </tbody>
+</table>
