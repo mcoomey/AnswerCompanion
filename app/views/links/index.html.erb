@@ -17,21 +17,27 @@
 	<div id="noscroll-panel">
     <div id="linktables">
   		<div class="current-tab">
-  			<%= render 'link_table', local_links: @links_current, local_course_asset_id: @course_asset.id %>
+        <div id="current-linktable"  class="tableContainer">
+  			  <%= render 'link_table', local_links: @links_current, local_course_asset: @course_asset %>
+        </div>
   			<br class="clearfloat"/>				
   		</div>
     
   		<div class="archived-tab">
-  			<%= render 'link_table', local_links: @links_archived, local_course_asset_id: @course_asset.id %>
+        <div id="archived-linktable"  class="tableContainer">
+          <%= render 'link_table', local_links: @links_archived, local_course_asset: @course_asset %>
+        </div>
   			<br class="clearfloat"/>
   		</div>
     
   		<div class="future-tab">
-  			<%= render 'link_table', local_links: @links_future, local_course_asset_id: @course_asset.id %>
+        <div id="future-linktable"  class="tableContainer">
+          <%= render 'link_table', local_links: @links_future, local_course_asset: @course_asset %>
+        </div>
   			<br class="clearfloat"/>
   		</div>
+    	<br class="clearfloat"/>
     </div>
 	</div>
-	<br class="clearfloat"/>
 
 </article>

@@ -11,9 +11,9 @@ class TextboxesController < ApplicationController
     respond_to do |format|
       format.html {
     		if @textboxes
-      		@textboxes_current  = @textboxes.where(:archived => 0).order("position")
-      		@textboxes_archived = @textboxes.where(:archived => 1).order("position")
-      		@textboxes_future   = @textboxes.where(:archived => 2).order("position")
+      		@textboxes_current  = @textboxes.where(:archived => 0).order("position DESC")
+      		@textboxes_archived = @textboxes.where(:archived => 1).order("position DESC")
+      		@textboxes_future   = @textboxes.where(:archived => 2).order("position DESC")
       		if (@textboxes && @textboxes.count == 0)
       			@ujsAlert = "There currently are not any textboxes."
       		else
@@ -91,7 +91,7 @@ class TextboxesController < ApplicationController
       @textbox.position = posit
       @textbox.save
       @ujsNotice = "Textbox has been moved to #{current_drop_tab.to_s} tab."
-      render "update"
+      render nothing: true  
     elsif params[:commit] && params[:commit] != "Cancel"
       if @textbox.update_attributes(params[:textbox])
         @ujsAlert = nil
@@ -121,17 +121,12 @@ class TextboxesController < ApplicationController
   
   
   def sort
-    tboxes = params[:tbox_id]
-    idx = 0
-    if tboxes && tboxes.count > 0
-      tboxes.each do |tbid|
-        tbox = Textbox.find_by_id(tbid)
-        tbox.position = tboxes.count - idx
-        tbox.save
-        idx = idx + 1
+    if params[:tbox_id]
+      params[:tbox_id].reverse.each_with_index do |id, index|
+        Textbox.update_all({position: index+1}, {id: id})
       end
-    end      
-    render nothing: true
+    end
+    render nothing: true  
   end
   
   

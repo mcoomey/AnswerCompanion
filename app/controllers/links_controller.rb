@@ -47,7 +47,7 @@ class LinksController < ApplicationController
 
   def create
     @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
-    @link = @course_asset.links.build(params[:link])
+    @link = @course_asset.links.build(params[:link].except(:course_id, :subject_id))
     @link.position = @course_asset.links.where(:archived => current_tab_index).count + 1 
     @link.archived = current_tab_index
     @action = "Create"
@@ -80,7 +80,7 @@ class LinksController < ApplicationController
       @link.position = posit
       @link.save
       @ujsNotice = "Link has been moved to #{current_drop_tab.to_s} tab."
-      render "update"
+      render nothing: true  
     
     elsif params[:commit]  != "Cancel"
       @link.description = params[:link][:description]

@@ -81,7 +81,7 @@ class DocumentsController < ApplicationController
       @document.position = posit
       @document.save
       @ujsNotice = "Document has been moved to #{current_drop_tab.to_s} tab."
-      render "update"
+      render nothing: true  
     
     elsif params[:commit]  != "Cancel"
       @document.description = params[:document][:description]

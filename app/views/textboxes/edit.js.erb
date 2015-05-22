@@ -1,4 +1,2 @@
 ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
-$("#tbox_id_<%= params[:id] %>").remove();                      // remove the <li> item if initial edit render
-$("#edit_textbox_<%= @textbox.id %>").closest("li").remove();   // remove the <li> item if re-rendering edit after failed update
-$("#panel ul:visible").prepend("<%= j render 'form' %>");
+$("#tbox_id_<%= params[:id] %>").replaceWith("<%= j render 'form' %>");

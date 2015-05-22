@@ -13,11 +13,11 @@
   <td><%= local_course.passphrase %> </td>
   <td>
     <%= link_to image_tag("EditIcon.png",  :mouseover => "EditIconHover.png",:class => "button", :alt => "Edit Course"), 
-    edit_course_path(local_course), id: "edit_link_#{local_course.id}" , remote: true %>
+    edit_course_path(local_course, course_id: local_course.id), id: "edit_link_#{local_course.id}" , remote: true %>
   </td>
   <td>
     <%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png",:class => "button", :alt => "Delete Course"),  
-    instructor_course_path(current_instructor.id, local_course.id), :confirm => "Delete [#{local_course.name} - Section #{local_course.section}] - Are you sure?", 
+    instructor_course_path(current_instructor.id, local_course.id, course_id: local_course.id), :confirm => "Delete [#{local_course.name} - Section #{local_course.section}] - Are you sure?", 
     :method => :delete, :remote => true %>
   </td>
 </tr>

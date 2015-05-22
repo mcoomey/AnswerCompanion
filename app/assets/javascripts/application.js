@@ -48,4 +48,13 @@ jQuery(function() {
     update: handleVerticalSortEvent
   });
   
+  $("tbody.sortableTable").sortable({
+    items: "> tr",
+    appendTo: "parent",
+    helper: "clone",
+    zIndex: 0,
+    update: handleSortEvent
+  });
+  
+  
 });

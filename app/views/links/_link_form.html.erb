@@ -1,0 +1,19 @@
+<div id="ujsform">
+  <%= form_for [@course_asset, @link], remote: true do |f| %>
+
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+	
+    <%= f.label :url %>
+    <%= f.text_field :url %>
+    	
+    <%= f.hidden_field :course_id, value: params[:link][:course_id] if params[:link]&&params[:link][:course_id] %>
+    <%= f.hidden_field :subject_id, value: params[:link][:subject_id] if params[:link]&&params[:link][:subject_id] %>
+    <%= f.hidden_field :course_id, value: params[:course_id] if params[:course_id] %>
+    <%= f.hidden_field :subject_id, value: params[:subject_id] if params[:subject_id] %>
+      
+    <%= f.submit "Submit", :name => "commit" %>
+    <%= f.submit "Cancel", :name => "commit" %>
+
+  <% end %>
+</div>

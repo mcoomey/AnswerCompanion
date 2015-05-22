@@ -3,15 +3,15 @@
     <%= local_link.description %>   
   </td>
   <td>
-    <%= link_to local_link.url, course_asset_link_path(local_course_asset_id, local_link.id, @query_string), remote: true, title: 'View Link' %> 
+    <%= link_to local_link.url, course_asset_link_path(local_course_asset.id, local_link.id, @query_string), remote: true, title: 'View Link' %> 
   </td>
   <td>
     <%= link_to image_tag("EditIcon.png",  :mouseover => "EditIconHover.png",:class => "button", :alt => "Edit link"), 
-        edit_course_asset_link_path(local_course_asset_id, local_link.id), title: 'Edit Description', remote: true %>
+        edit_course_asset_link_path(local_course_asset.id, local_link.id, @query_string), title: 'Edit Description', remote: true %>
   </td>
   <td>
     <%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png",:class => "button", :alt => "Delete link"),  
-    course_asset_link_path(local_course_asset_id, local_link.id), :confirm => "Delete Link - Are you sure?", 
+    course_asset_link_path(local_course_asset.id, local_link.id, @query_string), :confirm => "Delete Link - Are you sure?", 
     method: :delete, title: 'Delete Link', remote: true %>
   </td>
 </tr>
