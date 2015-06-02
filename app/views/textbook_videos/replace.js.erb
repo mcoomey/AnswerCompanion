@@ -3,7 +3,7 @@ ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
 $("table tr td:nth-child(2) a").fadeTo("fast", 0.3).bind('click', false);
 $("table tr td:nth-child(6) a:not(.video_hide_icon)").fadeTo("fast", 0.3).bind('click', false);
 $("table tr td:nth-child(7) a").fadeTo("fast", 0.3).bind('click', false);
-$("#buttonarea").hide().after("<%= j render 'replace_video' %>");
+$("#buttonarea").hide().after("<%= j render 'replace_tbvideo' %>");
 
 
 $('#new_textbook_video').fileupload({

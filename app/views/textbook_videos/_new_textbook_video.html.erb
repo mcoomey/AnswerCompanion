@@ -5,11 +5,11 @@
 		<%= f.file_field :videofile, :id => "video_filename" %>
     
     <%= f.hidden_field :instructor_id, :value => @user.id %>
-    
     <%= f.hidden_field :textbook_id, :value => @textbook.id %>
-    
-    <%= f.hidden_field :course_asset_id, :value => @course_asset.id %>
-            
+    <%= f.hidden_field :course_asset_id, value: params[:course_asset_id] if params[:course_asset_id] %>
+    <%= f.hidden_field :course_id, value: params[:course_id] if params[:course_id] %>
+    <%= f.hidden_field :subject_id, value: params[:subject_id] if params[:subject_id] %>
+
 		<%= f.submit "Cancel" %>
     
 	<% end %>

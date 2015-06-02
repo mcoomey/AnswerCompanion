@@ -10,7 +10,7 @@ class VideosController < ApplicationController
      
     respond_to do |format|
       format.html {
-        flash[:alert] = "No videos found." if (@videos.count == 0)
+        @ujsAlert = "No videos found." if (@videos.count == 0)
         @videos_current = @videos.where(archived:0).order("position")
         @videos_archived = @videos.where(archived:1).order("position")
         @videos_future = @videos.where(archived:2).order("position")

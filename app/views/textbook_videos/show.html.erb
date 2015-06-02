@@ -1,52 +1,28 @@
 <article>
+
 	<div id="buttonarea">
-    
-		<%= form_for :assetable, :url => course_asset_textbook_delegations_path(@course_asset), :html => { :method => 'get' } do |f| %>
-			<%= f.select(:id, @choices.collect{|x| [x.name + (x.section ? "-"+x.section : "") , x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
-		<% end %>
-		
-		<% if @user.class.to_s == "Instructor" %>
-  		<%=link_to image_tag("BackToCourses.png",  :mouseover => "BackToCoursesHover.png",:class => "button", :alt => "Back to Courses"), 
-  		           instructor_courses_path(@user) %>
-    <% else %>
-  		<%=link_to image_tag("BackToSubjects.png",  :mouseover => "BackToSubjectsHover.png",:class => "button", :alt => "Back to Subjects"), 
-  		           student_subjects_path(@user) %>
-    <% end %>
-							 
+    <%= render 'shared/common_buttons' %>
+    <%= render 'local_buttons' %>
 	</div>
   
 	<div id="horizontal-tabs">
 		<ul class="dynamic-tabs-nav">
-  			<%= content_tag(:li, (link_to "Lessons", textbook_lessons_path(@textbook, :course_asset_id => @course_asset.id )), class: ("activeTab" if @resource == "lessons")) %>
-  			<%= content_tag(:li, (link_to "Exercises", textbook_exercises_path(@textbook, :course_asset_id => @course_asset.id )), class: ("activeTab" if @resource == "exercises")) %>
+  			<%= content_tag(:li, (link_to "Lessons", textbook_lessons_path(@textbook, {:course_asset_id => @course_asset.id}.merge(@query_string) )), 
+                        class: ("activeTab" if @resource == "lessons")) %>
+  			<%= content_tag(:li, (link_to "Exercises", textbook_exercises_path(@textbook, {:course_asset_id => @course_asset.id}.merge(@query_string) )),
+                        class: ("activeTab" if @resource == "exercises")) %>
 		</ul>
 	</div>
-	<div id="vertical-tabs">
-		<ul class="dynamic-tabs-nav">
-  		<span class="title">Course Assets</span>
-			<% @course_assets.try :each do |asset| %>
-				<%= render "shared/course_asset_tag", :local_asset => asset %>
-				<% if (@course_asset == asset)&&((@resource == "exercises")||(@resource == "lessons")) %>
-					<%= image_tag(@textbook.thumbnail, class: "thumbnail") %>
-				<% end %>
-  		<% end %>
-		</ul>
-		<div id="noscroll-panel">
-			<div id="breadcrumbs">
-				<% if @resource == "exercises" %>
-					<%= link_to @videoable.section_title.name + " Exercise: " + @videoable.number, exercise_textbook_videos_path(@videoable, course_asset_id: @course_asset.id) %>
-				<% elsif @resource == "lessons"%>
-					<%= link_to @videoable.title + " Page: " + @videoable.page, lesson_textbook_videos_path(@videoable, course_asset_id: @course_asset.id) %>
-				<% end %>
-			</div>
-			<%= video_tag([@video.processed_video_url(:mp4), @video.processed_video_url(:ogv), @video.processed_video_url(:webm)],
-							:size => '800x480', 
-							:controls => true, 
-							:autoplay => true,
-							:autobuffer => true )%>
-		</div>
-		<br class="clearfloat"/>
+  
+  <%= render 'shared/vertical_tabs' %>  
+       
+	<div id="noscroll-panel">
+    <%= render 'tbvideo_breadcrumbs' %>
+    <%= render "show_tbvideo", :local_video => @video %>
 	</div>
+  
+	<br class="clearfloat"/>
+
 	<div id="create_new_section_title_dialog"
 	</div>
 </article>

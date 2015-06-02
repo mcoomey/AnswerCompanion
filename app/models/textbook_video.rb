@@ -1,7 +1,7 @@
 require 'video_model_mixin.rb'
 
 class TextbookVideo < ActiveRecord::Base
-  attr_accessor :replace_flag  
+  attr_accessor :replace_flag, :course_id, :subject_id
   attr_accessible :instructor_id, :length, :textbook_id, :videoable_id, :videoable_type, :videofile, :videofile_processed, :replace_flag, :old_version_id
   belongs_to :videoable, polymorphic: true
   belongs_to :instructor

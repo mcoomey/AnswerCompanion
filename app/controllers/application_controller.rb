@@ -70,7 +70,11 @@ class ApplicationController < ActionController::Base
           redirect_to course_path(@course, @query_string)
         end
       else
-        @course = Course.find_by_id(params[:course_id])
+        if params[:filters]
+          @course = Course.find_by_id(params[:filters][:course_id])
+        else
+          @course = Course.find_by_id(params[:course_id])
+        end
         @course_assets = @course.course_assets.try(:sort_by, &:position)
         @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
         @assetable = @course
@@ -118,7 +122,10 @@ class ApplicationController < ActionController::Base
     model = controller_name.singularize.to_sym   # .classify.constantize.to_s.downcase
     
     puts "****** model = #{model} ******"
-    if params.has_key?(model)
+    if params.has_key?(:filters)
+      @query_string = {:course_id => params[:filters][:course_id]} if params[:filters][:course_id]
+      @query_string = {:subject_id => params[:filters][:subject_id]} if params[:filters][:subject_id]
+    elsif params.has_key?(model)
       @query_string = {:course_id => params[model][:course_id]} if params[model][:course_id]
       @query_string = {:subject_id => params[model][:subject_id]} if params[model][:subject_id]
     else

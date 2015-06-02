@@ -1,16 +1,18 @@
 class TextbookVideosController < ApplicationController
   
-  before_filter :load_videoable, :except => [:destroy]
+  before_filter :get_user_mode, :load_tbvideos, :set_query_string
   
   # GET /videos
   # GET /videos.json
   def index
+    
+    get_drop_menu_data
+     
     respond_to do |format|
-      format.html {
-        flash[:alert] = "No videos found."  if (@textbook_videos.count == 0)
-      }
+      format.html { @ujsAlert = "No videos found." if (@textbook_videos.count == 0) }
       format.json { render json: @textbook_videos }
     end
+    
   end
 
   # GET /videos/1
@@ -18,8 +20,9 @@ class TextbookVideosController < ApplicationController
   def show
     @video = TextbookVideo.find(params[:id])
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { get_drop_menu_data }# show.html.erb
       format.json { render json: @video }
+      format.js   { get_drop_menu_data } # show.js.erb
     end
   end
 
@@ -47,46 +50,47 @@ class TextbookVideosController < ApplicationController
       render "cancel"
       
     elsif params[:textbook_video][:replace_flag]
+      @course_asset = CourseAsset.find_by_id(params[:textbook_video][:course_asset_id])
+      
       # find the original video that is being replaced
-      @video = TextbookVideo.find_by_id(params[:textbook_video][:old_version_id])
-      
-      # delete all the files in the associated directory
-      FileUtils.rm_rf(Dir.glob(File.join(@video.videofile.root, @video.videofile.store_dir, '*')))
-      
+      @old_video = TextbookVideo.find_by_id(params[:textbook_video][:old_version_id])
+            
       # get @videoable from the old version
-      @videoable = @video.videoable
+      @videoable = @old_video.videoable
       
       # build a new video from the new videofile 
-      @new_video = @videoable.textbook_videos.new(params[:textbook_video].except(:course_asset_id))
-      
-      # copy new videofile into original video and clear videofile_processed flag
-      @video.videofile = @new_video.videofile
+      @video = @videoable.textbook_videos.build(params[:textbook_video].except(:course_asset_id, :course_id, :subject_id))
       @video.get_video_duration
-      @video.videofile_processed = 0
+      @video.textbook_id = @old_video.textbook_id
+      @video.instructor_id = @old_video.instructor_id
       
+      
+      @action = "Replace"
+            
       # save the new version and submit for processing
       if @video.save
         @ujsAlert = nil
         @ujsNotice = "Video replacement has been submitted for processing."
         @video.do_video_conversion
         render "update_replacement"
-        
       else
         @ujsNotice = nil
         @ujsAlert = "Error! " + @video.errors.full_messages.first
         @old_version_id = params[:id]
-        @video = @course_asset.videos.new
+        @video = @videoable.textbook_videos.new
         render "replace"
       end
 
     # else create a brand new video
     else
-      @video = @videoable.textbook_videos.new(params[:textbook_video].except(:course_asset_id))
+      @course_asset = CourseAsset.find_by_id(params[:textbook_video][:course_asset_id])
+      @video = @videoable.textbook_videos.build(params[:textbook_video].except(:course_asset_id, :course_id, :subject_id))
       @action = "Create"
       if @video.save
         @ujsAlert = nil
         @ujsNotice = "Video upload has been submitted for processing."
         @video.do_video_conversion
+        render "create"
       else
         @ujsNotice = nil
         @ujsAlert = "Error! " + @video.errors.full_messages.first
@@ -106,30 +110,12 @@ class TextbookVideosController < ApplicationController
  
   private
   
-  def load_videoable
+  def load_tbvideos
     @resource, id = request.path.split('/')[1,2]
     @videoable = @resource.singularize.classify.constantize.find_by_id(id)
     if @videoable
       @textbook = @videoable.textbook
       @textbook_videos = @videoable.textbook_videos
-    end
-    
-    if current_user.class.to_s == "Instructor"
-      @user = current_instructor
-      @choices = @user.courses.where(:archived => 0)
-    elsif current_user.class.to_s == "Student"
-      @user = current_student
-      @choices = @user.subjects.where(:archived => 0)
-    else
-      @user = current_parent
-      # to_be_completed
-    end
-    
-    
-    @course_asset = CourseAsset.find_by_id(params[:course_asset_id]) || CourseAsset.find_by_id(params[:textbook_video][:course_asset_id])
-    if @course_asset
-      @assetable = @course_asset.assetable
-      @course_assets = @assetable.course_assets.order(:position)
     end
   end
   

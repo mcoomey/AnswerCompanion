@@ -11,7 +11,7 @@
         <% @enrolled_assets.try :each do |asset| %>
   				<%= render "shared/course_asset_tag", :local_asset => asset %>
           
-    				<% if (((params[:controller] == "lessons")||(params[:controller] == "exercises"))&& (@course_asset.id == asset.id)) %>
+    				<% if (((params[:controller] == "lessons")||(params[:controller] == "exercises")|(params[:controller] == "textbook_videos"))&& (@course_asset.id == asset.id)) %>
     					<%= image_tag(@textbook.textbook_image_url(:thumb), class: "thumbnail") %>
     				<% end %>
             
@@ -24,7 +24,7 @@
     			<% @course_assets.try :each do |asset| %>
     				<%= render "shared/course_asset_tag", :local_asset => asset %>
             
-    				<% if (((params[:controller] == "lessons")||(params[:controller] == "exercises"))&& (@course_asset.id == asset.id)) %>
+    				<% if (((params[:controller] == "lessons")||(params[:controller] == "exercises")|(params[:controller] == "textbook_videos"))&& (@course_asset.id == asset.id)) %>
     					<%= image_tag(@textbook.textbook_image_url(:thumb), class: "thumbnail") %>
     				<% end %>
             

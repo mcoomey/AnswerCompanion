@@ -1,0 +1,7 @@
+<div id="breadcrumbs">
+	<% if @resource == "exercises" %>
+		<%= link_to @videoable.section_title.name + " Exercise: " + @videoable.number, exercise_textbook_videos_path(@videoable, {:course_asset_id => @course_asset.id}.merge(@query_string)) %>
+	<% elsif @resource == "lessons"%>
+		<%= link_to @videoable.title + " Page: " + @videoable.page, lesson_textbook_videos_path(@videoable, {:course_asset_id => @course_asset.id}.merge(@query_string)) %>
+	<% end %>
+</div>

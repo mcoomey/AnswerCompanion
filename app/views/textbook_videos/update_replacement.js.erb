@@ -4,5 +4,5 @@ ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
 $("table tr td:nth-child(2) a").fadeTo("fast", 1).unbind('click');
 $("table tr td:nth-child(6) a:not(.video_hide_icon)").fadeTo("fast", 1).unbind('click');
 $("table tr td:nth-child(7) a").fadeTo("fast", 1).unbind('click');
-$("table tr#textbook_video_id_<%= @video.id %>").replaceWith("<%= j render 'tb_video_table_row', local_video:@video %>")
+$("table tr#textbook_video_id_<%= @old_video.id %>").replaceWith("<%= j render 'tb_video_table_row', local_video:@video %>")
 VideoPoller.request();

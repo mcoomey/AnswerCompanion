@@ -1,0 +1,5 @@
+var url = location.origin + "/<%= @resource %>/<%= @assetable.id %>/textbook_videos/<%= @video.id %>?<%=request.query_string %>";
+var stateObj = {id: <%= @video.id %>};
+history.pushState(stateObj, null, url);
+$("#breadcrumbs").replaceWith("<%= j render 'tbvideo_breadcrumbs' %> ");
+$("#tb_videotable").replaceWith("<%= j render 'show_tbvideo', :local_video => @video %> ");

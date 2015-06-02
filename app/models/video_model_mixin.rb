@@ -61,14 +61,17 @@ module VideoModelMixin
       # check to see if video is being replaced
       if self.old_version_id
         
-        puts "****************** REPLACING OLD VIDEO ********************"
+        model_name = self.class.to_s
+        puts "****************** REPLACING OLD #{model_name} ********************"
+        
+        model = model_name.constantize
           
-        old_video = Video.find_by_id(self.old_version_id)
+        old_video = model.find_by_id(self.old_version_id)
         
         old_video.videofile = self.videofile
         old_video.length = self.length
         old_video.videofile_processed = 1
-        old_video.archived = self.archived
+        old_video.archived = self.archived if self.respond_to?(:archived)
         
         if old_video.save
           
