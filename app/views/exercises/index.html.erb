@@ -2,24 +2,26 @@
 	<div id="buttonarea">
     <%= render 'shared/common_buttons' %>
     <%= render 'local_buttons' %>
+  	<div id="filterpane">
+  		<div id="filters">
+  			<%= form_for :filters, :url => textbook_exercises_path(@textbook), :html => { :method => 'get'} do |f| %>
+   				<%= f.label :page, "Page Filter:" %>
+   				<%= f.text_field :pagefilter, :size => 10, :value => @filterstring %>
+  				<%= f.hidden_field :course_asset_id, :value => @course_asset.id %>
+          <%= f.hidden_field :course_id, value: params[:course_id] if params[:course_id] %>
+          <%= f.hidden_field :subject_id, value: params[:subject_id] if params[:subject_id] %>
+          <%= f.hidden_field :course_id, value: params[:filters][:course_id] if params[:filters]&&params[:filters][:course_id] %>
+          <%= f.hidden_field :subject_id, value: params[:filters][:subject_id] if params[:filters]&&params[:filters][:subject_id] %>
+   				<%= f.submit "Apply", :class => "button"%>
+   				<%= f.submit "Reset", :commit => "Reset", :class => "button" %>
+   			<% end %>
+  		</div>
+  	</div>
 	</div> 
-    
-	<div id="filterpane">
-		<div id="filters">
-			<%= form_for :filters, :url => textbook_exercises_path(@textbook), :html => { :method => 'get'} do |f| %>
- 				<%= f.label :page, "Page Filter:" %>
- 				<%= f.text_field :pagefilter, :size => 10, :value => @filterstring %>
-				<%= f.hidden_field :course_asset_id, :value => @course_asset.id %>
- 				<%= f.submit "Apply", :class => "button"%>
- 				<%= f.submit "Reset", :commit => "Reset", :class => "button" %>
- 			<% end %>
-		</div>
-	</div>
-
 	<div id="horizontal-tabs">
 		<ul class="dynamic-tabs-nav">
-			<li><%= link_to "Lessons", textbook_lessons_path(@textbook, ({:course_asset_id => @course_asset.id}).merge(@query_string)) %></li>
-			<li class="activeTab"><%= link_to "Exercises", textbook_exercises_path(@textbook, ({:course_asset_id => @course_asset.id}).merge(@query_string)) %></li>
+			<li><%= link_to "Lessons", textbook_lessons_path(@textbook, @query_string) %></li>
+			<li class="activeTab"><%= link_to "Exercises", textbook_exercises_path(@textbook, @query_string) %></li>
 		</ul>
 	</div>
   

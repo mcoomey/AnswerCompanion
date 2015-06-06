@@ -1,0 +1,16 @@
+<tr id="exercise_id_<%=local_exercise.id %>" >
+  <td><%= link_to local_exercise.number, exercise_textbook_videos_path(local_exercise, @query_string) %></td>
+  <td><%= local_exercise.page %></td>
+  <td><%= local_exercise.section_title.name if local_exercise.section_title %></td>
+  <% if current_instructor %>
+  	<% if current_instructor.id == local_exercise.instructor_id %>
+  		<td><%= link_to image_tag("EditIcon.png",  :mouseover => "EditIconHover.png",:class => "button", :alt => "Edit Exercise"),
+               edit_textbook_exercise_path(local_exercise.textbook, local_exercise, @query_string), remote: true %></td>
+  	  <td><%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png",:class => "button", :alt => "Delete Exercise"),
+               exercise_path(local_exercise, @query_string), confirm: 'Delete Exercise - Are you sure?', method: :delete, :remote => true %></td>
+  	<% else %>
+  		<td></td>
+  		<td></td>
+  	<% end %>	
+  <% end %>
+</tr>

@@ -125,16 +125,28 @@ class ApplicationController < ActionController::Base
     if params.has_key?(:filters)
       @query_string = {:course_id => params[:filters][:course_id]} if params[:filters][:course_id]
       @query_string = {:subject_id => params[:filters][:subject_id]} if params[:filters][:subject_id]
+      @query_string = @query_string.merge({:course_asset_id => params[:filters][:course_asset_id]}) if @query_string && params[:filters][:course_asset_id]
     elsif params.has_key?(model)
       @query_string = {:course_id => params[model][:course_id]} if params[model][:course_id]
       @query_string = {:subject_id => params[model][:subject_id]} if params[model][:subject_id]
+      @query_string = @query_string.merge({:course_asset_id => params[model][:course_asset_id]}) if @query_string && params[model][:course_asset_id]
     else
       @query_string = {:course_id => params[:course_id]} if params[:course_id]
       @query_string = {:subject_id => params[:subject_id]} if params[:subject_id]
+      @query_string = @query_string.merge({:course_asset_id => params[:course_asset_id]}) if @query_string && params[:course_asset_id]
     end
   
     puts "****** SETTING @query_string TO #{@query_string}******"
     
+  end
+  
+  def load_query_string_vals
+    puts "%%%%%%%%%%%%% Loading query string values with @query_string = #{@query_string} %%%%%%%%%%%%%%"
+    if @query_string
+      @course = Course.find_by_id(@query_string[:course_id]) if @query_string[:course_id]
+      @subject = Course.find_by_id(@query_string[:subject_id]) if @query_string[:subject_id]
+      @course_asset = Course.find_by_id(@query_string[:course_asset_id]) if @query_string[:course_asset_id]
+    end
   end
 
 end

@@ -4,6 +4,10 @@
 	<%= f.hidden_field :section_title_name %>
 	<%= f.hidden_field :textbook_id %>
 	<%= f.hidden_field :course_asset_id, :value => @course_asset.id %>
+  <%= f.hidden_field :course_id, value: params[:exercise][:course_id] if params[:exercise]&&params[:exercise][:course_id] %>
+  <%= f.hidden_field :subject_id, value: params[:exercise][:subject_id] if params[:exercise]&&params[:exercise][:subject_id] %>
+  <%= f.hidden_field :course_id, value: params[:course_id] if params[:course_id] %>
+  <%= f.hidden_field :subject_id, value: params[:subject_id] if params[:subject_id] %>
 	</br>
 	<%= f.submit "Yes", :name => "commit", :id => "confirm_yes" %>
 	<%= f.submit "No", :name => "commit",  :id => "confirm_no"  %>

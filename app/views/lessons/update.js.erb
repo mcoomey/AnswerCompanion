@@ -2,5 +2,4 @@ ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
 $("#ujsform").remove();
 $("#buttonarea").show();
 
-$("#filters_pagefilter").val("");
-$("#lessonpane").replaceWith("<%= j render 'lesson_index', :lessons => @lessons %>");
+$("#lesson_id_<%= @lesson.id %>").replaceWith("<%= j render 'lesson_table_row', local_lesson: @lesson %>").show();

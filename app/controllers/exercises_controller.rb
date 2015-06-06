@@ -1,6 +1,6 @@
 class ExercisesController < ApplicationController
   
-  before_filter :get_user_mode, :set_query_string
+  before_filter :get_user_mode, :set_query_string, :load_query_string_vals
   
   def index
     
@@ -29,7 +29,7 @@ class ExercisesController < ApplicationController
 
     else
       @exercises = @textbook.exercises.sort{|a,b| a.page.to_i <=> b.page.to_i}
-      @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
+      # @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
       @assetable = @course_asset.assetable
       @course_assets = @assetable.course_assets.order(:position)
       
@@ -38,7 +38,7 @@ class ExercisesController < ApplicationController
     @ujsAlert = nil
     
     if (@exercises.count == 0)
-      f@ujsAlert = "No exercises found."
+      @ujsAlert = "No exercises found."
     end
     
     respond_to do |format|
@@ -150,7 +150,7 @@ class ExercisesController < ApplicationController
       
     elsif params[:commit] == "Update"
       old_section_title = @exercise.section_title
-      @exercise.assign_attributes(params[:exercise].except(:course_asset_id))
+      @exercise.assign_attributes(params[:exercise].except(:course_asset_id, :course_id, :subject_id))
       @section_title = @exercise.section_title
       if @section_title && @section_title.new_record?
         @new_section_title = true;

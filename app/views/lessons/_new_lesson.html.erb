@@ -8,6 +8,10 @@
 	
 	<%= f.hidden_field :textbook_id, :value => @textbook.id %>
 	<%= f.hidden_field :course_asset_id, :value => @course_asset.id %>
+  <%= f.hidden_field :course_id, value: params[:lesson][:course_id] if params[:lesson]&&params[:lesson][:course_id] %>
+  <%= f.hidden_field :subject_id, value: params[:lesson][:subject_id] if params[:lesson]&&params[:lesson][:subject_id] %>
+  <%= f.hidden_field :course_id, value: params[:course_id] if params[:course_id] %>
+  <%= f.hidden_field :subject_id, value: params[:subject_id] if params[:subject_id] %>
 	
 	<%= f.submit "Create" %>
 	<%= f.submit "Cancel" %>

@@ -20,8 +20,8 @@
 	</div> 
 	<div id="horizontal-tabs">
 		<ul class="dynamic-tabs-nav">
-			<li class="activeTab"><%= link_to "Lessons", textbook_lessons_path(@textbook, ({:course_asset_id => @course_asset.id}).merge(@query_string)) %></li>
-			<li><%= link_to "Exercises", textbook_exercises_path(@textbook, ({:course_asset_id => @course_asset.id}).merge(@query_string)) %></li>
+			<li class="activeTab"><%= link_to "Lessons", textbook_lessons_path(@textbook, @query_string) %></li>
+			<li><%= link_to "Exercises", textbook_exercises_path(@textbook, @query_string) %></li>
 		</ul>
 	</div>
   

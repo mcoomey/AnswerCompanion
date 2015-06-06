@@ -1,5 +1,5 @@
 ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
 $("#ujsform").remove();
 $("#buttonarea").show();
-$("#filters_pagefilter").val("");
-$("#exercisepane").replaceWith("<%= j render 'exercise_index', :exercises => @exercises %>");
+
+$("#exercise_id_<%= @exercise.id %>").replaceWith("<%= j render 'exercise_table_row', local_exercise: @exercise %>").show();

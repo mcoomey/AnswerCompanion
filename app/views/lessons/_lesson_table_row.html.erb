@@ -1,0 +1,15 @@
+<tr id="lesson_id_<%=local_lesson.id %>" >
+  <td><%= link_to local_lesson.title, lesson_textbook_videos_path(local_lesson, @query_string) %></td>
+  <td><%= local_lesson.page %></td>
+  <% if current_instructor %>
+    <% if current_instructor.id == local_lesson.instructor_id %>
+      <td><%= link_to image_tag("EditIcon.png",  :mouseover => "EditIconHover.png",:class => "button", :alt => "Edit Lesson"),
+               edit_textbook_lesson_path(local_lesson.textbook, local_lesson, @query_string), remote: true %></td>
+      <td><%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png",:class => "button", :alt => "Delete Lesson"),
+               lesson_path(local_lesson, @query_string), confirm: 'Delete Lesson - Are you sure?', method: :delete, :remote => true %></td>
+    <% else %>
+      <td></td>
+      <td></td>
+    <% end %>	
+  <% end %>
+</tr>
