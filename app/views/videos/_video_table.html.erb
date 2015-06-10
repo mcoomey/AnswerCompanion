@@ -11,7 +11,7 @@
   			<th></th>
   	  </tr>
     </thead>
-    <tbody class="scrollContent sortableTable">
+    <tbody class="scrollContent <%= @sortable %>Table">
   		<% local_videos.each do |video| %>
   			<%= render 'video_table_row', :local_course_asset => @course_asset, :local_video => video %>
   		<% end %>

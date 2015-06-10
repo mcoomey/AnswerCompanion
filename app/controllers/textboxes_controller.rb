@@ -5,7 +5,10 @@ class TextboxesController < ApplicationController
   def index
     
     get_drop_menu_data
-
+    
+    # set sortable mode for instructors or students who own the asset
+    set_sortable_mode
+     
     @textboxes = @course_asset.try(:textboxes)
 
     respond_to do |format|

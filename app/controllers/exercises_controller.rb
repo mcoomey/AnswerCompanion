@@ -9,9 +9,9 @@ class ExercisesController < ApplicationController
     @textbook = Textbook.find_by_id(params[:textbook_id])
     
     if params[:filters]
-      @course_asset = CourseAsset.find_by_id(params[:filters][:course_asset_id])
-      @assetable = @course_asset.assetable
-      @course_assets = @assetable.course_assets.order(:position)
+      # @course_asset = CourseAsset.find_by_id(params[:filters][:course_asset_id])
+      # @assetable = @course_asset.assetable
+      # @course_assets = @assetable.course_assets.order(:position)
       
       if (params[:commit] != "Reset")
         @filterstring = params[:filters][:pagefilter]
@@ -30,8 +30,8 @@ class ExercisesController < ApplicationController
     else
       @exercises = @textbook.exercises.sort{|a,b| a.page.to_i <=> b.page.to_i}
       # @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
-      @assetable = @course_asset.assetable
-      @course_assets = @assetable.course_assets.order(:position)
+      # @assetable = @course_asset.assetable
+      # @course_assets = @assetable.course_assets.order(:position)
       
     end
     

@@ -7,6 +7,9 @@ class VideosController < ApplicationController
   def index
 
     get_drop_menu_data
+    
+    # set sortable mode for instructors or students who own the asset
+    set_sortable_mode
      
     respond_to do |format|
       format.html {

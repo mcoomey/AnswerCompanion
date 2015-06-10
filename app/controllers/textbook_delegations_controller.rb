@@ -26,11 +26,8 @@ class TextbookDelegationsController < ApplicationController
       }
     end
     
-    if @user_mode == "instructor" || @course_asset.try(:assetable_type) == "Subject"
-      @sortable = "sortable"
-    else
-      @sortable = "not-sortable"
-    end
+    # set sortable mode for instructors or students who own the asset
+    set_sortable_mode
        
   end
   

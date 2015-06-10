@@ -6,6 +6,9 @@ class LinksController < ApplicationController
     
     get_drop_menu_data
     
+    # set sortable mode for instructors or students who own the asset
+    set_sortable_mode
+     
     @links = @course_asset.try(:links)
     
 

@@ -72,11 +72,12 @@ class ApplicationController < ActionController::Base
       else
         if params[:filters]
           @course = Course.find_by_id(params[:filters][:course_id])
+          @course_asset = CourseAsset.find_by_id(params[:filters][:course_asset_id])
         else
           @course = Course.find_by_id(params[:course_id])
+          @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
         end
         @course_assets = @course.course_assets.try(:sort_by, &:position)
-        @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
         @assetable = @course
       end
       
@@ -93,17 +94,22 @@ class ApplicationController < ActionController::Base
         @course_asset = @subject.course_assets.try(:first)
         @enrolled_assets = @subject.enrollment.try(:course).try(:course_assets).try(:sort_by, &:position)
         @enrolled_asset = @enrolled_assets.try(:first)
-        if @enrolled_asset
-          redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@enrolled_asset.model_type).name_of_model}_path", @enrolled_asset, @query_string)
-        elsif @course_asset
+        if @course_asset
           redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@course_asset.model_type).name_of_model}_path", @course_asset, @query_string)
+        elsif @enrolled_asset
+          redirect_to send("course_asset_#{CourseAssetModelType.find_by_id(@enrolled_asset.model_type).name_of_model}_path", @enrolled_asset, @query_string)
         else
           redirect_to subject_path(@subject)
         end
       else
-        @subject = Subject.find_by_id(params[:subject_id])
+        if params[:filters]
+          @subject = Subject.find_by_id(params[:filters][:subject_id])
+          @course_asset = CourseAsset.find_by_id(params[:filters][:course_asset_id])
+        else
+          @subject = Subject.find_by_id(params[:subject_id])
+          @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
+        end
         @course_assets = @subject.course_assets.try(:sort_by, &:position)
-        @course_asset = CourseAsset.find_by_id(params[:course_asset_id])
         @enrolled_assets = @subject.enrollment.try(:course).try(:course_assets).try(:sort_by, &:position)
         @assetable = @subject
       end
@@ -149,4 +155,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # set sortable mode for instructors or students who own the asset
+
+  def set_sortable_mode
+    if @user_mode == "instructor" || @course_asset.try(:assetable_type) == "Subject"
+      @sortable = "sortable"
+    else
+      @sortable = "not-sortable"
+    end
+  end
+  
 end
