@@ -7,7 +7,7 @@
       <th></th>
     </tr>
   </thead>
-  <tbody class="scrollContent sortableTable">
+  <tbody class="scrollContent <%= @sortable %>Table">
     <% local_docs.each do |doc| %>
       <%= render 'doc_table_row', local_doc: doc, local_course_asset: local_course_asset %>
     <% end %>

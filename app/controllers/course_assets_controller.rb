@@ -1,6 +1,6 @@
 class CourseAssetsController < ApplicationController
   
-  before_filter :load_assetable
+  before_filter :load_assetable, :get_user_mode
     
   # GET /course_assets
   # GET /course_assets.json
@@ -32,7 +32,6 @@ class CourseAssetsController < ApplicationController
    # POST /course_assets
   def create
    	if params[:commit]  != "Cancel"  
-      get_user_mode
       
       posit = @assetable.course_assets.count + 1
       @course_asset = @assetable.course_assets.new(params[:course_asset].merge(position: posit))

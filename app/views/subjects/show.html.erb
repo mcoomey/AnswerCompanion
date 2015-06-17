@@ -1,5 +1,6 @@
 <article>
 	<div id="buttonarea">
+        
 		<%= form_for :subject, :url => { :action => 'show' }, :html => { :method => 'get' } do |f| %>
 			<%= f.select(:id, @subjects.collect{|x| [x.name, x.id]}, {}, {:onChange => 'this.form.submit();' } ) %>
 		<% end %>

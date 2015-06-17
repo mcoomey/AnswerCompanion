@@ -18,7 +18,7 @@
       
 			<div class="current-tab">
 				<% if @textboxes_current %>
-          <ul id="current-ul-sortable">
+          <ul id="current-ul-<%= @sortable %>">
   					<% @textboxes_current.each do |tbox| %>
   						<%= render 'tbox', local_tbox: tbox, local_course_asset_id: @course_asset.id %>
   					<% end %>
@@ -29,7 +29,7 @@
       
 			<div class="archived-tab">
 			<% if @textboxes_archived %>
-          <ul id="archived-ul-sortable">
+          <ul id="archived-ul-<%= @sortable %>">
     				<% @textboxes_archived.each do |tbox| %>
   						<%= render 'tbox', local_tbox: tbox, local_course_asset_id: @course_asset.id %>
     				<% end %>
@@ -40,7 +40,7 @@
       
 			<div class="future-tab">
 			<% if @textboxes_future %>
-        <ul id="future-ul-sortable">
+        <ul id="future-ul-<%= @sortable %>">
   				<% @textboxes_future.each do |tbox| %>
   						<%= render 'tbox', local_tbox: tbox, local_course_asset_id: @course_asset.id %>
   				<% end %>

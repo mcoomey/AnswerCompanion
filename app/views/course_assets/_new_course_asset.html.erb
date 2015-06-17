@@ -5,7 +5,11 @@
     <%= f.text_field :name %>
 	
     <%= f.label :model_type, "Asset Type" %>
-    <%= f.collection_select :model_type, CourseAssetModelType.all, :id, :name, include_blank: true %>
+    <% if @user_mode == "instructor" %> 
+      <%= f.collection_select :model_type, CourseAssetModelType.all, :id, :name, include_blank: true %>
+    <% else %>
+      <%= f.collection_select :model_type, CourseAssetModelType.where('name != "Videos"'), :id, :name, include_blank: true %>
+    <% end %>
 	
     <%= f.submit "Submit", :name => "commit" %>
     <%= f.submit "Cancel", :name => "commit" %>

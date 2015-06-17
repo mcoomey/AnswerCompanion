@@ -1,3 +1,4 @@
-    <%=link_to image_tag("AddVideo.png",  :mouseover => "AddVideoHover.png",:class => "button", :alt => "Add a Video"), 
-		           new_polymorphic_path([@videoable, Video.new], {:course_asset_id => @course_asset.id}.merge(@query_string)), :id => "add_video", :remote => true %>
-							 
+<% if @user_mode == "instructor" %> 
+  <%=link_to image_tag("AddVideo.png",  :mouseover => "AddVideoHover.png",:class => "button", :alt => "Add a Video"), 
+             new_polymorphic_path([@videoable, Video.new], {:course_asset_id => @course_asset.id}.merge(@query_string)), :id => "add_video", :remote => true %>
+<% end %>

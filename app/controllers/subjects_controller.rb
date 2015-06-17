@@ -1,5 +1,7 @@
 class SubjectsController < ApplicationController
 
+  before_filter :get_user_mode, :set_query_string
+
   def index
     @student = Student.find_by_id(params[:student_id])
     @subjects = @student.subjects
