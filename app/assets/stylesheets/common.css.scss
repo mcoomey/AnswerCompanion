@@ -109,6 +109,15 @@ ul.ui-autocomplete {
 	overflow-y: scroll;
 }
 
+#wide-scroll-panel{
+  width:990px;
+  height:554px;
+	float:left;
+  padding:0;
+  margin:0;
+	overflow-y: scroll;
+}
+
 #noscroll-panel{
   width:890px;
   height:514px;

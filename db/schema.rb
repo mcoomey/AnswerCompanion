@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150513232329) do
+ActiveRecord::Schema.define(:version => 20150621124559) do
+
+  create_table "countries", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "course_asset_model_types", :force => true do |t|
     t.string   "name"
@@ -210,9 +216,9 @@ ActiveRecord::Schema.define(:version => 20150513232329) do
   create_table "schools", :force => true do |t|
     t.string   "name"
     t.string   "town"
-    t.string   "state"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "state_id"
   end
 
   create_table "section_titles", :force => true do |t|
@@ -230,6 +236,14 @@ ActiveRecord::Schema.define(:version => 20150513232329) do
     t.datetime "updated_at", :null => false
     t.integer  "position"
     t.string   "type"
+  end
+
+  create_table "states", :force => true do |t|
+    t.string   "name"
+    t.integer  "country_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "abbrev"
   end
 
   create_table "students", :force => true do |t|

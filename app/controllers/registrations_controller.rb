@@ -1,7 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
 
-  before_filter :authenticate_instructor!
-  
   def new
     @school = School.new
     super    

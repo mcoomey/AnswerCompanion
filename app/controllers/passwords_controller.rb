@@ -18,7 +18,7 @@ class PasswordsController < Devise::PasswordsController
     if resource.errors.empty?
       flash_message = resource.active_for_authentication? ? :updated : :updated_not_active
       set_flash_message(:notice, flash_message) if is_navigational_format?
-      flash.keep
+      # flash.keep
       sign_in(resource_name, resource)
       respond_with resource, :location => after_sign_in_path_for(resource)
     else

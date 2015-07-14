@@ -1,0 +1,20 @@
+<div id="ujsform">
+<%= form_for @enrollment, url: subject_enrollments_path(@subject), :html => { :method => 'post'}, remote:true do |f| %>
+
+	<%= f.label :state %>
+	<%= collection_select(:state, :value, @states, :to_s, :to_s, {include_blank: true}, {remote: true, onChange: 'this.form.submit();'} ) %>
+
+	<%= f.label :school %>
+	<%= collection_select(:school, :id, @schools, :id, :name, include_blank: true) %>
+
+	<%= f.label :inst %>
+	<%= collection_select(:instructor, :id, @instructors, :id, :lastname, include_blank: true) %>
+
+	<%= f.label :course %>
+	<%= f.collection_select(:course_id, @courses, :id, :name, include_blank: true) %>
+
+	<%= f.submit "Create", :name => "commit" %>
+	<%= f.submit "Cancel", :name => "commit" %>
+<% end %>
+</div>
+

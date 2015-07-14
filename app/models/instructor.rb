@@ -24,5 +24,6 @@ class Instructor < ActiveRecord::Base
   accepts_nested_attributes_for :schools, allow_destroy: true
    
 	validates :username, :uniqueness => { :message => " already exists."}, :allow_blank => true
+  validates_associated :schools
 	
 end

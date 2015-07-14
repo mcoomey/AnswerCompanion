@@ -24,7 +24,6 @@ class CoursesController < ApplicationController
     respond_to do |format|
       format.html { # index.html.erb
         if @courses.count == 0
-          @ujsNotice = "You don't have any courses defined.  "
           @ujsAlert = "Please add a course."
         end
         }

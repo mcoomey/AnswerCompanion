@@ -1,7 +1,8 @@
 <article> 
+<div id="wide-scroll-panel">
 	<div id="login-register", class="visible">
 		<div id="data-entry">
-		  <%= render 'shared/resource_heading', :formtype => "profile edit" %>  
+		  <%= render 'shared/resource_heading', :formtype => "profile edit" %>  XX
 		  <div id="data-entry-form">
 				<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :autocomplete => "off"}) do |f| %>
 				  <div class="left-entry-panel">
@@ -30,7 +31,7 @@
 						<%= f.fields_for :schools do |sch| %>
 						  <%= render 'shared/school_fields', f: sch %>
 					  <% end %>	
-					  <%= link_to_image_add_fields f, :schools, "AddSchool.png", "AddSchoolHover.png" %>
+  				  <%= link_to_image_add_fields f, :schools, "AddSchool.png", "AddSchoolHover.png" %>
 					
 						<% if resource_name == :student%>
 							<div class="full-width-panel">
@@ -67,4 +68,5 @@
 			</div>
 		</div>
 	</div>
+</div>
 </article>

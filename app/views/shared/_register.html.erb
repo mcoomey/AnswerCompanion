@@ -2,7 +2,7 @@
   <%= render 'shared/resource_heading', :formtype => "registration" %>
 	<div id="data-entry-form">
 			<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:autocomplete => "off"}) do |f| %>
-				<%= f.fields_for :school do |s| %>
+				<%= f.fields_for @school do |s| %>
 				  <div class="left-entry-panel">
 					 	<%= f.email_field :email, class: "wide", placeholder: "Email address", tabindex: 1 %>
 					  <%= f.password_field :password, class: "wide", placeholder: "Password", tabindex: 3 %>
@@ -17,7 +17,13 @@
 					 	<%= f.text_field :lastname, class: "wide", placeholder: "Last name", tabindex: 6 %>
 						<% if resource_name != :parent %>
 							<%= s.text_field :town, class: "medium", placeholder: "Town or City", tabindex: 8 %>
-							<%= s.text_field :state, class: "narrow", placeholder: "State", tabindex: 9 %>
+              <% if @school_error %>
+                <div class="field_with_errors">
+              <% end %>
+                <%= s.text_field :state_abbrev, class: "narrow", placeholder: "State", tabindex: 9 %>
+              <% if @school_error %>
+                </div>
+              <% end %>
 						<% end %>
 					</div>
 					
@@ -34,4 +40,6 @@
 			<% end %>
 		<%= image_tag "Cancel.png",  :mouseover => "CancelHover.png", :alt => "Cancel" , class: "cancel-login"  %>
 	</div>
+</div>
+<div id="create_new_school_dialog"
 </div>

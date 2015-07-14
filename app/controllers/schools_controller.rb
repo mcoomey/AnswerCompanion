@@ -14,7 +14,7 @@ class SchoolsController < ApplicationController
       format.html # index.html.erb
       format.json { 
         @filtered_schools = School.order(:name).where("lower(name) like ?", "#{params[:term.downcase]}%")
-        render json: @filtered_schools.map{|s| s.name + "||" + s.town +  "||" + s.state}
+        render json: @filtered_schools.map{|s| s.name + "||" + s.town +  "||" + State.find_by_id(s.state_id).abbrev}
       }
     end
   end

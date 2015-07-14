@@ -7,10 +7,17 @@
 		
 		<%=link_to image_tag("BackToSubjects.png",  :mouseover => "BackToSubjectsHover.png",:class => "button", :alt => "Back to Subjects"), 
 		           student_subjects_path(@student) %>
-		<%=link_to image_tag("Enroll.png",  :mouseover => "EnrollHover.png",:class => "button", :alt => "Enroll in course"), 
-		           edit_subject_path(@subject), remote: true %>
 		<%=link_to image_tag("AddAsset.png",  :mouseover => "AddAssetHover.png",:class => "button", :alt => "Add Course Asset"), 
 		           new_polymorphic_path([@subject, CourseAsset.new]), remote: true %>
+               
+    <% if @subject.enrollment %>
+  		<%=link_to image_tag("Drop.png",  :mouseover => "DropHover.png",:class => "button", :alt => "Delete Enrollment"), 
+  		           edit_subject_path(@subject), remote: true %>
+    
+    <% else %>
+  		<%=link_to image_tag("Enroll.png",  :mouseover => "EnrollHover.png",:class => "button", :alt => "Enroll in course"), 
+  		           new_subject_enrollment_path(@subject), remote: true %>
+    <% end %>
 	</div>
 	<div id="horizontal-tabs">
 		<ul class="static-tabs-nav">
