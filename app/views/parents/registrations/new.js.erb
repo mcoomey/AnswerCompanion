@@ -1,0 +1,12 @@
+$("#videoblock").hide();
+$(".notice").empty();
+$(".alert").empty();
+$("#menu").hide();
+$("#login-register").html("<%= j render 'shared/register' %>").show();
+$(".cancel-login").click(function() {
+  $("#login-register").hide();
+  $(".notice").html("Parent registration action canceled");
+  $(".alert").empty();
+  $("#videoblock").show();
+  $("#menu").show();
+})

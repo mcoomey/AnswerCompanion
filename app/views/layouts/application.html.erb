@@ -14,18 +14,12 @@
 			<div id="sessioninfo">
 				<% if instructor_signed_in? || student_signed_in? || parent_signed_in? %>
 					<%= link_to image_tag("LogoutLogo.png",  :mouseover => "LogoutLogoHover.png",:class => "button", :alt => "Logout" ), destroy_user_session_path, :method => :delete %> 
-					<%= link_to image_tag("Account.png",  :mouseover => "AccountHover.png",:class => "button", :alt => "Account" ), edit_user_registration_path %> </br>
+					<%= link_to image_tag("Account.png",  :mouseover => "AccountHover.png",:class => "button", :alt => "Account" ), edit_user_registration_path, remote: true %> </br>
 					<%= current_user.email%></br>
 					Prior login: <%= current_user.last_sign_in_at.localtime.strftime("%b %d, %Y @ %I:%M:%S%P") %></br>
 					<% if current_instructor || current_student %>
 						Account Balance: <%= number_to_currency(current_user.accountbalance, :unit => "$") %></br>
-					<% end %>
-          <% if instructor_signed_in? %>
-            INSTRUCTOR
-          <% else %>
-            STUDENT 
-          <% end %>
-          
+					<% end %>          
 				<% end %>
 			</div>   
  		</header>
@@ -35,7 +29,6 @@
 	  	<span class="alert"><%= alert %></span>
 			<span class="ujs_alert"><%= @ujsAlert %></span>
   	</div>
-		<%= yield :asset_table %>
 		<%= yield %>
     <footer> Version 0.0&nbsp;&nbsp;&nbsp;&nbsp;&copy;2015 Answer Companion, Incorporated&nbsp;&nbsp;&nbsp;&nbsp;Paxton, MA 01612 </footer>
   </div>

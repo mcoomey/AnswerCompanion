@@ -3,7 +3,7 @@ class Parents::RegistrationsController < Devise::RegistrationsController
   before_filter :authenticate_parent!
   
   def new
-    # @school = School.new
+    @school = School.new
     super    
   end
 

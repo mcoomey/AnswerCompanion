@@ -1,0 +1,59 @@
+// New Instructor registration
+
+<% if @new_school %>
+  $("#create_new_school_dialog").html("<%= j render 'new_school_dialog' %>");
+  $("#create_new_school_dialog").prepend("<span class \"title\"> <%= j @school.name %>, <%= j @school.town %>, <%= j @school.state_abbrev %></span>");
+  $("#create_new_school_dialog").dialog({
+	  title: "Create New School?",
+	  resizeable: false,
+	  modal: true
+  });
+  
+	$("#confirm_yes").click(function(){
+		$("#create_new_school_dialog").dialog("destroy");
+	});
+
+	$("#confirm_no").click(function(){
+		$("#create_new_school_dialog").dialog("destroy");
+	});
+
+<% else %>
+  
+  $("#videoblock").hide();
+  $(".notice").empty();
+  $(".alert").empty();
+  $(".ujs_alert").html("<%= @ujsAlert %>");
+  $(".ujs_notice").html("<%= @ujsNotice %>");
+  $("#menu").hide();
+  $("#login-register").html("<%= j render 'shared/register' %>").show();
+
+  $('#instructor_school_name').autocomplete({
+    minLength: 0,
+    delay: 0,
+    source: $("#instructor_school_name").data("autocomplete-source")},
+   {
+    messages: {
+      noResults: '',
+      results: ''
+    },
+    select: function(event, ui) {
+      var info;
+      info = ui.item.value.split("||");
+      ui.item.value = info[0];
+      $("#instructor_school_name").val(info[0]);
+      $("#instructor_school_town").val(info[1]);
+      return $("#instructor_school_state_abbrev").val(info[2]);
+      }
+    });
+
+<% end %>
+
+$(".cancel-login").click(function() {
+  $("#login-register").hide();
+  $(".alert").empty();
+  $(".notice").empty();
+  $(".ujs_alert").empty();
+  $(".ujs_notice").empty();
+  $("#videoblock").show();
+  $("#menu").show();
+})

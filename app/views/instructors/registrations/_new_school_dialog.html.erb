@@ -1,0 +1,26 @@
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), remote:true , :html => {:autocomplete => "off"}) do |f| %>
+ 	<%= f.hidden_field :email %>
+  <%= f.hidden_field :password %>
+ 	<%= f.hidden_field :firstname %>
+ 	<%= f.hidden_field :username %>
+  <%= f.hidden_field :password_confirmation %>
+ 	<%= f.hidden_field :lastname %>
+      
+  <% if resource_name == :student %>
+		<%= f.fields_for :parent_email do |p| %>
+	    <%= p.hidden_field :email, class: "wide", placeholder: "Parent email", tabindex: 10 %>
+		<% end %>
+	<% end %>
+  
+	<%= f.fields_for @school do |s| %>
+		<% if resource_name != :parent %>
+	    <%= s.hidden_field :name %>
+			<%= s.hidden_field :town %>
+      <%= s.hidden_field :state_abbrev %>
+		<% end %>
+  <% end %>
+
+	</br>
+	<%= f.submit "Yes", :name => "commit", :id => "confirm_yes" %>
+	<%= f.submit "No", :name => "commit",  :id => "confirm_no"  %>
+<% end %>

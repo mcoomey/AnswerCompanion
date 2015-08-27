@@ -1,0 +1,39 @@
+// New Studentregistration
+
+$("#videoblock").hide();
+$(".notice").empty();
+$(".alert").empty();
+$(".ujs_alert").html("<%= @ujsAlert %>");
+$(".ujs_notice").html("<%= @ujsNotice %>");
+$("#menu").hide();
+$("#login-register").html("<%= j render 'shared/register' %>").show();
+
+$('#student_school_name').autocomplete({
+  minLength: 0,
+  delay: 0,
+  source: $("#student_school_name").data("autocomplete-source")},
+ {
+  messages: {
+    noResults: '',
+    results: ''
+  },
+  select: function(event, ui) {
+    var info;
+    info = ui.item.value.split("||");
+    ui.item.value = info[0];
+    $("#student_school_name").val(info[0]);
+    $("#student_school_town").val(info[1]);
+    return $("#student_school_state_abbrev").val(info[2]);
+  }
+});
+
+
+$(".cancel-login").click(function() {
+  $("#login-register").hide();
+  $(".alert").empty();
+  $(".notice").empty();
+  $(".ujs_alert").empty();
+  $(".ujs_notice").empty();
+  $("#videoblock").show();
+  $("#menu").show();
+})

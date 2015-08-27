@@ -22,7 +22,7 @@
 				                                :onmouseout => "this.src='/assets/Login.png'", class: "signin", tabindex: 4 %>
 		<% end %>
 		
-		<%= image_tag "Cancel.png",  :mouseover => "CancelHover.png", :alt => "Cancel" , class: "cancel-login" %>
+		<%= image_tag("Cancel.png",  :mouseover => "CancelHover.png", :alt => "Cancel" , class: "cancel-login") %>
 
 		<% msg = I18n.t("devise.failure.unconfirmed") %>
 		<% if flash[:alert] && (flash[:alert].include? msg) %>

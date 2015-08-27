@@ -22,4 +22,5 @@ class Student < ActiveRecord::Base
   accepts_nested_attributes_for :parent_emails
   
 	validates :username, :uniqueness => { :message => " already exists."}, :allow_blank => true
+  validates_associated :schools
 end

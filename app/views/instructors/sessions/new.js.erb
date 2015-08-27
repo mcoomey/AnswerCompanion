@@ -1,12 +1,16 @@
+// New Instructor session
+
 $("#menu").hide();
 $(".notice").empty();
 $(".alert").empty();
 $("#videoblock").hide();
 $("#login-register").html("<%= j render 'shared/login' %>").show();
-$(".xxcancel-login").click(function() {
+$(".cancel-login").click(function(event) {
   $("#login-register").hide();
-  $(".notice").empty();
   $(".alert").empty();
+  $(".notice").empty();
+  $(".ujs_alert").empty();
+  $(".ujs_notice").empty();
   $("#videoblock").show();
   $("#menu").show();
 })

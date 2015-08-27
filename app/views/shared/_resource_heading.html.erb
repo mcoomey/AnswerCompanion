@@ -1,10 +1,10 @@
 <% if "#{resource_name}" == "instructor" %>
-    <%= image_tag("I.png", class: "login_img") %>
-    <span class="login">nstructor <%=formtype%></span>
-	    <% elsif "#{resource_name}" == "student" %>
-	      <%= image_tag("S.png", class: "login_img") %>
-	      <span class="login">tudent <%=formtype%></span>
-	    <% elsif "#{resource_name}" == "parent" %>
-	      <%= image_tag("P.png", class: "login_img") %>
-	      <span class="login">arent <%=formtype%></span>
-	    <% end %>
+  <%= image_tag("I.png", class: "login_img") %>
+  <span class="login">nstructor <%=formtype%></span>
+<% elsif "#{resource_name}" == "student" %>
+  <%= image_tag("S.png", class: "login_img") %>
+  <span class="login">tudent <%=formtype%></span>
+<% elsif "#{resource_name}" == "parent" %>
+  <%= image_tag("P.png", class: "login_img") %>
+  <span class="login">arent <%=formtype%></span>
+<% end %>

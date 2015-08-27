@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 31, 2014 at 06:01 PM
+-- Generation Time: Aug 10, 2015 at 12:42 PM
 -- Server version: 5.6.21
--- PHP Version: 5.5.14
+-- PHP Version: 5.5.24
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -23,32 +23,85 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `countries`
+--
+
+CREATE TABLE IF NOT EXISTS `countries` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `countries`
+--
+
+INSERT INTO `countries` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'United States', '2015-06-21 00:22:29', '2015-06-21 00:22:29');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `courses`
 --
 
 CREATE TABLE IF NOT EXISTS `courses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `section` varchar(255) DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `section` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `instructor_id` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `term` varchar(255) DEFAULT NULL,
+  `term` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `archived` int(11) DEFAULT NULL,
-  `passphrase` varchar(255) DEFAULT NULL,
+  `passphrase` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `position` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_courses_on_instructor_id` (`instructor_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `courses`
 --
 
 INSERT INTO `courses` (`id`, `name`, `section`, `instructor_id`, `created_at`, `updated_at`, `term`, `archived`, `passphrase`, `position`) VALUES
-(1, 'Algebra 1', '1', 1, '2014-10-22 14:28:19', '2014-10-28 17:55:56', 'A14', 0, 'Math rocks!', 1),
-(2, 'no assets', '2', 1, '2014-10-24 01:31:11', '2014-10-30 14:51:20', 'A2', 0, 'No Assets Allowed!', 2),
-(3, 'Algebra by MWC', '1', 2, '2014-10-22 14:28:19', '2014-10-30 13:56:17', 'A14', 0, 'Math rocks!', 1);
+(1, 'Algebra 1', '1', 1, '2015-03-12 01:39:23', '2015-05-07 14:00:02', 'A', 0, 'Algebra 1 rocks!', 1),
+(2, 'Empty', '0', 1, '2015-03-15 14:52:31', '2015-05-07 14:00:02', '0', 0, 'nothing here', 2),
+(3, 'Ruby', '2', 1, '2015-05-02 01:32:54', '2015-05-07 14:00:02', 'B', 0, '', 3),
+(4, 'C Programming', '1', 1, '2015-05-16 22:57:44', '2015-05-21 18:20:31', 'AB', 0, 'This is a passphrase', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `course_assets`
+--
+
+CREATE TABLE IF NOT EXISTS `course_assets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `model_type` int(11) DEFAULT NULL,
+  `assetable_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `position` int(11) DEFAULT NULL,
+  `assetable_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=18 ;
+
+--
+-- Dumping data for table `course_assets`
+--
+
+INSERT INTO `course_assets` (`id`, `name`, `model_type`, `assetable_id`, `created_at`, `updated_at`, `position`, `assetable_type`) VALUES
+(1, 'Textbooks', 1, 1, '2015-03-12 01:40:36', '2015-03-12 01:40:36', 1, 'Course'),
+(2, 'Videos', 2, 1, '2015-03-12 01:42:21', '2015-03-12 01:42:21', 2, 'Course'),
+(4, 'Documents', 3, 1, '2015-05-01 00:10:06', '2015-05-01 00:10:06', 3, 'Course'),
+(6, 'Textbook', 1, 3, '2015-05-02 01:33:21', '2015-05-02 01:33:21', 1, 'Course'),
+(7, 'Links', 4, 1, '2015-05-06 15:55:30', '2015-05-06 15:55:30', 4, 'Course'),
+(8, 'Plain Text', 5, 1, '2015-05-06 22:58:43', '2015-05-06 22:58:43', 5, 'Course'),
+(10, 'Textbooks', 1, 4, '2015-05-16 22:58:00', '2015-05-16 22:58:00', 1, 'Course');
 
 -- --------------------------------------------------------
 
@@ -58,12 +111,12 @@ INSERT INTO `courses` (`id`, `name`, `section`, `instructor_id`, `created_at`, `
 
 CREATE TABLE IF NOT EXISTS `course_asset_model_types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `name_of_model` varchar(255) DEFAULT NULL,
+  `name_of_model` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `course_asset_model_types`
@@ -86,18 +139,18 @@ CREATE TABLE IF NOT EXISTS `delayed_jobs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `priority` int(11) DEFAULT '0',
   `attempts` int(11) DEFAULT '0',
-  `handler` text,
-  `last_error` text,
+  `handler` text COLLATE utf8_unicode_ci,
+  `last_error` text COLLATE utf8_unicode_ci,
   `run_at` datetime DEFAULT NULL,
   `locked_at` datetime DEFAULT NULL,
   `failed_at` datetime DEFAULT NULL,
-  `locked_by` varchar(255) DEFAULT NULL,
-  `queue` varchar(255) DEFAULT NULL,
+  `locked_by` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `queue` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `delayed_jobs_priority` (`priority`,`run_at`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -107,24 +160,15 @@ CREATE TABLE IF NOT EXISTS `delayed_jobs` (
 
 CREATE TABLE IF NOT EXISTS `documents` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `description` varchar(255) DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `course_asset_id` int(11) DEFAULT NULL,
   `archived` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `position` int(11) DEFAULT NULL,
-  `docfile` varchar(255) DEFAULT NULL,
+  `docfile` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
-
---
--- Dumping data for table `documents`
---
-
-INSERT INTO `documents` (`id`, `description`, `course_asset_id`, `archived`, `created_at`, `updated_at`, `position`, `docfile`) VALUES
-(1, 'This is a test page.', 3, 0, '2014-10-23 14:13:51', '2014-10-23 14:13:51', 1, 'test_page.pdf'),
-(2, 'T2000 summary', 3, 0, '2014-10-23 14:14:47', '2014-10-23 14:14:47', 2, 'T2000_Summary.pdf'),
-(3, 'new doc', 3, 0, '2014-10-23 18:44:57', '2014-10-28 17:59:31', 3, 'vhdl_cheat_sheet.pdf');
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=14 ;
 
 -- --------------------------------------------------------
 
@@ -140,14 +184,7 @@ CREATE TABLE IF NOT EXISTS `enrollments` (
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_enrollments_on_course_id_and_subject_id` (`course_id`,`subject_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `enrollments`
---
-
-INSERT INTO `enrollments` (`id`, `course_id`, `subject_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '2014-10-31 11:44:23', '2014-10-31 11:44:23');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -157,24 +194,25 @@ INSERT INTO `enrollments` (`id`, `course_id`, `subject_id`, `created_at`, `updat
 
 CREATE TABLE IF NOT EXISTS `exercises` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `number` varchar(255) DEFAULT NULL,
-  `page` varchar(255) DEFAULT NULL,
+  `number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `page` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `section_title_id` int(11) DEFAULT NULL,
   `textbook_id` int(11) DEFAULT NULL,
   `instructor_id` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `exercises`
 --
 
 INSERT INTO `exercises` (`id`, `number`, `page`, `section_title_id`, `textbook_id`, `instructor_id`, `created_at`, `updated_at`) VALUES
-(1, '1', '12', 1, 1, 1, '2014-10-22 16:49:50', '2014-10-22 16:49:50'),
+(1, '1', '10', 1, 1, 1, '2014-10-22 16:49:50', '2015-06-03 10:48:42'),
 (2, '2', '13', 1, 1, 1, '2014-10-27 11:57:46', '2014-10-27 11:57:46'),
-(3, '3', '14', 1, 1, 1, '2014-10-27 11:58:55', '2014-10-27 11:58:55');
+(3, '3', '15', 1, 1, 1, '2014-10-27 11:58:55', '2015-06-05 12:34:26'),
+(7, '4', '15', 1, 1, 1, '2015-06-05 23:29:38', '2015-06-05 23:29:48');
 
 -- --------------------------------------------------------
 
@@ -184,49 +222,48 @@ INSERT INTO `exercises` (`id`, `number`, `page`, `section_title_id`, `textbook_i
 
 CREATE TABLE IF NOT EXISTS `instructors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) NOT NULL DEFAULT '',
-  `encrypted_password` varchar(255) NOT NULL DEFAULT '',
-  `reset_password_token` varchar(255) DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `encrypted_password` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `reset_password_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `reset_password_sent_at` datetime DEFAULT NULL,
   `remember_created_at` datetime DEFAULT NULL,
   `sign_in_count` int(11) DEFAULT '0',
   `current_sign_in_at` datetime DEFAULT NULL,
   `last_sign_in_at` datetime DEFAULT NULL,
-  `current_sign_in_ip` varchar(255) DEFAULT NULL,
-  `last_sign_in_ip` varchar(255) DEFAULT NULL,
-  `confirmation_token` varchar(255) DEFAULT NULL,
+  `current_sign_in_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_sign_in_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `confirmation_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `confirmed_at` datetime DEFAULT NULL,
   `confirmation_sent_at` datetime DEFAULT NULL,
-  `unconfirmed_email` varchar(255) DEFAULT NULL,
+  `unconfirmed_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `failed_attempts` int(11) DEFAULT '0',
-  `unlock_token` varchar(255) DEFAULT NULL,
+  `unlock_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `locked_at` datetime DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `firstname` varchar(255) DEFAULT NULL,
-  `lastname` varchar(255) DEFAULT NULL,
-  `username` varchar(255) DEFAULT NULL,
+  `firstname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `lastname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `username` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `emailpref` int(11) DEFAULT '0',
-  `paypalaccount` varchar(255) DEFAULT NULL,
+  `paypalaccount` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `privilege` int(11) DEFAULT '0',
-  `grade` varchar(255) DEFAULT NULL,
+  `grade` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `accountbalance` float DEFAULT '0',
   `violationcount` int(11) DEFAULT '0',
   `deactivated` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_instructors_on_email` (`email`),
-  UNIQUE KEY `index_instructors_on_reset_password_token` (`reset_password_token`),
   UNIQUE KEY `index_instructors_on_confirmation_token` (`confirmation_token`),
+  UNIQUE KEY `index_instructors_on_reset_password_token` (`reset_password_token`),
   UNIQUE KEY `index_instructors_on_unlock_token` (`unlock_token`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `instructors`
 --
 
 INSERT INTO `instructors` (`id`, `email`, `encrypted_password`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `confirmation_token`, `confirmed_at`, `confirmation_sent_at`, `unconfirmed_email`, `failed_attempts`, `unlock_token`, `locked_at`, `created_at`, `updated_at`, `firstname`, `lastname`, `username`, `emailpref`, `paypalaccount`, `privilege`, `grade`, `accountbalance`, `violationcount`, `deactivated`) VALUES
-(1, 'mcoomey@gmail.com', '$2a$10$1YXIZI71L3dwoDcdWWhSdO.Rd.yOElep4s0b1UOFC1iyVInqejVk.', NULL, NULL, NULL, 6, '2014-10-31 15:36:24', '2014-10-31 13:06:38', '127.0.0.1', '127.0.0.1', NULL, '2014-10-22 13:09:51', '2014-10-22 13:09:22', NULL, 0, NULL, NULL, '2014-10-22 13:09:22', '2014-10-31 15:36:24', 'Michael', 'Coomey', 'mcoomey', 0, NULL, 0, NULL, 0, 0, 0),
-(2, 'mwcoomey@gmail.com', '$2a$10$1YXIZI71L3dwoDcdWWhSdO.Rd.yOElep4s0b1UOFC1iyVInqejVk.', NULL, NULL, NULL, 4, '2014-10-29 18:45:46', '2014-10-27 23:29:19', '127.0.0.1', '127.0.0.1', NULL, '2014-10-22 13:09:51', '2014-10-22 13:09:22', NULL, 0, NULL, NULL, '2014-10-22 13:09:22', '2014-10-29 18:45:46', 'Michael', 'Coomey', 'mWcoomey', 0, NULL, 0, NULL, 0, 0, 0);
+(1, 'mcoomey@gmail.com', '$2a$10$1YXIZI71L3dwoDcdWWhSdO.Rd.yOElep4s0b1UOFC1iyVInqejVk.', NULL, NULL, NULL, 50, '2015-08-08 23:27:58', '2015-08-05 19:42:53', '127.0.0.1', '127.0.0.1', NULL, '2014-10-22 13:09:51', '2014-10-22 13:09:22', NULL, 0, NULL, NULL, '2014-10-22 13:09:22', '2015-08-08 23:27:58', 'Michael', 'Coomey', 'mcoomey', 0, NULL, 0, NULL, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -236,14 +273,25 @@ INSERT INTO `instructors` (`id`, `email`, `encrypted_password`, `reset_password_
 
 CREATE TABLE IF NOT EXISTS `lessons` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) DEFAULT NULL,
-  `page` varchar(255) DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `page` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `textbook_id` int(11) DEFAULT NULL,
   `instructor_id` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `lessons`
+--
+
+INSERT INTO `lessons` (`id`, `title`, `page`, `textbook_id`, `instructor_id`, `created_at`, `updated_at`) VALUES
+(1, '1.1 Basic Concepts', '2', 1, 1, '2015-05-22 14:05:21', '2015-06-03 16:54:02'),
+(2, 'junk and stuff', '88', 1, 1, '2015-05-22 14:05:52', '2015-06-05 12:23:35'),
+(3, 'new lesson', '104', 1, 1, '2015-05-25 12:57:18', '2015-05-25 12:57:18'),
+(7, 'more junk', '301', 1, 1, '2015-06-04 17:20:42', '2015-06-04 17:21:46'),
+(8, 'more junk', '0', 1, 1, '2015-06-05 23:27:30', '2015-06-05 23:28:01');
 
 -- --------------------------------------------------------
 
@@ -253,24 +301,23 @@ CREATE TABLE IF NOT EXISTS `lessons` (
 
 CREATE TABLE IF NOT EXISTS `links` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `description` varchar(255) DEFAULT NULL,
-  `url` varchar(255) DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `course_asset_id` int(11) DEFAULT NULL,
   `archived` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `position` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `links`
 --
 
 INSERT INTO `links` (`id`, `description`, `url`, `course_asset_id`, `archived`, `created_at`, `updated_at`, `position`) VALUES
-(3, '1', '1', 5, 0, '2014-10-23 21:12:30', '2014-10-23 21:12:30', 1),
-(4, '2', '2', 5, 0, '2014-10-23 21:12:36', '2014-10-28 18:21:42', 2),
-(6, '4', '4', 5, 0, '2014-10-23 21:12:50', '2014-10-28 18:21:44', 3);
+(7, 'Dynamic Test', 'www.dynamictest.com', 17, 0, '2015-06-11 19:08:49', '2015-06-11 19:08:49', 1),
+(8, 'Answer Companion', 'www.answercompanion.com', 17, 0, '2015-06-11 19:09:12', '2015-06-11 19:09:56', 2);
 
 -- --------------------------------------------------------
 
@@ -280,33 +327,33 @@ INSERT INTO `links` (`id`, `description`, `url`, `course_asset_id`, `archived`, 
 
 CREATE TABLE IF NOT EXISTS `parents` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) NOT NULL DEFAULT '',
-  `encrypted_password` varchar(255) NOT NULL DEFAULT '',
-  `reset_password_token` varchar(255) DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `encrypted_password` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `reset_password_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `reset_password_sent_at` datetime DEFAULT NULL,
   `remember_created_at` datetime DEFAULT NULL,
   `sign_in_count` int(11) DEFAULT '0',
   `current_sign_in_at` datetime DEFAULT NULL,
   `last_sign_in_at` datetime DEFAULT NULL,
-  `current_sign_in_ip` varchar(255) DEFAULT NULL,
-  `last_sign_in_ip` varchar(255) DEFAULT NULL,
-  `confirmation_token` varchar(255) DEFAULT NULL,
+  `current_sign_in_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_sign_in_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `confirmation_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `confirmed_at` datetime DEFAULT NULL,
   `confirmation_sent_at` datetime DEFAULT NULL,
-  `unconfirmed_email` varchar(255) DEFAULT NULL,
+  `unconfirmed_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `failed_attempts` int(11) DEFAULT '0',
-  `unlock_token` varchar(255) DEFAULT NULL,
+  `unlock_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `locked_at` datetime DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `firstname` varchar(255) DEFAULT NULL,
-  `lastname` varchar(255) DEFAULT NULL,
+  `firstname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `lastname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `deactivated` tinyint(1) DEFAULT '0',
-  `username` varchar(255) DEFAULT NULL,
+  `username` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_parents_on_email` (`email`),
   UNIQUE KEY `index_parents_on_reset_password_token` (`reset_password_token`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -317,12 +364,12 @@ CREATE TABLE IF NOT EXISTS `parents` (
 CREATE TABLE IF NOT EXISTS `parent_emails` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `student_id` int(11) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_parent_emails_on_student_id_and_email` (`student_id`,`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -332,11 +379,11 @@ CREATE TABLE IF NOT EXISTS `parent_emails` (
 
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `roles`
@@ -357,20 +404,19 @@ INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
 CREATE TABLE IF NOT EXISTS `role_assignments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `role_id` int(11) DEFAULT NULL,
-  `roleable_type` varchar(255) DEFAULT NULL,
+  `roleable_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `roleable_id` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `role_assignments`
 --
 
 INSERT INTO `role_assignments` (`id`, `role_id`, `roleable_type`, `roleable_id`, `created_at`, `updated_at`) VALUES
-(1, 2, 'Instructor', 1, '2014-10-22 13:09:24', '2014-10-22 13:09:24'),
-(2, 3, 'Student', 1, '2014-10-29 18:09:23', '2014-10-29 18:09:23');
+(1, 2, 'Instructor', 1, '2014-10-22 13:09:24', '2014-10-22 13:09:24');
 
 -- --------------------------------------------------------
 
@@ -379,9 +425,9 @@ INSERT INTO `role_assignments` (`id`, `role_id`, `roleable_type`, `roleable_id`,
 --
 
 CREATE TABLE IF NOT EXISTS `schema_migrations` (
-  `version` varchar(255) NOT NULL,
+  `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   UNIQUE KEY `unique_schema_migrations` (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `schema_migrations`
@@ -465,9 +511,13 @@ INSERT INTO `schema_migrations` (`version`) VALUES
 ('20140929183205'),
 ('20140930234816'),
 ('20141001152323'),
-('20141014234537'),
 ('20141017001404'),
-('20141031174336');
+('20141106141659'),
+('20150513232329'),
+('20150621000004'),
+('20150621000542'),
+('20150621001305'),
+('20150621124559');
 
 -- --------------------------------------------------------
 
@@ -477,21 +527,21 @@ INSERT INTO `schema_migrations` (`version`) VALUES
 
 CREATE TABLE IF NOT EXISTS `schools` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `town` varchar(255) DEFAULT NULL,
-  `state` varchar(255) DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `town` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `state_id` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `schools`
 --
 
-INSERT INTO `schools` (`id`, `name`, `town`, `state`, `created_at`, `updated_at`) VALUES
-(1, 'Oxford High School', 'Oxford', 'MA', '2014-10-22 10:00:05', '2014-10-22 10:00:05'),
-(2, 'Wachusett Regional High School', 'Holden', 'MA', '2014-10-29 18:09:21', '2014-10-29 18:09:21');
+INSERT INTO `schools` (`id`, `name`, `town`, `state_id`, `created_at`, `updated_at`) VALUES
+(1, 'Oxford High School', 'Oxford', 34, '2014-10-22 10:00:05', '2014-10-22 10:00:05'),
+(2, 'Wachusett Regional High School', 'Holden', 34, '2014-10-29 18:09:21', '2014-10-29 18:09:21');
 
 -- --------------------------------------------------------
 
@@ -503,21 +553,19 @@ CREATE TABLE IF NOT EXISTS `school_memberships` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `school_id` int(11) DEFAULT NULL,
   `schoolmember_id` int(11) DEFAULT NULL,
-  `schoolmember_type` varchar(255) DEFAULT NULL,
+  `schoolmember_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_school_memberships_on_id_and_type` (`schoolmember_id`,`schoolmember_type`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `school_memberships`
 --
 
 INSERT INTO `school_memberships` (`id`, `school_id`, `schoolmember_id`, `schoolmember_type`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 'Instructor', '2014-10-22 10:00:07', '2014-10-22 10:00:07'),
-(2, 1, 2, 'Instructor', '2014-10-22 13:09:24', '2014-10-22 13:09:24'),
-(3, 2, 1, 'Student', '2014-10-29 18:09:22', '2014-10-29 18:09:22');
+(1, 1, 1, 'Instructor', '2015-07-03 11:51:56', '2015-07-03 11:51:56');
 
 -- --------------------------------------------------------
 
@@ -527,12 +575,12 @@ INSERT INTO `school_memberships` (`id`, `school_id`, `schoolmember_id`, `schoolm
 
 CREATE TABLE IF NOT EXISTS `section_titles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `textbook_id` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `section_titles`
@@ -573,53 +621,119 @@ INSERT INTO `site_assets` (`id`, `name`, `model_type`, `course_id`, `created_at`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `states`
+--
+
+CREATE TABLE IF NOT EXISTS `states` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `abbrev` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `country_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=52 ;
+
+--
+-- Dumping data for table `states`
+--
+
+INSERT INTO `states` (`id`, `name`, `abbrev`, `country_id`, `created_at`, `updated_at`) VALUES
+(1, 'Alabama', 'AL', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(2, 'Alaska', 'AK', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(3, 'Arizona', 'AZ', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(4, 'Arkansas', 'AR', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(5, 'California', 'CA', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(6, 'Colorado', 'CO', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(7, 'Connecticut', 'CT', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(8, 'Delaware', 'DE', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(9, 'District of Columbia', 'DC', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(10, 'Florida', 'FL', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(11, 'Georgia', 'GA', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(12, 'Hawaii', 'HI', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(13, 'Idaho', 'ID', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(14, 'Illinois', 'IL', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(15, 'Indiana', 'IN', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(16, 'Iowa', 'IA', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(17, 'Kansas', 'KS', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(18, 'Kentucky', 'KY', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(19, 'Louisiana', 'LA', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(20, 'Maine', 'ME', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(21, 'Montana', 'MT', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(22, 'Nebraska', 'NE', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(23, 'Nevada', 'NV', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(24, 'New Hampshire', 'NH', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(25, 'New Jersey', 'NJ', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(26, 'New Mexico', 'NM', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(27, 'New York', 'NY', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(28, 'North Carolina', 'NC', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(29, 'North Dakota', 'ND', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(30, 'Ohio', 'OH', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(31, 'Oklahoma', 'OK', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(32, 'Oregon', 'OR', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(33, 'Maryland', 'MD', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(34, 'Massachusetts', 'MA', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(35, 'Michigan', 'MI', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(36, 'Minnesota', 'MN', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(37, 'Mississippi', 'MS', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(38, 'Missouri', 'MO', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(39, 'Pennsylvania', 'PA', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(40, 'Rhode Island', 'RI', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(41, 'South Carolina', 'SC', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(42, 'South Dakota', 'SD', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(43, 'Tennessee', 'TN', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(44, 'Texas', 'TX', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(45, 'Utah', 'UT', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(46, 'Vermont', 'VT', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(47, 'Virginia', 'VA', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(48, 'Washington', 'WA', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(49, 'West Virginia', 'WV', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(50, 'Wisconsin', 'WI', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14'),
+(51, 'Wyoming', 'WY', 1, '2015-06-21 18:37:14', '2015-06-21 18:37:14');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `students`
 --
 
 CREATE TABLE IF NOT EXISTS `students` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) NOT NULL DEFAULT '',
-  `encrypted_password` varchar(255) NOT NULL DEFAULT '',
-  `reset_password_token` varchar(255) DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `encrypted_password` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `reset_password_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `reset_password_sent_at` datetime DEFAULT NULL,
   `remember_created_at` datetime DEFAULT NULL,
   `sign_in_count` int(11) DEFAULT '0',
   `current_sign_in_at` datetime DEFAULT NULL,
   `last_sign_in_at` datetime DEFAULT NULL,
-  `current_sign_in_ip` varchar(255) DEFAULT NULL,
-  `last_sign_in_ip` varchar(255) DEFAULT NULL,
-  `confirmation_token` varchar(255) DEFAULT NULL,
+  `current_sign_in_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_sign_in_ip` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `confirmation_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `confirmed_at` datetime DEFAULT NULL,
   `confirmation_sent_at` datetime DEFAULT NULL,
-  `unconfirmed_email` varchar(255) DEFAULT NULL,
+  `unconfirmed_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `failed_attempts` int(11) DEFAULT '0',
-  `unlock_token` varchar(255) DEFAULT NULL,
+  `unlock_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `locked_at` datetime DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `firstname` varchar(255) DEFAULT NULL,
-  `lastname` varchar(255) DEFAULT NULL,
-  `username` varchar(255) DEFAULT NULL,
+  `firstname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `lastname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `username` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `emailpref` int(11) DEFAULT '0',
-  `paypalaccount` varchar(255) DEFAULT NULL,
+  `paypalaccount` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `privilege` int(11) DEFAULT '0',
-  `grade` varchar(255) DEFAULT NULL,
+  `grade` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `accountbalance` float DEFAULT '0',
   `violationcount` int(11) DEFAULT '0',
   `deactivated` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_students_on_email` (`email`),
-  UNIQUE KEY `index_students_on_reset_password_token` (`reset_password_token`),
   UNIQUE KEY `index_students_on_confirmation_token` (`confirmation_token`),
+  UNIQUE KEY `index_students_on_reset_password_token` (`reset_password_token`),
   UNIQUE KEY `index_students_on_unlock_token` (`unlock_token`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `students`
---
-
-INSERT INTO `students` (`id`, `email`, `encrypted_password`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `confirmation_token`, `confirmed_at`, `confirmation_sent_at`, `unconfirmed_email`, `failed_attempts`, `unlock_token`, `locked_at`, `created_at`, `updated_at`, `firstname`, `lastname`, `username`, `emailpref`, `paypalaccount`, `privilege`, `grade`, `accountbalance`, `violationcount`, `deactivated`) VALUES
-(1, 'spamfreemwc@gmail.com', '$2a$10$4qfldfqkioNkbFoYIBm9Te.T8F8dhYYUz3D2e1hYHjny3B1XbTY6u', NULL, NULL, NULL, 2, '2014-10-31 13:40:44', '2014-10-29 18:10:05', '127.0.0.1', '127.0.0.1', NULL, '2014-10-29 18:10:05', '2014-10-29 18:09:21', NULL, 0, NULL, NULL, '2014-10-29 18:09:21', '2014-10-31 13:40:44', 'Spam', 'Free', 'Spammy', 0, NULL, 0, NULL, 0, 0, 0);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -629,26 +743,16 @@ INSERT INTO `students` (`id`, `email`, `encrypted_password`, `reset_password_tok
 
 CREATE TABLE IF NOT EXISTS `subjects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `student_id` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `archived` tinyint(1) DEFAULT NULL,
-  `term` varchar(255) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
+  `term` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `position` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
-
---
--- Dumping data for table `subjects`
---
-
-INSERT INTO `subjects` (`id`, `name`, `student_id`, `created_at`, `updated_at`, `archived`, `term`, `description`, `position`) VALUES
-(1, 'Sub 1', 1, '2014-10-30 14:40:23', '2014-10-30 15:18:12', 0, 'A14', 'M, Tu, Th, F - Block 5', 1),
-(2, 'Sub 2', 1, '2014-10-30 15:17:03', '2014-10-30 15:20:13', 0, '2', '2nd subject', 2),
-(3, 'Sub 3', 1, '2014-10-30 15:17:30', '2014-10-31 01:12:07', 0, '3', '3rd subject', 3),
-(4, 'Sub 4', 1, '2014-10-30 15:17:53', '2014-10-31 01:12:07', 1, '4', '4th subject', 1);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 
@@ -675,25 +779,33 @@ CREATE TABLE IF NOT EXISTS `subject_assets` (
 
 CREATE TABLE IF NOT EXISTS `textbooks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `isbn13` varchar(255) DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `author` varchar(255) DEFAULT NULL,
-  `publisher` varchar(255) DEFAULT NULL,
+  `isbn13` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `author` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `publisher` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `image_link` varchar(255) DEFAULT NULL,
+  `image_link` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `textbook_image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `textbooks`
 --
 
-INSERT INTO `textbooks` (`id`, `isbn13`, `title`, `author`, `publisher`, `created_at`, `updated_at`, `image_link`) VALUES
-(1, '9780130523167', 'Algebra 1', 'Allan Bellman, Sadie Chavis Bragg, Randall I. Charles', 'Pearson Prentice Hall', '2014-10-22 14:30:48', '2014-10-22 14:30:48', 'http://bks5.books.google.com/books?id=Rd4tQwAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'),
-(2, '9780321557643', 'Intermediate Algebra', 'Margaret L. Lial, John Hornsby, Terry McGinnis', 'Addison-Wesley Longman', '2014-10-22 14:34:20', '2014-10-22 14:34:20', 'http://bks5.books.google.com/books?id=2OlJPgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'),
-(3, '9780078746376', 'Glencoe Chemistry: Matter and Change, Student Edition', 'McGraw-Hill, Glencoe', 'Glencoe/McGraw-Hill', '2014-10-22 15:32:36', '2014-10-22 15:32:36', 'http://bks5.books.google.com/books?id=OZInPwAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'),
-(4, '9780131101630', 'The C Programming Language', 'Brian W. Kernighan', 'Prentice Hall PTR', '2014-10-25 18:20:54', '2014-10-25 18:20:54', 'http://bks2.books.google.com/books?id=fMKTngEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api');
+INSERT INTO `textbooks` (`id`, `isbn13`, `title`, `author`, `publisher`, `created_at`, `updated_at`, `image_link`, `textbook_image`) VALUES
+(1, '9780130523167', 'Algebra 1', 'Allan Bellman, Sadie Chavis Bragg, Randall I. Charles', 'Pearson Prentice Hall', '2014-10-22 14:30:48', '2015-05-14 15:08:52', 'http://bks5.books.google.com/books?id=Rd4tQwAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', 'front_cover.png'),
+(2, '9780321557643', 'Intermediate Algebra', 'Margaret L. Lial, John Hornsby, Terry McGinnis', 'Addison-Wesley Longman', '2014-10-22 14:34:20', '2015-05-14 15:12:57', 'http://bks5.books.google.com/books?id=2OlJPgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', 'front_cover.png'),
+(3, '9780078746376', 'Glencoe Chemistry: Matter and Change, Student Edition', 'McGraw-Hill, Glencoe', 'Glencoe/McGraw-Hill', '2014-10-22 15:32:36', '2015-05-14 15:13:05', 'http://bks5.books.google.com/books?id=OZInPwAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', 'front_cover.png'),
+(4, '9780131101630', 'The C Programming Language', 'Brian W. Kernighan', 'Prentice Hall PTR', '2014-10-25 18:20:54', '2015-05-14 15:13:16', 'http://bks2.books.google.com/books?id=fMKTngEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', 'front_cover.png'),
+(5, '9780470485040', 'Fedora 11 and Red Hat Enterprise Linux Bible', 'Christopher Negus, Eric Foster-Johnson', 'John Wiley & Sons', '2015-03-15 03:42:15', '2015-05-14 15:13:28', 'http://books.google.com/books/content?id=EHQOdKnawU8C&printsec=frontcover&img=1&zoom=1&edge=none&source=gbs_api', 'front_cover.png'),
+(8, '9781934356081', 'Programming Ruby 1.9: The Pragmatic Programmers'' Guide', 'David Thomas', NULL, '2015-05-15 15:00:49', '2015-05-15 15:00:49', 'http://bks4.books.google.com/books/content?id=f89GPgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', 'front_cover.png'),
+(9, '9780596100926', 'Perl Testing: A Developer''s Notebook', 'Ian Langworth, Chromatic', '"O''Reilly Media, Inc."', '2015-05-15 15:06:42', '2015-05-15 15:06:42', 'http://bks7.books.google.com/books/content?id=gLgi8qJ03XoC&printsec=frontcover&img=1&zoom=1&edge=none&source=gbs_api', 'front_cover.png'),
+(10, '9780596000271', 'Programming Perl: 3rd Edition', 'Larry Wall, Tom Christiansen, Jon Orwant', '"O''Reilly Media, Inc."', '2015-05-17 00:23:14', '2015-05-17 00:23:14', 'http://bks5.books.google.com/books/content?id=xx5JBSqcQzIC&printsec=frontcover&img=1&zoom=1&edge=none&source=gbs_api', 'front_cover.png'),
+(11, '9780596006990', 'Programming C#: Building .NET Applications with C#', 'Jesse Liberty', 'O''Reilly Media', '2015-05-17 00:23:49', '2015-05-17 00:23:49', 'http://bks0.books.google.com/books/content?id=6s0nmQEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', 'front_cover.png'),
+(12, '9781934356470', 'Metaprogramming Ruby: Program Like the Ruby Pros', 'Paolo Perrotta', NULL, '2015-05-17 00:25:42', '2015-05-17 00:25:42', 'http://bks8.books.google.com/books/content?id=86YGQQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api', 'front_cover.png'),
+(13, '9780596516178', 'The Ruby Programming Language', 'David Flanagan, Yukihiro Matsumoto', '"O''Reilly Media, Inc."', '2015-06-07 13:06:04', '2015-06-07 13:06:04', 'http://bks7.books.google.com/books/content?id=rbY5mz-_VdQC&printsec=frontcover&img=1&zoom=1&edge=none&source=gbs_api', 'front_cover.png');
 
 -- --------------------------------------------------------
 
@@ -710,16 +822,22 @@ CREATE TABLE IF NOT EXISTS `textbook_delegations` (
   `archived` int(11) DEFAULT NULL,
   `position` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_textbook_delegations_on_textbook_id_and_subject_id` (`textbook_id`),
-  KEY `index_textbook_delegations_on_textable_id_and_textable_type` (`course_asset_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+  KEY `index_textbook_delegations_on_textable_id_and_textable_type` (`course_asset_id`),
+  KEY `index_textbook_delegations_on_textbook_id_and_subject_id` (`textbook_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=61 ;
 
 --
 -- Dumping data for table `textbook_delegations`
 --
 
 INSERT INTO `textbook_delegations` (`id`, `textbook_id`, `created_at`, `updated_at`, `course_asset_id`, `archived`, `position`) VALUES
-(3, 1, '2014-10-24 01:47:22', '2014-10-25 18:14:33', 1, 0, 1);
+(43, 1, '2015-05-16 18:46:31', '2015-05-16 18:46:31', 1, 0, 1),
+(47, 8, '2015-05-16 22:56:02', '2015-05-16 22:56:02', 6, 0, 1),
+(48, 4, '2015-05-16 22:56:21', '2015-05-16 22:56:21', 6, 1, 1),
+(49, 4, '2015-05-16 22:58:19', '2015-05-16 22:58:19', 10, 0, 1),
+(58, 13, '2015-06-07 13:06:04', '2015-06-07 13:06:04', 9, 0, 1),
+(59, 8, '2015-06-10 15:54:27', '2015-06-11 19:35:43', 9, 0, 2),
+(60, 2, '2015-07-18 00:40:20', '2015-07-18 00:40:20', 1, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -729,10 +847,10 @@ INSERT INTO `textbook_delegations` (`id`, `textbook_id`, `created_at`, `updated_
 
 CREATE TABLE IF NOT EXISTS `textbook_videos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `videofile` varchar(255) DEFAULT NULL,
-  `length` varchar(255) DEFAULT NULL,
+  `videofile` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `length` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `videofile_processed` int(11) DEFAULT NULL,
-  `videoable_type` varchar(255) DEFAULT NULL,
+  `videoable_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `videoable_id` int(11) DEFAULT NULL,
   `textbook_id` int(11) DEFAULT NULL,
   `instructor_id` int(11) DEFAULT NULL,
@@ -741,16 +859,16 @@ CREATE TABLE IF NOT EXISTS `textbook_videos` (
   `old_version_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_textbook_videos_on_videoable_id_and_videoable_type` (`videoable_id`,`videoable_type`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `textbook_videos`
 --
 
 INSERT INTO `textbook_videos` (`id`, `videofile`, `length`, `videofile_processed`, `videoable_type`, `videoable_id`, `textbook_id`, `instructor_id`, `created_at`, `updated_at`, `old_version_id`) VALUES
-(2, 'Wildlife_512kb.mp4', '00:00:30.07', 1, 'Exercise', 1, 1, 1, '2014-10-22 22:15:13', '2014-10-22 22:17:05', NULL),
-(4, 'Wildlife_512kb.mp4', '00:00:30.07', 1, 'Exercise', 1, 1, 1, '2014-10-28 01:42:35', '2014-10-28 01:50:34', NULL),
-(6, 'short.mp4', '00:00:08.55', 1, 'Exercise', 3, 1, 1, '2014-10-28 10:48:02', '2014-10-28 10:52:50', NULL);
+(1, 'small1.mp4', '00:00:05.57', 1, 'Lesson', 1, 1, 1, '2015-05-27 18:24:40', '2015-06-02 16:51:47', NULL),
+(7, 'small2.mp4', '00:00:05.57', 1, 'Lesson', 1, 1, 1, '2015-06-04 15:03:53', '2015-06-04 15:04:13', NULL),
+(8, 'small2.mp4', '00:00:05.57', 1, 'Exercise', 6, 1, 1, '2015-06-05 18:09:05', '2015-06-05 18:09:23', NULL);
 
 -- --------------------------------------------------------
 
@@ -760,22 +878,15 @@ INSERT INTO `textbook_videos` (`id`, `videofile`, `length`, `videofile_processed
 
 CREATE TABLE IF NOT EXISTS `textboxes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `content` text,
+  `content` text COLLATE utf8_unicode_ci,
   `course_asset_id` int(11) DEFAULT NULL,
   `archived` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `position` int(11) DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
-
---
--- Dumping data for table `textboxes`
---
-
-INSERT INTO `textboxes` (`id`, `content`, `course_asset_id`, `archived`, `created_at`, `updated_at`, `position`, `title`) VALUES
-(2, 'Textbox 2', 4, 0, '2014-10-23 19:45:28', '2014-10-29 16:21:43', 1, 'tb#2');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -785,31 +896,20 @@ INSERT INTO `textboxes` (`id`, `content`, `course_asset_id`, `archived`, `create
 
 CREATE TABLE IF NOT EXISTS `videos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `videofile` varchar(255) DEFAULT NULL,
-  `length` varchar(255) DEFAULT NULL,
+  `videofile` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `length` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `archived` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `videofile_processed` int(11) DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `position` int(11) DEFAULT NULL,
   `course_asset_id` int(11) DEFAULT NULL,
   `instructor_id` int(11) DEFAULT NULL,
   `old_version_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
-
---
--- Dumping data for table `videos`
---
-
-INSERT INTO `videos` (`id`, `videofile`, `length`, `archived`, `created_at`, `updated_at`, `videofile_processed`, `title`, `description`, `position`, `course_asset_id`, `instructor_id`, `old_version_id`) VALUES
-(2, 'Wildlife_512kb.mp4', '00:00:30.07', 1, '2014-10-23 00:06:14', '2014-10-28 16:05:57', 1, 'Short1', 'The short  video', 3, 2, 1, NULL),
-(3, 'short.mp4', '00:00:08.55', 1, '2014-10-23 01:00:10', '2014-10-28 16:17:55', 1, 'Short & Sweet', 'A short video about Answer Companion', 1, 2, 1, NULL),
-(4, 'Kate_magic.mp4', '00:00:44.84', 2, '2014-10-23 10:10:02', '2014-10-23 10:16:32', 1, 'Future', 'Into the future', 1, 2, 1, NULL),
-(5, 'Wildlife_512kb.mp4', '00:00:30.07', 1, '2014-10-23 11:18:26', '2014-10-23 11:20:31', 1, 'newest', 'newest ca video', 2, 2, 1, NULL),
-(6, 'Kate_magic_copy.mp4', '00:00:44.84', 2, '2014-10-23 11:19:01', '2014-10-23 11:27:33', 1, 'Magic Show', 'copy', 2, 2, 1, NULL);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

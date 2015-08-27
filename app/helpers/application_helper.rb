@@ -51,6 +51,7 @@ module ApplicationHelper
   end
 	
   def link_to_image_add_fields(f, association, img, imghvr)
+    
     new_object = f.object.send(association).klass.new
     id = new_object.object_id
     fields = f.fields_for(association, new_object, child_index: id) do |builder|

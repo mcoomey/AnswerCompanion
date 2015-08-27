@@ -67,10 +67,22 @@
       font-size: 1em;
     }
     input.signin {
-      padding-top:40px;
       position:absolute;
       bottom:10px;
       right:160px;
+  		&:hover{
+		    color:blue;	
+		    cursor:pointer;
+		  }
+    }
+    input.cancel-login {
+      position:absolute;
+      bottom:10px;
+      right:60px;
+  		&:hover{
+  		  color:red;	
+  		  cursor:pointer;
+  		}
     }
     img.cancel-login {
       position:absolute;

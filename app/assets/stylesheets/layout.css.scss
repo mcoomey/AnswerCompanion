@@ -60,7 +60,10 @@ header {
 	width:$screen-width - 10px;
 	height:30px;
 	margin-left:5px;
-
+  margin-right:10px;
+  overflow-x:scroll;
+  overflow-y:hidden;
+  white-space:nowrap;
   .notice, .ujs_notice  {
 		font-size: 1em;
 		line-height: 28px;
@@ -68,7 +71,7 @@ header {
 		color: $medium-green;
 	}
 	.alert, .ujs_alert {
-		font-size: 1.5em;
+		font-size: 1.2em;
 		line-height: 28px;
 		padding-top: 2px;
 		color: red;

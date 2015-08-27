@@ -2,9 +2,9 @@
 <div id="wide-scroll-panel">
 	<div id="login-register", class="visible">
 		<div id="data-entry">
-		  <%= render 'shared/resource_heading', :formtype => "profile edit" %>  XX
+		  <%= render 'shared/resource_heading', :formtype => "profile edit" %>
 		  <div id="data-entry-form">
-				<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :autocomplete => "off"}) do |f| %>
+				<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), remote:true, :html => { :method => :put, :autocomplete => "off"}) do |f| %>
 				  <div class="left-entry-panel">
 						<%= f.label "Email:" %>
 					 	<%= f.email_field :email, class: "wide", tabindex: 1 %>
@@ -28,9 +28,13 @@
 						<div class="full-width-panel">
 							School Membership:
 						</div>
-						<%= f.fields_for :schools do |sch| %>
-						  <%= render 'shared/school_fields', f: sch %>
-					  <% end %>	
+            <%= f.fields_for :school_memberships do |m| %>
+  						<%= m.fields_for :school do |sch| %>
+
+  						  <%= render 'shared/school_fields', f: sch %>
+
+  					  <% end %>	
+            <% end %>
   				  <%= link_to_image_add_fields f, :schools, "AddSchool.png", "AddSchoolHover.png" %>
 					
 						<% if resource_name == :student%>
@@ -59,8 +63,9 @@
 						<% end %>
 					<% end %>
 					<div class="clear-float-space"></br></div>
-					<%= image_submit_tag "Submit.png", :onmouseover => "this.src='/assets/SubmitHover.png'",
+					<%= image_submit_tag "Submit.png",  name: "submit", value: true, :onmouseover => "this.src='/assets/SubmitHover.png'",
 				                                     :onmouseout => "this.src='/assets/Submit.png'", class: "signin" %>	
+                                             
 				<% end %>
 				</br>
 				<%= link_to "Delete my account", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete, class: "delete-link" %>
@@ -68,5 +73,7 @@
 			</div>
 		</div>
 	</div>
+  <div id="create_new_school_dialog">
+  </div>
 </div>
 </article>

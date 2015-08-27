@@ -1,0 +1,26 @@
+<% if @new_school %>
+  alert("new school detected");
+  $("#create_new_school_dialog").html("<%= j render 'new_school_dialog' %>");
+  $("#create_new_school_dialog").prepend("<span class \"title\"> <%= j @school.name %>, <%= j @school.town %>, <%= j @school.state_abbrev %></span>");
+  $("#create_new_school_dialog").dialog({
+	  title: "Create New School?",
+	  resizeable: false,
+	  modal: true
+  });
+  
+	$("#confirm_yes").click(function(){
+		$("#create_new_school_dialog").dialog("close");
+	});
+
+	$("#confirm_no").click(function(){
+		$("#create_new_school_dialog").dialog("close");
+	});
+
+<% else %>
+  $(".alert").empty()
+  $(".notice").empty()
+  $(".ujs_alert").empty()
+  $(".ujs_notice").empty()
+  $("article").replaceWith("<%= j render 'shared/edit_registration' %>");
+  setupAddRemoveFields();
+<% end %>

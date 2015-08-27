@@ -9,4 +9,6 @@ jQuery ->
     $("#menu").show()
     $(".alert").empty()
     $(".notice").empty()
+    $(".ujs_alert").empty()
+    $(".ujs_notice").empty()
   

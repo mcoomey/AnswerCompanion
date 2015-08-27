@@ -2,20 +2,24 @@ class Students::RegistrationsController < Devise::RegistrationsController
 
   before_filter :authenticate_student!
   
+  respond_to :js, :html, :xml
+  
   def new
-    # @school = School.new
+    @school = School.new
     super    
   end
 
   def create
-    build_resource(params[:student].except(:school).except(:parent_email))
+    state_id = State.find_by_abbrev(params[:student][:school][:state_abbrev])
     if params[:student][:school][:name].length > 0
       @school = School.where(name: params[:student][:school][:name], 
                              town: params[:student][:school][:town], 
-                             state: params[:student][:school][:state]).first_or_create
+                             state_id: state_id).first_or_create    
     else
-      @school = nil
+      @school = School.new
     end
+    
+    build_resource(params[:student].except(:school).except(:parent_email))
                            
     if params[:student][:parent_email][:email].length > 0
       @parent_email = ParentEmail.where(email: params[:student][:parent_email][:email]).first_or_create
