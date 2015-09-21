@@ -6,7 +6,11 @@ jQuery ->
 	  minLength: 0
 	  delay: 0
 	  source: $("#instructor_school_name").data("autocomplete-source"),
-    messages: {noResults: '', results: ''}
+    messages:
+      noResults: () ->
+        'No results found.'
+      results: (count) ->
+        count + (if count > 1 then ' results' else ' result ') + ' found'
     select: (event, ui) ->
       info = ui.item.value.split("||")
       ui.item.value = info[0]

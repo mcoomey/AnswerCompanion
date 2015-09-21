@@ -12,6 +12,6 @@ class Parent < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me,
                   :firstname, :lastname, :username, :emailpref, :paypalaccount,
                   :privilege, :grade, :school, :accountbalance, :violationcount
-   
+      
 	validates :username, :uniqueness => { :message => " already exists."}, :allow_blank => true
 end

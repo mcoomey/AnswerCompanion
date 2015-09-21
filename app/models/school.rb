@@ -1,5 +1,5 @@
 class School < ActiveRecord::Base
-  attr_accessible :name, :state_id, :town
+  attr_accessible :name, :state_id, :town, :state_abbrev
   belongs_to :state
   has_many :school_memberships
   has_many :instructors, :through => :school_memberships, :source => :schoolmember, :source_type => 'Instructor'

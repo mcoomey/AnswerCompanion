@@ -66,6 +66,15 @@
     input[type=submit]{
       font-size: 1em;
     }
+    input.cancel-login {
+      position:absolute;
+      bottom:10px;
+      right:60px;
+  		&:hover{
+  		  color:red;	
+  		  cursor:pointer;
+  		}
+    }
     input.signin {
       position:absolute;
       bottom:10px;
@@ -75,14 +84,14 @@
 		    cursor:pointer;
 		  }
     }
-    input.cancel-login {
+    img.signin {
       position:absolute;
       bottom:10px;
-      right:60px;
+      right:160px;
   		&:hover{
-  		  color:red;	
-  		  cursor:pointer;
-  		}
+		    color:blue;	
+		    cursor:pointer;
+		  }
     }
     img.cancel-login {
       position:absolute;

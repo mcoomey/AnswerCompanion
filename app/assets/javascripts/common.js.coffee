@@ -73,8 +73,12 @@ window.onpopstate = (event) ->
 
 window.setupAddRemoveFields = (event) ->
   $('form').on 'click', '.remove_fields', (event) ->
-    $(this).closest('div').find('input:hidden').val('1')
+    $(this).closest('div').find('input:hidden.destroy_membership').val(1)
     $(this).closest('div').hide()
+    event.preventDefault()
+
+  $('form').on 'click', '.erase_fields', (event) ->
+    $(this).closest('div').remove()
     event.preventDefault()
 
   $('form').on 'click', '.add_fields', (event) ->  

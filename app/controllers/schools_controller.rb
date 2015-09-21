@@ -19,6 +19,22 @@ class SchoolsController < ApplicationController
     end
   end
 
+  def exists
+    state_id = State.find_by_abbrev(params[:state])
+    if !state_id
+      render json: "-1"
+    else
+      school = School.where(name:params[:name], town:params[:town],state_id:state_id)
+      if school.length > 0
+        render json: "1"
+      elsif school.new.valid?
+        render json: "0"
+      else
+        render json: "-1"
+      end
+    end
+  end
+
   # GET /schools/1
   # GET /schools/1.json
   def show
@@ -81,6 +97,8 @@ class SchoolsController < ApplicationController
   # DELETE /schools/1
   # DELETE /schools/1.json
   def destroy
+    
+    puts "***************** DESTROYING SCHOOL *******************"
     @school = School.find(params[:id])
     @school.destroy
 

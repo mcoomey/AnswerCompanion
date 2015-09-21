@@ -1,5 +1,7 @@
 AnswerCompanion::Application.routes.draw do
 
+  get "school_memberships/destroy"
+
   resources :course_assets do
     collection do
       put 'sort'
@@ -124,7 +126,11 @@ AnswerCompanion::Application.routes.draw do
   resources :section_titles
   resources :lessons
   resources :exercises
-  resources :schools
+  resources :schools do
+    collection do
+      get 'exists'
+    end
+  end
   
 	root :to => "screens#index"
 	

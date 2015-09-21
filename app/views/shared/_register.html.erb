@@ -35,11 +35,11 @@
 					
 			  <% end %>
         
-        <%= image_submit_tag "Register.png", name: "register", value: true, :onmouseover => "this.src='/assets/RegisterHover.png'",
+        <%= image_tag "Register.png", name: "register", id: "register-button", value: true, :onmouseover => "this.src='/assets/RegisterHover.png'",
         				                                     :onmouseout => "this.src='/assets/Register.png'", class: "signin" %>
                                                      
-        <%= image_tag "Cancel.png", name:"cancel", :mouseover => "CancelHover.png", :alt => "Cancel" , class: "cancel-login"  %>
-                                                     
+        <%= image_tag "Cancel.png", name:"cancel", id: "cancel-button", :mouseover => "CancelHover.png", :alt => "Cancel" , class: "cancel-login"  %>
+                          
 			<% end %>
 	</div>
 </div>

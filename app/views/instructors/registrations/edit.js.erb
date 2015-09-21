@@ -1,26 +1,105 @@
-<% if @new_school %>
-  alert("new school detected");
-  $("#create_new_school_dialog").html("<%= j render 'new_school_dialog' %>");
-  $("#create_new_school_dialog").prepend("<span class \"title\"> <%= j @school.name %>, <%= j @school.town %>, <%= j @school.state_abbrev %></span>");
-  $("#create_new_school_dialog").dialog({
-	  title: "Create New School?",
-	  resizeable: false,
-	  modal: true
+$(".notice").empty();
+$(".alert").empty();
+$(".ujs_alert").html("<%= @ujsAlert %>");
+$(".ujs_notice").html("<%= @ujsNotice %>");
+$("section#edit_registration").remove();
+$("article").hide().after("<%= j render 'shared/edit_registration' %>");
+$(".cancel-link").click(function(e){
+  $("section#edit_registration").remove();
+  $("article").show();
+});
+
+$("input.autocomplete-field").each(function(index) {
+  $(this).autocomplete({
+  minLength: 0,
+  delay: 0,
+  source: $(this).data("autocomplete-source")},
+ {
+  messages: {
+    noResults: '',
+    results: ''
+  },
+  select: function(event, ui) {
+    var info;
+    info = ui.item.value.split("||");
+    ui.item.value = info[0];
+    $(this).val(info[0]);
+    $(this).next("input").val(info[1]);
+    return $(this).next("input").next("input").val(info[2]);
+    }
   });
+});
+
+setupAddRemoveFields();
+
+$("#change_password").click(function(e){
+  $('#new_password').html("<label for='instructor_New Password (if desired):'>New password (if desired):</label><input type='password' tabindex='3' size='30' name='instructor[password]' id='instructor_password' class='wide' autocomplete='off'>");
+  $('#reenter_password').html("<label for='instructor_Re-enter New Password:'>Re-enter new password:</label><input id='instructor_password_confirmation' class='wide' type='password' tabindex='4' size='30' name='instructor[password_confirmation]'>");
+  $("#change_password").remove();
+  e.preventDefault();
+  });
+
+$("#update-button").click(function(){
+  var new_schools = "";
+  var new_school_count = 0;
   
-	$("#confirm_yes").click(function(){
-		$("#create_new_school_dialog").dialog("close");
-	});
+  var current_password = $("#instructor_current_password").val();
+  
+  if (current_password == "") {
+    alert("Current Password cannot be blank.");
+  }
+  else {
+    $("div.school-memberships").each(function(index){
+      fields = $(this).find("input");
+      var school = fields.eq(0).val();
+      var town = fields.eq(1).val();
+      var state_abbrev = fields.eq(2).val();
+    
+      var urlString = window.location.origin + "/schools/exists.json?name="+school+"&town="+town+"&state="+state_abbrev;
+    
+      $.ajax({
+        url: urlString,
+        dataType: 'json',
+        async: false,
+        success: function(data){
+          // if school exists data=1, if not and params are valid data=0, if params are invalid data=-1
+          if (data != "1"){
+            new_schools = new_schools + "<span class \"title\">" + school + ", " + town + ", " + state_abbrev +"</span></br>";
+            new_school_count++;
+            }
+          }
+        });
+      });
 
-	$("#confirm_no").click(function(){
-		$("#create_new_school_dialog").dialog("close");
-	});
+    if (new_school_count > 0) {     
+      var diag_title = (new_school_count > 1) ? "Create new schools?" : "Create a new school?";
+     
+      $("#create_new_school_dialog").prepend(new_schools);
+ 
+      $("#create_new_school_dialog").dialog({
+    	  title: diag_title,
+    	  resizeable: false,
+    	  modal: true,
+        buttons : {
+            "Yes" : function ()
+            {
+              $("#create_new_school_dialog").dialog("destroy");
+              $("#create_new_school_dialog").html("");
+              $("form#edit_instructor").submit()
+              return true;
+             },
+            "No" : function ()
+            {
+              $("#create_new_school_dialog").dialog("destroy");
+              $("#create_new_school_dialog").html("");
+              return false;
+            }
+          }
+        });
+      }
+      else { // new_school_count == 0
+        $("form#edit_instructor").submit();
+      }
+    }
+  });
 
-<% else %>
-  $(".alert").empty()
-  $(".notice").empty()
-  $(".ujs_alert").empty()
-  $(".ujs_notice").empty()
-  $("article").replaceWith("<%= j render 'shared/edit_registration' %>");
-  setupAddRemoveFields();
-<% end %>

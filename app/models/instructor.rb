@@ -20,9 +20,9 @@ class Instructor < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me,
                   :firstname, :lastname, :username, :emailpref, :paypalaccount,
                   :privilege, :grade, :accountbalance, :violationcount,
-                  :deactivated, :school, :schools_attributes, :school_memberships_attributes
+                  :deactivated, :school_memberships_attributes
                   
-  accepts_nested_attributes_for :schools, allow_destroy: true
+  # accepts_nested_attributes_for :schools, allow_destroy: true
   accepts_nested_attributes_for :school_memberships, allow_destroy: true
    
 	validates :username, :uniqueness => { :message => " already exists."}, :allow_blank => true

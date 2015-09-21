@@ -15,11 +15,13 @@ class Student < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me,
   								:firstname, :lastname, :username, :emailpref, :paypalaccount,
-  								:privilege, :grade, :school, :accountbalance, :violationcount, 
-  								:schools_attributes, :parent_emails_attributes
+  								:privilege, :grade, :accountbalance, :violationcount, 
+  								:schools_attributes, :parent_emails_attributes, :school_memberships_attributes
 
-  accepts_nested_attributes_for :schools, allow_destroy: true
+  # accepts_nested_attributes_for :schools, allow_destroy: true
   accepts_nested_attributes_for :parent_emails
+  accepts_nested_attributes_for :school_memberships, allow_destroy: true
+   
   
 	validates :username, :uniqueness => { :message => " already exists."}, :allow_blank => true
   validates_associated :schools
