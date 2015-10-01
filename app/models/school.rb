@@ -5,6 +5,7 @@ class School < ActiveRecord::Base
   has_many :instructors, :through => :school_memberships, :source => :schoolmember, :source_type => 'Instructor'
   has_many :students, :through => :school_memberships, :source => :schoolmember, :source_type => 'Student'
   
+  
   validates :name, :presence => { message: " can not be blank."}
   validates :town, :presence => { message: "can not be blank."}
   validates :state_id, :presence => { message: "invalid abbreviation."}

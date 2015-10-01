@@ -4,11 +4,12 @@ class SchoolMembership < ActiveRecord::Base
   belongs_to :schoolmember, :polymorphic => true
   before_destroy :pre_delete_orphan_school
   
-  accepts_nested_attributes_for :school, allow_destroy: true
+  accepts_nested_attributes_for :school, allow_destroy: true, reject_if: :all_blank
+  
+  validates :school_id, :uniqueness => { :scope => [:schoolmember_id, :schoolmember_type], :message => " membership duplication."}
   
   def pre_delete_orphan_school
     if self.school.members.count == 1
-      puts "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& destroying school membership for #{self.school.name} #{self.school.town}, #{self.school.state_abbrev} &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
       self.school.destroy
     end
   end

@@ -1,9 +1,9 @@
-<%= f.fields_for :school_attributes do |m| %>
-  <div class="wide-panel school-memberships">  
-      	<%= m.text_field :name, data: {autocomplete_source: schools_path}, class: "wide", placeholder: "School name"%>
-      	<%= m.text_field :town, class: "medium", placeholder: "Town or City" %>
-        <%= m.text_field :state_abbrev, class: "narrow", placeholder: "State" %>
-        <%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png", :alt => "Delete School" , id: "remove_#{f.object.id}", class: "remove_fields"), '#'  %>
-        <%= m.hidden_field :_destroy, class:"destroy_membership" %>	
+  <div class="wide-panel new-school-memberships">  
+      <%= f.fields_for :school_attributes do |sch| %>
+      	<%= sch.text_field :name, data: {autocomplete_source: schools_path}, class: "wide", placeholder: "School name"%>
+      	<%= sch.text_field :town, class: "medium", placeholder: "Town or City" %>
+        <%= sch.text_field :state_abbrev, class: "narrow", placeholder: "State" %>
+      <% end %>
+      <%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png", :alt => "Delete School" , id: "remove_#{f.object.id}", class: "erase_fields"), '#'  %>
+      <%= f.hidden_field :_destroy, class:"destroy_membership" %>	
   </div>
-<% end %>

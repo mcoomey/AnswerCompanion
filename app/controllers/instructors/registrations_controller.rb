@@ -58,6 +58,7 @@ class Instructors::RegistrationsController < Devise::RegistrationsController
     # @schools = resource.schools
     @school = resource.schools.first
     @new_school = false
+    puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ABOUT TO RENDER EDIT VIEW @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
     render :edit
   end
   

@@ -49,12 +49,14 @@ $("#update-button").click(function(){
     alert("Current Password cannot be blank.");
   }
   else {
-    $("div.school-memberships").each(function(index){
+    $("div.new-school-memberships").each(function(index){
       fields = $(this).find("input");
       var school = fields.eq(0).val();
       var town = fields.eq(1).val();
       var state_abbrev = fields.eq(2).val();
     
+      console.log("*** New Schools: " + school + ", " + town + ", " + state_abbrev + "***");
+      
       var urlString = window.location.origin + "/schools/exists.json?name="+school+"&town="+town+"&state="+state_abbrev;
     
       $.ajax({

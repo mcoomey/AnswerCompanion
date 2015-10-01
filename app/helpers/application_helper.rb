@@ -49,7 +49,7 @@ module ApplicationHelper
       render("shared/" + association.to_s.singularize + "_fields", f: builder)
     end
 
-    link_to(image_tag(img,  :mouseover => imghvr), '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
+    link_to(image_tag(img,  :mouseover => imghvr, class: "add_fields_img"), '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
   end
     
 end
