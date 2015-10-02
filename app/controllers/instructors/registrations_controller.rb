@@ -55,10 +55,6 @@ class Instructors::RegistrationsController < Devise::RegistrationsController
   
   # GET /resource/edit
   def edit
-    # @schools = resource.schools
-    @school = resource.schools.first
-    @new_school = false
-    puts "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ABOUT TO RENDER EDIT VIEW @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
     render :edit
   end
   
@@ -73,13 +69,44 @@ class Instructors::RegistrationsController < Devise::RegistrationsController
     # update the params hash to replace state_abbrev with state_id 
     params[resource_name] = encode_state_id(params[resource_name])
     
+    # isolate the school_memberships_attributes
+    sma_params = params[resource_name].delete("school_memberships_attributes")
+    
     # load the resource (i.e. Instructor, Student, Parent) from the db
     self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
   
-    @schools = resource.schools
-
-    if resource.update_with_password(params[resource_name])
+    school_error_flag = false
+    # check password and process the school memberships
+    if resource.valid_password?(params[resource_name]["current_password"])
+      sma_params.each do |k,v|
+        if v.is_a?(Hash) && v.has_key?("school_attributes")
+          # school_attributes is a hash representing a new school membership
+          school = School.where(v["school_attributes"]).first_or_initialize
+          if school.valid?
+            if resource.schools.where(id:school.id).exists?
+              @ujsNotice = @ujsNotice.to_s + "*** Duplicate school membership ignored. "
+            else
+              resource.schools << school
+            end
+          else
+            school_error_flag = true
+            @ujsAlert = @ujsAlert.to_s + school.errors.full_messages.join(", ")
+          end
+        elsif v.is_a?(Hash)
+          # process existing SchoolMemberships
+          if v["_destroy"] == "1"
+            school_membership = SchoolMembership.find_by_id(v["id"])
+            school_membership.destroy if school_membership
+          end
+        end
+      end
+    end
+    
+    if school_error_flag
+      render :edit
+      
+    elsif resource.update_with_password(params[resource_name])
       if is_navigational_format?
         flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ? :update_needs_confirmation : :updated
         set_flash_message :notice, flash_key unless skool_error
@@ -90,11 +117,9 @@ class Instructors::RegistrationsController < Devise::RegistrationsController
       if resource.errors.count > 1
         msg ="Errors: " + resource.errors.full_messages.join(", ")
         @ujsAlert = msg
-        puts "*******************#{msg}*******************"
       else
         msg = "Error: " + resource.errors.full_messages.join(", ")
         @ujsAlert = msg
-        puts "*******************#{msg}*******************"
       end
       clean_up_passwords resource
       render :edit
