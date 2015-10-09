@@ -33,8 +33,8 @@ $("input.autocomplete-field").each(function(index) {
 setupAddRemoveFields();
 
 $("#change_password").click(function(e){
-  $('#new_password').html("<label for='instructor_New Password (if desired):'>New password (if desired):</label><input type='password' tabindex='3' size='30' name='instructor[password]' id='instructor_password' class='wide' autocomplete='off'>");
-  $('#reenter_password').html("<label for='instructor_Re-enter New Password:'>Re-enter new password:</label><input id='instructor_password_confirmation' class='wide' type='password' tabindex='4' size='30' name='instructor[password_confirmation]'>");
+  $('#new_password').html("<label for='student_New Password (if desired):'>New password (if desired):</label><input type='password' tabindex='3' size='30' name='student[password]' id='student_password' class='wide' autocomplete='off'>");
+  $('#reenter_password').html("<label for='student_Re-enter New Password:'>Re-enter new password:</label><input id='student_password_confirmation' class='wide' type='password' tabindex='4' size='30' name='student[password_confirmation]'>");
   $("#change_password").remove();
   e.preventDefault();
   });
@@ -43,7 +43,7 @@ $("#update-button").click(function(){
   var new_schools = "";
   var new_school_count = 0;
   
-  var current_password = $("#instructor_current_password").val();
+  var current_password = $("#student_current_password").val();
   
   if (current_password == "") {
     alert("Current Password cannot be blank.");
@@ -85,7 +85,7 @@ $("#update-button").click(function(){
             {
               $("#create_new_school_dialog").dialog("destroy");
               $("#create_new_school_dialog").html("");
-              $("form#edit_instructor").submit()
+              $("form#edit_student").submit()
               return true;
              },
             "No" : function ()
@@ -98,7 +98,7 @@ $("#update-button").click(function(){
         });
       }
       else { // new_school_count == 0
-        $("form#edit_instructor").submit();
+        $("form#edit_student").submit();
       }
     }
   });

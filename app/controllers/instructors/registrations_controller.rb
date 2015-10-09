@@ -112,6 +112,7 @@ class Instructors::RegistrationsController < Devise::RegistrationsController
         set_flash_message :notice, flash_key unless skool_error
       end
       sign_in resource_name, resource, :bypass => true
+      @ujsNotice = @ujsNotice.to_s + "Account has been updated. "
       respond_with resource, :location => after_update_path_for(resource)
     else
       if resource.errors.count > 1
@@ -124,29 +125,6 @@ class Instructors::RegistrationsController < Devise::RegistrationsController
       clean_up_passwords resource
       render :edit
     end
-  end
-  
-  def encode_state_id(hash)
-    state_id_hash = Hash.new
-    change_state_key_and_value(hash, state_id_hash)
-    state_id_hash
-  end
-
-  # change_state_key_and_value copies hash to target replacing state_abbrev keys and values with state_id
-  def change_state_key_and_value(hash, target)
-
-    hash.each do |k, v|
-      if v.is_a?(String)
-        if k=="state_abbrev"
-          target["state_id"] = (State.find_by_abbrev(v).try(:id)).try(:to_s)
-        else
-          target[k] = v
-        end
-      elsif v.is_a?(Hash)
-        target[k] = change_state_key_and_value(v, Hash.new)
-      end
-    end
-    target
   end
 
 end

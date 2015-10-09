@@ -7,6 +7,9 @@ class ScreensController < ApplicationController
     elsif current_instructor
       cookies.permanent[:user_mode] = :instructor
       redirect_to(instructor_courses_path(current_instructor))
+    elsif current_parent
+      cookies.permanent[:user_mode] = :parent
+      redirect_to(students_path)
     end  		
   end
 

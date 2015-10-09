@@ -31,4 +31,13 @@ class Instructor < ActiveRecord::Base
   validates :lastname, :presence=>true
   validates_associated :schools
 	
+  # destroy any school memberships (and resulting orphan schools) before destroying the user account
+  before_destroy :pre_delete_school_memberships
+  
+  def pre_delete_school_memberships
+    sch_mbrships = self.school_memberships
+    sch_mbrships.each do |m|
+      m.destroy
+    end
+  end
 end

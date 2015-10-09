@@ -1,0 +1,32 @@
+$(".notice").empty();
+$(".alert").empty();
+$(".ujs_alert").html("<%= @ujsAlert %>");
+$(".ujs_notice").html("<%= @ujsNotice %>");
+$("section#edit_registration").remove();
+$("article").hide().after("<%= j render 'shared/edit_registration' %>");
+$(".cancel-link").click(function(e){
+  $("section#edit_registration").remove();
+  $("article").show();
+});
+
+
+setupAddRemoveFields();
+
+$("#change_password").click(function(e){
+  $('#new_password').html("<label for='parent_New Password (if desired):'>New password (if desired):</label><input type='password' tabindex='3' size='30' name='parent[password]' id='parent_password' class='wide' autocomplete='off'>");
+  $('#reenter_password').html("<label for='parent_Re-enter New Password:'>Re-enter new password:</label><input id='parent_password_confirmation' class='wide' type='password' tabindex='4' size='30' name='parent[password_confirmation]'>");
+  $("#change_password").remove();
+  e.preventDefault();
+  });
+
+$("#update-button").click(function(){
+  
+  var current_password = $("#parent_current_password").val();
+  
+  if (current_password == "") {
+    alert("Current Password cannot be blank.");
+    }
+  else {
+    $("form#edit_parent").submit();
+    }
+  });

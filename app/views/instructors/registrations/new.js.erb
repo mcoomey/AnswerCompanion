@@ -41,26 +41,35 @@ $("#register-button").click(function(){
   var school = $("#instructor_school_name").val();
   var town = $("#instructor_school_town").val();
   var state_abbrev = $("#instructor_school_state_abbrev").val();
+  
   // check to see if school already exists in database 
   var urlString = window.location.origin + "/schools/exists.json?name="+school+"&town="+town+"&state="+state_abbrev;
-  $.getJSON(urlString,
-    function(data){
+  
+  $.ajax({
+    url: urlString,
+    dataType: 'json',
+    async: false,
+    success: function(data){
       // if school exists data=1, if not and params are valid data=0, if params are invalid data=-1
       if (data == "0"){
         $("#create_new_school_dialog").prepend("<span class \"title\">" + school + ", " + town + ", " + state_abbrev +"</span>");
         $("#create_new_school_dialog").dialog({
-      	  title: "Create New School?",
-      	  resizeable: false,
-      	  modal: true,
+          title: "Create New School?",
+          resizeable: false,
+          modal: true,
           buttons : {
               "Yes" : function ()
               {
-                $("#create_new_school_dialog").dialog ("close");
+                $("#create_new_school_dialog").dialog("destroy");
+                $("#create_new_school_dialog").html("");
                 $("#new_instructor").submit();
+                return true;
               },
               "No" : function ()
               {
-                $("#create_new_school_dialog").dialog ("close");
+                $("#create_new_school_dialog").dialog ("destroy");
+                $("#create_new_school_dialog").html("");
+                return false;
               }
             }
           });
@@ -69,5 +78,6 @@ $("#register-button").click(function(){
         // just submit the form and let rails handle any form errors
         $("#new_instructor").submit();
         }
-      });
+      }
+    });
   });

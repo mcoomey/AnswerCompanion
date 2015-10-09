@@ -3,6 +3,10 @@ $(".notice").empty();
 $(".alert").empty();
 $("#menu").hide();
 $("#login-register").html("<%= j render 'shared/register' %>").show();
+$("#register-button").click(function(){
+  $("#new_parent").submit();
+  });
+  
 $(".cancel-login").click(function() {
   $("#login-register").hide();
   $(".notice").html("Parent registration action canceled");

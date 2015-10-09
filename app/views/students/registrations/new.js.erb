@@ -24,9 +24,8 @@ $('#student_school_name').autocomplete({
     $("#student_school_name").val(info[0]);
     $("#student_school_town").val(info[1]);
     return $("#student_school_state_abbrev").val(info[2]);
-  }
-});
-
+    }
+  });
 
 $(".cancel-login").click(function() {
   $("#login-register").hide();
@@ -37,3 +36,48 @@ $(".cancel-login").click(function() {
   $("#videoblock").show();
   $("#menu").show();
 })
+
+$("#register-button").click(function(){
+  var school = $("#student_school_name").val();
+  var town = $("#student_school_town").val();
+  var state_abbrev = $("#student_school_state_abbrev").val();
+  
+  // check to see if school already exists in database 
+  var urlString = window.location.origin + "/schools/exists.json?name="+school+"&town="+town+"&state="+state_abbrev;
+  
+  $.ajax({
+    url: urlString,
+    dataType: 'json',
+    async: false,
+    success: function(data){
+      // if school exists data=1, if not and params are valid data=0, if params are invalid data=-1
+      if (data == "0"){
+        $("#create_new_school_dialog").prepend("<span class \"title\">" + school + ", " + town + ", " + state_abbrev +"</span>");
+        $("#create_new_school_dialog").dialog({
+          title: "Create New School?",
+          resizeable: false,
+          modal: true,
+          buttons : {
+              "Yes" : function ()
+              {
+                $("#create_new_school_dialog").dialog("destroy");
+                $("#create_new_school_dialog").html("");
+                $("#new_student").submit();
+                return true;
+              },
+              "No" : function ()
+              {
+                $("#create_new_school_dialog").dialog ("destroy");
+                $("#create_new_school_dialog").html("");
+                return false;
+              }
+            }
+          });
+        }
+      else {
+        // just submit the form and let rails handle any form errors
+        $("#new_student").submit();
+        }
+      }
+    });
+  });

@@ -29,7 +29,6 @@
 						<div class="full-width-panel">
 							School Membership:
 						</div>
-<!-- *********************************************************** -->
             <%= f.fields_for :school_memberships do |m| %>
             <div class="wide-panel">
               <div class="school-memberships">  
@@ -42,7 +41,6 @@
             </div>
             <% end %>
     				<%= link_to_image_add_fields f, :school_memberships, "AddSchool.png", "AddSchoolHover.png" %>
-<!-- *********************************************************** -->
 					
 						<% if resource_name == :student%>
 							<div class="full-width-panel">
@@ -56,18 +54,18 @@
 						<% end %>
 						
 					<% else %>
-						<% if @children.count > 0 %>
-							<div class="full-width-panel">
-							Children:
-							<ul>
-							<% @children.each do |child| %>
-								<li><%= child.email %></li>
-							<% end %>
-							</ul>
-						<% else %>
-						  Children must add your email to their profile to allow you access to their account.
-							</div>
-						<% end %>
+						<div class="full-width-panel">
+  						<% if @children.count > 0 %>
+  							Children:
+  							<ul>
+    							<% @children.each do |child| %>
+    								<li><%= child.email %></li>
+    							<% end %>
+  							</ul>
+  						<% else %>
+  						  Children must add your email to their profile to allow you to access their account.
+  						<% end %>
+						</div>
 					<% end %>
 					<div class="clear-float-space"></br></div>
 					<%= image_tag "Update.png",  name: "update", id: "update-button", value: true, :onmouseover => "this.src='/assets/UpdateHover.png'",
