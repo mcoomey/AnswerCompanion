@@ -6,6 +6,7 @@ class Students::RegistrationsController < Devise::RegistrationsController
   
   def new
     @school = School.new
+    
     super    
   end
 
@@ -22,12 +23,21 @@ class Students::RegistrationsController < Devise::RegistrationsController
     @school = School.where(name: params[resource_name][:school][:name], 
                            town: params[resource_name][:school][:town], 
                            state_id: state).first_or_initialize
-    build_resource(params[resource_name].except(:school).except(:parent_email))
+                           
+    parent_email = params[resource_name].delete(:parent_email)
+    puts "******** parent_email = #{parent_email} *********"
+    
+    build_resource(params[resource_name].except(:school))
     @role = Role.find_by_name("Student")
+    
     resource.roles << @role
     resource.schools << @school
+    
+    if parent_email["email"].length > 0
+      pem = ParentEmail.new(email: parent_email["email"])
+      resource.parent_emails << pem
+    end
 
-      
     if resource.save
       if resource.active_for_authentication?
         @ujsNotice = find_message(:"signed_up") if is_navigational_format?
@@ -72,9 +82,6 @@ class Students::RegistrationsController < Devise::RegistrationsController
     # isolate the school_memberships_attributes
     sma_params = params[resource_name].delete("school_memberships_attributes")
     
-    # and strip out the parent email
-    parent_email_params = params[resource_name].delete("parent_email")
-    
     # load the resource (i.e. Instructor, Student, Parent) from the db
     self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
@@ -108,6 +115,15 @@ class Students::RegistrationsController < Devise::RegistrationsController
     
     if school_error_flag
       render :edit
+      
+    elsif ((resource.valid_password?(params[resource_name]["current_password"]))&&(params[resource_name]["destroy_account"]=="true"))
+      sign_out @student
+      if @student.destroy
+        @student = nil
+        redirect_to root_url+"?msg=DeletedAccount"
+      else
+        @ujsAlert = "Unable to delete account.  Please contact Customer Service."
+      end
       
     elsif resource.update_with_password(params[resource_name])
       if is_navigational_format?

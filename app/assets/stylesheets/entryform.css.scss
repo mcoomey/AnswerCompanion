@@ -1,3 +1,7 @@
+div.red-title div.ui-dialog-titlebar {
+    background:red;
+}
+
 #data-entry {
   position:relative;
   height:auto !important;
@@ -102,6 +106,11 @@
       bottom:10px;
       right:60px;
     }
+    img.delete-account {
+      position:absolute;
+      bottom:10px;
+      margin-left:20px;
+    }
     a.delete-link {
       position:absolute;
       bottom:10px;
@@ -166,7 +175,10 @@
     .wide-panel{
       margin-left:20px;
       width:660px;
-//      height:45px;
+      input.stricken {
+        text-decoration:line-through;
+        color:red;
+      }
     }
     a.add_fields{
       padding-top:15px;
@@ -181,7 +193,6 @@
       background-color:white;
       padding-left:10px;
       padding-top:5px;
-//      margin-left:20px;
       
       div.wide {
         float:left;
@@ -207,9 +218,7 @@
           color:red;
         }
       }
-//      background-color:$light-grey;
     }
-    
   }
 }
 

@@ -5,6 +5,8 @@
 		  <%= render 'shared/resource_heading', :formtype => "profile edit" %>
 		  <div id="data-entry-form">
 				<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), remote:true, :html => { :method => :put, :autocomplete => "off"}) do |f| %>
+        
+        
 				  <div class="left-entry-panel">
 						<%= f.label "Email:" %>
 					 	<%= f.email_field :email, class: "wide", tabindex: 1 %>
@@ -15,6 +17,7 @@
 					  <%= f.label "Username:"%>
 					 	<%= f.text_field :username, class: "wide", tabindex: 7 %>
 				  </div>
+          
 				  <div class="right-entry-panel">
 					  <%= f.label "Current password:" %>
             <%= link_to " (change)", "#", id: "change_password" %>
@@ -24,34 +27,35 @@
 					  <%= f.label "Last name:"%>
 					 	<%= f.text_field :lastname, class: "wide", tabindex: 6 %>
 					</div>
+          
 					<div class="clear-float-space"></div>
+          
 					<% if resource_name != :parent %>
 						<div class="full-width-panel">
 							School Membership:
 						</div>
             <%= f.fields_for :school_memberships do |m| %>
-            <div class="wide-panel">
-              <div class="school-memberships">  
-                <div class="wide"><%= m.object.school.name %></div>
-                <div class="medium"><%= m.object.school.town %></div>
-                <div class="narrow"><%= m.object.school.state_abbrev%></div>
-                <%= m.hidden_field :_destroy, class:"destroy_membership" %>	
-                <%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png", :alt => "Delete School" , id: "remove_#{m.object.id}", class: "remove_fields"), '#'  %>
+              <div class="wide-panel">
+                <div class="school-memberships">  
+                  <div class="wide"><%= m.object.school.name %></div>
+                  <div class="medium"><%= m.object.school.town %></div>
+                  <div class="narrow"><%= m.object.school.state_abbrev%></div>
+                  <%= m.hidden_field :_destroy, class:"destroy_membership" %>	
+                  <%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png", :alt => "Delete School" , id: "remove_#{m.object.id}", class: "remove_fields"), '#'  %>
+                </div>
               </div>
-            </div>
             <% end %>
     				<%= link_to_image_add_fields f, :school_memberships, "AddSchool.png", "AddSchoolHover.png" %>
 					
-						<% if resource_name == :student%>
+						<% if resource_name == :student %>
 							<div class="full-width-panel">
 								Grant Parent Access to:
 							</div>
 							<%= f.fields_for :parent_emails do |em| %>
 							  <%= render 'shared/parent_email_fields', f: em %>
-					  <% end %>	
-					  <%= link_to_image_add_fields f, :parent_emails, "AddParent.png", "AddParentHover.png" %>
-						
-						<% end %>
+  					  <% end %>	
+  					  <%= link_to_image_add_fields f, :parent_emails, "AddParent.png", "AddParentHover.png" %>
+            <% end %>
 						
 					<% else %>
 						<div class="full-width-panel">
@@ -70,15 +74,20 @@
 					<div class="clear-float-space"></br></div>
 					<%= image_tag "Update.png",  name: "update", id: "update-button", value: true, :onmouseover => "this.src='/assets/UpdateHover.png'",
 				                                     :onmouseout => "this.src='/assets/Update.png'", class: "signin" %>	
-                                             
-				<% end %>
+
+          <%= f.hidden_field :destroy_account, id: "destroy_account", value: false %>
+
+        <% end %>  
+
 				</br>
-				<%= link_to "Delete my account", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete, class: "delete-link" %>
+        <%= image_tag("DeleteAccount.png", :mouseover => "DeleteAccountHover.png", :alt => "Delete Account", class: "delete-account")%>
 				<%= image_tag("Cancel.png",  :mouseover => "CancelHover.png", :alt => "Cancel" , class: "cancel-link") %>
 			</div>
 		</div>
 	</div>
   <div id="create_new_school_dialog">
+  </div>
+  <div id="delete_account_dialog">
   </div>
 </div>
 </section>

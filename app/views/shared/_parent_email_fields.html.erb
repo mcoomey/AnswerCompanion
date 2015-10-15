@@ -1,5 +1,5 @@
 <div class="wide-panel">  
-	<%= f.email_field :email, class: "wide", placeholder: "Parent Email" %>
-	<%= f.hidden_field :_destroy %>	
-	<%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png", :alt => "Delete Parent" , class: "remove_fields"), '#'  %>
+  <%= f.email_field :email, class: "wide", placeholder: "Parent Email" %>
+  <%= f.hidden_field :_destroy, class:"destroy_membership" %>	
+  <%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png", :alt => "Delete Parent" , class: "delete-parent"), '#'  %>
 </div>	

@@ -73,7 +73,16 @@ class Parents::RegistrationsController < Devise::RegistrationsController
     self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
   
-    if resource.update_with_password(params[resource_name])
+    if ((resource.valid_password?(params[resource_name]["current_password"]))&&(params[resource_name]["destroy_account"]=="true"))
+      sign_out @parent
+      if @parent.destroy
+        @parent = nil
+        redirect_to root_url+"?msg=DeletedAccount"
+      else
+        @ujsAlert = "Unable to delete account.  Please contact Customer Service."
+      end
+  
+    elsif resource.update_with_password(params[resource_name])
       if is_navigational_format?
         flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ? :update_needs_confirmation : :updated
         set_flash_message :notice, flash_key unless skool_error

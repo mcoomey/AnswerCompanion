@@ -4,10 +4,14 @@ $(".ujs_alert").html("<%= @ujsAlert %>");
 $(".ujs_notice").html("<%= @ujsNotice %>");
 $("section#edit_registration").remove();
 $("article").hide().after("<%= j render 'shared/edit_registration' %>");
+
 $(".cancel-link").click(function(e){
+  $(".ujs_alert").empty();
+  $(".ujs_notice").empty();
   $("section#edit_registration").remove();
   $("article").show();
 });
+
 
 $("input.autocomplete-field").each(function(index) {
   $(this).autocomplete({
@@ -102,4 +106,36 @@ $("#update-button").click(function(){
       }
     }
   });
+
+
+
+  $(".delete-account").click(function(e){
+    $("#delete_account_dialog").prepend("Deletion of an account is permanent and can not be undone!");
+    
+    $("#delete_account_dialog").dialog({
+  	  title: "Are you ABSOLUTELY SURE ?",
+      dialogClass: "red-title",
+  	  resizeable: false,
+  	  modal: true,
+      buttons : {
+        "Delete" : function ()
+        {
+          $("#delete_account_dialog").dialog("destroy");
+          $("#delete_account_dialog").html("");
+          $("form input#destroy_account").val("true");
+          $("form#edit_instructor").submit()
+          return true;
+         },
+        "Keep" : function ()
+        {
+          $("#delete_account_dialog").dialog("destroy");
+          $("form input#destroy_account").val("false");
+          $("#delete_account_dialog").html("");
+          return false;
+        }
+      }
+    });
+  });
+
+
 

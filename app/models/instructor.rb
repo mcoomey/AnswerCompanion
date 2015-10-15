@@ -20,7 +20,8 @@ class Instructor < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me,
                   :firstname, :lastname, :username, :emailpref, :paypalaccount,
                   :privilege, :grade, :accountbalance, :violationcount,
-                  :deactivated, :school_memberships_attributes, :schools_attributes
+                  :deactivated, :school_memberships_attributes, :schools_attributes,
+                  :destroy_account
 
   # accepts_nested_attributes_for :schools, allow_destroy: true
   accepts_nested_attributes_for :school_memberships, allow_destroy: true
@@ -30,6 +31,7 @@ class Instructor < ActiveRecord::Base
   validates :firstname, :presence=>true
   validates :lastname, :presence=>true
   validates_associated :schools
+  validates_email_format_of :email, :message => 'is not a valid email format.'
 	
   # destroy any school memberships (and resulting orphan schools) before destroying the user account
   before_destroy :pre_delete_school_memberships
@@ -40,4 +42,13 @@ class Instructor < ActiveRecord::Base
       m.destroy
     end
   end
+  
+  def destroy_account
+    @destroy_account
+  end
+  
+  def destroy_account=(val)
+    @destroy_account = val
+  end
+  
 end

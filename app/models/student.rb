@@ -16,13 +16,40 @@ class Student < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me,
   								:firstname, :lastname, :username, :emailpref, :paypalaccount,
   								:privilege, :grade, :accountbalance, :violationcount, 
-  								:schools_attributes, :parent_emails_attributes, :school_memberships_attributes
+  								:schools_attributes, :parent_emails_attributes, :school_memberships_attributes,
+                  :destroy_account
 
-  # accepts_nested_attributes_for :schools, allow_destroy: true
-  accepts_nested_attributes_for :parent_emails
+  accepts_nested_attributes_for :parent_emails, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :school_memberships, allow_destroy: true
    
   
 	validates :username, :uniqueness => { :message => " already exists."}, :allow_blank => true
   validates_associated :schools
+  validates_email_format_of :email, :message => 'is not a valid email format.'
+
+  # destroy any school memberships (and resulting orphan schools) and parent_emails before destroying the user account
+  before_destroy :pre_delete_school_memberships, :pre_delete_parent_emails
+  
+  def pre_delete_school_memberships
+    sch_mbrships = self.school_memberships
+    sch_mbrships.each do |m|
+      m.destroy
+    end
+  end
+  
+  def pre_delete_parent_emails
+    parents = self.parent_emails
+    parent_emails.each do |p|
+      p.destroy
+    end
+  end
+  
+  def destroy_account
+    @destroy_account
+  end
+
+  def destroy_account=(val)
+    @destroy_account = val
+  end
+
 end

@@ -27,13 +27,13 @@
 						<% end %>
 					</div>
 					
-					<% if resource_name == :student %>
-						<%= f.fields_for :parent_email do |p| %>
-					    <%= p.email_field :email, class: "wide", placeholder: "Parent email", tabindex: 10 %>
-						<% end %>
-					<% end %>
-					
-			  <% end %>
+  				<% if resource_name == :student %>
+              <%= f.label :email, "Grant Parent Access to: "%> </br>
+  						<%= f.fields_for :parent_email do |p| %>
+  					    <%= p.email_field :email, class: "wide", placeholder: "Parent email (optional)", tabindex: 10 %>
+  						<% end %>
+  					<% end %>					
+  			  <% end %>
         
         <%= image_tag "Register.png", name: "register", id: "register-button", value: true, :onmouseover => "this.src='/assets/RegisterHover.png'",
         				                                     :onmouseout => "this.src='/assets/Register.png'", class: "signin" %>

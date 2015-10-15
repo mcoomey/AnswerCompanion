@@ -106,6 +106,15 @@ class Instructors::RegistrationsController < Devise::RegistrationsController
     if school_error_flag
       render :edit
       
+    elsif ((resource.valid_password?(params[resource_name]["current_password"]))&&(params[resource_name]["destroy_account"]=="true"))
+      sign_out @instructor
+      if @instructor.destroy
+        @instructor = nil
+        redirect_to root_url+"?msg=DeletedAccount"
+      else
+        @ujsAlert = "Unable to delete account.  Please contact Customer Service."
+      end
+      
     elsif resource.update_with_password(params[resource_name])
       if is_navigational_format?
         flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ? :update_needs_confirmation : :updated

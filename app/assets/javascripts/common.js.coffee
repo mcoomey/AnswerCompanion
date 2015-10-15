@@ -83,6 +83,17 @@ window.setupAddRemoveFields = (event) ->
       $(this).closest('div').find('div').removeClass("stricken")
     event.preventDefault()
 
+  $('form').on 'click', '.delete-parent', (event) ->
+    destroyValue = $(this).closest('div').find('input:hidden.destroy_membership').val()
+    console.log "destroyValue = " + destroyValue
+    if destroyValue != "1"
+      $(this).closest('div').find('input:hidden.destroy_membership').val("1")
+      $(this).closest('div').find('input[type=email]').addClass("stricken")
+    else
+      $(this).closest('div').find('input:hidden.destroy_membership').val("0")
+      $(this).closest('div').find('input[type=email]').removeClass("stricken")
+    event.preventDefault()
+
   $('form').on 'click', '.erase_fields', (event) ->
     $(this).closest('div').remove()
     event.preventDefault()
