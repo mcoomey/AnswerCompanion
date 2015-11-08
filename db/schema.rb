@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150621124559) do
+ActiveRecord::Schema.define(:version => 20151029141811) do
 
   create_table "countries", :force => true do |t|
     t.string   "name"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(:version => 20150621124559) do
     t.integer  "subject_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "passphrase"
   end
 
   add_index "enrollments", ["course_id", "subject_id"], :name => "index_enrollments_on_course_id_and_subject_id"
@@ -122,7 +123,7 @@ ActiveRecord::Schema.define(:version => 20150621124559) do
     t.string   "paypalaccount"
     t.integer  "privilege",              :default => 0
     t.string   "grade"
-    t.float    "accountbalance",         :default => 0.0
+    t.integer  "accountbalance",         :default => 0
     t.integer  "violationcount",         :default => 0
     t.boolean  "deactivated",            :default => false
   end
@@ -216,9 +217,9 @@ ActiveRecord::Schema.define(:version => 20150621124559) do
   create_table "schools", :force => true do |t|
     t.string   "name"
     t.string   "town"
+    t.integer  "state_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.integer  "state_id"
   end
 
   create_table "section_titles", :force => true do |t|
@@ -240,10 +241,10 @@ ActiveRecord::Schema.define(:version => 20150621124559) do
 
   create_table "states", :force => true do |t|
     t.string   "name"
+    t.string   "abbrev"
     t.integer  "country_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.string   "abbrev"
   end
 
   create_table "students", :force => true do |t|
@@ -273,7 +274,7 @@ ActiveRecord::Schema.define(:version => 20150621124559) do
     t.string   "paypalaccount"
     t.integer  "privilege",              :default => 0
     t.string   "grade"
-    t.float    "accountbalance",         :default => 0.0
+    t.integer  "accountbalance",         :default => 0
     t.integer  "violationcount",         :default => 0
     t.boolean  "deactivated",            :default => false
   end

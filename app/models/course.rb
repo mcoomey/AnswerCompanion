@@ -9,4 +9,14 @@ class Course < ActiveRecord::Base
   
 	validates :name, :presence => true
 	validates :name, :uniqueness => { :scope => [:instructor_id, :section, :term], :message => " already exists."}
+  
+  def name_and_section
+    
+    if self.section.length > 0
+      self.name + "-" + self.section
+    else 
+      self.name
+    end
+    
+  end
 end

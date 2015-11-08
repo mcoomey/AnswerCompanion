@@ -1,5 +1,38 @@
 $("#ujsform").remove();
 ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
-$("table tr td:nth-child(4) a").fadeTo("fast", 0.3).bind('click', false);
 $("table tr td:nth-child(5) a").fadeTo("fast", 0.3).bind('click', false);
+$("table tr td:nth-child(6) a").fadeTo("fast", 0.3).bind('click', false);
 $("#buttonarea").hide().after("<%= j render 'edit_subject' %>");
+$("#subject_enrollment_attributes__destroy").click(function(e){
+  if ($(this).is(":checked")){
+    $("#subject_enrollment_attributes__destroy").parent().find("select, input[type=text]").addClass("stricken");
+  }
+  else {
+    $("#subject_enrollment_attributes__destroy").parent().find("select, input[type=text]").removeClass("stricken");
+  }
+});
+
+var courses, instructor, escaped_instructor, options;
+courses = $('#subject_enrollment_attributes_course_id').html();
+
+$('#instructor_id').change(function() {
+  var instructor, escaped_instructor, options;
+  instructor = $('#instructor_id :selected').text();
+  console.log("instructor " + instructor);
+  escaped_instructor = instructor.replace(/([ #;&,.+*~\':"!^$[\]()=>|\/@])/g, '\\$1');
+  options = $(courses).filter("optgroup[label='" + escaped_instructor + "']").html();
+  if (options) {
+    console.log("options " + options);
+    $('#subject_enrollment_attributes_course_id').fadeTo("fast", 1.0);
+    $('#subject_enrollment_attributes_course_id').html(options);
+    $("#enroll_submit").fadeTo("fast", 1.0);
+    $("#enroll_submit").prop('disabled', false);
+    $("#messages .ujs_alert").html("");
+  } else {
+    $('#subject_enrollment_attributes_course_id').fadeTo("fast", 0.1);
+    $('#subject_enrollment_attributes_course_id').empty();
+    $("#enroll_submit").fadeTo("fast", 0.1);
+    $("#enroll_submit").prop('disabled', true);
+    $("#messages .ujs_alert").html("Instructor " + instructor + " has not published any courses.");
+  }
+});

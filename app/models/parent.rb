@@ -1,6 +1,6 @@
 class Parent < ActiveRecord::Base
   
-	has_many :role_assignments, :as => :roleable
+	has_many :role_assignments, :as => :roleable, dependent: :destroy
 	has_many :roles, :through => :role_assignments
   
   # Include default devise modules. Others available are:

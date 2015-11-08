@@ -1,8 +1,8 @@
 class Instructor < ActiveRecord::Base
 	
-	has_many :role_assignments, :as => :roleable
+	has_many :role_assignments, :as => :roleable, dependent: :destroy
 	has_many :roles, :through => :role_assignments
-	has_many :school_memberships, :as => :schoolmember
+	has_many :school_memberships, :as => :schoolmember, dependent: :destroy
 	has_many :schools, :through => :school_memberships
 	has_many :courses, dependent: :destroy
 	has_many :videos
@@ -33,16 +33,7 @@ class Instructor < ActiveRecord::Base
   validates_associated :schools
   validates_email_format_of :email, :message => 'is not a valid email format.'
 	
-  # destroy any school memberships (and resulting orphan schools) before destroying the user account
-  before_destroy :pre_delete_school_memberships
-  
-  def pre_delete_school_memberships
-    sch_mbrships = self.school_memberships
-    sch_mbrships.each do |m|
-      m.destroy
-    end
-  end
-  
+ 
   def destroy_account
     @destroy_account
   end

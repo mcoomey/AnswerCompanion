@@ -62,6 +62,7 @@ $("#register-button").click(function(){
               {
                 $("#create_new_school_dialog").dialog("destroy");
                 $("#create_new_school_dialog").html("");
+                $("div#login-register").css('cursor','wait');
                 $("#new_instructor").submit();
                 return true;
               },
@@ -76,6 +77,7 @@ $("#register-button").click(function(){
         }
       else {
         // just submit the form and let rails handle any form errors
+        $("div#login-register").css('cursor','wait');
         $("#new_instructor").submit();
         }
       }

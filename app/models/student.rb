@@ -1,11 +1,11 @@
 class Student < ActiveRecord::Base
 	
-	has_many :role_assignments, :as => :roleable
+	has_many :role_assignments, :as => :roleable, dependent: :destroy
 	has_many :roles, :through => :role_assignments
-	has_many :school_memberships, :as => :schoolmember
+	has_many :school_memberships, :as => :schoolmember, dependent: :destroy
 	has_many :schools, :through => :school_memberships
 	has_many :subjects
-	has_many :parent_emails
+	has_many :parent_emails, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :timeoutable and :omniauthable
@@ -27,23 +27,6 @@ class Student < ActiveRecord::Base
   validates_associated :schools
   validates_email_format_of :email, :message => 'is not a valid email format.'
 
-  # destroy any school memberships (and resulting orphan schools) and parent_emails before destroying the user account
-  before_destroy :pre_delete_school_memberships, :pre_delete_parent_emails
-  
-  def pre_delete_school_memberships
-    sch_mbrships = self.school_memberships
-    sch_mbrships.each do |m|
-      m.destroy
-    end
-  end
-  
-  def pre_delete_parent_emails
-    parents = self.parent_emails
-    parent_emails.each do |p|
-      p.destroy
-    end
-  end
-  
   def destroy_account
     @destroy_account
   end

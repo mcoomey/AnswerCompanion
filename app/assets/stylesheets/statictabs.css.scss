@@ -89,7 +89,7 @@
 	font-family: Verdana,Arial,sans-serif;
 	font-size: 0.75em;
   
-  #asset-title {
+  div.asset-title {
   	background: $main-green;
     width:120px;
     height:20px;
@@ -100,11 +100,12 @@
   	  margin-left:10px;
   	}
   }
-  
+    
   #enrolled_assets {
   }
   
   #course_assets {
+    padding-top:20px;
   }
   
   .height-fix:after {

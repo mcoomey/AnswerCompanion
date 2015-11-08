@@ -1,12 +1,15 @@
 	<div id="vertical-tabs">
     
-    <div id="asset-title">
-  		<span class="title"><%= @asset_type %></span>
-    </div>
-  
     <div id="all-assets">
 
       <div id="enrolled_assets" class="height-fix">
+        
+        <% if @enrolled_assets && @enrolled_assets.count > 0 %>
+          <div class="asset-title">
+        		<span class="title"><%= @enrolled_asset_title %></span>
+          </div>
+        <% end %>
+  
         <ul class="dynamic-tabs-nav <%= @sortable_assets %>">
         <% @enrolled_assets.try :each do |asset| %>
   				<%= render "shared/course_asset_tag", :local_asset => asset %>
@@ -20,6 +23,13 @@
       </div>
     
       <div id="course_assets" class="height-fix">
+        
+        <% if @course_assets && @course_assets.count > 0 %>      
+          <div class="asset-title">
+            <span class="title"><%= @course_asset_title %></span>
+          </div>
+        <% end %>
+        
         <ul class="dynamic-tabs-nav  sortable">
     			<% @course_assets.try :each do |asset| %>
     				<%= render "shared/course_asset_tag", :local_asset => asset %>

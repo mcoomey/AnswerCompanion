@@ -4,6 +4,7 @@ $(".alert").empty();
 $("#menu").hide();
 $("#login-register").html("<%= j render 'shared/register' %>").show();
 $("#register-button").click(function(){
+  $("div#login-register").css('cursor','wait');
   $("#new_parent").submit();
   });
   

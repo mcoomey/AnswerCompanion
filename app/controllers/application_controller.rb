@@ -56,7 +56,7 @@ class ApplicationController < ActionController::Base
     
     if @user_mode == "instructor"
       @choices = @user.courses.where(:archived => 0)
-      @asset_type = "Course Assets"
+      @course_asset_title = "Course Assets"
       @sortable_assets = "sortable"
     
       if params[:course] # drop-down menu
@@ -84,7 +84,7 @@ class ApplicationController < ActionController::Base
     elsif @user_mode == "student"
 
       @choices = @user.subjects.where(:archived => 0)
-      @asset_type = "Subject Assets"
+      @course_asset_title = "Subject Assets"
       @sortable_assets = "not-sortable"
     
       if params[:subject]
@@ -112,6 +112,9 @@ class ApplicationController < ActionController::Base
         @course_assets = @subject.course_assets.try(:sort_by, &:position)
         @enrolled_assets = @subject.enrollment.try(:course).try(:course_assets).try(:sort_by, &:position)
         @assetable = @subject
+        if @subject.enrollment
+          @enrolled_asset_title = @subject.enrollment.course.name
+        end
       end
             
     else

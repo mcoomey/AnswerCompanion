@@ -1,18 +1,30 @@
+<div id="ujsform" class="double_height">
+  <%= form_for @subject, remote:true do |f| %>
 
-<div id="ujsform">
-<%= form_for @subject, remote:true do |f| %>
+    <div class="one_line">
+      <span class="title">Subject:</span>
+      <%= f.label :name %>
+    	<%= f.text_field :name, class: "name_text" %>
 
-	<%= f.label :subject %>
-	<%= f.text_field :name, :size => "20" %>
-
-	<%= f.label :description %>
-	<%= f.text_field :description, :size => "40" %>
-
-	<%= f.label :term %>
-	<%= f.text_field :term, :size => "15" %>
-
-	<%= f.submit "Update", :name => "commit" %>
-	<%= f.submit "Cancel", :name => "commit" %>
-<% end %>
+      <%= f.label :term %>
+    	<%= f.text_field :term, class: "term_text" %>
+      
+      <%= f.label :description %>
+      <%= f.text_field :description, class: "description_text" %>
+      
+    	<%= f.submit "Update", :name => "commit", :class=>"btn-right" %>
+    </div>
+    <div class="one_line">
+      <span class="title">Enrollment:</span>
+      <% if @enrollment %>
+        <%= render 'shared/enrollment_fields', f:f, local_instructors: @instructors %>
+      <% else %>
+        <%= image_tag "Enroll.png", name: "enroll", id: "enroll-button", value: true, :onmouseover => "this.src='/assets/EnrollHover.png'",
+      				                                     :onmouseout => "this.src='/assets/Enroll.png'", class: "enroll" %>
+      <% end %>
+    	<%= f.submit "Cancel", :name => "commit", :class=>"btn-right" %>
+    </div>
+    
+  <% end %>
 </div>
 

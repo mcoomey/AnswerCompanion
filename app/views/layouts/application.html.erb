@@ -18,7 +18,7 @@
 					<%= current_user.email%></br>
 					Prior login: <%= current_user.last_sign_in_at.localtime.strftime("%b %d, %Y @ %I:%M:%S%P") %></br>
 					<% if current_instructor || current_student %>
-						Account Balance: <%= number_to_currency(current_user.accountbalance, :unit => "$") %></br>
+						Token Count: <%= current_user.accountbalance %></br>
 					<% end %>          
 				<% end %>
 			</div>   

@@ -8,6 +8,10 @@ class SubjectsController < ApplicationController
     @current_subjects = @subjects.where(:archived => 0).order(:position)
     @archived_subjects = @subjects.where(:archived => 1).order(:position)
 
+    if @subjects.count == 0
+			@ujsAlert = "You must add a Subject."
+    end
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @subjects }
@@ -75,6 +79,11 @@ class SubjectsController < ApplicationController
   def edit
   	@subject = Subject.find_by_id(params[:id])
   	@student = @subject.try(:student) || current_student
+    @instructors = Instructor.all(order: :lastname)
+    @enrollment = @subject.enrollment
+    if @subject.enrollment
+      @instructor = @subject.enrollment.course.instructor
+    end
   end
 
   def update
@@ -92,8 +101,10 @@ class SubjectsController < ApplicationController
       
     elsif params[:commit] && params[:commit] != "Cancel"
       if @subject.update_attributes(params[:subject])
+        @subject = Subject.find_by_id(@subject.id)    #refesh the instance to reflect possible enrollment destruction
         @ujsNotice = "Subject was successfully updated."
         @ujsAlert = nil
+        puts "********** @subject.enrollment = #{@subject.enrollment} **************"
         render "update"
       else
         @ujsNotice = nil

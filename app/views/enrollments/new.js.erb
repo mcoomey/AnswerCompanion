@@ -1,3 +1,31 @@
 ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
-$("#ujsform").remove();
-$("#buttonarea").hide().after("<%= j render 'new_enrollment' %>");
+<% if @courses.count > 0 %>
+  $("#ujsform").remove();
+  $("#buttonarea").hide().after("<%= j render 'new_enrollment' %>");
+
+  var states, courses, instructor, escaped_instructor, options;
+  courses = $('#enrollment_course_id').html();
+
+  $('#instructor_id').change(function() {
+    var instructor, escaped_instructor, options;
+    instructor = $('#instructor_id :selected').text();
+    console.log("instructor " + instructor);
+    escaped_instructor = instructor.replace(/([ #;&,.+*~\':"!^$[\]()=>|\/@])/g, '\\$1');
+    options = $(courses).filter("optgroup[label='" + escaped_instructor + "']").html();
+    if (options) {
+      $('#enrollment_course_id').fadeTo("fast", 1.0);
+      $('#enrollment_course_id').html(options);
+      $("label[for='enrollment_course']").fadeTo("fast", 1.0)
+      $("#enroll_submit").fadeTo("fast", 1.0);
+      $("#enroll_submit").prop('disabled', false);
+      $("#messages .ujs_alert").html("");
+    } else {
+      $('#enrollment_course_id').fadeTo("fast", 0.1);
+      $('#enrollment_course_id').empty();
+      $("label[for='enrollment_course']").fadeTo("fast", 0.1)
+      $("#enroll_submit").fadeTo("fast", 0.1);
+      $("#enroll_submit").prop('disabled', true);
+      $("#messages .ujs_alert").html("Instructor " + instructor + " has not published any courses.");
+    }
+  });
+<% end %>

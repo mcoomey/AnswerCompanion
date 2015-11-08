@@ -1,1 +1,4 @@
-alert ("creating enrollment");
+$("#ujsform").remove();
+$("#buttonarea").show();
+ujsMessages("<%= @ujsAlert %>", "<%= @ujsNotice %>");
+window.location = "<%= @reload_path %>";

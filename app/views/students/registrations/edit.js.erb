@@ -101,6 +101,7 @@ $("#update-button").click(function(){
         });
       }
       else { // new_school_count == 0
+        $("div#login-register").css('cursor', 'wait');
         $("form#edit_student").submit();
       }
     }
@@ -120,6 +121,7 @@ $("#update-button").click(function(){
           $("#delete_account_dialog").dialog("destroy");
           $("#delete_account_dialog").html("");
           $("form input#destroy_account").val("true");
+          $("div#login-register").css('cursor', 'wait');
           $("form#edit_student").submit()
           return true;
          },

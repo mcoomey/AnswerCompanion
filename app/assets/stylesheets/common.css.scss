@@ -28,17 +28,29 @@
 		margin-right:10px;
 		font-size:1em;
 		color: $main-green;
+    min-width:120px;
 	}
 }
 
 #ujsform {
 	width:$screen-width - 24px;
 	height:30px;
-  margin-left: 10px;
+  padding-left: 10px;
+	.title {
+		font-size:24px;
+		color: $main-green;
+		float:left;
+		padding-top:4px;
+		padding-left:4px;
+		min-width:150px;
+	}
 	label {
 		font-size:1em;
     color:$main-green;
     margin-left:10px;
+    &.flush{
+      margin-left:0px;
+    }
   }
   label.attention {
 		font-size:1.5em;
@@ -55,7 +67,25 @@
 		  color:blue;	
 		  cursor:pointer;
 		}
+    &.btn-right {
+      float:right;
+    }
 	}
+  input[type="text"]{
+    &.name_text{
+      width:120px;
+    }
+    &.term_text{
+      width:120px;
+    }
+    &.description_text{
+      width:250px;
+    }
+    &.stricken {
+      text-decoration:line-through;
+      color:red;
+    }
+  }
 	input[value="Cancel"] {
 		color:black;
 		font-size:1em;
@@ -63,11 +93,36 @@
 		  color:red;	
 		  cursor:pointer;
 		}
+    &.btn-right {
+      float:right;
+    }
 	}
 	select {
 		color:$main-green;
 		font-size:1em;
+    min-width:80px;
+    &.instructor_select {
+      width:150px;
+    }
+    &.course_select {
+      width:250px;
+    }
+    &.stricken {
+      text-decoration:line-through;
+      color:red;
+    }
 	}
+	.field_with_errors input{
+	  border: solid 1px red;
+	}
+  &.double_height {
+    height:60px;
+  }
+  .one_line {
+    height:30px;
+    width:100%;
+    float:left;
+  }
 }
 
 ul.ui-autocomplete {

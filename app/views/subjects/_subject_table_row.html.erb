@@ -1,6 +1,6 @@
 <tr id="subject_<%=local_subject.id %>" data-model="subject" data-model_id="<%= local_subject.id %>">
   <td>
-    <% if local_subject.enrollment.try(:course).try(:course_assets) %>
+    <% if local_subject.enrollment && (local_subject.enrollment.course.course_assets.count > 0) %>
       <%= link_to local_subject.name, send("course_asset_#{CourseAssetModelType.find_by_id(local_subject.enrollment.course.course_assets.first.model_type).name_of_model}_path", 
                                             local_subject.enrollment.course.course_assets.first,
                                             subject_id: local_subject.id ) %>
@@ -13,15 +13,17 @@
   		<%= link_to local_subject.name, student_subject_path(current_student, local_subject.id, subject_id: local_subject.id) %>
   	<% end %>
   </td>
-	<td><%= local_subject.description %></td>
 	<td><%= local_subject.term %></td>
+  <td><%= local_subject.description %></td>
+	<td><%= local_subject.enrollment.try(:course).try(:instructor).try(:lastname) %>
+	    --- <%= local_subject.enrollment.try(:course).try(:name) %></td>
 	<td>
-    <%= link_to image_tag("EditIcon.png",  :mouseover => "EditIconHover.png",:class => "button", :alt => "Edit Subject"), 
+    <%= link_to image_tag("EditIcon.png",  :mouseover => "EditIconHover.png",:class => "button", :alt => "Edit Subject", title: "Edit Subject"), 
     edit_student_subject_path(current_student.id, local_subject), id: "edit_link_#{local_subject.id}" , remote: true %>
 	</td>
 	<td>
-		<%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png",:class => "button", :alt => "Delete Subject"),  
-			        student_subject_path(current_student.id, local_subject.id), :confirm => "Delete #{local_subject.name} - Are you sure?", 
-			        :method => :delete, :remote => true %>
+		<%= link_to image_tag("xDelete.png",  mouseover: "xDeleteHover.png", class: "button", alt: "Delete Subject", title: "Delete Subject"),  
+			        student_subject_path(current_student.id, local_subject.id), confirm: "Delete #{local_subject.name} - Are you sure?", 
+			        method: :delete, remote: true %>
 	</td>
 </tr>

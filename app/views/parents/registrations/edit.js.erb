@@ -30,6 +30,7 @@ $("#update-button").click(function(){
     alert("Current Password cannot be blank.");
     }
   else {
+    $("div#login-register").css('cursor', 'wait');
     $("form#edit_parent").submit();
     }
   });
@@ -47,6 +48,7 @@ $("#update-button").click(function(){
           $("#delete_account_dialog").dialog("destroy");
           $("#delete_account_dialog").html("");
           $("form input#destroy_account").val("true");
+          $("div#login-register").css('cursor', 'wait');
           $("form#edit_parent").submit()
           return true;
          },

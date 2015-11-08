@@ -1,0 +1,9 @@
+<%= collection_select(:instructor, :id, local_instructors, :id, :lastname, {include_blank: "Instructor"}, {class: "instructor_select"}) %>
+
+<%= f.fields_for :enrollment do |e| %>
+	<%= e.grouped_collection_select(:course_id, Instructor.all,  :courses, :lastname, :id, :name_and_section, {include_blank: "Course"}, {class: "course_select"}) %>
+  <%= e.text_field :passphrase, size: 25, placeholder: "Passphrase", class:"passphrase_text" %>
+  <%= e.check_box :_destroy %>
+  <%= e.label :_destroy, "Un-enroll"%>
+<% end %>
+ 
