@@ -24,6 +24,6 @@
 	<td>
 		<%= link_to image_tag("xDelete.png",  mouseover: "xDeleteHover.png", class: "button", alt: "Delete Subject", title: "Delete Subject"),  
 			        student_subject_path(current_student.id, local_subject.id), confirm: "Delete #{local_subject.name} - Are you sure?", 
-			        method: :delete, remote: true %>
+			        method: :delete, id: "delete_subject_#{local_subject.id}", remote: true %>
 	</td>
 </tr>

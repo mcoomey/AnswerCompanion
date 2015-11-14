@@ -1,6 +1,7 @@
 class SubjectsController < ApplicationController
 
-  before_filter :get_user_mode, :set_query_string
+  before_filter :get_user_mode
+  before_filter :set_query_string, :except => [:sort]
 
   def index
     @student = Student.find_by_id(params[:student_id])
@@ -35,7 +36,9 @@ class SubjectsController < ApplicationController
     else
       @subject = Subject.find_by_id(params[:id])
       @course_assets = @subject.course_assets.order(:position)
-      if @course_assets.count == 0
+      if @course_assets.count == 0 && @subject.enrollment
+  			@ujsAlert = "You must add a Subject Asset."
+      elsif @course_assets.count == 0 
   			@ujsAlert = "You must add a Subject Asset or enroll in a course."
       end
       @student = @subject.student
@@ -100,15 +103,46 @@ class SubjectsController < ApplicationController
       render "update"
       
     elsif params[:commit] && params[:commit] != "Cancel"
-      if @subject.update_attributes(params[:subject])
+      
+      # copy enrollment_attributes params from the enrollment fields that were dynamically added 
+      if params["subject"]["enrollment_attributes"]["enrollment"]
+        params["subject"]["enrollment_attributes"]=params["subject"]["enrollment_attributes"]["enrollment"]
+      end
+      
+      passphraseError = false
+      if params["subject"]["enrollment_attributes"]
+        @course = Course.find_by_id(params["subject"]["enrollment_attributes"]["course_id"])
+        passphrase = params["subject"]["enrollment_attributes"]["passphrase"]
+        passphraseError = true  if passphrase != @course.try(:passphrase)
+      end
+      
+      if passphraseError
+          @ujsAlert = "Error! Incorrect Passphrase.  Please check with instructor."
+
+        	@subject = Subject.find_by_id(params[:id])
+        	@student = @subject.try(:student) || current_student
+          @instructors = Instructor.all(order: :lastname)
+          @enrollment = @subject.enrollment
+          if @subject.enrollment
+            @instructor = @subject.enrollment.course.instructor
+          end
+          render "edit"
+      elsif @subject.update_attributes(params[:subject])
         @subject = Subject.find_by_id(@subject.id)    #refesh the instance to reflect possible enrollment destruction
         @ujsNotice = "Subject was successfully updated."
         @ujsAlert = nil
-        puts "********** @subject.enrollment = #{@subject.enrollment} **************"
         render "update"
       else
         @ujsNotice = nil
         @ujsAlert = @subject.errors.full_messages.first
+
+      	@subject = Subject.find_by_id(params[:id])
+      	@student = @subject.try(:student) || current_student
+        @instructors = Instructor.all(order: :lastname)
+        @enrollment = @subject.enrollment
+        if @subject.enrollment
+          @instructor = @subject.enrollment.course.instructor
+        end
         render "edit"
       end
     else

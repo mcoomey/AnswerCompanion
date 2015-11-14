@@ -2,4 +2,10 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-# set up autocomplete options for subject category and subcategory text_fields
+jQuery ->
+  $('form').on 'click', '.add_enrollment', (event) ->  
+    time = new Date().getTime()
+    regexp = new RegExp($(this).data('id'), 'g')
+    $(this).replaceWith($(this).data('fields').replace(regexp, time))
+    event.preventDefault()
+    

@@ -1,4 +1,5 @@
 window.handleDropEvent = (event, ui) ->
+  console.log ">>>>> handleDropEvent (from common.js.coffee) <<<<<"
   $("#ujsform").remove()
   $("#buttonarea").show()
   dragitem = ui.draggable
@@ -42,6 +43,7 @@ window.handleDropEvent = (event, ui) ->
 
 
 window.handleSortEvent = (event, ui) ->
+  console.log ">>>>> handleSortEvent (from common.js.coffee) <<<<<"
   dataString = $(this).sortable('serialize')
   urlString = window.location.pathname + "/sort" 
   console.log "urlString = " + urlString 

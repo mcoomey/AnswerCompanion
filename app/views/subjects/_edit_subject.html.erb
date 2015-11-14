@@ -12,17 +12,16 @@
       <%= f.label :description %>
       <%= f.text_field :description, class: "description_text" %>
       
-    	<%= f.submit "Update", :name => "commit", :class=>"btn-right" %>
+    	<%= f.submit "Update", name: "commit", class: "btn-right", id: "update-button" %>
     </div>
     <div class="one_line">
       <span class="title">Enrollment:</span>
       <% if @enrollment %>
         <%= render 'shared/enrollment_fields', f:f, local_instructors: @instructors %>
       <% else %>
-        <%= image_tag "Enroll.png", name: "enroll", id: "enroll-button", value: true, :onmouseover => "this.src='/assets/EnrollHover.png'",
-      				                                     :onmouseout => "this.src='/assets/Enroll.png'", class: "enroll" %>
+        <%= link_to_image_add_enrollment f, @instructors, "Enroll.png", "EnrollHover.png" %>
       <% end %>
-    	<%= f.submit "Cancel", :name => "commit", :class=>"btn-right" %>
+    	<%= f.submit "Cancel", name: "commit", class: "btn-right", id: "cancel-button" %>
     </div>
     
   <% end %>
