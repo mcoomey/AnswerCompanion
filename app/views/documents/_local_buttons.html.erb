@@ -1,2 +1,4 @@
+<% if @user_mode == "instructor" || @course_asset.assetable_type == "Subject" %>     
 	<%=link_to image_tag("AddDocument.png",  :mouseover => "AddDocumentHover.png",:class => "button", :alt => "Add a Document"), 
 		           new_course_asset_document_path(@course_asset, @query_string), remote: true %>
+<% end %>

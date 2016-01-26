@@ -1,13 +1,14 @@
 <li class="textbox" id= "tbox_id_<%= local_tbox.id %>" data-model="textbox" data-model_id="<%= local_tbox.id %>">
   <fieldset><legend><%=local_tbox.title %></legend>
     <div class="textboxdelete">
+    <% if @user_mode == "instructor" || @course_asset.assetable_type == "Subject" %>      
+      <%= link_to image_tag("EditIcon.png",  :mouseover => "EditIconHover.png",:class => "button", :alt => "Edit Textbox"), 
+          edit_course_asset_textbox_path(local_course_asset_id, local_tbox.id), title: 'Edit Textbox', remote: true, :class => "buttonTo" %>
       
-    <%= link_to image_tag("EditIcon.png",  :mouseover => "EditIconHover.png",:class => "button", :alt => "Edit Textbox"), 
-        edit_course_asset_textbox_path(local_course_asset_id, local_tbox.id), title: 'Edit Textbox', remote: true, :class => "buttonTo" %>
-      
-    <%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png",:class => "button", :alt => "Delete Document"),  
-    course_asset_textbox_path(local_course_asset_id, local_tbox.id), :confirm => 'Remove Textbox. Are you sure?', 
-      :method => :delete, :remote => true, :class => "buttonTo"%>
+      <%= link_to image_tag("xDelete.png",  :mouseover => "xDeleteHover.png",:class => "button", :alt => "Delete Document"),  
+      course_asset_textbox_path(local_course_asset_id, local_tbox.id), :confirm => 'Remove Textbox. Are you sure?', 
+        :method => :delete, :remote => true, :class => "buttonTo"%>
+    <% end %>
       
     </div>
 		<%= local_tbox.content %>

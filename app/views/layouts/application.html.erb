@@ -18,7 +18,7 @@
 					<%= current_user.email%></br>
 					Prior login: <%= current_user.last_sign_in_at.localtime.strftime("%b %d, %Y @ %I:%M:%S%P") %></br>
 					<% if current_instructor || current_student %>
-						Token Count: <%= current_user.accountbalance %></br>
+						Video Tokens: <%= current_user.accountbalance %></br>
 					<% end %>          
 				<% end %>
 			</div>   
@@ -30,7 +30,7 @@
 			<span class="ujs_alert"><%= @ujsAlert %></span>
   	</div>
 		<%= yield %>
-    <footer> Version 0.0&nbsp;&nbsp;&nbsp;&nbsp;&copy;2015 Answer Companion, Incorporated&nbsp;&nbsp;&nbsp;&nbsp;Paxton, MA 01612 </footer>
+    <footer> Version 0.0&nbsp;&nbsp;&nbsp;&nbsp;&copy;2016 Answer Companion, Incorporated&nbsp;&nbsp;&nbsp;&nbsp;Paxton, MA 01612 </footer>
   </div>
 </div>
 </body>
